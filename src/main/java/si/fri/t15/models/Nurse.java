@@ -25,4 +25,47 @@ public class Nurse implements Serializable{
 	
 	@OneToMany(mappedBy="nurse")
 	private List<Doctor_Nurse> doctor_nurses;
+	
+	public Nurse() {
+	}	
+	
+	public int getNurseId() {
+		return this.id;
+	}
+
+	public void setNurseId(int id) {
+		this.id = id;
+	}	
+	
+	public String getFirst_Name() {
+		return this.first_name;
+	}
+
+	public void setFirst_Name(String first_name) {
+		this.first_name = first_name;
+	}
+	
+	public String getLast_Name() {
+		return this.last_name;
+	}
+
+	public void setLast_Name(String last_name) {
+		this.last_name = last_name;
+	}
+	
+	public List<Doctor_Nurse> getDoctor_Nurses() {
+		return this.doctor_nurses;
+	}
+
+	public void setDoctor_Nurses(List<Doctor_Nurse> doctor_nurses) {
+		this.doctor_nurses = doctor_nurses;
+	}
+	
+	public Medical_Center getMedical_Center() {
+		return this.medical_center;
+	}
+
+	public void setMedical_Center(Medical_Center medical_center) {
+		this.medical_center = medical_center;
+	}
 }

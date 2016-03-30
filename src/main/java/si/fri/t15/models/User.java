@@ -27,4 +27,55 @@ public class User implements Serializable{
 	
 	@OneToMany(mappedBy="user")
 	private List<Pacient> pacients;
+	
+	public User() {
+	}	
+	
+	public int getUserId() {
+		return this.id;
+	}
+
+	public void setUserId(int id) {
+		this.id = id;
+	}	
+	
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public char getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(char status) {
+		this.status = status;
+	}
+	
+	public List<Pacient> getPacients() {
+		return this.pacients;
+	}
+
+	public void setPacients(List<Pacient> pacients) {
+		this.pacients = pacients;
+	}
 }

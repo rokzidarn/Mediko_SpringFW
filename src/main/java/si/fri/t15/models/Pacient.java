@@ -19,9 +19,6 @@ public class Pacient implements Serializable{
 
 	@Column(name="Last_Name", length=15, nullable=false, updatable=true)
 	private String last_name;
-
-	@Column(name="Password", length=15, nullable=false, updatable=true)
-	private String password;
 	
 	@ManyToOne
 	private User user;
@@ -38,4 +35,63 @@ public class Pacient implements Serializable{
 	
 	@OneToMany(mappedBy="pacient")
 	private List<Checkup> checkups;
+	
+	public Pacient() {
+	}	
+	
+	public int getPacientId() {
+		return this.id;
+	}
+
+	public void setPacientId(int id) {
+		this.id = id;
+	}	
+	
+	public String getFirst_Name() {
+		return this.first_name;
+	}
+
+	public void setFirst_Name(String first_name) {
+		this.first_name = first_name;
+	}
+	
+	public String getLast_Name() {
+		return this.last_name;
+	}
+
+	public void setLast_Name(String last_name) {
+		this.last_name = last_name;
+	}
+	
+	public Doctor getDoctor() {
+		return this.doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+	
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	public List<Appointment> getAppointments() {
+		return this.appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+	
+	public List<Checkup> getCheckups() {
+		return this.checkups;
+	}
+
+	public void setCheckups(List<Checkup> checkups) {
+		this.checkups = checkups;
+	}
 }
