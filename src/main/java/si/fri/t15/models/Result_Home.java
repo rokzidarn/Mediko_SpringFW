@@ -19,4 +19,42 @@ public class Result_Home implements Serializable{
 	
 	@OneToMany(mappedBy="result_home")
 	private List<Reading_Data> reading_datas;
+	
+	@ManyToOne
+	private Pacient pacient;
+	
+	public Result_Home() {
+	}	
+	
+	public int getResult_HomeId() {
+		return this.id;
+	}
+
+	public void setResult_HomeId(int id) {
+		this.id = id;
+	}	
+	
+	public String getText() {
+		return this.text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	public List<Reading_Data> getReading_Datas() {
+		return this.reading_datas;
+	}
+
+	public void setReading_Datas(List<Reading_Data> reading_datas) {
+		this.reading_datas = reading_datas;
+	}
+	
+	public Pacient gePacient() {
+		return this.pacient;
+	}
+
+	public void setPacient(Pacient pacient) {
+		this.pacient = pacient;
+	}
 }

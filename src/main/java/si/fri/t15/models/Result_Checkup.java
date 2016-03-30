@@ -22,4 +22,39 @@ public class Result_Checkup implements Serializable{
 	
 	@ManyToOne
 	private Checkup checkup;
+	
+	public Result_Checkup() {
+	}	
+	
+	public int getResult_CheckupId() {
+		return this.id;
+	}
+
+	public void setResult_CheckupId(int id) {
+		this.id = id;
+	}	
+	
+	public String getText() {
+		return this.text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	public List<Reading_Data> getReading_Datas() {
+		return this.reading_datas;
+	}
+
+	public void setReading_Datas(List<Reading_Data> reading_datas) {
+		this.reading_datas = reading_datas;
+	}
+	
+	public Checkup getCheckup() {
+		return this.checkup;
+	}
+
+	public void setCheckup(Checkup checkup) {
+		this.checkup = checkup;
+	}
 }
