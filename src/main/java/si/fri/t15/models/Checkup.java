@@ -1,6 +1,7 @@
 package si.fri.t15.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -21,4 +22,16 @@ public class Checkup implements Serializable{
 	
 	@ManyToOne
 	private Doctor doctor;
+	
+	@OneToMany(mappedBy="checkup")
+	private List<Checkup_Diet> checkup_diets;
+	
+	@OneToMany(mappedBy="checkup")
+	private List<Checkup_Disease> checkup_diseases;
+	
+	@OneToMany(mappedBy="checkup")
+	private List<Checkup_Medicine> checkup_medicines;
+	
+	@OneToMany(mappedBy="checkup")
+	private List<Result_Checkup> result_checkups;
 }

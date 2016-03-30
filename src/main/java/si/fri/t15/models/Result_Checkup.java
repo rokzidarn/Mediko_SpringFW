@@ -19,4 +19,7 @@ public class Result_Checkup implements Serializable{
 	
 	@OneToMany(mappedBy="result_checkup")
 	private List<Reading_Data> reading_datas;
+	
+	@ManyToOne
+	private Checkup checkup;
 }
