@@ -15,4 +15,10 @@ public class Appointment implements Serializable{
 	
 	@Column(name="Date", nullable=false)
 	private Date date;
+	
+	@ManyToOne
+	private Pacient pacient;
+	
+	@ManyToOne
+	private Doctor doctor;
 }

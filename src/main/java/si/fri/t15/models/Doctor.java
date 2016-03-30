@@ -1,6 +1,7 @@
 package si.fri.t15.models;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -23,4 +24,16 @@ public class Doctor implements Serializable{
 	
 	@Column(name="Specialist", length=15, nullable=false, updatable=true)
 	private String specialist;
+	
+	@OneToMany(mappedBy="doctor")
+	private List<Pacient> pacients;
+	
+	@OneToMany(mappedBy="doctor")
+	private List<Appointment> appointments;
+	
+	@ManyToOne
+	private Medical_Center medical_center;
+	
+	@OneToMany(mappedBy="doctor")
+	private List<Doctor_Nurse> doctor_nurses;
 }

@@ -1,6 +1,8 @@
 package si.fri.t15.models;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,4 +19,10 @@ public class Nurse implements Serializable{
 
 	@Column(name="Last_Name", length=15, nullable=false, updatable=true)
 	private String last_name;
+	
+	@ManyToOne
+	private Medical_Center medical_center;
+	
+	@OneToMany(mappedBy="nurse")
+	private List<Doctor_Nurse> doctor_nurses;
 }

@@ -11,4 +11,10 @@ public class Doctor_Nurse implements Serializable{
 	@Column(name="idDoctor_Nurse", length=4, nullable=false, updatable=false, unique=true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
+	@ManyToOne
+	private Doctor doctor;
+	
+	@ManyToOne
+	private Nurse nurse;
 }

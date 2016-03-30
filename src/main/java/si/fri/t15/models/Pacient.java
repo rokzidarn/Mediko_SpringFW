@@ -1,6 +1,8 @@
 package si.fri.t15.models;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,4 +22,17 @@ public class Pacient implements Serializable{
 
 	@Column(name="Password", length=15, nullable=false, updatable=true)
 	private String password;
+	
+	@ManyToOne
+	private User user;
+	
+	@ManyToOne
+	private Doctor doctor;
+	
+	@OneToMany(mappedBy="pacient")
+	private List<Appointment> appointments;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="PO_Box_idPO_Box")
+	private PO_Box po_box;
 }

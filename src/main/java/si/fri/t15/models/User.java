@@ -2,6 +2,7 @@ package si.fri.t15.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
 public class User implements Serializable{
@@ -23,4 +24,7 @@ public class User implements Serializable{
 	
 	@Column(name="Status", nullable=false, updatable=true)
 	private char status;
+	
+	@OneToMany(mappedBy="user")
+	private List<Pacient> pacients;
 }
