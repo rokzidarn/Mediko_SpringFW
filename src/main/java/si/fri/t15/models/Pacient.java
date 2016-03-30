@@ -35,4 +35,7 @@ public class Pacient implements Serializable{
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="PO_Box_idPO_Box")
 	private PO_Box po_box;
+	
+	@OneToMany(mappedBy="pacient")
+	private List<Checkup> checkups;
 }

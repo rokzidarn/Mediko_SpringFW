@@ -36,4 +36,7 @@ public class Doctor implements Serializable{
 	
 	@OneToMany(mappedBy="doctor")
 	private List<Doctor_Nurse> doctor_nurses;
+	
+	@OneToMany(mappedBy="doctor")
+	private List<Checkup> checkups;
 }
