@@ -21,4 +21,39 @@ public class Appointment implements Serializable{
 	
 	@ManyToOne
 	private Doctor doctor;
+	
+	public Appointment() {
+	}
+
+	public int getIdAppointment() {
+		return this.id;
+	}
+
+	public void setIdAppointment(int id) {
+		this.id = id;
+	}
+
+	public Date getDate() {
+		return this.date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
+	public Doctor getDoctor() {
+		return this.doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+	
+	public Pacient getPacient() {
+		return this.pacient;
+	}
+
+	public void setPacient(Pacient pacient) {
+		this.pacient = pacient;
+	}
 }

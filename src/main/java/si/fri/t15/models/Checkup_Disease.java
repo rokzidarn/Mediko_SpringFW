@@ -18,4 +18,31 @@ public class Checkup_Disease implements Serializable{
 	
 	@ManyToOne
 	private Disease disease;
+	
+	public Checkup_Disease() {
+	}
+
+	public int getCheckup_DiseaseId() {
+		return this.id;
+	}
+
+	public void setCheckup_DiseaseId(int id) {
+		this.id = id;
+	}	
+	
+	public Checkup getCheckup() {
+		return this.checkup;
+	}
+
+	public void setCheckup(Checkup checkup) {
+		this.checkup = checkup;
+	}
+	
+	public Disease getDisease() {
+		return this.disease;
+	}
+
+	public void setDisease(Disease disease) {
+		this.disease = disease;
+	}
 }

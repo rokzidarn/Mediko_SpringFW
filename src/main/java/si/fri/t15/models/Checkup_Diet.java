@@ -19,4 +19,31 @@ public class Checkup_Diet implements Serializable{
 	
 	@OneToMany(mappedBy="diet")
 	private List<Instructions_Diet> instruction_diets;
+	
+	public Checkup_Diet() {
+	}
+
+	public int getCheckup_DietId() {
+		return this.id;
+	}
+
+	public void setCheckup_DietId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public List<Instructions_Diet> getInstructions_Diets() {
+		return this.instruction_diets;
+	}
+
+	public void setInstructions_Diets(List<Instructions_Diet> instruction_diets) {
+		this.instruction_diets = instruction_diets;
+	}
 }

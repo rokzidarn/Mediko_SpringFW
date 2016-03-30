@@ -18,4 +18,31 @@ public class Checkup_Medicine implements Serializable{
 	
 	@ManyToOne
 	private Medicine medicine;
+	
+	public Checkup_Medicine() {
+	}
+
+	public int getCheckup_MedicineId() {
+		return this.id;
+	}
+
+	public void setCheckup_MedicineId(int id) {
+		this.id = id;
+	}	
+	
+	public Checkup getCheckup() {
+		return this.checkup;
+	}
+
+	public void setCheckup(Checkup checkup) {
+		this.checkup = checkup;
+	}
+	
+	public Medicine getMedicine() {
+		return this.medicine;
+	}
+
+	public void setMedicine(Medicine medicine) {
+		this.medicine = medicine;
+	}
 }

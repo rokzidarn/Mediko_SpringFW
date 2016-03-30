@@ -18,4 +18,31 @@ public class Disease_Medicine implements Serializable{
 	
 	@ManyToOne
 	private Disease disease;
+	
+	public Disease_Medicine() {
+	}	
+	
+	public int getDisease_MedicineId() {
+		return this.id;
+	}
+
+	public void setDisease_MedicineId(int id) {
+		this.id = id;
+	}	
+	
+	public Medicine getMedicine() {
+		return this.medicine;
+	}
+
+	public void setMedicine(Medicine medicine) {
+		this.medicine = medicine;
+	}
+	
+	public Disease getDisease() {
+		return this.disease;
+	}
+
+	public void setDisease(Disease disease) {
+		this.disease = disease;
+	}
 }
