@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="Result_Checkup.findAll", query="SELECT r FROM Result_Checkup r")
 public class Result_Checkup implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -21,6 +22,7 @@ public class Result_Checkup implements Serializable{
 	private List<Reading_Data> reading_datas;
 	
 	@ManyToOne
+	@JoinColumn(name="Checkup_idCheckup")
 	private Checkup checkup;
 	
 	public Result_Checkup() {

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="Result_Home.findAll", query="SELECT r FROM Result_Home r")
 public class Result_Home implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -21,6 +22,7 @@ public class Result_Home implements Serializable{
 	private List<Reading_Data> reading_datas;
 	
 	@ManyToOne
+	@JoinColumn(name="Pacient_idPacient")
 	private Pacient pacient;
 	
 	public Result_Home() {

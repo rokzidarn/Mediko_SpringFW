@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="Instructions_Diet.findAll", query="SELECT i FROM Instructions_Diet i")
 public class Instructions_Diet implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

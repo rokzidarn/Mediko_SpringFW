@@ -20,8 +20,12 @@ public class Diet implements Serializable{
 	@OneToMany(mappedBy="diet")
 	private List<Instructions_Diet> instruction_diets;
 	
-	@OneToMany(mappedBy="diet")
-	private List<Checkup_Diet> checkup_diets;
+	@ManyToMany(mappedBy="diet")
+	@JoinTable(
+		      name="Checkup_Diet",
+		      joinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDiet"),
+		      inverseJoinColumns=@JoinColumn(name="C_ID", referencedColumnName="idCheckup"))
+	private List<Checkup> checkups;
 	
 	public Diet() {
 	}	
@@ -48,13 +52,5 @@ public class Diet implements Serializable{
 
 	public void setInstructions_Diets(List<Instructions_Diet> instruction_diets) {
 		this.instruction_diets = instruction_diets;
-	}
-	
-	public List<Checkup_Diet> getCheckup_Diets() {
-		return this.checkup_diets;
-	}
-
-	public void setCheckup_Diets(List<Checkup_Diet> checkup_diets) {
-		this.checkup_diets = checkup_diets;
 	}
 }

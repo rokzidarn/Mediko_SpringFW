@@ -1,10 +1,12 @@
 package si.fri.t15.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="PO_Box.findAll", query="SELECT p FROM PO_Box p")
 public class PO_Box implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -15,6 +17,13 @@ public class PO_Box implements Serializable{
 	
 	@Column(name="City", length=45, nullable=false)
 	private String city;
+	
+	@OneToMany(mappedBy="poBox")
+	private List<Medical_Center> medicalCenters;
+
+	@ManyToOne
+	@JoinColumn(name="PO_Box_idPO_Box")
+	private PO_Box poBox;
 	
 	public PO_Box() {
 	}	

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="Reading_Data.findAll", query="SELECT r FROM Reading_Data r")
 public class Reading_Data implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -20,13 +21,16 @@ public class Reading_Data implements Serializable{
 	private String unit;
 	
 	@ManyToOne
+	@JoinColumn(name="Reading_idReading")
 	private Reading reading;
-	
+
 	@ManyToOne
-	private Result_Home result_home;
-	
-	@ManyToOne
+	@JoinColumn(name="Result_Checkup_idResult_Checkup")
 	private Result_Checkup result_checkup;
+
+	@ManyToOne
+	@JoinColumn(name="Result_Home_idResult_Home")
+	private Result_Home result_home;
 	
 	public Reading_Data() {
 	}	

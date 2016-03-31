@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="Reading.findAll", query="SELECT r FROM Reading r")
 public class Reading implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -18,7 +19,8 @@ public class Reading implements Serializable{
 	@Column(name="Type", length=45, nullable=false)
 	private String type;
 	
-	@Column(name="Date", nullable=false)
+	@Temporal(TemporalType.DATE)
+	@Column(name="Date")
 	private Date date;
 	
 	@OneToMany(mappedBy="reading")

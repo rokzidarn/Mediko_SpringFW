@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
+@NamedQuery(name="Appointment.findAll", query="SELECT a FROM Appointment a")
 public class Appointment implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -13,13 +14,16 @@ public class Appointment implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	@Temporal(TemporalType.DATE)
 	@Column(name="Date", nullable=false)
 	private Date date;
 	
 	@ManyToOne
+	@JoinColumn(name="Pacient_idPacient")
 	private Pacient pacient;
 	
 	@ManyToOne
+	@JoinColumn(name="Doctor_idDoctor")
 	private Doctor doctor;
 	
 	public Appointment() {

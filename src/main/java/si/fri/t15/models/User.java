@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
+@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -77,5 +78,19 @@ public class User implements Serializable{
 
 	public void setPacients(List<Pacient> pacients) {
 		this.pacients = pacients;
+	}
+	
+	public Pacient addPacient(Pacient pacient) {
+		getPacients().add(pacient);
+		pacient.setUser(this);
+
+		return pacient;
+	}
+
+	public Pacient removePacient(Pacient pacient) {
+		getPacients().remove(pacient);
+		pacient.setUser(null);
+
+		return pacient;
 	}
 }

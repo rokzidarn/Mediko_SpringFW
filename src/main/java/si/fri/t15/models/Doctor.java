@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d")
 public class Doctor implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -34,8 +35,12 @@ public class Doctor implements Serializable{
 	@ManyToOne
 	private Medical_Center medical_center;
 	
-	@OneToMany(mappedBy="doctor")
-	private List<Doctor_Nurse> doctor_nurses;
+	@ManyToMany(mappedBy="checkup")
+	@JoinTable(
+		      name="Doctor_Nurse",
+		      joinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDoctor"),
+		      inverseJoinColumns=@JoinColumn(name="N_ID", referencedColumnName="idNurse"))
+	private List<Nurse> nurses;
 	
 	@OneToMany(mappedBy="doctor")
 	private List<Checkup> checkups;
@@ -107,19 +112,39 @@ public class Doctor implements Serializable{
 		this.appointments = appointments;
 	}
 	
-	public List<Doctor_Nurse> getDoctor_Nurses() {
-		return this.doctor_nurses;
-	}
-
-	public void setDoctor_Nurses(List<Doctor_Nurse> doctor_nurses) {
-		this.doctor_nurses = doctor_nurses;
-	}
-	
 	public List<Checkup> getCheckups() {
 		return this.checkups;
 	}
 
 	public void setCheckups(List<Checkup> checkups) {
 		this.checkups = checkups;
+	}
+	
+	public Checkup addCheckup(Checkup checkup) {
+		getCheckups().add(checkup);
+		checkup.setDoctor(this);
+
+		return checkup;
+	}
+
+	public Checkup removeCheckup(Checkup checkup) {
+		getCheckups().remove(checkup);
+		checkup.setDoctor(null);
+
+		return checkup;
+	}
+	
+	public Pacient addPacient(Pacient pacient) {
+		getPacients().add(pacient);
+		pacient.setDoctor(this);
+
+		return pacient;
+	}
+
+	public Pacient removePacient(Pacient pacient) {
+		getPacients().remove(pacient);
+		pacient.setDoctor(null);
+
+		return pacient;
 	}
 }

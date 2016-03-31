@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="Medicine.findAll", query="SELECT m FROM Medicine m")
 public class Medicine implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -20,14 +21,22 @@ public class Medicine implements Serializable{
 	@Column(name="Type", nullable=false)
 	private char type;
 	
-	@OneToMany(mappedBy="medicine")
-	private List<Disease_Medicine> disease_medicines;
+	@ManyToMany(mappedBy="medicine")
+	@JoinTable(
+    		  name="Checkup_Medicine",
+		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idMedicine"),
+		      inverseJoinColumns=@JoinColumn(name="C_ID", referencedColumnName="idCheckup"))
+	private List<Checkup> checkups;
+	
+	@ManyToMany(mappedBy="medicine")
+	@JoinTable(
+    		  name="Disease_Medicine",
+		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idMedicine"),
+		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDisease"))
+	private List<Disease> diseases;
 	
 	@OneToMany(mappedBy="medicine")
 	private List<Instructions> instructions;
-	
-	@OneToMany(mappedBy="medicine")
-	private List<Checkup_Medicine> checkup_medicines;
 	
 	public Medicine() {
 	}	
@@ -56,14 +65,6 @@ public class Medicine implements Serializable{
 		this.type = type;
 	}
 	
-	public List<Disease_Medicine> getDisease_Medicines() {
-		return this.disease_medicines;
-	}
-
-	public void setDisease_Medicines(List<Disease_Medicine> disease_medicines) {
-		this.disease_medicines = disease_medicines;
-	}
-	
 	public List<Instructions> getInstructions() {
 		return this.instructions;
 	}
@@ -72,11 +73,17 @@ public class Medicine implements Serializable{
 		this.instructions = instructions;
 	}
 	
-	public List<Checkup_Medicine> getCheckup_Medicines() {
-		return this.checkup_medicines;
+	public Instructions addInstruction(Instructions instruction) {
+		getInstructions().add(instruction);
+		instruction.setMedicine(this);
+
+		return instruction;
 	}
 
-	public void setCheckup_Medicines(List<Checkup_Medicine> checkup_medicines) {
-		this.checkup_medicines = checkup_medicines;
+	public Instructions removeInstruction(Instructions instruction) {
+		getInstructions().remove(instruction);
+		instruction.setMedicine(null);
+
+		return instruction;
 	}
 }

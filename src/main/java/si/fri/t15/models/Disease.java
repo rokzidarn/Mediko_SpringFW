@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="Disease.findAll", query="SELECT d FROM Disease d")
 public class Disease implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -17,8 +18,7 @@ public class Disease implements Serializable{
 	@Column(name="Name", length=45, nullable=false)
 	private String name;
 	
-	@OneToMany(mappedBy="disease")
-	private List<Checkup_Disease> checkup_diseases;
+	
 	
 	public Disease() {
 	}	
@@ -39,11 +39,17 @@ public class Disease implements Serializable{
 		this.name = name;
 	}
 	
-	public List<Checkup_Disease> getCheckup_Diseases() {
-		return this.checkup_diseases;
-	}
-
-	public void setCheckup_Diseases(List<Checkup_Disease> checkup_diseases) {
-		this.checkup_diseases = checkup_diseases;
-	}
+	@ManyToMany(mappedBy="disease")
+	@JoinTable(
+		      name="Checkup_Disease",
+		      joinColumns=@JoinColumn(name="C_ID", referencedColumnName="idCheckup"),
+		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDisease"))
+	private List<Checkup> checkups;
+	
+	@ManyToMany(mappedBy="disease")
+	@JoinTable(
+		      name="Disease_Medicine",
+		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idMedicine"),
+		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDisease"))
+	private List<Medicine> medicines;
 }

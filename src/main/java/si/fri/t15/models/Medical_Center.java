@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="Medical_Center.findAll", query="SELECT m FROM Medical_Center m")
 public class Medical_Center implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -20,9 +21,9 @@ public class Medical_Center implements Serializable{
 	@OneToMany(mappedBy="medical_center")
 	private List<Doctor> doctors;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="PO_Box_idPO_Box")
-	private PO_Box po_box;
+	private PO_Box poBox;
 	
 	@OneToMany(mappedBy="medial_center")
 	private List<Nurse> nurses;

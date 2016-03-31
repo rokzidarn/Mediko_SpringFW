@@ -23,8 +23,11 @@ public class Nurse implements Serializable{
 	@ManyToOne
 	private Medical_Center medical_center;
 	
-	@OneToMany(mappedBy="nurse")
-	private List<Doctor_Nurse> doctor_nurses;
+	@JoinTable(
+		      name="Doctor_Nurse",
+		      joinColumns=@JoinColumn(name="N_ID", referencedColumnName="idNurse"),
+		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDoctor"))
+	private List<Doctor> doctors;
 	
 	public Nurse() {
 	}	
@@ -51,14 +54,6 @@ public class Nurse implements Serializable{
 
 	public void setLast_Name(String last_name) {
 		this.last_name = last_name;
-	}
-	
-	public List<Doctor_Nurse> getDoctor_Nurses() {
-		return this.doctor_nurses;
-	}
-
-	public void setDoctor_Nurses(List<Doctor_Nurse> doctor_nurses) {
-		this.doctor_nurses = doctor_nurses;
 	}
 	
 	public Medical_Center getMedical_Center() {
