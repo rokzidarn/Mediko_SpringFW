@@ -23,10 +23,7 @@ public class Nurse implements Serializable{
 	@ManyToOne
 	private Medical_Center medical_center;
 	
-	@JoinTable(
-		      name="Doctor_Nurse",
-		      joinColumns=@JoinColumn(name="N_ID", referencedColumnName="idNurse"),
-		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDoctor"))
+	@ManyToMany(mappedBy="nurses")
 	private List<Doctor> doctors;
 	
 	public Nurse() {
