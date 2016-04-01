@@ -22,8 +22,8 @@ public class Result_Home implements Serializable{
 	private List<Reading_Data> reading_datas;
 	
 	@ManyToOne
-	@JoinColumn(name="Pacient_idPacient")
-	private Pacient pacient;
+	@JoinColumn(name="Patient_idPatient")
+	private Patient patient;
 	
 	public Result_Home() {
 	}	
@@ -52,11 +52,11 @@ public class Result_Home implements Serializable{
 		this.reading_datas = reading_datas;
 	}
 	
-	public Pacient gePacient() {
-		return this.pacient;
+	public Patient gePatient() {
+		return this.patient;
 	}
 
-	public void setPacient(Pacient pacient) {
-		this.pacient = pacient;
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 }

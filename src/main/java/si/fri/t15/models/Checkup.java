@@ -19,8 +19,8 @@ public class Checkup implements Serializable{
 	private String reason;
 	
 	@ManyToOne
-	@JoinColumn(name="Pacient_idPacient")
-	private Pacient pacient;
+	@JoinColumn(name="Patient_idPatient")
+	private Patient patient;
 	
 	@ManyToOne
 	@JoinColumn(name="Doctor_idDoctor")
@@ -69,12 +69,12 @@ public class Checkup implements Serializable{
 		this.reason = reason;
 	}
 	
-	public Pacient getPacient() {
-		return this.pacient;
+	public Patient getPatient() {
+		return this.patient;
 	}
 
-	public void setPacient(Pacient pacient) {
-		this.pacient = pacient;
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 	public void setDoctor(Doctor doctor) {

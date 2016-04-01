@@ -30,7 +30,7 @@ public class User implements Serializable{
 	private Timestamp timestamp;
 	
 	@OneToMany(mappedBy="user")
-	private List<Pacient> pacients;
+	private List<Patient> patients;
 	
 	public User() {
 	}	
@@ -75,25 +75,25 @@ public class User implements Serializable{
 		this.status = status;
 	}
 	
-	public List<Pacient> getPacients() {
-		return this.pacients;
+	public List<Patient> getPatients() {
+		return this.patients;
 	}
 
-	public void setPacients(List<Pacient> pacients) {
-		this.pacients = pacients;
+	public void setPatients(List<Patient> patients) {
+		this.patients = patients;
 	}
 	
-	public Pacient addPacient(Pacient pacient) {
-		getPacients().add(pacient);
-		pacient.setUser(this);
+	public Patient addPatient(Patient patient) {
+		getPatients().add(patient);
+		patient.setUser(this);
 
-		return pacient;
+		return patient;
 	}
 
-	public Pacient removePacient(Pacient pacient) {
-		getPacients().remove(pacient);
-		pacient.setUser(null);
+	public Patient removePatient(Patient patient) {
+		getPatients().remove(patient);
+		patient.setUser(null);
 
-		return pacient;
+		return patient;
 	}
 }
