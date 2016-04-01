@@ -26,19 +26,26 @@ public class Checkup implements Serializable{
 	@JoinColumn(name="Doctor_idDoctor")
 	private Doctor doctor;
 	
-	@ManyToMany(mappedBy="checkup")
+	@ManyToMany(mappedBy="checkups")
 	@JoinTable(
 		      name="Checkup_Disease",
 		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idCheckup"),
 		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDisease"))
 	private List<Disease> diseases;
 	
-	@ManyToMany(mappedBy="checkup")
+	@ManyToMany(mappedBy="checkups")
 	@JoinTable(
 		      name="Checkup_Medicine",
 		      joinColumns=@JoinColumn(name="C_ID", referencedColumnName="idCheckup"),
 		      inverseJoinColumns=@JoinColumn(name="M_ID", referencedColumnName="idDMedicine"))
 	private List<Medicine> medicines;
+	
+	@ManyToMany(mappedBy="checkups")
+	@JoinTable(
+		      name="Checkup_Diet",
+		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idCheckup"),
+		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDiet"))
+	private List<Diet> diets;
 	
 	@OneToMany(mappedBy="checkup")
 	private List<Result_Checkup> resultCheckups;

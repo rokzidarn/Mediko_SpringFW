@@ -1,6 +1,7 @@
 package si.fri.t15.models;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.*;
 
@@ -23,8 +24,21 @@ public class Doctor implements Serializable{
 	@Column(name="Type", length=15, nullable=false, updatable=true)
 	private String type;
 	
-	@Column(name="Specialist", length=15, nullable=false, updatable=true)
-	private String specialist;
+	@Column(name="Username", length=15, nullable=false)
+	private String username;
+
+	@Column(name="Email", length=45, nullable=false)
+	private String email;
+
+	@Column(name="Password", length=15, nullable=false, updatable=true)
+	private String password;
+	
+	@Column(name="Status", nullable=false, updatable=true)
+	private char status;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="Timestamp", nullable=false, updatable=true)
+	private Timestamp timestamp;
 	
 	@OneToMany(mappedBy="doctor")
 	private List<Pacient> pacients;
@@ -35,7 +49,7 @@ public class Doctor implements Serializable{
 	@ManyToOne
 	private Medical_Center medical_center;
 	
-	@ManyToMany(mappedBy="checkup")
+	@ManyToMany(mappedBy="doctors")
 	@JoinTable(
 		      name="Doctor_Nurse",
 		      joinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDoctor"),
@@ -78,14 +92,6 @@ public class Doctor implements Serializable{
 
 	public void setType(String type) {
 		this.type = type;
-	}
-	
-	public String getSpecialist() {
-		return this.specialist;
-	}
-
-	public void setSpecialist(String specialist) {
-		this.specialist = specialist;
 	}
 	
 	public Medical_Center getMedical_Center() {

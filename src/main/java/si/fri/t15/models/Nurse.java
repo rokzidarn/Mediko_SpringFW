@@ -1,6 +1,7 @@
 package si.fri.t15.models;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.*;
@@ -19,6 +20,22 @@ public class Nurse implements Serializable{
 
 	@Column(name="Last_Name", length=15, nullable=false, updatable=true)
 	private String last_name;
+	
+	@Column(name="Username", length=15, nullable=false)
+	private String username;
+
+	@Column(name="Email", length=45, nullable=false)
+	private String email;
+
+	@Column(name="Password", length=15, nullable=false, updatable=true)
+	private String password;
+	
+	@Column(name="Status", nullable=false, updatable=true)
+	private char status;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="Timestamp", nullable=false, updatable=true)
+	private Timestamp timestamp;
 	
 	@ManyToOne
 	private Medical_Center medical_center;

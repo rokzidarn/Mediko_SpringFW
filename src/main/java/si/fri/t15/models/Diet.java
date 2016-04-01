@@ -20,11 +20,7 @@ public class Diet implements Serializable{
 	@OneToMany(mappedBy="diet")
 	private List<Instructions_Diet> instruction_diets;
 	
-	@ManyToMany(mappedBy="diet")
-	@JoinTable(
-		      name="Checkup_Diet",
-		      joinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDiet"),
-		      inverseJoinColumns=@JoinColumn(name="C_ID", referencedColumnName="idCheckup"))
+	@ManyToMany(mappedBy="diets")
 	private List<Checkup> checkups;
 	
 	public Diet() {

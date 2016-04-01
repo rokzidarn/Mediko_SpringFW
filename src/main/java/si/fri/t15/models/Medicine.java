@@ -21,14 +21,10 @@ public class Medicine implements Serializable{
 	@Column(name="Type", nullable=false)
 	private char type;
 	
-	@ManyToMany(mappedBy="medicine")
-	@JoinTable(
-    		  name="Checkup_Medicine",
-		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idMedicine"),
-		      inverseJoinColumns=@JoinColumn(name="C_ID", referencedColumnName="idCheckup"))
+	@ManyToMany(mappedBy="medicines")
 	private List<Checkup> checkups;
 	
-	@ManyToMany(mappedBy="medicine")
+	@ManyToMany(mappedBy="medicines")
 	@JoinTable(
     		  name="Disease_Medicine",
 		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idMedicine"),

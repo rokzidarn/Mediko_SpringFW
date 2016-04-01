@@ -18,8 +18,6 @@ public class Disease implements Serializable{
 	@Column(name="Name", length=45, nullable=false)
 	private String name;
 	
-	
-	
 	public Disease() {
 	}	
 	
@@ -39,17 +37,9 @@ public class Disease implements Serializable{
 		this.name = name;
 	}
 	
-	@ManyToMany(mappedBy="disease")
-	@JoinTable(
-		      name="Checkup_Disease",
-		      joinColumns=@JoinColumn(name="C_ID", referencedColumnName="idCheckup"),
-		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDisease"))
+	@ManyToMany(mappedBy="diseases")
 	private List<Checkup> checkups;
 	
-	@ManyToMany(mappedBy="disease")
-	@JoinTable(
-		      name="Disease_Medicine",
-		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idMedicine"),
-		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDisease"))
+	@ManyToMany(mappedBy="diseases")
 	private List<Medicine> medicines;
 }
