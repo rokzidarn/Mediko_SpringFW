@@ -36,7 +36,6 @@ public class Doctor implements Serializable{
 	@Column(name="Status", nullable=false, updatable=true)
 	private char status;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="Timestamp", nullable=false, updatable=true)
 	private Timestamp timestamp;
 	
@@ -49,7 +48,7 @@ public class Doctor implements Serializable{
 	@ManyToOne
 	private Medical_Center medical_center;
 	
-	@ManyToMany(mappedBy="doctors")
+	@ManyToMany
 	@JoinTable(
 		      name="Doctor_Nurse",
 		      joinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDoctor"),

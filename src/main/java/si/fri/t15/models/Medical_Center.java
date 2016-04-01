@@ -25,7 +25,7 @@ public class Medical_Center implements Serializable{
 	@JoinColumn(name="PO_Box_idPO_Box")
 	private PO_Box poBox;
 	
-	@OneToMany(mappedBy="medial_center")
+	@OneToMany(mappedBy="medical_center")
 	private List<Nurse> nurses;
 	
 	public Medical_Center() {

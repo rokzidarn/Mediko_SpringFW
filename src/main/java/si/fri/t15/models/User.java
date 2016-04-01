@@ -26,7 +26,6 @@ public class User implements Serializable{
 	@Column(name="Status", nullable=false, updatable=true)
 	private char status;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="Timestamp", nullable=false, updatable=true)
 	private Timestamp timestamp;
 	

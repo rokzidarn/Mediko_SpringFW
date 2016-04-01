@@ -19,7 +19,6 @@ public class Reading implements Serializable{
 	@Column(name="Type", length=45, nullable=false)
 	private String type;
 	
-	@Temporal(TemporalType.DATE)
 	@Column(name="Date")
 	private Date date;
 	

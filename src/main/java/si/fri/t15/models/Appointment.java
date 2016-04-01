@@ -14,7 +14,6 @@ public class Appointment implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@Temporal(TemporalType.DATE)
 	@Column(name="Date", nullable=false)
 	private Date date;
 	
