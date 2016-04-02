@@ -19,28 +19,28 @@ public class Checkup implements Serializable{
 	private String reason;
 	
 	@ManyToOne
-	@JoinColumn(name="Pacient_idPacient")
-	private Pacient pacient;
+	@JoinColumn(name="Patient_idPatient")
+	private Patient patient;
 	
 	@ManyToOne
 	@JoinColumn(name="Doctor_idDoctor")
 	private Doctor doctor;
 	
-	@ManyToMany(mappedBy="checkups")
+	@ManyToMany
 	@JoinTable(
 		      name="Checkup_Disease",
 		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idCheckup"),
 		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDisease"))
 	private List<Disease> diseases;
 	
-	@ManyToMany(mappedBy="checkups")
+	@ManyToMany
 	@JoinTable(
 		      name="Checkup_Medicine",
 		      joinColumns=@JoinColumn(name="C_ID", referencedColumnName="idCheckup"),
-		      inverseJoinColumns=@JoinColumn(name="M_ID", referencedColumnName="idDMedicine"))
+		      inverseJoinColumns=@JoinColumn(name="M_ID", referencedColumnName="idMedicine"))
 	private List<Medicine> medicines;
 	
-	@ManyToMany(mappedBy="checkups")
+	@ManyToMany
 	@JoinTable(
 		      name="Checkup_Diet",
 		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idCheckup"),
@@ -69,12 +69,12 @@ public class Checkup implements Serializable{
 		this.reason = reason;
 	}
 	
-	public Pacient getPacient() {
-		return this.pacient;
+	public Patient getPatient() {
+		return this.patient;
 	}
 
-	public void setPacient(Pacient pacient) {
-		this.pacient = pacient;
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 	public void setDoctor(Doctor doctor) {

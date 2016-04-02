@@ -24,7 +24,7 @@ public class Medicine implements Serializable{
 	@ManyToMany(mappedBy="medicines")
 	private List<Checkup> checkups;
 	
-	@ManyToMany(mappedBy="medicines")
+	@ManyToMany
 	@JoinTable(
     		  name="Disease_Medicine",
 		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idMedicine"),

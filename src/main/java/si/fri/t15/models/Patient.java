@@ -6,12 +6,12 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name="Pacient.findAll", query="SELECT p FROM Pacient p")
-public class Pacient implements Serializable{
+@NamedQuery(name="Patient.findAll", query="SELECT p FROM Patient p")
+public class Patient implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="idPacient", length=4, nullable=false, updatable=false, unique=true)
+	@Column(name="idPatient", length=4, nullable=false, updatable=false, unique=true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
@@ -27,24 +27,24 @@ public class Pacient implements Serializable{
 	@ManyToOne
 	private Doctor doctor;
 	
-	@OneToMany(mappedBy="pacient")
+	@OneToMany(mappedBy="patient")
 	private List<Appointment> appointments;
 	
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="PO_Box_idPO_Box")
 	private PO_Box po_box;
 	
-	@OneToMany(mappedBy="pacient")
+	@OneToMany(mappedBy="patient")
 	private List<Checkup> checkups;
 	
-	public Pacient() {
+	public Patient() {
 	}	
 	
-	public int getPacientId() {
+	public int getPatientId() {
 		return this.id;
 	}
 
-	public void setPacientId(int id) {
+	public void setPatientId(int id) {
 		this.id = id;
 	}	
 	
@@ -98,14 +98,14 @@ public class Pacient implements Serializable{
 	
 	public Appointment addAppointment(Appointment appointment) {
 		getAppointments().add(appointment);
-		appointment.setPacient(this);
+		appointment.setPatient(this);
 
 		return appointment;
 	}
 
 	public Appointment removeAppointment(Appointment appointment) {
 		getAppointments().remove(appointment);
-		appointment.setPacient(null);
+		appointment.setPatient(null);
 
 		return appointment;
 	}

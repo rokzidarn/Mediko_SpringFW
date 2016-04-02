@@ -36,12 +36,11 @@ public class Doctor implements Serializable{
 	@Column(name="Status", nullable=false, updatable=true)
 	private char status;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="Timestamp", nullable=false, updatable=true)
 	private Timestamp timestamp;
 	
 	@OneToMany(mappedBy="doctor")
-	private List<Pacient> pacients;
+	private List<Patient> patients;
 	
 	@OneToMany(mappedBy="doctor")
 	private List<Appointment> appointments;
@@ -49,7 +48,7 @@ public class Doctor implements Serializable{
 	@ManyToOne
 	private Medical_Center medical_center;
 	
-	@ManyToMany(mappedBy="doctors")
+	@ManyToMany
 	@JoinTable(
 		      name="Doctor_Nurse",
 		      joinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDoctor"),
@@ -102,12 +101,12 @@ public class Doctor implements Serializable{
 		this.medical_center = medical_center;
 	}
 	
-	public List<Pacient> getPacients() {
-		return this.pacients;
+	public List<Patient> getPatients() {
+		return this.patients;
 	}
 
-	public void setPacients(List<Pacient> pacients) {
-		this.pacients = pacients;
+	public void setPatients(List<Patient> patients) {
+		this.patients = patients;
 	}
 	
 	public List<Appointment> getAppointments() {
@@ -140,17 +139,17 @@ public class Doctor implements Serializable{
 		return checkup;
 	}
 	
-	public Pacient addPacient(Pacient pacient) {
-		getPacients().add(pacient);
-		pacient.setDoctor(this);
+	public Patient addPatient(Patient patient) {
+		getPatients().add(patient);
+		patient.setDoctor(this);
 
-		return pacient;
+		return patient;
 	}
 
-	public Pacient removePacient(Pacient pacient) {
-		getPacients().remove(pacient);
-		pacient.setDoctor(null);
+	public Patient removePatient(Patient patient) {
+		getPatients().remove(patient);
+		patient.setDoctor(null);
 
-		return pacient;
+		return patient;
 	}
 }
