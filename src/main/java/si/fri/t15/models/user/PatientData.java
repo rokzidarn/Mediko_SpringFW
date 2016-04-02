@@ -1,6 +1,5 @@
 package si.fri.t15.models.user;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -14,7 +13,7 @@ import si.fri.t15.models.Checkup;
 import si.fri.t15.models.PO_Box;
 
 @Entity
-public class PatientData extends UserData implements Serializable {
+public class PatientData extends UserData {
 
 	private static final long serialVersionUID = 1L;
 	

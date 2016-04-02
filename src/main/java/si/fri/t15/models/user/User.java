@@ -29,7 +29,7 @@ public class User implements Serializable{
 	private char status;
 
 	@Column(name="Timestamp", nullable=false, updatable=true)
-	private Timestamp timestamp;
+	private Timestamp lastLogin;
 	
 	@Column(name="PasswordResetToken", length=15, updatable=true, unique=true)
 	private String passwordResetToken;
@@ -80,12 +80,12 @@ public class User implements Serializable{
 		this.status = status;
 	}
 	
-	public Timestamp getTimestamp() {
-		return timestamp;
+	public Timestamp getLastLogin() {
+		return lastLogin;
 	}
 
-	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
+	public void setLastLogin(Timestamp lastLogin) {
+		this.lastLogin = lastLogin;
 	}
 
 	public UserData getData() {
