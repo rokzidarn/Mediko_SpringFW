@@ -1,12 +1,14 @@
-package si.fri.t15.models;
+package si.fri.t15.models.user;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.*;
-import java.util.*;
+
+import si.fri.t15.base.models.UserData;
 
 @Entity
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -29,17 +31,20 @@ public class User implements Serializable{
 	@Column(name="Timestamp", nullable=false, updatable=true)
 	private Timestamp timestamp;
 	
-	@OneToMany(mappedBy="user")
-	private List<Patient> patients;
+	@Column(name="PasswordResetToken", length=15, updatable=true, unique=true)
+	private String passwordResetToken;
+	
+	@OneToOne
+	private UserData data;
 	
 	public User() {
 	}	
 	
-	public int getUserId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setUserId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}	
 	
@@ -75,25 +80,43 @@ public class User implements Serializable{
 		this.status = status;
 	}
 	
-	public List<Patient> getPatients() {
-		return this.patients;
+	public Timestamp getTimestamp() {
+		return timestamp;
 	}
 
-	public void setPatients(List<Patient> patients) {
-		this.patients = patients;
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public UserData getData() {
+		return data;
+	}
+
+	public void setData(PatientData data) {
+		this.data = data;
 	}
 	
-	public Patient addPatient(Patient patient) {
-		getPatients().add(patient);
-		patient.setUser(this);
-
-		return patient;
+	public PatientData getPatientData() {
+		return (PatientData) data;
 	}
 
-	public Patient removePatient(Patient patient) {
-		getPatients().remove(patient);
-		patient.setUser(null);
+	public void setPatientData(PatientData data) {
+		this.data = data;
+	}
+	
+	public DoctorData getDoctorData() {
+		return (DoctorData) data;
+	}
 
-		return patient;
+	public void setDoctorData(DoctorData data) {
+		this.data = data;
+	}
+	
+	public NurseData getNurseData() {
+		return (NurseData) data;
+	}
+
+	public void setNurseData(NurseData data) {
+		this.data = data;
 	}
 }

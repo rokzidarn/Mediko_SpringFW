@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import si.fri.t15.models.user.DoctorData;
+import si.fri.t15.models.user.PatientData;
+
 @Entity
 @NamedQuery(name="Checkup.findAll", query="SELECT c FROM Checkup c")
 public class Checkup implements Serializable{
@@ -20,11 +23,11 @@ public class Checkup implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="Patient_idPatient")
-	private Patient patient;
+	private PatientData patient;
 	
 	@ManyToOne
 	@JoinColumn(name="Doctor_idDoctor")
-	private Doctor doctor;
+	private DoctorData doctor;
 	
 	@ManyToMany
 	@JoinTable(
@@ -69,15 +72,15 @@ public class Checkup implements Serializable{
 		this.reason = reason;
 	}
 	
-	public Patient getPatient() {
+	public PatientData getPatient() {
 		return this.patient;
 	}
 
-	public void setPatient(Patient patient) {
+	public void setPatient(PatientData patient) {
 		this.patient = patient;
 	}
 
-	public void setDoctor(Doctor doctor) {
+	public void setDoctor(DoctorData doctor) {
 		this.doctor = doctor;
 	}
 }
