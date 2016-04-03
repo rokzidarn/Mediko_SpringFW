@@ -75,6 +75,9 @@ a:link, a:hover, a:active{
 	margin-bottom: 5px;
 	font-family: Arial, Helvetica, sans-serif;
 }
+.side-menu-item:hover{
+	color:#36B8D5;	
+}
 .side-menu-item-selected{
 	color:#36B8D5;
 }
