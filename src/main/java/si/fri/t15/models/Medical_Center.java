@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import si.fri.t15.models.user.DoctorData;
+import si.fri.t15.models.user.NurseData;
+
 @Entity
 @NamedQuery(name="Medical_Center.findAll", query="SELECT m FROM Medical_Center m")
 public class Medical_Center implements Serializable{
@@ -19,14 +22,13 @@ public class Medical_Center implements Serializable{
 	private String name;
 	
 	@OneToMany(mappedBy="medical_center")
-	private List<Doctor> doctors;
+	private List<DoctorData> doctors;
 	
-	@ManyToOne
-	@JoinColumn(name="PO_Box_idPO_Box")
-	private PO_Box poBox;
+	@OneToOne
+	private PO_Box po_box;
 	
 	@OneToMany(mappedBy="medical_center")
-	private List<Nurse> nurses;
+	private List<NurseData> nurses;
 	
 	public Medical_Center() {
 	}	
@@ -47,19 +49,19 @@ public class Medical_Center implements Serializable{
 		this.name = name;
 	}
 	
-	public List<Doctor> getDoctors() {
+	public List<DoctorData> getDoctors() {
 		return this.doctors;
 	}
 
-	public void setDoctors(List<Doctor> doctors) {
+	public void setDoctors(List<DoctorData> doctors) {
 		this.doctors = doctors;
 	}
 	
-	public List<Nurse> getNursees() {
+	public List<NurseData> getNurses() {
 		return this.nurses;
 	}
 
-	public void setNurses(List<Nurse> nurses) {
+	public void setNurses(List<NurseData> nurses) {
 		this.nurses = nurses;
 	}
 }

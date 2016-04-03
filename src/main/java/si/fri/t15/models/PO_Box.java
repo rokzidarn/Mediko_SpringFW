@@ -1,7 +1,6 @@
 package si.fri.t15.models;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -17,14 +16,7 @@ public class PO_Box implements Serializable{
 	
 	@Column(name="City", length=45, nullable=false)
 	private String city;
-	
-	@OneToMany(mappedBy="poBox")
-	private List<Medical_Center> medicalCenters;
 
-	@ManyToOne
-	@JoinColumn(name="PO_Box_idPO_Box")
-	private PO_Box poBox;
-	
 	public PO_Box() {
 	}	
 	
