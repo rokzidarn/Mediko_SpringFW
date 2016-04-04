@@ -1,0 +1,25 @@
+<div class="side-menu">
+    <a href="#">
+        <div class="side-menu-item #if($page && $page=="home")side-menu-item-selected #end">
+        Home
+        </div>
+    </a>
+    <a href="#">
+        <div class="side-menu-item #if($page && $page=="history")side-menu-item-selected #end">
+        History
+        </div>
+    </a>
+    <a href="#">
+        <div class="side-menu-item #if($page && $page=="doctors")side-menu-item-selected #end">
+        Doctors
+        </div>
+    </a>
+	#if($usertype && $usertype == "admin")
+		<div class="side-menu-seperator"></div>
+		<a href="#">
+			<div class="side-menu-item #if($page && $page=="admin")side-menu-item-selected #end">
+				Administration
+			</div>
+		</a>
+	#end
+</div>

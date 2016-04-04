@@ -10,7 +10,7 @@
                         <div class="content-container">
                             <div class="content-topbar">
                                 <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md">SHOW</div>
-                                <div class="content-title">Title</div>
+                                <div class="content-title">$title</div>
                             </div>
                             <div class="content">
                                 Content
@@ -34,23 +34,7 @@
                                 </div>
                             </div>
                             <div class="sidebar-seperator"></div>
-                            <div class="side-menu">
-                                <a href="#">
-                                    <div class="side-menu-item">
-                                    Home
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="side-menu-item">
-                                    History
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="side-menu-item side-menu-item-selected">
-                                    Doctors
-                                    </div>
-                                </a>
-                            </div>
+                            #parse("../common/sidemenu.vm")
                             <div class="sidebar-seperator"></div>
                         </div>
                     </div>

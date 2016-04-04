@@ -18,6 +18,12 @@ public class HomeController extends ControllerBase{
 		//model.addAttribute("_csrf", (CsrfToken) request.getAttribute(CsrfToken.class.getName()));
 		//model.addAttribute("trans", getTranslation("login.title", request));
 		
+		//Side menu variables
+		model.addAttribute("usertype", "admin");
+		model.addAttribute("page", "doctors");
+		
+		//Page variables
+		model.addAttribute("title", "Home");
 		return "home";
 	}
 }
