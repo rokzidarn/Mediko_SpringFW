@@ -1,0 +1,133 @@
+body{
+	background-color: #f4f4f4;
+}
+
+a:link, a:hover, a:active{
+   color: #eee;
+   text-decoration: none;
+}
+
+.main-panel{
+	margin-top: 40px;
+}
+
+.main-container{
+	position: relative;
+	min-height: 500px;
+	background-color: #2b333d;
+	border-radius: inherit;
+}
+
+.sidebar{
+	width:200px;
+	height: 100%;
+	border-radius: inherit;
+	background-color: #2b333d;
+}
+
+.sidebar-visible{
+	visibility: visible !important;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	width: 100%;
+}
+.sidebar-topbar{
+	height:50px;
+}
+.logo{
+	float:left;
+}
+.sidebar-seperator{
+	border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+.patient{
+	margin-top: 20px;
+}
+.patient-image{
+	height:100px;
+	width:100px;
+	background-color: rgba(0,0,0,0.3);
+	border-radius: 50px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.patient-name{
+	color:#36B8D5;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 15px;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+
+.side-menu{
+	padding-left: 20px;
+	padding-top: 20px;
+	padding-bottom: 15px;
+}
+.side-menu-item{
+	color:#eee;
+	font-size: 17px;
+	margin-bottom: 5px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.side-menu-item:hover{
+	color:#36B8D5;	
+}
+.side-menu-item-selected{
+	color:#36B8D5;
+}
+
+.content-container{
+	position: absolute;
+	top: 0px;
+	left: 200px;
+	right:0px;
+	bottom: 0px;
+	background-color: #fff;
+	border-radius: inherit;
+	border-bottom-left-radius: 0px;
+	border-top-left-radius: 0px;
+}
+
+
+.content-topbar{
+	background-color: rgba(72,86,102,1);
+	height:50px;
+	border-top-right-radius: 4px;
+}
+
+.content-title{
+	text-align: center;
+	color:#eee;
+	font-size: 20px;
+	padding-top: 10px;
+}
+.show-sidebar-button{
+	float:left;
+	height:50px;
+	width:50px;
+	background-color: #2b333d;
+	border-top-left-radius: 4px;
+}
+.hide-sidebar-button{
+	float: right;
+	height: 50px;
+	width:50px;
+	background-color: rgba(72,86,102,1);
+	border-top-right-radius: 4px;
+}
+
+@media (max-width: 992px) {
+	.content-container{
+		left:0px;
+		border-top-left-radius: 4px;
+	}
+	.content-topbar{
+		border-top-left-radius: 4px;
+	}
+}

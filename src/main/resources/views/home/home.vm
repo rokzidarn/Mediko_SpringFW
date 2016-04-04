@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Home</title>
+        <!-- css -->
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+	
+		<!-- js -->
+		<script type="text/javascript" src="js/jquery-2.2.2.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+    </head>
+    <body>
+    	<div class="container">
+            <div class="row">
+                <div class="panel panel-default main-panel">
+                    <div class="main-container">
+                        <div class="content-container">
+                            <div class="content-topbar">
+                                <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md">SHOW</div>
+                                <div class="content-title">Title</div>
+                            </div>
+                            <div class="content">
+                                Content
+                            </div>
+                        </div>
+                        <div id="sidebar" class="sidebar hidden-sm hidden-xs">
+                            <div class="sidebar-topbar">
+                                <div class="logo" style="color:#eee">
+                                    logo
+                                </div>
+                                <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                    CLOSE
+                                </div>
+                            </div>
+                            <div class="patient">
+                                <div class="patient-image">
+
+                                </div>
+                                <div class="patient-name">
+                                    Janez Novak
+                                </div>
+                            </div>
+                            <div class="sidebar-seperator"></div>
+                            <div class="side-menu">
+                                <a href="#">
+                                    <div class="side-menu-item">
+                                    Home
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="side-menu-item">
+                                    History
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="side-menu-item side-menu-item-selected">
+                                    Doctors
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="sidebar-seperator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
