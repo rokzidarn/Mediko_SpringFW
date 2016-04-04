@@ -9,11 +9,11 @@ a:link, a:hover, a:active{
 
 .main-panel{
 	margin-top: 40px;
+	margin-bottom: 40px;
 }
 
 .main-container{
 	position: relative;
-	min-height: 500px;
 	background-color: #2b333d;
 	border-radius: inherit;
 }
@@ -23,15 +23,15 @@ a:link, a:hover, a:active{
 	height: 100%;
 	border-radius: inherit;
 	background-color: #2b333d;
-}
-
-.sidebar-visible{
-	visibility: visible !important;
 	position: absolute;
 	left: 0px;
 	right: 0px;
 	top: 0px;
 	bottom: 0px;
+}
+
+.sidebar-visible{
+	visibility: visible !important;
 	width: 100%;
 }
 .sidebar-topbar{
@@ -75,19 +75,18 @@ a:link, a:hover, a:active{
 	margin-bottom: 5px;
 	font-family: Arial, Helvetica, sans-serif;
 }
-.side-menu-item:hover{
-	color:#36B8D5;	
-}
 .side-menu-item-selected{
 	color:#36B8D5;
 }
 
+.content{
+	padding: 20px;
+	padding-bottom: 0px;
+	min-height: 500px;
+}
+
 .content-container{
-	position: absolute;
-	top: 0px;
-	left: 200px;
-	right:0px;
-	bottom: 0px;
+	margin-left:200px;
 	background-color: #fff;
 	border-radius: inherit;
 	border-bottom-left-radius: 0px;
@@ -124,7 +123,7 @@ a:link, a:hover, a:active{
 
 @media (max-width: 992px) {
 	.content-container{
-		left:0px;
+		margin-left:0px;
 		border-top-left-radius: 4px;
 	}
 	.content-topbar{
