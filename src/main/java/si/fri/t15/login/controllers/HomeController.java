@@ -20,8 +20,8 @@ public class HomeController extends ControllerBase{
 		
 		//Side menu variables
 		model.addAttribute("usertype", "admin");
-		model.addAttribute("page", "doctors");
-		
+		model.addAttribute("page", "admin");
+		model.addAttribute("subpage", "addDoctor");	
 		//Page variables
 		model.addAttribute("title", "Home");
 		return "home";

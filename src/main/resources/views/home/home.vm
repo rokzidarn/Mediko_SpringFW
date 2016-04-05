@@ -9,7 +9,7 @@
                     <div class="main-container">
                         <div class="content-container">
                             <div class="content-topbar">
-                                <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md">SHOW</div>
+                                <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
                                 <div class="content-title">$title</div>
                             </div>
                             <div class="content">
@@ -19,17 +19,16 @@
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">
                             <div class="sidebar-topbar">
                                 <div class="logo" style="color:#eee">
-                                    logo
+                                    
                                 </div>
                                 <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
-                                    CLOSE
                                 </div>
                             </div>
-                            <div class="pacient">
-                                <div class="pacient-image">
+                            <div class="patient">
+                                <div class="patient-image patient-male">
 
                                 </div>
-                                <div class="pacient-name">
+                                <div class="patient-name">
                                     Janez Novak
                                 </div>
                             </div>

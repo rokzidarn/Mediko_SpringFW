@@ -43,18 +43,31 @@ a:link, a:hover, a:active{
 .sidebar-seperator{
 	border-bottom: 1px solid rgba(0,0,0,0.3);
 }
-.pacient{
+.patient{
 	margin-top: 20px;
 }
-.pacient-image{
+.patient-image{
 	height:100px;
 	width:100px;
 	background-color: rgba(0,0,0,0.3);
 	border-radius: 50px;
 	margin-left: auto;
 	margin-right: auto;
+	
 }
-.pacient-name{
+.patient-female{
+	background-image:url(../images/female.png);
+	background-repeat:no-repeat;
+	background-position:center;
+	background-size:100px;
+}
+.patient-male{
+	background-image:url(../images/male.png);
+	background-repeat:no-repeat;
+	background-position:center;
+	background-size:100px;
+}
+.patient-name{
 	color:#36B8D5;
 	text-align: center;
 	padding-top: 10px;
@@ -65,7 +78,6 @@ a:link, a:hover, a:active{
 
 
 .side-menu{
-	padding-left: 20px;
 	padding-top: 20px;
 	padding-bottom: 15px;
 }
@@ -73,21 +85,43 @@ a:link, a:hover, a:active{
 	height:20px;
 }
 .side-menu-item{
-	color:#eee;
-	font-size: 17px;
-	margin-bottom: 5px;
+	
+	color:#ddd;
+	font-size: 14px;
 	font-family: 'Roboto', sans-serif;
 	font-weight:500;
+	padding:7px;
+	padding-left:20px;
 }
+
+
+
 .side-menu-item:hover{
-	color:#3190A3;
+	background-color:rgba(0,0,0,0.2);
 }
 .side-menu-item-selected{
 	color:#36B8D5;
+	background-color:rgba(0,0,0,0.2);
+	border-left: #36B8D5 solid 5px;
+	padding-left:15px;
 }
-.side-menu-item-selected:hover{
+
+.side-submenu-item{
+	color:#ddd;
+	font-size: 13px;
+	font-family: 'Roboto', sans-serif;
+	font-weight:500;
+	padding:7px;
+	padding-top:5px;
+	padding-left:30px;
+}
+.side-submenu-item:hover{
+	background-color:rgba(0,0,0,0.2);
+}
+.side-submenu-item-selected{
 	color:#36B8D5;
 }
+
 
 
 .content{
@@ -124,6 +158,9 @@ a:link, a:hover, a:active{
 	width:50px;
 	background-color: #2b333d;
 	border-top-left-radius: 4px;
+	background-image:url(../images/show.png);
+	background-repeat:no-repeat;
+	background-position:center;
 }
 .hide-sidebar-button{
 	float: right;
@@ -131,6 +168,9 @@ a:link, a:hover, a:active{
 	width:50px;
 	background-color: rgba(72,86,102,1);
 	border-top-right-radius: 4px;
+	background-image:url(../images/close.png);
+	background-repeat:no-repeat;
+	background-position:center;
 }
 
 @media (max-width: 992px) {

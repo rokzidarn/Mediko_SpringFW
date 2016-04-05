@@ -1,25 +1,37 @@
 <div class="side-menu">
     <a href="#">
         <div class="side-menu-item #if($page && $page=="home")side-menu-item-selected #end">
-        Home
+        HOME
         </div>
     </a>
     <a href="#">
         <div class="side-menu-item #if($page && $page=="history")side-menu-item-selected #end">
-        History
+        HISTORY
         </div>
     </a>
     <a href="#">
         <div class="side-menu-item #if($page && $page=="doctors")side-menu-item-selected #end">
-        Doctors
+        DOCTORS
         </div>
     </a>
 	#if($usertype && $usertype == "admin")
 		<div class="side-menu-seperator"></div>
 		<a href="#">
 			<div class="side-menu-item #if($page && $page=="admin")side-menu-item-selected #end">
-				Administration
+				ADMINISTRATION
 			</div>
 		</a>
+		#if($page && $page == "admin")
+			<a href="#">
+				<div class="side-submenu-item #if($subpage && $subpage=="addDoctor")side-submenu-item-selected #end">
+					DODAJ OSEBJE
+				</div>
+			</a>
+			<a href="#">
+				<div class="side-submenu-item">
+					DRUGO
+				</div>
+			</a>
+		#end
 	#end
 </div>
