@@ -126,7 +126,7 @@ a:link, a:hover, a:active{
 
 .content{
 	padding: 20px;
-	padding-bottom: 0px;
+	padding-bottom: 1px;
 	min-height: 500px;
 }
 
@@ -161,6 +161,7 @@ a:link, a:hover, a:active{
 	background-image:url(../images/show.png);
 	background-repeat:no-repeat;
 	background-position:center;
+	background-size:20px;
 }
 .hide-sidebar-button{
 	float: right;
@@ -171,6 +172,7 @@ a:link, a:hover, a:active{
 	background-image:url(../images/close.png);
 	background-repeat:no-repeat;
 	background-position:center;
+	background-size:20px;
 }
 
 @media (max-width: 992px) {
