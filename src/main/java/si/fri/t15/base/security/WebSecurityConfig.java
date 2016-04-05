@@ -19,6 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             	.antMatchers("/css/**", "/js/**", "/fonts/**", "/images/**").permitAll()
                 .antMatchers("/").hasRole("USER")
                 .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/patient").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -34,4 +35,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
 	}
+	
 }
