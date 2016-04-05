@@ -10,8 +10,8 @@ import si.fri.t15.base.controllers.ControllerBase;
 @Controller
 public class SignupController extends ControllerBase {
 	
-	@RequestMapping(value = "/patient")
-	public String login(Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/patient/signup")
+	public String signup(Model model, HttpServletRequest request) {
 		return "patient";
 	}
 	
