@@ -1,5 +1,5 @@
 $( document ).ready(function(){
-	
+	$("#caretaker").hide();
 	$( window  ).on('resize', function(){
 		hideSidebar();
 	});
@@ -12,6 +12,16 @@ $( document ).ready(function(){
 
 	$("#hideSidebarButton").on('click', function(){
 		hideSidebar();
+	});
+	
+	$(document).on('change' , '#checkbox' , function(){
+
+	    if(this.checked) {
+	    	$("#caretaker").show();
+	    }
+	    else  {
+	    	$("#caretaker").hide();
+	    }
 	});
 });
 

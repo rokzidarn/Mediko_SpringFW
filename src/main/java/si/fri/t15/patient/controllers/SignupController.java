@@ -12,7 +12,9 @@ public class SignupController extends ControllerBase {
 	
 	@RequestMapping(value = "/patient/signup")
 	public String signup(Model model, HttpServletRequest request) {
-		return "patient";
+		model.addAttribute("path", "/mediko_dev/");
+		model.addAttribute("title", "Ustvari Račun");
+		return "signup";
 	}
 	
 }
