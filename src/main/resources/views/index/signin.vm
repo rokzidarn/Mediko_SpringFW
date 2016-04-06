@@ -12,16 +12,17 @@
                                 <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
                                 <div class="content-title">$title</div>
                             </div>
-                            <div class="content">
-                                
-								<form method="POST" action="${signin}">
+                            <div class="content">                              
+								<form action="#", th:action="@{/signin}" th:object="${form}" method="POST">
 									<div class="form-group">
 										<label for="usernameInput">Uporabniško ime</label>
-										<input type="text" class="form-control" id="usernameInput" name="username" placeholder="Uporabniško ime" required>
+										<input type="text" th:field="*{username}" class="form-control" id="usernameInput" name="username" placeholder="Uporabniško ime" required>
+										<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Napaka pri vnosu uporabniškega imena</span>
 									</div>
 									<div class="form-group">
 										<label for="passwordInput">Geslo</label>
-										<input type="password" class="form-control" id="passwordInput" name="password" placeholder="Geslo" required>
+										<input type="password" th:field="*{password}" class="form-control" id="passwordInput" name="password" placeholder="Geslo" required>
+										<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Napaka pri vnosu gesla</span>
 										<div><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></div>
 									</div>
 									<br />

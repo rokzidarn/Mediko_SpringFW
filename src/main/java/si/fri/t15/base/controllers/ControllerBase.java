@@ -13,6 +13,5 @@ public class ControllerBase {
 	
 	protected String getTranslation(String translationKey, HttpServletRequest request) {
 		return translations.getMessage(translationKey, null, RequestContextUtils.getLocale(request));
-	}
-	
+	}	
 }
