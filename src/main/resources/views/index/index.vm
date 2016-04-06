@@ -27,7 +27,7 @@
  								<br>
  								<a href="mediko_dev/../patient/signup.vm" class="btn btn-primary btn-lg btn-block" role="button">REGISTRACIJA</a>	
  								<br>
- 								<a href="mediko_dev/../home/signin.vm" class="btn btn-primary btn-lg btn-block" role="button">PRIJAVA</a>	
+ 								<a href="mediko_dev/../index/signin.vm" class="btn btn-primary btn-lg btn-block" role="button">PRIJAVA</a>	
  							</div> 				                  
                         </div>
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">

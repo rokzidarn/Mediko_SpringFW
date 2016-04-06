@@ -22,8 +22,9 @@ public class HomeController extends ControllerBase{
 		model.addAttribute("usertype", "admin");
 		model.addAttribute("page", "admin");
 		model.addAttribute("subpage", "addDoctor");	
+		model.addAttribute("path", "/mediko_dev/");
 		//Page variables
-		model.addAttribute("title", "Home");
+		model.addAttribute("title", "Prijava");
 		return "home";
 	}
 }
