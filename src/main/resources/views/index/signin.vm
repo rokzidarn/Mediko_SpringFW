@@ -14,14 +14,15 @@
                             </div>
                             <div class="content">
                                 
-								<form method="POST" action="#">
+								<form method="POST" action="${signin}">
 									<div class="form-group">
 										<label for="usernameInput">Uporabniško ime</label>
 										<input type="text" class="form-control" id="usernameInput" name="username" placeholder="Uporabniško ime" required>
 									</div>
 									<div class="form-group">
 										<label for="passwordInput">Geslo</label>
-										<input type="password" class="form-control" id="passwordInput" name="password" placeholder="Geslo" required pattern="(?=.*\d).{8,}" onchange="form.passwordInputRepeat.pattern = this.value;">
+										<input type="password" class="form-control" id="passwordInput" name="password" placeholder="Geslo" required>
+										<div><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></div>
 									</div>
 									<br />
 									<p class="text-center">
@@ -29,7 +30,8 @@
 									</p>
 									<p class="text-center">
 										<input type="submit" class="btn btn-danger" value="Pozabljeno geslo?">
-									</p>								
+									</p>	
+									<a href="mediko_dev/../../home.vm" class="btn btn-primary btn-lg" role="button">DOMOV</a>							
 								</form>									
                             </div>
                         </div>
