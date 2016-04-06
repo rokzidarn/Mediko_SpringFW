@@ -43,10 +43,10 @@ a:link, a:hover, a:active{
 .sidebar-seperator{
 	border-bottom: 1px solid rgba(0,0,0,0.3);
 }
-.patient{
+.patient, .name{
 	margin-top: 20px;
 }
-.patient-image{
+.patient-image, .logo-image{
 	height:100px;
 	width:100px;
 	background-color: rgba(0,0,0,0.3);
@@ -67,7 +67,13 @@ a:link, a:hover, a:active{
 	background-position:center;
 	background-size:100px;
 }
-.patient-name{
+.logo-mediko{
+	background-image:url(../images/logo.png);
+	background-repeat:no-repeat;
+	background-position:center;
+	background-size:100px;
+}
+.patient-name, .logo-name{
 	color:#36B8D5;
 	text-align: center;
 	padding-top: 10px;

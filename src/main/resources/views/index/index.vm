@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    #parse("../common/head.vm")
+    <body>
+    	<div class="container">
+            <div class="row">
+                <div class="panel panel-default main-panel">
+                    <div class="main-container">
+                        <div class="content-container">
+                        	<div class="content-topbar">
+                                <div class="content-title">$title</div>
+                            </div>
+ 							<div class="content">								
+ 								<h3><p class="text-center"> Dobrodošli v spletni aplikaciji Mediko, vašem spletnem zdravstvenem pomočniku. </p></h4>
+ 								<br>
+ 								<p class="text-center"> Omogoča vam prijavo v sistem, pred tem se morate registrirati, bodisi kot pacient ali skrbnik.
+ 								Nato lahko izbirate med zdravstvenimi ustanovami, zdravniki in medicinskimi sestrami, ki uporabljajo naš sistem. </p>
+ 								<br>
+ 								<p class="text-center"> Sistem Mediko omogoča izbiro termina pregleda pri vašem osebnem zdravniku ali zobozdravniku. Namenjen je tudi 
+ 								lažjemu pregledu vaših preteklih pregledov, diagnoz ter zdravil. Preko njega lahko pregledujete navodila za vaša zdravila ali pa morda
+ 								poiščete alternativno zdravilo, ki vam bolj ustreza. </p>
+ 								<br>
+ 								<p class="text-center"> Z uporabno sistema pa se lahko izognete tudi dolgim čakalnim vrstam in nepotrebnim prihodom zdravnikom, saj
+ 								lahko beležite vaše vitalne znake, kar preko spleta. Namreč merite lahko sladkor, krvni tlak doma, ga vnesete v sistem in rezultati so
+ 								vidni vašemu zdravniku, ki vam potem lahko v trenutku svetuje glede nadaljevanja terapije. </p>
+ 								<br>
+ 								<a href="mediko_dev/../patient/signup.vm" class="btn btn-primary btn-lg btn-block" role="button">REGISTRACIJA</a>	
+ 								<br>
+ 								<a href="mediko_dev/../home/signin.vm" class="btn btn-primary btn-lg btn-block" role="button">PRIJAVA</a>	
+ 							</div> 				                  
+                        </div>
+                        <div id="sidebar" class="sidebar hidden-sm hidden-xs">
+                            <div class="sidebar-topbar">
+                                <div class="logo" style="color:#eee">                                    
+                                </div>
+                                <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                </div>
+                            </div>
+                            <div class="name">
+                                <div class="logo-image logo-mediko">
+                                </div>
+                                <div class="logo-name">
+                                    MEDIKO
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -94,6 +94,21 @@
 								</form>									
                             </div>
                         </div>
+                        <div id="sidebar" class="sidebar hidden-sm hidden-xs">
+                            <div class="sidebar-topbar">
+                                <div class="logo" style="color:#eee">                                    
+                                </div>
+                                <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                </div>
+                            </div>
+                            <div class="name">
+                                <div class="logo-image logo-mediko">
+                                </div>
+                                <div class="logo-name">
+                                    MEDIKO
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
