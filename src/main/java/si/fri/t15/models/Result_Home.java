@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import si.fri.t15.models.user.PatientData;
+
 @Entity
 @NamedQuery(name="Result_Home.findAll", query="SELECT r FROM Result_Home r")
 public class Result_Home implements Serializable{
@@ -22,8 +24,8 @@ public class Result_Home implements Serializable{
 	private List<Reading_Data> reading_datas;
 	
 	@ManyToOne
-	@JoinColumn(name="Pacient_idPacient")
-	private Pacient pacient;
+	@JoinColumn(name="Patient_idPatient")
+	private PatientData patient;
 	
 	public Result_Home() {
 	}	
@@ -52,11 +54,11 @@ public class Result_Home implements Serializable{
 		this.reading_datas = reading_datas;
 	}
 	
-	public Pacient gePacient() {
-		return this.pacient;
+	public PatientData getPatient() {
+		return this.patient;
 	}
 
-	public void setPacient(Pacient pacient) {
-		this.pacient = pacient;
+	public void setPatient(PatientData patient) {
+		this.patient = patient;
 	}
 }
