@@ -14,6 +14,8 @@ public class SignupController extends ControllerBase {
 	public String signup(Model model, HttpServletRequest request) {
 		model.addAttribute("path", "/mediko_dev/");
 		model.addAttribute("title", "Ustvari Račun");
+		model.addAttribute("user","none");
+		model.addAttribute("page", "register");
 		return "signup";
 	}
 	
