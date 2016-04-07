@@ -1,19 +1,32 @@
 <div class="side-menu">
-    <a href="#">
-        <div class="side-menu-item #if($page && $page=="home")side-menu-item-selected #end">
-        HOME
-        </div>
-    </a>
-    <a href="#">
-        <div class="side-menu-item #if($page && $page=="history")side-menu-item-selected #end">
-        HISTORY
-        </div>
-    </a>
-    <a href="#">
-        <div class="side-menu-item #if($page && $page=="doctors")side-menu-item-selected #end">
-        DOCTORS
-        </div>
-    </a>
+	#if($usertype && ($usertype == "user" || $usertype == "admin"))
+	    <a href="#">
+	        <div class="side-menu-item #if($page && $page=="home")side-menu-item-selected #end">
+	        HOME
+	        </div>
+	    </a>
+	    <a href="#">
+	        <div class="side-menu-item #if($page && $page=="history")side-menu-item-selected #end">
+	        HISTORY
+	        </div>
+	    </a>
+	    <a href="#">
+	        <div class="side-menu-item #if($page && $page=="doctors")side-menu-item-selected #end">
+	        DOCTORS
+	        </div>
+	    </a>
+    #else
+	 	<a href="#">
+	        <div class="side-menu-item #if($page && $page=="home")side-menu-item-selected #end">
+	        PRIJAVA
+	        </div>
+	    </a>
+	    <a href="#">
+	        <div class="side-menu-item #if($page && $page=="history")side-menu-item-selected #end">
+	        REGISTRACIJA
+	        </div>
+	    </a>
+    #end
 	#if($usertype && $usertype == "admin")
 		<div class="side-menu-seperator"></div>
 		<a href="#">
