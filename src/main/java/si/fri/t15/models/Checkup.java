@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import si.fri.t15.models.user.DoctorData;
+import si.fri.t15.models.user.PatientData;
+
 @Entity
 @NamedQuery(name="Checkup.findAll", query="SELECT c FROM Checkup c")
 public class Checkup implements Serializable{
@@ -19,28 +22,28 @@ public class Checkup implements Serializable{
 	private String reason;
 	
 	@ManyToOne
-	@JoinColumn(name="Pacient_idPacient")
-	private Pacient pacient;
+	@JoinColumn(name="Patient_idPatient")
+	private PatientData patient;
 	
 	@ManyToOne
 	@JoinColumn(name="Doctor_idDoctor")
-	private Doctor doctor;
+	private DoctorData doctor;
 	
-	@ManyToMany(mappedBy="checkups")
+	@ManyToMany
 	@JoinTable(
 		      name="Checkup_Disease",
 		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idCheckup"),
 		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDisease"))
 	private List<Disease> diseases;
 	
-	@ManyToMany(mappedBy="checkups")
+	@ManyToMany
 	@JoinTable(
 		      name="Checkup_Medicine",
 		      joinColumns=@JoinColumn(name="C_ID", referencedColumnName="idCheckup"),
-		      inverseJoinColumns=@JoinColumn(name="M_ID", referencedColumnName="idDMedicine"))
+		      inverseJoinColumns=@JoinColumn(name="M_ID", referencedColumnName="idMedicine"))
 	private List<Medicine> medicines;
 	
-	@ManyToMany(mappedBy="checkups")
+	@ManyToMany
 	@JoinTable(
 		      name="Checkup_Diet",
 		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idCheckup"),
@@ -69,15 +72,15 @@ public class Checkup implements Serializable{
 		this.reason = reason;
 	}
 	
-	public Pacient getPacient() {
-		return this.pacient;
+	public PatientData getPatient() {
+		return this.patient;
 	}
 
-	public void setPacient(Pacient pacient) {
-		this.pacient = pacient;
+	public void setPatient(PatientData patient) {
+		this.patient = patient;
 	}
 
-	public void setDoctor(Doctor doctor) {
+	public void setDoctor(DoctorData doctor) {
 		this.doctor = doctor;
 	}
 }

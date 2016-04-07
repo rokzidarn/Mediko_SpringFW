@@ -2,6 +2,10 @@ package si.fri.t15.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import si.fri.t15.models.user.DoctorData;
+import si.fri.t15.models.user.PatientData;
+
 import java.sql.Date;
 
 @Entity
@@ -14,17 +18,16 @@ public class Appointment implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@Temporal(TemporalType.DATE)
 	@Column(name="Date", nullable=false)
 	private Date date;
 	
 	@ManyToOne
-	@JoinColumn(name="Pacient_idPacient")
-	private Pacient pacient;
+	@JoinColumn(name="Patient_idPatient")
+	private PatientData patient;
 	
 	@ManyToOne
 	@JoinColumn(name="Doctor_idDoctor")
-	private Doctor doctor;
+	private DoctorData doctor;
 	
 	public Appointment() {
 	}
@@ -45,19 +48,19 @@ public class Appointment implements Serializable{
 		this.date = date;
 	}
 	
-	public Doctor getDoctor() {
+	public DoctorData getDoctor() {
 		return this.doctor;
 	}
 
-	public void setDoctor(Doctor doctor) {
+	public void setDoctor(DoctorData doctor) {
 		this.doctor = doctor;
 	}
 	
-	public Pacient getPacient() {
-		return this.pacient;
+	public PatientData getPatient() {
+		return this.patient;
 	}
 
-	public void setPacient(Pacient pacient) {
-		this.pacient = pacient;
+	public void setPatient(PatientData user) {
+		this.patient = user;
 	}
 }
