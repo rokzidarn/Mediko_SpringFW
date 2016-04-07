@@ -108,6 +108,9 @@
                                     MEDIKO
                                 </div>
                             </div>
+                            <div class="sidebar-seperator"></div>
+                            #parse("../common/sidemenu.vm")
+                            <div class="sidebar-seperator"></div>
                         </div>
                     </div>
                 </div>

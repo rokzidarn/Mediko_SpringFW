@@ -9,6 +9,7 @@
                     <div class="main-container">
                         <div class="content-container">
                         	<div class="content-topbar">
+                        		<div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
                                 <div class="content-title">$title</div>
                             </div>
  							<div class="content">								
@@ -25,9 +26,16 @@
  								lahko beležite vaše vitalne znake, kar preko spleta. Namreč merite lahko sladkor, krvni tlak doma, ga vnesete v sistem in rezultati so
  								vidni vašemu zdravniku, ki vam potem lahko v trenutku svetuje glede nadaljevanja terapije. </p>
  								<br>
- 								<a href="mediko_dev/../patient/signup" class="btn btn-primary btn-lg btn-block" role="button">REGISTRACIJA</a>	
- 								<br>
- 								<a href="mediko_dev/../index/signin" class="btn btn-primary btn-lg btn-block" role="button">PRIJAVA</a>	
+ 								<div class="row">
+ 									<div class="col-md-6">
+ 										<a href="mediko_dev/../patient/signup" class="btn btn-primary btn-lg btn-block" role="button">REGISTRACIJA</a>	
+ 									</div>
+ 									<div class="hidden-md hidden-lg"><br></div>
+ 									<div class="col-md-6">
+ 										<a href="mediko_dev/../index/signin" class="btn btn-primary btn-lg btn-block" role="button">PRIJAVA</a>	
+ 									</div>
+								</div>
+ 								
  							</div> 				                  
                         </div>
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">
@@ -44,6 +52,9 @@
                                     MEDIKO
                                 </div>
                             </div>
+                            <div class="sidebar-seperator"></div>
+                            #parse("../common/sidemenu.vm")
+                            <div class="sidebar-seperator"></div>
                         </div>
                     </div>                    
                 </div>
