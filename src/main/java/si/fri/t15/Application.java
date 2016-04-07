@@ -6,12 +6,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import si.fri.t15.dao.UserDetailsService;
+
+@EnableGlobalMethodSecurity(securedEnabled = true)
+//@Configuration
+//@ComponentScan(basePackages={"si.fri.t15.dao", "si.fri.t15.base.security"})
 @SpringBootApplication
 public class Application extends WebMvcConfigurerAdapter {
 
@@ -69,5 +75,10 @@ public class Application extends WebMvcConfigurerAdapter {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(localeChangeInterceptor());
+	}
+	
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return new UserDetailsService();
 	}
 }
