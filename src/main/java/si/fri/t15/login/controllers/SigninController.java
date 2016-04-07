@@ -7,6 +7,7 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,7 +27,7 @@ public class SigninController extends ControllerBase {
 	}
 	
 	@RequestMapping(value = "index/signin", method=RequestMethod.POST)
-	public String validateSignIn(@Valid SignInForm form, BindingResult bindingResult) {
+	public String validateSignIn(@ModelAttribute("command") @Valid SignInForm command, BindingResult bindingResult, HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
             return "signin";
         }
