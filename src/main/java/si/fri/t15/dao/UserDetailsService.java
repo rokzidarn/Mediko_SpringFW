@@ -19,7 +19,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 
 		User user = userRepo.findByUsername(username);
 		if (user == null) {
-			return null;
+			throw new UsernameNotFoundException("Username: " + username);
 		}
 
 		return user;
