@@ -1,34 +1,40 @@
 package si.fri.t15.models.user;
-import java.io.Serializable;
 import java.sql.Timestamp;
-import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import org.springframework.security.core.CredentialsContainer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import si.fri.t15.base.models.UserData;
+import si.fri.t15.models.UserRole;
 
 @Entity
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
-public class User implements Serializable{
+public class User implements UserDetails, CredentialsContainer{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="idUser", length=4, nullable=false, updatable=false, unique=true)
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	
-	@Column(name="Username", length=15, nullable=false)
+	@Column(name="Username", length=15, unique=true, nullable=false)
 	private String username;
 
-	@Column(name="Email", length=45, nullable=false)
+	@Column(name="Email", length=45, unique=true, nullable=false)
 	private String email;
 
-	@Column(name="Password", length=15, nullable=false, updatable=true)
+	@Column(name="Password", length=60, nullable=false, updatable=true)
 	private String password;
 	
-	@Column(name="Status", nullable=false, updatable=true)
-	private char status;
-
-	@Column(name="Timestamp", nullable=false, updatable=true)
+	@Column(name="LastLogin", updatable=true)
 	private Timestamp lastLogin;
 	
 	@Column(name="PasswordResetToken", length=15, updatable=true, unique=true)
@@ -37,49 +43,68 @@ public class User implements Serializable{
 	@OneToOne
 	private UserData data;
 	
-	public User() {
-	}	
+	@OneToMany
+	private Set<UserRole> userRoles = new HashSet<>(0);
 	
-	public int getId() {
-		return this.id;
+	@Column
+	private boolean isAccountNonExpired;
+	
+	@Column
+	private boolean isAccountNonLocked;
+	
+	@Column
+	private boolean isCredentialsNonExpired;
+	
+	@Column
+	private boolean isEnabled;
+
+	@Override
+	public void eraseCredentials() {
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}	
-	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	@Override
 	public String getUsername() {
-		return this.username;
+		return username;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	@Override
+	public boolean isAccountNonExpired() {
+		return isAccountNonExpired;
 	}
-	
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return isAccountNonLocked;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return isCredentialsNonExpired;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	public String getPassword() {
-		return this.password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	public char getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(char status) {
-		this.status = status;
-	}
-	
 	public Timestamp getLastLogin() {
 		return lastLogin;
 	}
@@ -88,35 +113,53 @@ public class User implements Serializable{
 		this.lastLogin = lastLogin;
 	}
 
+	public String getPasswordResetToken() {
+		return passwordResetToken;
+	}
+
+	public void setPasswordResetToken(String passwordResetToken) {
+		this.passwordResetToken = passwordResetToken;
+	}
+
 	public UserData getData() {
 		return data;
 	}
 
-	public void setData(PatientData data) {
+	public void setData(UserData data) {
 		this.data = data;
-	}
-	
-	public PatientData getPatientData() {
-		return (PatientData) data;
 	}
 
-	public void setPatientData(PatientData data) {
-		this.data = data;
-	}
-	
-	public DoctorData getDoctorData() {
-		return (DoctorData) data;
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
 	}
 
-	public void setDoctorData(DoctorData data) {
-		this.data = data;
-	}
-	
-	public NurseData getNurseData() {
-		return (NurseData) data;
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 
-	public void setNurseData(NurseData data) {
-		this.data = data;
+	public void setUsername(String username) {
+		this.username = username;
 	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setAccountNonExpired(boolean isAccountNonExpired) {
+		this.isAccountNonExpired = isAccountNonExpired;
+	}
+
+	public void setAccountNonLocked(boolean isAccountNonLocked) {
+		this.isAccountNonLocked = isAccountNonLocked;
+	}
+
+	public void setCredentialsNonExpired(boolean isCredentialsNonExpired) {
+		this.isCredentialsNonExpired = isCredentialsNonExpired;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+	
+	
 }
