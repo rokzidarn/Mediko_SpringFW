@@ -17,12 +17,12 @@
 	    </a>
     #else
 	 	<a href="#">
-	        <div class="side-menu-item #if($page && $page=="login")side-menu-item-selected #end>
+	        <div class="side-menu-item #if($page && $page=="login")side-menu-item-selected #end">
 	        PRIJAVA
 	        </div>
 	    </a>
 	    <a href="#">
-	        <div class="side-menu-item #if($page && $page=="register")side-menu-item-selected #end>
+	        <div class="side-menu-item #if($page && $page=="register")side-menu-item-selected #end">
 	        REGISTRACIJA
 	        </div>
 	    </a>

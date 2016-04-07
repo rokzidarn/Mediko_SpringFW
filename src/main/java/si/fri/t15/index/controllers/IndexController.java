@@ -15,7 +15,7 @@ public class IndexController extends ControllerBase{
 	@RequestMapping(value = "/")
 	public String index(Model model, HttpServletRequest request) {
 		model.addAttribute("path", "/mediko_dev/");
-		model.addAttribute("page", "login");
+		model.addAttribute("page", "index");
 		model.addAttribute("user", "none");
 		model.addAttribute("title", "MEDIKO");
 		
