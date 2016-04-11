@@ -27,7 +27,7 @@ public class SignupController extends ControllerBase {
 		binder.setValidator(validator);
 	}
  
-	@Resource(name = "SignUpValidator")
+	@Resource(name="signUpValidator")
 	Validator validator;
 	
 	@RequestMapping(value = "/patient/signup")
@@ -38,17 +38,13 @@ public class SignupController extends ControllerBase {
 		model.addAttribute("user","none");
 		model.addAttribute("page", "register");
 		
-		boolean confirm = true;
-		
 		if (result.hasErrors()) {
 			return new ModelAndView("signup");
 		}
 		
-		if (confirm) {
-			 //add user
-		}
+		//send email to confirm, don't show home/home!
 		
-		return new ModelAndView("home/home", "command", command);
+		return new ModelAndView("signup");
 	}
 	
 }

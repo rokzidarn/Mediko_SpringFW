@@ -14,7 +14,8 @@
                             </div>
                             <div class="content">
                                 
-								<form method="POST" action="'#springUrl("patient/signup")">
+								<form method="POST" action="#springUrl('/patient/signup')">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 									<h4><p class="text-center"> Osnovni podatki<small> (obvezno)</small> </p></h4>
 									<div class="form-group">
 									 	#springBind( "command.email" )

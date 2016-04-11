@@ -65,36 +65,36 @@ public class SignUpForm {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    public String getRPassword() {
-        return repeatpassword;
-    }
 
-    public void setRPassword(String repeatpassword) {
-        this.repeatpassword = repeatpassword;
-    }
-    
-    public String getFirstName() {
-        return this.first_name;
-    }
+	public String getRepeatpassword() {
+		return repeatpassword;
+	}
 
-    public void setFirstName(String first_name) {
-        this.first_name = first_name;
-    }
-    
-    public String getLastName() {
-        return this.last_name;
-    }
+	public void setRepeatpassword(String repeatpassword) {
+		this.repeatpassword = repeatpassword;
+	}
 
-    public void setLastName(String last_name) {
-        this.last_name = last_name;
-    }
-    
-    public int getPOBox() {
-        return this.po_box;
-    }
+	public String getFirst_name() {
+		return first_name;
+	}
 
-    public void setPOBox(int po_box) {
-        this.po_box = po_box;
-    }
+	public void setFirst_name(String first_name) {
+		this.first_name = first_name;
+	}
+
+	public String getLast_name() {
+		return last_name;
+	}
+
+	public void setLast_name(String last_name) {
+		this.last_name = last_name;
+	}
+
+	public int getPo_box() {
+		return po_box;
+	}
+
+	public void setPo_box(int po_box) {
+		this.po_box = po_box;
+	}
 }
