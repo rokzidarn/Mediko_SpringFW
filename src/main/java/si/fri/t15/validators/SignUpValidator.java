@@ -22,8 +22,7 @@ public class SignUpValidator implements Validator{
 	public void validate(Object target, Errors errors) {
 		ValidationUtils.rejectIfEmpty(errors, "email", "field.required", "Required field");
 		ValidationUtils.rejectIfEmpty(errors, "username", "field.required", "Required field");	
-		ValidationUtils.rejectIfEmpty(errors, "password", "field.required", "Required field");
-		
+		ValidationUtils.rejectIfEmpty(errors, "password", "field.required", "Required field");		
 		ValidationUtils.rejectIfEmpty(errors, "repeatpassword", "field.required", "Required field");		
 		ValidationUtils.rejectIfEmpty(errors, "first_name", "field.required", "Required field");	
 		ValidationUtils.rejectIfEmpty(errors, "last_name", "field.required", "Required field");
