@@ -84,7 +84,7 @@ public class Application extends WebMvcConfigurerAdapter {
 	}
 	
 	@Bean
-	public SignUpValidator suv() {
+	public SignUpValidator signUpValidator() {
 		return new SignUpValidator();
 	}
 }
