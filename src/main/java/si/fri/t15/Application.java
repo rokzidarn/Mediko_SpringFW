@@ -14,6 +14,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import si.fri.t15.dao.UserDetailsService;
+import si.fri.t15.validators.SignUpValidator;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
 //@Configuration
@@ -80,5 +81,10 @@ public class Application extends WebMvcConfigurerAdapter {
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new UserDetailsService();
+	}
+	
+	@Bean
+	public SignUpValidator suv() {
+		return new SignUpValidator();
 	}
 }

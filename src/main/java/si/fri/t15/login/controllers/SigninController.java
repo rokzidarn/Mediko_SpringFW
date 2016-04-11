@@ -1,18 +1,15 @@
 package si.fri.t15.login.controllers;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import si.fri.t15.base.controllers.ControllerBase;
-import si.fri.t15.validators.SignInForm;
 
 @Controller
 public class SigninController extends ControllerBase {
@@ -27,7 +24,7 @@ public class SigninController extends ControllerBase {
 	}
 	
 	@RequestMapping(value = "index/signin", method=RequestMethod.POST)
-	public String validateSignIn(@ModelAttribute("command") @Valid SignInForm command, BindingResult bindingResult, HttpServletRequest request) {
+	public String validateSignIn(BindingResult bindingResult, HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
             return "signin";
         }

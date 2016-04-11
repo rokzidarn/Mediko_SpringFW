@@ -13,19 +13,15 @@
                                 <div class="content-title">$title</div>
                             </div>
                             <div class="content">                              
-								<form action="#springUrl("index/signin")" method="POST">
+								<form action="#" method="POST">
 									<div class="form-group">
-										#springBind( "command.username" )
 										<label for="usernameInput">Uporabniško ime</label>
 										<input type="text" class="form-control" id="usernameInput" name="${status.expression}" value="$!status.value" placeholder="Uporabniško ime" required>	
-										#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end			
 									</div>
 									<div class="form-group">
-										#springBind( "command.password" )
 										<label for="passwordInput">Geslo</label>
 										<input type="password" class="form-control" id="passwordInput" name="${status.expression}" value="$!status.value" placeholder="Geslo" required>									
 										<div><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></div>
-										#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 									</div>
 									<br />
 									<p class="text-center">

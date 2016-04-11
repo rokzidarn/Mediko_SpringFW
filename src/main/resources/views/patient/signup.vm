@@ -14,27 +14,35 @@
                             </div>
                             <div class="content">
                                 
-								<form method="POST" action="#">
+								<form method="POST" action="'#springUrl("patient/signup")">
 									<h4><p class="text-center"> Osnovni podatki<small> (obvezno)</small> </p></h4>
 									<div class="form-group">
+									 	#springBind( "command.email" )
 										<label for="emailInput">Email naslov</label>
-										<input type="email" class="form-control" id="emailInput" name="email" placeholder="Email" required>
+										<input type="email" class="form-control" id="emailInput" name="${status.expression}" value="$!status.value" placeholder="Email" required>
+										#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 									</div>
 									<div class="form-group">
+									 	#springBind( "command.username" )
 										<label for="usernameInput">Uporabniško ime</label>
-										<input type="email" class="form-control" id="usernameInput" name="username" placeholder="Uporabniško ime" required>
+										<input type="email" class="form-control" id="usernameInput" name="${status.expression}" value="$!status.value" placeholder="Uporabniško ime" required>
+										#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 									</div>
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
+												 #springBind( "command.password" )
 												<label for="passwordInput">Geslo</label>
-												<input type="password" class="form-control" id="passwordInput" name="password" placeholder="Geslo" required pattern="(?=.*\d).{8,}" onchange="form.passwordInputRepeat.pattern = this.value;">
+												<input type="password" class="form-control" id="passwordInput" name="${status.expression}" value="$!status.value" placeholder="Geslo" required pattern="(?=.*\d).{8,}" onchange="form.passwordInputRepeat.pattern = this.value;">
+												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
+												 #springBind( "command.repeatpassword" )
 												<label for="passwordInputRepeat">Ponovi geslo</label>
-												<input type="password" class="form-control" id="passwordInputRepeat" name="passwordRepeat" placeholder="Ponovi geslo" required pattern="">
+												<input type="password" class="form-control" id="passwordInputRepeat" name="${status.expression}" value="$!status.value" placeholder="Ponovi geslo" required>
+												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
 									</div>
@@ -43,23 +51,30 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
+											 	#springBind( "command.first_name" )
 												<label for="firstNameInput">Ime</label>
-												<input type="text" class="form-control" id="firstNameInput" name="first_name" placeholder="Ime">
+												<input type="text" class="form-control" id="firstNameInput" name="${status.expression}" value="$!status.value" placeholder="Ime">
+												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
+												 #springBind( "command.last_name" )
 												<label for="lastNameInput">Priimek</label>
-												<input type="text" class="form-control" id="lastNameInput" name="last_name" placeholder="Priimek">
+												<input type="text" class="form-control" id="lastNameInput" name="${status.expression}" value="$!status.value" placeholder="Priimek">
+												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
+												 #springBind( "command.po_box" )
 												<label for="poBoxInput">Poštna številka</label>
-												<input type="text" class="form-control" id="poBoxInput" name="po_box" placeholder="Poštna številka">
+												<input type="text" class="form-control" id="poBoxInput" name="${status.expression}" value="$!status.value" placeholder="Poštna številka">
+												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
 									</div>
+									<!-- 
 									<br />
 									<h4><p class="text-center">Skrbnik</small> </p></h4>
 									<div class="checkbox">
@@ -84,9 +99,10 @@
 											<div class="form-group">
 												<label for="poBoxInputC">Poštna številka vašega varovanca</label>
 												<input type="text" class="form-control" id="poBoxInputC" name="po_boxC" placeholder="Poštna številka">
-											</div>
-										</div>
+											</div>											
+										</div>						
 									</div>
+									-->
 									<br />
 									<p class="text-center">
 										<input type="submit" class="btn btn-default btn-lg" value="Ustvari">
