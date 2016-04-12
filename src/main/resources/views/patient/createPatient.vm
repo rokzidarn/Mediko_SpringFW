@@ -15,56 +15,7 @@
                             <div class="content">
                                 
 								<form method="POST" action="#">
-									<h4><p class="text-center"> Osnovni podatki<small> (obvezno)</small> </p></h4>
-									<div class="form-group">
-										<label for="emailInput">Email naslov</label>
-										<input type="email" class="form-control" id="emailInput" name="email" placeholder="Email" required>
-									</div>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="passwordInput">Geslo</label>
-												<input type="password" class="form-control" id="passwordInput" name="password" placeholder="Geslo" required pattern="(?=.*\d).{8,}" onchange="form.passwordInputRepeat.pattern = this.value;">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="passwordInputRepeat">Ponovi geslo</label>
-												<input type="password" class="form-control" id="passwordInputRepeat" name="passwordRepeat" placeholder="Ponovi geslo" required pattern="">
-											</div>
-										</div>
-									</div>
-									<br />
-									<h4><p class="text-center"> Ostalo <small>(neobvezno)</small> </p></h4>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="titleInput">Naziv</label>
-												<input type="text" class="form-control" id="titleInput" name="title" placeholder="Naziv">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="workerType">Tip</label>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="radio">
-															<label>
-																<input type="radio" name="workerType" id="doctorRadio" value="doctor" checked>Zdravnik
-															</label>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="radio">
-															<label>
-																<input type="radio" name="workerType" id="nurseRadion" value="nurse">Medicinska sestra
-															</label>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
+									
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
@@ -76,6 +27,36 @@
 											<div class="form-group">
 												<label for="lastNameInput">Priimek</label>
 												<input type="text" class="form-control" id="lastNameInput" name="lastName" placeholder="Priimek">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="sex">Spol</label>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="radio">
+															<label>
+																<input type="radio" name="sex" id="maleRadio" value="doctor" checked>Ženski
+															</label>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="radio">
+															<label>
+																<input type="radio" name="sex" id="femaleRadio" value="nurse">Moški
+
+															</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="birth">Rojstvo</label>
+												<input type="date" id="birth" class="form-control" name="birth" value="1950-01-01">
 											</div>
 										</div>
 									</div>

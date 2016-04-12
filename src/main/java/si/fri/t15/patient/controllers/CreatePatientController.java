@@ -24,7 +24,7 @@ public class CreatePatientController extends ControllerBase{
 		model.addAttribute("subpage", "createPatient");	
 		model.addAttribute("path", "/mediko_dev/");
 		//Page variables
-		model.addAttribute("title", "Dodaj pacient");
+		model.addAttribute("title", "Dodaj pacienta");
 		return "createPatient";
 	}
 }
