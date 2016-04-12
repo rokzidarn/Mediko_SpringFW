@@ -17,7 +17,8 @@ public class SigninController extends ControllerBase {
 	@RequestMapping(value = "index/signin", method=RequestMethod.GET)
 	public String signin(Model model, HttpServletRequest request) {
 		model.addAttribute("signin", "signin");
-		model.addAttribute("_csrf", (CsrfToken) request.getAttribute(CsrfToken.class.getName()));
+		model.addAttribute("user","none");
+		model.addAttribute("page", "login");
 		model.addAttribute("path", "/mediko_dev/");
 		model.addAttribute("title", "Prijava");
 		return "signin";
