@@ -1,9 +1,16 @@
 package si.fri.t15.patient.controllers;
 
+import java.util.Set;
+
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,10 +23,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import si.fri.t15.base.controllers.ControllerBase;
+import si.fri.t15.models.UserRole;
+import si.fri.t15.models.user.User;
 import si.fri.t15.validators.SignUpForm;
 
 @Controller
 public class SignupController extends ControllerBase {
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
+	@PersistenceContext
+    private EntityManager em;
 	
 	
 	@InitBinder
@@ -43,6 +58,7 @@ public class SignupController extends ControllerBase {
 		return new ModelAndView("signup");
 	}
 	
+	@Transactional
 	@RequestMapping(value = "/patient/signup", method=RequestMethod.POST)
 	public ModelAndView signupPOST(Model model, @ModelAttribute("command") @Valid SignUpForm command,
 			BindingResult result, HttpServletRequest request) {
@@ -51,6 +67,24 @@ public class SignupController extends ControllerBase {
 			return new ModelAndView("signup");
 		}
 		
+		User newUser = new User();
+		
+		newUser.setEmail(command.getEmail());
+		newUser.setUsername(command.getUsername());
+		newUser.setPassword(passwordEncoder.encode(command.getPassword()));
+		newUser.setAccountNonExpired(true);
+		newUser.setAccountNonLocked(true); //false for mail confirmation
+		newUser.setCredentialsNonExpired(true);
+		newUser.setEnabled(true); //false for mail confirmation
+		
+		//UserRole not working yet
+		//Set<UserRole> userRoles;
+		//UserRole userRole = new UserRole();
+		//userRole.setRole("user");
+		//userRoles.add(userRole);
+		//newUser.setUserRoles()
+		
+		em.persist(newUser);
 		//send email to confirm, don't show home/home!
 		
 		return new ModelAndView("signup");
