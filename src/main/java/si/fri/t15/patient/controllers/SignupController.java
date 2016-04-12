@@ -40,7 +40,7 @@ public class SignupController extends ControllerBase {
 		model.addAttribute("user","none");
 		model.addAttribute("page", "register");
 		
-		return new ModelAndView("/patient/signup");
+		return new ModelAndView("signup");
 	}
 	
 	@RequestMapping(value = "/patient/signup", method=RequestMethod.POST)

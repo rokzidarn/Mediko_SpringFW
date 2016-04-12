@@ -30,8 +30,9 @@ public class SignUpValidator implements Validator{
 		
 		SignUpForm u = (SignUpForm) target;
 		
-		if (!u.getPassword().equals(u.getRepeatpassword())) {
-			errors.rejectValue("password", "field.format",
+		//Problem maker
+		if (u.getRepeatpassword() != null && u.getPassword() != null && !u.getRepeatpassword().equals(u.getPassword())) {
+			errors.rejectValue("passwordConfirmation", "field.format",
 					"Passwords do not match");
 		}
 		
