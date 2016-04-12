@@ -12,6 +12,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import si.fri.t15.base.controllers.ControllerBase;
@@ -30,13 +31,21 @@ public class SignupController extends ControllerBase {
 	@Resource(name="signUpValidator")
 	Validator validator;
 	
-	@RequestMapping(value = "/patient/signup")
-	public ModelAndView signup(Model model, @ModelAttribute("command") @Valid SignUpForm command,
+	@RequestMapping(value = "/patient/signup", method=RequestMethod.GET)
+	public ModelAndView signupGET(Model model, @ModelAttribute("command") @Valid SignUpForm command,
 			BindingResult result, HttpServletRequest request) {
+		
 		model.addAttribute("path", "/mediko_dev/");
 		model.addAttribute("title", "Ustvari Račun");
 		model.addAttribute("user","none");
 		model.addAttribute("page", "register");
+		
+		return new ModelAndView("/patient/signup");
+	}
+	
+	@RequestMapping(value = "/patient/signup", method=RequestMethod.POST)
+	public ModelAndView signupPOST(Model model, @ModelAttribute("command") @Valid SignUpForm command,
+			BindingResult result, HttpServletRequest request) {
 		
 		if (result.hasErrors()) {
 			return new ModelAndView("signup");
