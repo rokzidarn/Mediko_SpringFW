@@ -46,9 +46,10 @@ public class SignupController extends ControllerBase {
 	@Resource(name="signUpValidator")
 	Validator validator;
 	
-	@RequestMapping(value = "/patient/signup", method=RequestMethod.GET)
-	public ModelAndView signupGET(Model model, @ModelAttribute("command") @Valid SignUpForm command,
-			BindingResult result, HttpServletRequest request) {
+
+	
+	@RequestMapping(value = "/signup", method=RequestMethod.GET)
+	public ModelAndView signupGET(Model model, HttpServletRequest request) {
 		
 		model.addAttribute("path", "/mediko_dev/");
 		model.addAttribute("title", "Ustvari Račun");
@@ -59,7 +60,7 @@ public class SignupController extends ControllerBase {
 	}
 	
 	@Transactional
-	@RequestMapping(value = "/patient/signup", method=RequestMethod.POST)
+	@RequestMapping(value = "/signup", method=RequestMethod.POST)
 	public ModelAndView signupPOST(Model model, @ModelAttribute("command") @Valid SignUpForm command,
 			BindingResult result, HttpServletRequest request) {
 		
@@ -69,15 +70,15 @@ public class SignupController extends ControllerBase {
 		
 		User newUser = new User();
 		
-		newUser.setEmail(command.getEmail());
+		newUser.setEmail("DELETE THIS ROW"); //Delete, ko se bo updejtal JPA
 		newUser.setUsername(command.getUsername());
 		newUser.setPassword(passwordEncoder.encode(command.getPassword()));
 		newUser.setAccountNonExpired(true);
-		newUser.setAccountNonLocked(true); //false for mail confirmation
+		newUser.setAccountNonLocked(true);
 		newUser.setCredentialsNonExpired(true);
 		newUser.setEnabled(true); //false for mail confirmation
 		
-		//UserRole not working yet
+		//UserRole not working yet, popravimo user_role, da bo ime kr id
 		//Set<UserRole> userRoles;
 		//UserRole userRole = new UserRole();
 		//userRole.setRole("user");
