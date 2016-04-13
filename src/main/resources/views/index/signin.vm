@@ -13,7 +13,7 @@
                                 <div class="content-title">$title</div>
                             </div>
                             <div class="content">                              
-								<form action="/mediko_dev/j_spring_security_check" method="POST">
+								<form action="" method="POST">
 									<div class="form-group">
 										<label for="usernameInput">Uporabniško ime</label>
 										<input type="text" class="form-control" id="usernameInput" name="username"  placeholder="Uporabniško ime" required>	
