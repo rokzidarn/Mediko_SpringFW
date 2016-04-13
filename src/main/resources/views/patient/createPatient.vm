@@ -14,13 +14,14 @@
                             </div>
                             <div class="content">
                                 
-								<form method="POST" action="#">
+								<form method="POST" action="">
 									
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="firstNameInput">Ime</label>
 												<input type="text" class="form-control" id="firstNameInput" name="firstName" placeholder="Ime">
+												<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -57,6 +58,25 @@
 											<div class="form-group">
 												<label for="birth">Rojstvo</label>
 												<input type="date" id="birth" class="form-control" name="birth" value="1950-01-01">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="streetInput">Ulica in hišna številka</label>
+												<input type="text" class="form-control" id="streetInput" name="street" placeholder="Ulica in hišna številka">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="postOfficeInput">Pošta</label>
+												<select class="form-control" id="postOfficeInput" name="postOffice">
+												  <option value="1000">1000 - Ljubljana</option>
+												  <option value="2000">2000 - Maribor</option>
+												  <option value="3000">3000 - Celje</option>
+												  <option value="4000">4000 - Kranj</option>
+												</select>
 											</div>
 										</div>
 									</div>
