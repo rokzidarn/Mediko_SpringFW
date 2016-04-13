@@ -1,8 +1,6 @@
 package si.fri.t15.index.controllers;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

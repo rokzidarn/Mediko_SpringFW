@@ -21,22 +21,18 @@ public class SignUpValidator implements Validator{
 	@Override
 	public void validate(Object target, Errors errors) {
 		ValidationUtils.rejectIfEmpty(errors, "email", "field.required", "Required field");
-		ValidationUtils.rejectIfEmpty(errors, "username", "field.required", "Required field");	
-		ValidationUtils.rejectIfEmpty(errors, "password", "field.required", "Required field");
-		
-		ValidationUtils.rejectIfEmpty(errors, "repeatpassword", "field.required", "Required field");		
-		ValidationUtils.rejectIfEmpty(errors, "first_name", "field.required", "Required field");	
-		ValidationUtils.rejectIfEmpty(errors, "last_name", "field.required", "Required field");
-		ValidationUtils.rejectIfEmpty(errors, "po_box", "field.required", "Required field");
+		ValidationUtils.rejectIfEmpty(errors, "password", "field.required", "Required field");		
+		ValidationUtils.rejectIfEmpty(errors, "repeatpassword", "field.required", "Required field");
 		
 		SignUpForm u = (SignUpForm) target;
 		
-		if (!u.getPassword().equals(u.getRepeatpassword())) {
-			errors.rejectValue("password", "field.format",
+		//Problem maker
+		if (u.getRepeatpassword() != null && u.getPassword() != null && !u.getRepeatpassword().equals(u.getPassword())) {
+			errors.rejectValue("passwordConfirmation", "field.format",
 					"Passwords do not match");
 		}
 		
-		if (!validateEmail(u.getEmail())) {
+		if (!validateEmail(u.getUsername())) {
 			errors.rejectValue("email", "field.format",
 					"Incorrect email format");
 		}

@@ -15,7 +15,7 @@ public class LoginController extends ControllerBase {
 	@RequestMapping(value = "/login")
 	public String login(Model model, HttpServletRequest request) {
 		model.addAttribute("login", "login");
-		model.addAttribute("_csrf", (CsrfToken) request.getAttribute(CsrfToken.class.getName()));
+		//model.addAttribute("_csrf", (CsrfToken) request.getAttribute(CsrfToken.class.getName()));
 		model.addAttribute("trans", getTranslation("login.title", request));
 		if(request.getParameterMap().containsKey("error")){
 			model.addAttribute("error", "error");

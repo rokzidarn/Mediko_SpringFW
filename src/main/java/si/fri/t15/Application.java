@@ -14,6 +14,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import si.fri.t15.dao.UserDetailsService;
+import si.fri.t15.validators.CreateMedicalWorkerValidator;
 import si.fri.t15.validators.SignUpValidator;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -86,5 +87,10 @@ public class Application extends WebMvcConfigurerAdapter {
 	@Bean
 	public SignUpValidator signUpValidator() {
 		return new SignUpValidator();
+	}
+	
+	@Bean
+	public CreateMedicalWorkerValidator createMedicalWorkerValidator() {
+		return new CreateMedicalWorkerValidator();
 	}
 }
