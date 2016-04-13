@@ -13,14 +13,14 @@
                                 <div class="content-title">$title</div>
                             </div>
                             <div class="content">                              
-								<form action="#" method="POST">
+								<form action="/mediko_dev/j_spring_security_check" method="POST">
 									<div class="form-group">
 										<label for="usernameInput">Uporabniško ime</label>
-										<input type="text" class="form-control" id="usernameInput" name="${status.expression}" value="$!status.value" placeholder="Uporabniško ime" required>	
+										<input type="text" class="form-control" id="usernameInput" name="username"  placeholder="Uporabniško ime" required>	
 									</div>
 									<div class="form-group">
 										<label for="passwordInput">Geslo</label>
-										<input type="password" class="form-control" id="passwordInput" name="${status.expression}" value="$!status.value" placeholder="Geslo" required>									
+										<input type="password" class="form-control" id="passwordInput" name="password"  placeholder="Geslo" required>									
 										<div><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></div>
 									</div>
 									<br />
