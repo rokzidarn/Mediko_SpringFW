@@ -32,7 +32,15 @@ public abstract class UserData implements Serializable {
 	protected String address;
 	
 	@Column(name="Sex",  nullable=false, updatable=true)
-	protected boolean sex;
+	protected char sex;
+
+	public char isSex() {
+		return sex;
+	}
+
+	public void setSex(char sex) {
+		this.sex = sex;
+	}
 
 	public int getId() {
 		return id;
