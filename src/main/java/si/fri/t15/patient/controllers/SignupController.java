@@ -82,13 +82,13 @@ public class SignupController extends ControllerBase {
 		newUser.setEnabled(true); //false for mail confirmation
 		
 		Query userRoleQuery = em.createNamedQuery("UserRole.findByRole");
-		userRoleQuery.setParameter("role", "user");
+		userRoleQuery.setParameter("role", "ROLE_USER");
 		List<UserRole> res = (List<UserRole>)userRoleQuery.getResultList();
 		//UserRole userRole = (UserRole)userRoleQuery.getSingleResult();
 		UserRole userRole = null;
 		if(res.isEmpty()){
 			userRole = new UserRole();
-			userRole.setRole("user");
+			userRole.setRole("ROLE_USER");
 		}else{
 			userRole = res.get(0);
 		}

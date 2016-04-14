@@ -15,8 +15,8 @@
                             <div class="content">                              
 								<form action="" method="POST">
 									<div class="form-group">
-										<label for="usernameInput">Uporabniško ime</label>
-										<input type="text" class="form-control" id="usernameInput" name="username"  placeholder="Uporabniško ime" required>	
+										<label for="usernameInput">Email</label>
+										<input type="text" class="form-control" id="usernameInput" name="username"  placeholder="Email" required>	
 									</div>
 									<div class="form-group">
 										<label for="passwordInput">Geslo</label>
