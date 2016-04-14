@@ -20,7 +20,7 @@ public class SignUpValidator implements Validator{
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmpty(errors, "email", "field.required", "Required field");
+		ValidationUtils.rejectIfEmpty(errors, "username", "field.required", "Required field");
 		ValidationUtils.rejectIfEmpty(errors, "password", "field.required", "Required field");		
 		ValidationUtils.rejectIfEmpty(errors, "repeatpassword", "field.required", "Required field");
 		
@@ -33,7 +33,7 @@ public class SignUpValidator implements Validator{
 		}
 		
 		if (!validateEmail(u.getUsername())) {
-			errors.rejectValue("email", "field.format",
+			errors.rejectValue("username", "field.format",
 					"Incorrect email format");
 		}
 
