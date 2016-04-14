@@ -4,9 +4,11 @@ import java.util.Locale;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.embedded.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -14,6 +16,8 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import si.fri.t15.dao.UserDetailsService;
+import si.fri.t15.login.controllers.SessionEndedListener;
+import si.fri.t15.validators.CreateMedicalWorkerValidator;
 import si.fri.t15.validators.SignUpValidator;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -86,5 +90,20 @@ public class Application extends WebMvcConfigurerAdapter {
 	@Bean
 	public SignUpValidator signUpValidator() {
 		return new SignUpValidator();
+	}
+	
+	@Bean
+	public CreateMedicalWorkerValidator createMedicalWorkerValidator() {
+		return new CreateMedicalWorkerValidator();
+	}
+	
+	@Bean
+	public SessionEndedListener sessionEndedListener() {
+		return new SessionEndedListener();
+	}
+	
+	@Bean
+	public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+	    return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
 	}
 }

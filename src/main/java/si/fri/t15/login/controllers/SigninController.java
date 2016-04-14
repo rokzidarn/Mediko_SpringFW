@@ -24,13 +24,4 @@ public class SigninController extends ControllerBase {
 		return "signin";
 	}
 	
-	@RequestMapping(value = "index/signin", method=RequestMethod.POST)
-	public String validateSignIn(BindingResult bindingResult, HttpServletRequest request) {
-		if (bindingResult.hasErrors()) {
-            return "signin";
-        }
-
-        return "redirect: mediko_dev/../../home";
-	}
-	
 }
