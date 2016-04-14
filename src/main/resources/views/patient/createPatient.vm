@@ -13,7 +13,8 @@
                                 <div class="content-title">$title</div>
                             </div>
                             <div class="content">
-                                
+                               	
+                               	
 								<form method="POST" action="">
 									
 									<div class="row">
@@ -72,10 +73,9 @@
 											<div class="form-group">
 												<label for="postOfficeInput">Pošta</label>
 												<select class="form-control" id="postOfficeInput" name="postOffice">
-												  <option value="1000">1000 - Ljubljana</option>
-												  <option value="2000">2000 - Maribor</option>
-												  <option value="3000">3000 - Celje</option>
-												  <option value="4000">4000 - Kranj</option>
+													#foreach($po_box in $po_boxes)
+													<option value="$po_box.getPO_BoxId()">$po_box.getPO_BoxId() - $po_box.getCity()</option>
+													#end
 												</select>
 											</div>
 										</div>
