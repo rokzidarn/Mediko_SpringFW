@@ -1,10 +1,13 @@
 package si.fri.t15.patient.controllers;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -70,7 +73,7 @@ public class SignupController extends ControllerBase {
 		
 		User newUser = new User();
 		
-		newUser.setEmail("DELETE THIS ROW"); //Delete, ko se bo updejtal JPA
+		//newUser.setEmail("DELETE THIS ROW"); //Delete, ko se bo updejtal JPA
 		newUser.setUsername(command.getUsername());
 		newUser.setPassword(passwordEncoder.encode(command.getPassword()));
 		newUser.setAccountNonExpired(true);
@@ -78,17 +81,30 @@ public class SignupController extends ControllerBase {
 		newUser.setCredentialsNonExpired(true);
 		newUser.setEnabled(true); //false for mail confirmation
 		
-		//UserRole not working yet, popravimo user_role, da bo ime kr id
-		//Set<UserRole> userRoles;
-		//UserRole userRole = new UserRole();
-		//userRole.setRole("user");
-		//userRoles.add(userRole);
-		//newUser.setUserRoles()
+		Query userRoleQuery = em.createNamedQuery("UserRole.findByRole");
+		userRoleQuery.setParameter("role", "user");
+		List<UserRole> res = (List<UserRole>)userRoleQuery.getResultList();
+		//UserRole userRole = (UserRole)userRoleQuery.getSingleResult();
+		UserRole userRole = null;
+		if(res.isEmpty()){
+			userRole = new UserRole();
+			userRole.setRole("user");
+		}else{
+			userRole = res.get(0);
+		}
+		//Save user role
+		em.persist(userRole);
 		
+		//Set users userroles
+		Set<UserRole> userRoles = new HashSet<>(0);
+		userRoles.add(userRole);
+		newUser.setUserRoles(userRoles);
+		
+		//save user
 		em.persist(newUser);
 		//send email to confirm, don't show home/home!
 		
-		return new ModelAndView("signup");
+		return new ModelAndView("redirect:/index/signin");
 	}
 	
 }
