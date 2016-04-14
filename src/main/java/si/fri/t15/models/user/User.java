@@ -1,7 +1,9 @@
 package si.fri.t15.models.user;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.OneToOne;
 
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import si.fri.t15.base.models.UserData;
@@ -61,7 +64,11 @@ public class User implements UserDetails, CredentialsContainer{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		for (UserRole role : userRoles) {
+			authorities.add(new SimpleGrantedAuthority(role.getRole()));
+		}
+		return authorities;
 	}
 
 	@Override
