@@ -30,6 +30,9 @@ public abstract class UserData implements Serializable {
 	
 	@Column(name="Address", length=100, nullable=false, updatable=true)
 	protected String address;
+	
+	@Column(name="Sex",  nullable=false, updatable=true)
+	protected boolean sex;
 
 	public int getId() {
 		return id;
