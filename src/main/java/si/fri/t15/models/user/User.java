@@ -25,11 +25,8 @@ public class User implements UserDetails, CredentialsContainer{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="Username", length=15, unique=true, nullable=false)
+	@Column(name="Username", length=45, unique=true, nullable=false)
 	private String username;
-
-	@Column(name="Email", length=45, unique=true, nullable=false)
-	private String email;
 
 	@Column(name="Password", length=60, nullable=false, updatable=true)
 	private String password;
@@ -95,14 +92,6 @@ public class User implements UserDetails, CredentialsContainer{
 	@Override
 	public boolean isEnabled() {
 		return isEnabled;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public Timestamp getLastLogin() {
