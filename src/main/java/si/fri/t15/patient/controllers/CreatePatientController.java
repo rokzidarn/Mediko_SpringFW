@@ -1,19 +1,20 @@
 package si.fri.t15.patient.controllers;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,9 +24,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.PO_Box;
+import si.fri.t15.models.user.PatientData;
+import si.fri.t15.models.user.User;
 import si.fri.t15.validators.CreatePatientForm;
 import si.fri.t15.validators.CreatePatientValidator;
-import si.fri.t15.validators.SignUpForm;
 
 @Controller
 public class CreatePatientController extends ControllerBase{
@@ -53,7 +55,6 @@ public class CreatePatientController extends ControllerBase{
 		model.addAttribute("usertype", "user");
 		model.addAttribute("page", "patient");
 		model.addAttribute("subpage", "createPatient");	
-		model.addAttribute("path", "/mediko_dev/");
 		//Page variables
 		model.addAttribute("title", "Dodaj pacienta");
 		
@@ -67,12 +68,57 @@ public class CreatePatientController extends ControllerBase{
 	}
 	
 	@RequestMapping(value = "/patient/createPatient", method=RequestMethod.POST)
+	@Transactional
 	public ModelAndView createPatientPOST(Model model, @ModelAttribute("command") @Valid CreatePatientForm command,
 			BindingResult result, HttpServletRequest request) {
+		
+		
+		//Side menu variables
+		
+		model.addAttribute("usertype", "user");
+		model.addAttribute("page", "patient");
+		model.addAttribute("subpage", "createPatient");	
+		//Page variables
+		model.addAttribute("title", "Dodaj pacienta");
+		
+		//Post office numbers;
+		Query allPOBoxQuery = em.createNamedQuery("PO_Box.findAll");
+		List<PO_Box> poBoxes = allPOBoxQuery.getResultList();
+		model.addAttribute("po_boxes",poBoxes);
+		
 		
 		if (result.hasErrors()) {
 			return new ModelAndView("createPatient");
 		}
+		
+		//Dodajanje pacienta
+		//Get logged in user
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		user = em.merge(user);
+		
+		//Create patient
+		PatientData patient = new PatientData();
+		patient.setFirst_name(command.getFirstName());
+		patient.setLast_name(command.getLastName());
+		patient.setSex(command.getSex());
+		//Birth
+		String[]dateValues = command.getBirth().split("-");
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Integer.parseInt(dateValues[0]),Integer.parseInt(dateValues[0]),Integer.parseInt(dateValues[0]));
+		patient.setBirth_date(new Date(calendar.getTimeInMillis()));
+		
+		patient.setAddress(command.getAddress());
+		
+		//POBOX
+		PO_Box pobox = em.find(PO_Box.class, command.getPobox());
+		patient.setPo_box(pobox);
+		
+		//Care taker
+		patient.setCaretaker(user);
+		
+		//Save
+		em.persist(patient);
+		
 		
 		return new ModelAndView("createPatient");
 	

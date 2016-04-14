@@ -2,11 +2,13 @@ package si.fri.t15.models.user;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -36,6 +38,9 @@ public class User implements UserDetails, CredentialsContainer{
 	
 	@Column(name="PasswordResetToken", length=15, updatable=true, unique=true)
 	private String passwordResetToken;
+	
+	@OneToMany
+	private List<PatientData> patients;
 	
 	@OneToOne
 	private UserData data;

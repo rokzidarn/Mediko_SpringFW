@@ -18,7 +18,7 @@ public class PatientData extends UserData {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne
-	private PatientData caretaker;
+	private User caretaker;
 	
 	@ManyToOne
 	private DoctorData doctor;
@@ -86,6 +86,7 @@ public class PatientData extends UserData {
 		this.patients = patients;
 	}
 	
+	/*
 	public PatientData addPatient(PatientData patient) {
 		getPatients().add(patient);
 		patient.setCaretaker(patient);
@@ -98,13 +99,13 @@ public class PatientData extends UserData {
 		patient.setCaretaker(null);
 
 		return patient;
-	}
+	}*/
 
-	public PatientData getCaretaker() {
+	public User getCaretaker() {
 		return caretaker;
 	}
 
-	public void setCaretaker(PatientData caretaker) {
+	public void setCaretaker(User caretaker) {
 		this.caretaker = caretaker;
 	}
 
