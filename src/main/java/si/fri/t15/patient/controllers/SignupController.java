@@ -2,6 +2,7 @@ package si.fri.t15.patient.controllers;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -51,6 +53,9 @@ public class SignupController extends ControllerBase {
 	
 	@Autowired
 	UserRepository userRepo;
+	
+	@Value("${proxy.realPath}")
+	private String domain;
 	
 	
 	@InitBinder
@@ -119,10 +124,15 @@ public class SignupController extends ControllerBase {
 		//save user
 		em.persist(newUser);
 		
-		String domain = request.getRequestURL().toString();
+		String tString = null;
 		String cpath = request.getContextPath().toString();
-
-		String tString = domain.substring(0, domain.indexOf(cpath) + cpath.length());
+		if (domain != null) {
+			tString = domain + cpath;
+		}
+		else {
+			domain = request.getRequestURL().toString();
+			tString = domain.substring(0, domain.indexOf(cpath) + cpath.length());
+		}
 		
 		signUpConfirmationMail(newUser, tString, activationToken);
 		
@@ -137,10 +147,10 @@ public class SignupController extends ControllerBase {
 			user.setEnabled(true);
 			user.setPasswordResetToken(null);
 			em.merge(user);
-			return "redirect:/index/signin?activationSuccess";
+			return "redirect:/login?activationSuccess";
 		}
 		
-		return "redirect:/index/signin?activationError";
+		return "redirect:/login?activationError";
 	}
 	
 	private void signUpConfirmationMail(User user, String URL, String activationToken) {
