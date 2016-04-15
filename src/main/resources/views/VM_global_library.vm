@@ -16,10 +16,17 @@
 		        </div>
 		    </a>
 		    <a href="#">
-		        <div class="side-menu-item #if($page && $page=="doctors")side-menu-item-selected #end">
-		        DOCTORS
+		        <div class="side-menu-item #if($page && $page=="patient")side-menu-item-selected #end">
+		        PACIENTI
 		        </div>
 		    </a>
+		    #if($page && $page == "patient")
+				<a href="#">
+					<div class="side-submenu-item #if($subpage && $subpage=="createPatient")side-submenu-item-selected #end">
+						DODAJ
+					</div>
+				</a>
+			#end
 	    #else
 		 	<a href="#">
 		        <div class="side-menu-item #if($page && $page=="login")side-menu-item-selected #end">

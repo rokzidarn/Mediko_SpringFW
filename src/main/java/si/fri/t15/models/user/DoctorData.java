@@ -20,7 +20,7 @@ public class DoctorData extends UserData {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="Type", length=15, nullable=false, updatable=true)
+	@Column(name="Type", length=15, nullable=true, updatable=true)
 	private String type;
 	
 	@OneToMany(mappedBy="doctor")
