@@ -29,6 +29,12 @@ public class HomeController extends ControllerBase{
 		//Side menu variables
 		String userType = "user";
 		user = em.merge(user);
+		
+		//REDIRECT ČE NIMA PATIENT DATA
+		if(user.getData() == null){
+			return "redirect:/createProfile";
+		}
+		
 		if(user.getUserRoles().contains("ROLE_ADMIN")) {
 			userType = "admin";
 		}
