@@ -136,7 +136,7 @@ public class SignupController extends ControllerBase {
 		
 		signUpConfirmationMail(newUser, tString, activationToken);
 		
-		return new ModelAndView("redirect:/index/signin");
+		return new ModelAndView("redirect:/login");
 	}
 	
 	@Transactional
