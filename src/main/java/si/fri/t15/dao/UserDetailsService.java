@@ -1,5 +1,6 @@
 package si.fri.t15.dao;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +22,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 		if (user == null) {
 			throw new UsernameNotFoundException("Username: " + username);
 		}
-
+		Hibernate.initialize(user.getUserRoles());
 		return user;
 	}
 }
