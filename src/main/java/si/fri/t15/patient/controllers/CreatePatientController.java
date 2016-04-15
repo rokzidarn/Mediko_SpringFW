@@ -113,8 +113,10 @@ public class CreatePatientController extends ControllerBase{
 		PO_Box pobox = em.find(PO_Box.class, command.getPobox());
 		patient.setPo_box(pobox);
 		
+		PatientData caretakerPatient = (PatientData)user.getData();
+		
 		//Care taker
-		patient.setCaretaker(user);
+		patient.setCaretaker(caretakerPatient);
 		
 		//Save
 		em.persist(patient);
