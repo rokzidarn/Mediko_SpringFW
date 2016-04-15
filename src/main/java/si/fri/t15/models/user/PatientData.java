@@ -88,7 +88,7 @@ public class PatientData extends UserData {
 	
 	public PatientData addPatient(PatientData patient) {
 		getPatients().add(patient);
-		patient.setCaretaker(patient);
+		patient.setCaretaker(this);
 
 		return patient;
 	}

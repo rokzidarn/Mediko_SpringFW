@@ -1,7 +1,3 @@
-#macro(lolzer)
-	<p>LOLZER</p>
-#end
-
 #macro(sidemenu $usertype $page $subpage)
 	<div class="side-menu">
 		#if($usertype && ($usertype == "user" || $usertype == "admin"))

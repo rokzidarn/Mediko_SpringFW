@@ -28,7 +28,7 @@
  								<br>
  								<div class="row">
  									<div class="col-md-6">
- 										<a href="mediko_dev/../patient/signup" class="btn btn-primary btn-lg btn-block" role="button">REGISTRACIJA</a>	
+ 										<a href="mediko_dev/../signup" class="btn btn-primary btn-lg btn-block" role="button">REGISTRACIJA</a>	
  									</div>
  									<div class="hidden-md hidden-lg"><br></div>
  									<div class="col-md-6">
