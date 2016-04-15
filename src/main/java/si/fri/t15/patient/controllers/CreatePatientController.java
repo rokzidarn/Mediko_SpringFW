@@ -77,12 +77,17 @@ public class CreatePatientController extends ControllerBase{
 	@RequestMapping(value = "/patient/createPatient", method=RequestMethod.POST)
 	@Transactional
 	public ModelAndView createPatientPOST(Model model, @ModelAttribute("command") @Valid CreatePatientForm command,
-			BindingResult result, HttpServletRequest request) {
+			BindingResult result, HttpServletRequest request, @AuthenticationPrincipal User user) {
 		
 		
 		//Side menu variables
-		
-		model.addAttribute("usertype", "user");
+		String userType = "user";
+		user = em.merge(user);
+		if(user.getUserRoles().contains("ROLE_ADMIN")) {
+			userType = "admin";
+		}
+		model.addAttribute("user",user);
+		model.addAttribute("usertype", userType);
 		model.addAttribute("page", "patient");
 		model.addAttribute("subpage", "createPatient");	
 		//Page variables
@@ -99,9 +104,6 @@ public class CreatePatientController extends ControllerBase{
 		}
 		
 		//Dodajanje pacienta
-		//Get logged in user
-		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		user = em.merge(user);
 		
 		//Create patient
 		PatientData patient = new PatientData();
