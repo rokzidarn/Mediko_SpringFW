@@ -9,8 +9,10 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.springframework.security.core.CredentialsContainer;
@@ -43,7 +45,11 @@ public class User implements UserDetails, CredentialsContainer{
 	@OneToOne
 	private UserData data;
 	
-	@OneToMany
+	@ManyToMany
+	@JoinTable(
+		      name="user_user_roles",
+		      joinColumns=@JoinColumn(name="U_ID", referencedColumnName="username"),
+		      inverseJoinColumns=@JoinColumn(name="R_ID", referencedColumnName="role"))
 	private Set<UserRole> userRoles = new HashSet<>(0);
 	
 	@Column

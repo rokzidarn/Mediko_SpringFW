@@ -119,7 +119,12 @@ public class SignupController extends ControllerBase {
 		//save user
 		em.persist(newUser);
 		
-		signUpConfirmationMail(newUser, activationToken);
+		String domain = request.getRequestURL().toString();
+		String cpath = request.getContextPath().toString();
+
+		String tString = domain.substring(0, domain.indexOf(cpath) + cpath.length());
+		
+		signUpConfirmationMail(newUser, tString, activationToken);
 		
 		return new ModelAndView("redirect:/index/signin");
 	}
@@ -138,7 +143,7 @@ public class SignupController extends ControllerBase {
 		return "redirect:/index/signin?activationError";
 	}
 	
-	private void signUpConfirmationMail(User user, String activationToken) {
+	private void signUpConfirmationMail(User user, String URL, String activationToken) {
 		MimeMessage mail = mailSender.createMimeMessage();
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(mail, true);
@@ -147,7 +152,7 @@ public class SignupController extends ControllerBase {
 			helper.setSubject("Potrditvena povezava za registracijo");
 			helper.setText("Prosimo, kliknite na povezavo, da zaključite z registracijo\n"
 					+ "in aktivirate svoj račun v sistemu Mediko.\n"
-					+ "https://sladic.si/mediko/confirm?token=" + activationToken);
+					+ URL + "/confirm?token=" + activationToken);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} finally {
