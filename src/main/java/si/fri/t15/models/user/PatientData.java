@@ -86,6 +86,7 @@ public class PatientData extends UserData {
 		this.patients = patients;
 	}
 	
+	
 	public PatientData addPatient(PatientData patient) {
 		getPatients().add(patient);
 		patient.setCaretaker(patient);
