@@ -81,7 +81,7 @@ public class CreateProfileController extends ControllerBase{
 		
 		//Side menu variables
 		String userType = "user";
-		user = em.merge(user);
+		//user = em.merge(user);
 		if(user.getUserRoles().contains("ROLE_ADMIN")) {
 			userType = "admin";
 		}
@@ -123,6 +123,7 @@ public class CreateProfileController extends ControllerBase{
 		
 		user.setData(patient);
 		
+		em.merge(user);
 		
 		return new ModelAndView("redirect:/dashboard");
 	
