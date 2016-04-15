@@ -20,7 +20,7 @@ public class HomeController extends ControllerBase{
 	EntityManager em;
 	
 	@Transactional
-	@RequestMapping(value = "/home")
+	@RequestMapping(value = "/dashboard")
 	public String home(Model model, HttpServletRequest request, @AuthenticationPrincipal User user) {
 		//model.addAttribute("login", "login");
 		//model.addAttribute("_csrf", (CsrfToken) request.getAttribute(CsrfToken.class.getName()));
@@ -33,8 +33,7 @@ public class HomeController extends ControllerBase{
 			userType = "admin";
 		}
 		model.addAttribute("usertype", userType);
-		model.addAttribute("page", "admin");
-		model.addAttribute("subpage", "addDoctor");	
+		model.addAttribute("page", "home");
 		model.addAttribute("path", "/mediko_dev/");
 		//Page variables
 		model.addAttribute("title", "Prijava");
