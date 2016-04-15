@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,15 +45,20 @@ public class CreatePatientController extends ControllerBase{
 		binder.setValidator(createPatientValidator);
 	}
  
-	
+	@Transactional
 	@RequestMapping(value = "/patient/createPatient", method=RequestMethod.GET)
-	public ModelAndView createPatient(Model model, HttpServletRequest request) {
+	public ModelAndView createPatient(Model model, HttpServletRequest request, @AuthenticationPrincipal User user) {
 		//model.addAttribute("login", "login");
 		//model.addAttribute("_csrf", (CsrfToken) request.getAttribute(CsrfToken.class.getName()));
 		//model.addAttribute("trans", getTranslation("login.title", request));
 		
 		//Side menu variables
-		model.addAttribute("usertype", "user");
+		String userType = "user";
+		user = em.merge(user);
+		if(user.getUserRoles().contains("ROLE_ADMIN")) {
+			userType = "admin";
+		}
+		model.addAttribute("usertype", userType);
 		model.addAttribute("page", "patient");
 		model.addAttribute("subpage", "createPatient");	
 		//Page variables

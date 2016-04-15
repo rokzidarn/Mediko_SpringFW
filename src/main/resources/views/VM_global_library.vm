@@ -1,17 +1,22 @@
 #macro(sidemenu $usertype $page $subpage)
 	<div class="side-menu">
 		#if($usertype && ($usertype == "user" || $usertype == "admin"))
-		    <a href="#">
+		    <a href="#springUrl('/home')">
 		        <div class="side-menu-item #if($page && $page=="home")side-menu-item-selected #end">
-		        HOME
+		        NADZORNA PLOŠČA
 		        </div>
 		    </a>
 		    <a href="#">
 		        <div class="side-menu-item #if($page && $page=="history")side-menu-item-selected #end">
-		        HISTORY
+		        PREGLEDI
 		        </div>
 		    </a>
 		    <a href="#">
+		        <div class="side-menu-item #if($page && $page=="doctor")side-menu-item-selected #end">
+		        ZDRAVNIK
+		        </div>
+		    </a>
+		    <a href="#springUrl('/patient/createPatient')">
 		        <div class="side-menu-item #if($page && $page=="patient")side-menu-item-selected #end">
 		        PACIENTI
 		        </div>
@@ -39,7 +44,7 @@
 			<div class="side-menu-seperator"></div>
 			<a href="#">
 				<div class="side-menu-item #if($page && $page=="admin")side-menu-item-selected #end">
-					ADMINISTRATION
+					ADMINISTRACIJA
 				</div>
 			</a>
 			#if($page && $page == "admin")
