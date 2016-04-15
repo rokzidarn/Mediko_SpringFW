@@ -3,8 +3,11 @@ package si.fri.t15.patient.controllers;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -13,6 +16,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,9 +28,11 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import si.fri.t15.base.controllers.ControllerBase;
+import si.fri.t15.dao.UserRepository;
 import si.fri.t15.models.UserRole;
 import si.fri.t15.models.user.User;
 import si.fri.t15.validators.SignUpForm;
@@ -36,8 +43,14 @@ public class SignupController extends ControllerBase {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	JavaMailSender mailSender;
+	
 	@PersistenceContext
     private EntityManager em;
+	
+	@Autowired
+	UserRepository userRepo;
 	
 	
 	@InitBinder
@@ -79,7 +92,7 @@ public class SignupController extends ControllerBase {
 		newUser.setAccountNonExpired(true);
 		newUser.setAccountNonLocked(true);
 		newUser.setCredentialsNonExpired(true);
-		newUser.setEnabled(true); //false for mail confirmation
+		newUser.setEnabled(false); //false for mail confirmation
 		
 		Query userRoleQuery = em.createNamedQuery("UserRole.findByRole");
 		userRoleQuery.setParameter("role", "ROLE_USER");
@@ -89,22 +102,56 @@ public class SignupController extends ControllerBase {
 		if(res.isEmpty()){
 			userRole = new UserRole();
 			userRole.setRole("ROLE_USER");
+			//Save user role
+			em.persist(userRole);
 		}else{
 			userRole = res.get(0);
 		}
-		//Save user role
-		em.persist(userRole);
 		
 		//Set users userroles
 		Set<UserRole> userRoles = new HashSet<>(0);
 		userRoles.add(userRole);
 		newUser.setUserRoles(userRoles);
 		
+		String activationToken = UUID.randomUUID().toString().substring(0, 15); 
+		newUser.setPasswordResetToken(activationToken);
+		
 		//save user
 		em.persist(newUser);
-		//send email to confirm, don't show home/home!
+		
+		signUpConfirmationMail(newUser, activationToken);
 		
 		return new ModelAndView("redirect:/index/signin");
 	}
 	
+	@Transactional
+	@RequestMapping("/confirm")
+	public String confirmRegistration(Model model, HttpServletRequest request, @RequestParam String token) {
+		User user = userRepo.findByPasswordResetToken(token);
+		if(user!=null) {
+			user.setEnabled(true);
+			user.setPasswordResetToken(null);
+			em.merge(user);
+			return "redirect:/index/signin?activationSuccess";
+		}
+		
+		return "redirect:/index/signin?activationError";
+	}
+	
+	private void signUpConfirmationMail(User user, String activationToken) {
+		MimeMessage mail = mailSender.createMimeMessage();
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+			helper.setTo(user.getUsername());
+			helper.setFrom("mediko@sladic.si");
+			helper.setSubject("Potrditvena povezava za registracijo");
+			helper.setText("Prosimo, kliknite na povezavo, da zaključite z registracijo\n"
+					+ "in aktivirate svoj račun v sistemu Mediko.\n"
+					+ "https://sladic.si/mediko/confirm?token=" + activationToken);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} finally {
+		}
+		mailSender.send(mail);
+	}
 }
