@@ -39,7 +39,7 @@ public class CreatePatientController extends ControllerBase{
 	@Autowired
 	CreatePatientValidator createPatientValidator;
 	
-	@InitBinder
+	@InitBinder("command")
 	protected void initBinder(HttpServletRequest request,
 			ServletRequestDataBinder binder) {
 		binder.setValidator(createPatientValidator);
@@ -58,6 +58,7 @@ public class CreatePatientController extends ControllerBase{
 		if(user.getUserRoles().contains("ROLE_ADMIN")) {
 			userType = "admin";
 		}
+		model.addAttribute("user",user);
 		model.addAttribute("usertype", userType);
 		model.addAttribute("page", "patient");
 		model.addAttribute("subpage", "createPatient");	

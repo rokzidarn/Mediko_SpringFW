@@ -1,7 +1,7 @@
 #macro(sidemenu $usertype $page $subpage)
 	<div class="side-menu">
 		#if($usertype && ($usertype == "user" || $usertype == "admin"))
-		    <a href="#springUrl('/home')">
+		    <a href="#springUrl('/dashboard')">
 		        <div class="side-menu-item #if($page && $page=="home")side-menu-item-selected #end">
 		        NADZORNA PLOŠČA
 		        </div>
