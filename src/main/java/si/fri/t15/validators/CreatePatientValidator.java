@@ -31,7 +31,7 @@ public class CreatePatientValidator implements Validator{
 		
 		CreatePatientForm u = (CreatePatientForm) target;
 		
-		if(!GenericValidator.isDate(u.getBirth(), "YYYY-MM-DD", true)){
+		if(!GenericValidator.isDate(u.getBirth(), "yyyy-MM-dd", false)){
 			errors.rejectValue("birth", "field.format","Napačen format datuma");
 		}
 		
