@@ -1,6 +1,7 @@
 package si.fri.t15.index.controllers;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ public class IndexController extends ControllerBase{
 		model.addAttribute("page", "index");
 		model.addAttribute("user", "none");
 		model.addAttribute("title", "MEDIKO");
-		
+
 		return "index";
 	}
 }
