@@ -54,7 +54,7 @@ public class SignupController extends ControllerBase {
 	@Autowired
 	UserRepository userRepo;
 	
-	@Value("${proxy.realPath}")
+	@Value("${proxy.realPath:#{null}}")
 	private String domain;
 	
 	
