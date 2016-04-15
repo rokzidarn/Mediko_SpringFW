@@ -14,7 +14,7 @@ import si.fri.t15.base.controllers.ControllerBase;
 @Controller
 public class SigninController extends ControllerBase {
 	
-	@RequestMapping(value = "index/signin", method=RequestMethod.GET)
+	@RequestMapping(value = "/login", method=RequestMethod.GET)
 	public String signin(Model model, HttpServletRequest request) {
 		model.addAttribute("signin", "signin");
 		model.addAttribute("page", "login");
