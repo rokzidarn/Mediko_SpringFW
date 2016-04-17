@@ -287,6 +287,8 @@
                                 </div>
                             </div>
                             <div class="sidebar-seperator"></div>
+                            #patientPicker($user)
+                            <div class="sidebar-seperator"></div>
                             #sidemenu($usertype $page $subpage)
                             <div class="sidebar-seperator"></div>
                         </div>
