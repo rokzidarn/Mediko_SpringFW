@@ -71,3 +71,29 @@
 			</div>
 		#end
 #end
+#macro(patientPicker $user)
+	<div class="selected-patient-title" onclick="$('#patientsContainer').slideToggle(500)">
+		Izbrani pacient:
+		<div class="selected-patient-edit">
+			<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div class="selected-patient">
+		$selectedPatient.getFirst_name() $selectedPatient.getLast_name()
+	</div>
+	<div id="patientsContainer" class="available-patients-container" style="display: none">
+		<a href="#springUrl('/dashboard/patient/')$user.getData().getId()">
+			<div class="patient-select-item #if($selectedPatient.getId() == $user.getData().getId()) patient-select-item-selected #end">
+				$user.getData().getFirst_name() $user.getData().getLast_name()
+			</div>
+		</a>
+		#foreach($patient in $user.getData().getPatients())
+			<a href="#springUrl('/dashboard/patient/')$patient.getId()">
+				<div class="patient-select-item #if($selectedPatient.getId() == $patient.getId()) patient-select-item-selected #end">
+					$patient.getFirst_name() $patient.getLast_name()
+				</div>
+			</a>
+		#end
+	</div>
+
+#end
