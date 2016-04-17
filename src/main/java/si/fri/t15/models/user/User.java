@@ -63,6 +63,11 @@ public class User implements UserDetails, CredentialsContainer{
 	
 	@Column
 	private boolean isEnabled;
+	
+	//SelectedPatient 
+	
+	transient private PatientData selectedPatient;
+
 
 	@Override
 	public void eraseCredentials() {
@@ -161,6 +166,14 @@ public class User implements UserDetails, CredentialsContainer{
 
 	public void setEnabled(boolean isEnabled) {
 		this.isEnabled = isEnabled;
+	}
+	
+	public PatientData getSelectedPatient() {
+		return selectedPatient;
+	}
+
+	public void setSelectedPatient(PatientData selectedPatient) {
+		this.selectedPatient = selectedPatient;
 	}
 	
 	

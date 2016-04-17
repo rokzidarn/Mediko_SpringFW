@@ -79,19 +79,21 @@
 		</div>
 	</div>
 	<div class="selected-patient">
-		Janez Novak
+		$selectedPatient.getFirst_name() $selectedPatient.getLast_name()
 	</div>
 	<div id="patientsContainer" class="available-patients-container" style="display: none">
-		<a href="#">
-			<div class="patient-select-item patient-select-item-selected">
-				Janez Novak
+		<a href="#springUrl('/dashboard/patient/')$user.getData().getId()">
+			<div class="patient-select-item #if($selectedPatient.getId() == $user.getData().getId()) patient-select-item-selected #end">
+				$user.getData().getFirst_name() $user.getData().getLast_name()
 			</div>
 		</a>
-		<a href="#">
-			<div class="patient-select-item">
-				Rok Zidarn
-			</div>
-		</a>
+		#foreach($patient in $user.getData().getPatients())
+			<a href="#springUrl('/dashboard/patient/')$patient.getId()">
+				<div class="patient-select-item #if($selectedPatient.getId() == $patient.getId()) patient-select-item-selected #end">
+					$patient.getFirst_name() $patient.getLast_name()
+				</div>
+			</a>
+		#end
 	</div>
 
 #end
