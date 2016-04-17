@@ -21,23 +21,32 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <strong>Ime</strong><br>
-                                                        Janez
+                                                        $selectedPatient.first_name
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Priimek</strong><br>
-                                                        Novak
+                                                        $selectedPatient.last_name
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Datum rojstva</strong><br>
-                                                        17.4.1960
+                                                        $selectedPatient.birth_date
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <strong>Spol</strong><br>
+                                                        #if($selectedPatient.getSex() == 'f')
+                                                        	Ženski
+                                                        #else
+                                                        	Moški
+                                                        #end
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Kartica ZZZS</strong><br>
-                                                        214893240294
+                                                        xxxxxxxxxx
                                                     </div>
+                                                    
                                                     <div class="col-md-6">
                                                         <strong>Naslov in kraj</strong><br>
-                                                        Linhartova cesta 36<br>1000 Ljubljana
+                                                        $selectedPatient.address<br>$p.po_box.city
                                                     </div>
                                                 </div>
                                             </div>
@@ -48,13 +57,18 @@
                                             <div class="panel-heading">Zdravniki</div>
                                             <div class="panel-body">
                                                <div class="row">
+                                               	#if(!$p.doctor)
+                                               		<div class="col-md-6">
+                                                        <strong>Nimate še izbranega zdravnika!</strong><br>
+                                                    </div>
+                                                #else
                                                     <div class="col-md-6">
                                                         <strong>Ime</strong><br>
-                                                        Gregory
+                                                        $p.doctor.first_name
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Priimek</strong><br>
-                                                        House
+                                                        $p.doctor.last_name
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Tip</strong><br>
@@ -67,7 +81,8 @@
                                                     <div class="col-md-6">
                                                         <strong>Medicinska sestra</strong><br>
                                                         Thirteen, 13
-                                                    </div>                                                   
+                                                    </div>   
+                                            	#end                                                
                                                 </div>
                                             </div>
                                         </div>

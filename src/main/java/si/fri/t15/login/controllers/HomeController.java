@@ -3,6 +3,7 @@ package si.fri.t15.login.controllers;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import si.fri.t15.base.controllers.ControllerBase;
+import si.fri.t15.base.models.UserData;
+import si.fri.t15.models.PO_Box;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
 
@@ -50,10 +53,6 @@ public class HomeController extends ControllerBase{
 		//model.addAttribute("_csrf", (CsrfToken) request.getAttribute(CsrfToken.class.getName()));
 		//model.addAttribute("trans", getTranslation("login.title", request));
 		
-		
-		
-		
-		
 		//REDIRECT ČE NIMA PATIENT DATA
 		if(userSession.getData() == null){
 			return "redirect:/createProfile";
@@ -66,6 +65,10 @@ public class HomeController extends ControllerBase{
 		//Side menu variables
 		String userType = "user";
 		User user = em.merge(userSession);
+		PatientData p = em.merge(userSession.getSelectedPatient());
+		
+		Hibernate.initialize(p.getPo_box());
+		Hibernate.initialize(p.getDoctor());
 		
 		//Naloži lazy podatke
 		if(user.getData().getClass().equals(PatientData.class)){
@@ -77,6 +80,7 @@ public class HomeController extends ControllerBase{
 		}
 		model.addAttribute("usertype", userType);
 		model.addAttribute("selectedPatient", userSession.getSelectedPatient());
+		model.addAttribute("p", p);
 		model.addAttribute("page", "home");
 		model.addAttribute("path", "/mediko_dev/");
 		//Page variables
