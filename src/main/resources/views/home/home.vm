@@ -80,8 +80,12 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Medicinska sestra</strong><br>
-                                                        #foreach($nurse in $p.doctor.nurses)
-                                                        	$nurse.first_name $nurse.last_name
+                                                        #if(!$p.doctor.nurses)
+                                                        /
+                                                        #else
+	                                                        #foreach($nurse in $p.doctor.nurses)
+	                                                        	$nurse.first_name $nurse.last_name
+	                                                    	#end
                                                     	#end
                                                     </div>   
                                             	#end                                                
