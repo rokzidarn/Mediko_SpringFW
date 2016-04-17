@@ -104,7 +104,9 @@ a:link, a:hover, a:active{
 	padding-right:20px;	
 }
 .available-patients-container{
-	
+	max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
     background-color: rgba(0,0,0,0.3);
 }
 
