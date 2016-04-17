@@ -71,3 +71,27 @@
 			</div>
 		#end
 #end
+#macro(patientPicker $user)
+	<div class="selected-patient-title" onclick="$('#patientsContainer').slideToggle(500)">
+		Izbrani pacient:
+		<div class="selected-patient-edit">
+			<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div class="selected-patient">
+		Janez Novak
+	</div>
+	<div id="patientsContainer" class="available-patients-container" style="display: none">
+		<a href="#">
+			<div class="patient-select-item patient-select-item-selected">
+				Janez Novak
+			</div>
+		</a>
+		<a href="#">
+			<div class="patient-select-item">
+				Rok Zidarn
+			</div>
+		</a>
+	</div>
+
+#end
