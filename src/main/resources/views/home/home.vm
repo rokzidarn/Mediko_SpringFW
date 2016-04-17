@@ -28,8 +28,16 @@
                                                         Novak
                                                     </div>
                                                     <div class="col-md-6">
+                                                        <strong>Datum rojstva</strong><br>
+                                                        17.4.1960
+                                                    </div>
+                                                    <div class="col-md-6">
                                                         <strong>Kartica ZZZS</strong><br>
                                                         214893240294
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <strong>Naslov in kraj</strong><br>
+                                                        Linhartova cesta 36<br>1000 Ljubljana
                                                     </div>
                                                 </div>
                                             </div>
@@ -39,7 +47,28 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Zdravniki</div>
                                             <div class="panel-body">
-                                                neki podobnega ko osebni profil
+                                               <div class="row">
+                                                    <div class="col-md-6">
+                                                        <strong>Ime</strong><br>
+                                                        Gregory
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <strong>Priimek</strong><br>
+                                                        House
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <strong>Tip</strong><br>
+                                                        Osebni zdravnik
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <strong>Zdravstvena ustanova</strong><br>
+                                                        Princeton-Plainsboro Teaching Hospital, NJ
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <strong>Medicinska sestra</strong><br>
+                                                        Thirteen, 13
+                                                    </div>                                                   
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -55,24 +84,14 @@
                                                             <tr> 
                                                                 <th>Datum</th> 
                                                                 <th>Zdravnik</th>
-                                                                <th>Dodatno</th>
+                                                                <th>Diagnoza</th>
                                                             </tr>
                                                         </thead> 
                                                         <tbody> 
                                                             <tr> 
                                                                 <th scope="row">17.4.2016</th> 
-                                                                <td>dr. med. Kekec Novak</td> 
-                                                                <td>-</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th scope="row">10.2.2016</th>
-                                                                <td>dr. med. Kekec Novak</td> 
-                                                                <td>-</td> 
-                                                            </tr> 
-                                                            <tr> 
-                                                                <th scope="row">12.10.2015</th> 
-                                                                <td>dr. med. Kekec Novak</td> 
-                                                                <td>-</td> 
+                                                                <td>dr. med. Gregory House</td> 
+                                                                <td>Gripa</td>
                                                             </tr> 
                                                         </tbody> 
                                                     </table>
@@ -89,25 +108,15 @@
                                                     <table class="table table-hover">
                                                         <thead>
                                                             <tr> 
-                                                                <th>Datum obolenja</th> 
+                                                                <th>Razlog</th>
                                                                 <th>Bolezen</th>
                                                                 <th>Dodatno</th>
                                                             </tr>
                                                         </thead> 
                                                         <tbody> 
                                                             <tr> 
-                                                                <th scope="row">17.4.2016</th> 
-                                                                <td>gripa</td> 
-                                                                <td>-</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th scope="row">10.2.2016</th>
-                                                                <td>driska</td> 
-                                                                <td>-</td> 
-                                                            </tr> 
-                                                            <tr> 
-                                                                <th scope="row">1.10.2015</th> 
-                                                                <td>faks</td> 
+                                                                <th scope="row">Bolečina v prsih</th> 
+                                                                <td>Srčni zastoj</td> 
                                                                 <td>-</td> 
                                                             </tr> 
                                                         </tbody> 
@@ -127,19 +136,20 @@
                                                     <table class="table table-hover">
                                                         <thead>
                                                             <tr> 
-                                                                <th>Datum obolenja</th> 
+                                                                <th>Razlog</th> 
                                                                 <th>Alergija</th>
                                                                 <th>Dodatno</th>
                                                             </tr>
                                                         </thead> 
                                                         <tbody> 
                                                             <tr> 
-                                                                <th scope="row">17.4.2016</th> 
+                                                                <th scope="row">Kihanje</th> 
                                                                 <td>Cvetni prah</td> 
                                                                 <td>-</td>
                                                             </tr>
                                                         </tbody> 
                                                     </table>
+                                                    <button type="button" class="btn btn-info">Pokaži več</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -153,20 +163,19 @@
                                                         <thead>
                                                             <tr> 
                                                                 <th>Dieta</th>
-                                                                <th>Datum pričetka</th>
-                                                                <th>Datum konca</th>
-                                                                <th>Dodatno</th>
+                                                                <th>Trajanje</th>
+                                                                <th>Navodila</th>
                                                             </tr>
                                                         </thead> 
                                                         <tbody> 
                                                             <tr> 
                                                                 <th scope="row">Brezglutenska</th> 
-                                                                <td>17.4.2016</td> 
-                                                                <td>17.4.2016</td> 
-                                                                <td><a href="#">Link do diete</a></td>
+                                                                <td>6 mesecev</td>  
+                                                                <td><a href="#">Povezava</a></td>
                                                             </tr>
                                                         </tbody> 
                                                     </table>
+                                                    <button type="button" class="btn btn-info">Pokaži več</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -182,20 +191,17 @@
                                                         <thead>
                                                             <tr> 
                                                                 <th>Zdravilo</th>
-                                                                <th>Datum pričetka</th>
-                                                                <th>Datum konca</th>
-                                                                <th>Dodatno</th>
+                                                                <th>Navodila</th>
                                                             </tr>
                                                         </thead> 
                                                         <tbody> 
                                                             <tr> 
-                                                                <th scope="row">Lekadol</th> 
-                                                                <td>17.4.2016</td> 
-                                                                <td>17.4.2016</td> 
-                                                                <td>2x dnevno</td>
+                                                                <th scope="row">Lekadol</th>  
+                                                                <td><a href="#">Povezava</a></td>
                                                             </tr>
                                                         </tbody> 
                                                     </table>
+                                                    <button type="button" class="btn btn-info">Pokaži več</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -208,42 +214,29 @@
                                                     <table class="table table-hover">
                                                         <thead>
                                                             <tr> 
+                                                            	<th>Tip</th>
                                                                 <th>Datum</th>
-                                                                <th>Lokacija</th>
-                                                                <th>Dodatno</th>
+                                                                <th>Lokacija</th>    
                                                             </tr>
                                                         </thead> 
                                                         <tbody> 
                                                             <!-- MERITEV 1-->
                                                             <tr onclick="$('#meritev-0').toggle(500)"> 
-                                                                <th scope="row">17.4.2016</th> 
-                                                                <td>Na domu</td> 
-                                                                <td>/</td> 
+                                                                <th scope="row">Sladkor</th> 
+                                                                <td>17.4.2016</td> 
+                                                                <td>Na domu</td>                                                                
                                                             </tr>
                                                             <tr class="info" id="meritev-0" style="display: none">
                                                                 <td colspan="3">
                                                                     <div>
-                                                                        Dodatni podatki o meritvah, ki se razteza čez več stolpcev
+                                                                        4.1 mmol/l
                                                                     </div>
                                                                 </td>
                                                             </tr>
-                                                            <!-- KONEC MERITVE 1 -->
-                                                            <!-- MERITEV 2-->
-                                                            <tr onclick="$('#meritev-1').toggle(500)"> 
-                                                                <th scope="row">17.4.2013</th> 
-                                                                <td>Zdravnik</td> 
-                                                                <td>/</td> 
-                                                            </tr>
-                                                            <tr class="info" id="meritev-1" style="display: none">
-                                                                <td colspan="3">
-                                                                    <div>
-                                                                        Dodatni podatki o meritvah, ki se razteza čez več stolpcev
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <!-- KONEC MERITVE 2 -->
+                                                            <!-- KONEC MERITVE 0 <tr onclick="$('#meritev-1').toggle(500)"> -->
                                                         </tbody> 
                                                     </table>
+                                                    <button type="button" class="btn btn-info">Pokaži več</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -260,29 +253,17 @@
                                                             <tr> 
                                                                 <th>Datum</th> 
                                                                 <th>Zdravnik</th>
-                                                                <th>Dodatno</th>
                                                             </tr>
                                                         </thead> 
                                                         <tbody> 
                                                             <tr> 
-                                                                <th scope="row">17.4.2017</th> 
-                                                                <td>dr. med. Kekec Novak</td> 
-                                                                <td>-</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th scope="row">10.2.2018</th>
-                                                                <td>dr. med. Kekec Novak</td> 
-                                                                <td>-</td> 
-                                                            </tr> 
-                                                            <tr> 
-                                                                <th scope="row">12.10.2019</th> 
-                                                                <td>dr. med. Kekec Novak</td> 
-                                                                <td>-</td> 
-                                                            </tr> 
+                                                                <th scope="row">17.5.2016</th> 
+                                                                <td>dr. med. Lisa Cuddy</td> 
+                                                            </tr>                                                           
                                                         </tbody> 
                                                     </table>
                                                 </div>
-                                                <button type="button" class="btn btn-primary">Naroči na pregled</button>
+                                                <button type="button" class="btn btn-info">Naroči na pregled</button>
                                             </div>
                                         </div>
                                     </div>

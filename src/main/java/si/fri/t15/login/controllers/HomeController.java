@@ -42,7 +42,7 @@ public class HomeController extends ControllerBase{
 		model.addAttribute("page", "home");
 		model.addAttribute("path", "/mediko_dev/");
 		//Page variables
-		model.addAttribute("title", "Prijava");
+		model.addAttribute("title", "NADZORNA PLOŠČA MEDIKO");
 		model.addAttribute("user", user);
 		return "home";
 	}
