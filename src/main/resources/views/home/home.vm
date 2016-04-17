@@ -38,15 +38,14 @@
                                                         #else
                                                         	Moški
                                                         #end
+                                                    </div>                                                                                                   
+                                                    <div class="col-md-6">
+                                                        <strong>Naslov in kraj</strong><br>
+                                                        $selectedPatient.address<br>$p.po_box.city
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Kartica ZZZS</strong><br>
                                                         xxxxxxxxxx
-                                                    </div>
-                                                    
-                                                    <div class="col-md-6">
-                                                        <strong>Naslov in kraj</strong><br>
-                                                        $selectedPatient.address<br>$p.po_box.city
                                                     </div>
                                                 </div>
                                             </div>
@@ -156,9 +155,11 @@
 			                                                        </thead> 
 			                                                        <tbody> 
 			                                                            <tr> 
-			                                                                <th scope="row">Bolečina v prsih</th> 
-			                                                                <td>Srčni zastoj</td> 
-			                                                                <td>-</td> 
+			                                                            	#if($disease.type == 0)
+				                                                                <th scope="row">$checkup.reason</th> 
+				                                                                <td>$disease.name</td> 
+				                                                                <td>-</td> 
+			                                                                #end
 			                                                            </tr> 
 			                                                        </tbody> 
 			                                                    </table>                                                  
@@ -177,25 +178,43 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading"Bolezni>Alergije</div>
                                             <div class="panel-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr> 
-                                                                <th>Razlog</th> 
-                                                                <th>Alergija</th>
-                                                                <th>Dodatno</th>
-                                                            </tr>
-                                                        </thead> 
-                                                        <tbody> 
-                                                            <tr> 
-                                                                <th scope="row">Kihanje</th> 
-                                                                <td>Cvetni prah</td> 
-                                                                <td>-</td>
-                                                            </tr>
-                                                        </tbody> 
-                                                    </table>
-                                                    <button type="button" class="btn btn-info">Pokaži več</button>
-                                                </div>
+                                            #if($p.checkups.isEmpty())
+                                            	<div class="col-md-6">
+													<strong>Nimate alergij!</strong><br>
+												</div>
+											#else
+                                            	#foreach($checkup in $p.checkups)
+	                                            	#if($checkup.diseases.isEmpty())
+														<div class="col-md-6">
+															<strong>Nimate alergij!</strong><br>
+														</div>
+													#else
+														#foreach($disease in $checkup.diseases)
+															<div class="table-responsive">
+			                                                    <table class="table table-hover">
+			                                                        <thead>
+			                                                            <tr> 
+			                                                                <th>Razlog</th>
+			                                                                <th>Alergija</th>
+			                                                                <th>Dodatno</th>
+			                                                            </tr>
+			                                                        </thead> 
+			                                                        <tbody> 
+			                                                            <tr> 
+			                                                                #if($disease.type == 1)
+				                                                                <th scope="row">$checkup.reason</th> 
+				                                                                <td>$disease.name</td> 
+				                                                                <td>-</td> 
+			                                                                #end 
+			                                                            </tr> 
+			                                                        </tbody> 
+			                                                    </table>                                                  
+			                                                </div>
+			                                                <button type="button" class="btn btn-info">Pokaži več</button>
+														#end
+                                                	#end
+                                                #end
+                                        	#end 
                                             </div>
                                         </div>
                                     </div>
@@ -203,25 +222,43 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading"Bolezni>Diete</div>
                                             <div class="panel-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr> 
-                                                                <th>Dieta</th>
-                                                                <th>Trajanje</th>
-                                                                <th>Navodila</th>
-                                                            </tr>
-                                                        </thead> 
-                                                        <tbody> 
-                                                            <tr> 
-                                                                <th scope="row">Brezglutenska</th> 
-                                                                <td>6 mesecev</td>  
-                                                                <td><a href="#">Povezava</a></td>
-                                                            </tr>
-                                                        </tbody> 
-                                                    </table>
-                                                    <button type="button" class="btn btn-info">Pokaži več</button>
-                                                </div>
+                                            #if($p.checkups.isEmpty())
+                                            	<div class="col-md-6">
+													<strong>Nimate diet!</strong><br>
+												</div>
+											#else
+                                            	#foreach($checkup in $p.checkups)
+	                                            	#if($checkup.diets.isEmpty())
+														<div class="col-md-6">
+															<strong>Nimate diet!</strong><br>
+														</div>
+													#else
+														#foreach($diet in $checkup.diets)
+															<div class="table-responsive">
+			                                                    <table class="table table-hover">
+			                                                        <thead>
+			                                                            <tr> 
+			                                                                <th>Dieta</th>
+			                                                                <th>Trajanje</th>
+			                                                                <th>Navodila</th>
+			                                                            </tr>
+			                                                        </thead> 
+			                                                        <tbody> 
+			                                                            <tr> 
+			                                                                #if($disease.type == 1)
+				                                                                <th scope="row">$diet.name</th> 
+				                                                                <td>$diet.duration</td> 
+				                                                                <td>-</td> 
+			                                                                #end 
+			                                                            </tr> 
+			                                                        </tbody> 
+			                                                    </table>                                                  
+			                                                </div>
+			                                                <button type="button" class="btn btn-info">Pokaži več</button>
+														#end
+                                                	#end
+                                                #end
+                                        	#end 
                                             </div>
                                         </div>
                                     </div>
@@ -231,23 +268,39 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading"Bolezni>Zdravila</div>
                                             <div class="panel-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr> 
-                                                                <th>Zdravilo</th>
-                                                                <th>Navodila</th>
-                                                            </tr>
-                                                        </thead> 
-                                                        <tbody> 
-                                                            <tr> 
-                                                                <th scope="row">Lekadol</th>  
-                                                                <td><a href="#">Povezava</a></td>
-                                                            </tr>
-                                                        </tbody> 
-                                                    </table>
-                                                    <button type="button" class="btn btn-info">Pokaži več</button>
-                                                </div>
+                                            #if($p.checkups.isEmpty())
+                                            	<div class="col-md-6">
+													<strong>Nimate zdravil!</strong><br>
+												</div>
+											#else
+                                            	#foreach($checkup in $p.checkups)
+	                                            	#if($checkup.medicines.isEmpty())
+														<div class="col-md-6">
+															<strong>Nimate zdravil!</strong><br>
+														</div>
+													#else
+														#foreach($medicine in $checkup.medicines)
+															<div class="table-responsive">
+			                                                    <table class="table table-hover">
+			                                                        <thead>
+			                                                            <tr> 
+			                                                                <th>Zdravilo</th>
+			                                                                <th>Navodila</th>
+			                                                            </tr>
+			                                                        </thead> 
+			                                                        <tbody> 
+			                                                            <tr> 
+			                                                                <th scope="row">$medicine.name</th> 
+			                                                                <td>-</td> 
+			                                                            </tr> 
+			                                                        </tbody> 
+			                                                    </table>                                                  
+			                                                </div>
+			                                                <button type="button" class="btn btn-info">Pokaži več</button>
+														#end
+                                                	#end
+                                                #end
+                                        	#end 
                                             </div>
                                         </div>
                                     </div>
