@@ -34,7 +34,7 @@ public abstract class UserData implements Serializable {
 	@Column(name="Sex",  nullable=false, updatable=true)
 	protected char sex;
 
-	public char isSex() {
+	public char getSex() {
 		return sex;
 	}
 

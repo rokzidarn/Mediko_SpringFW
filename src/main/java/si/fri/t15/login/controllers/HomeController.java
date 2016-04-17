@@ -69,6 +69,8 @@ public class HomeController extends ControllerBase{
 		
 		Hibernate.initialize(p.getPo_box());
 		Hibernate.initialize(p.getDoctor());
+		Hibernate.initialize(p.getDoctor().getMedical_center());
+		Hibernate.initialize(p.getDoctor().getNurses());
 		
 		//Naloži lazy podatke
 		if(user.getData().getClass().equals(PatientData.class)){

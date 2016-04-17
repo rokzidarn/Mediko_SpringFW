@@ -72,15 +72,17 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Tip</strong><br>
-                                                        Osebni zdravnik
+                                                        $p.doctor.type
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Zdravstvena ustanova</strong><br>
-                                                        Princeton-Plainsboro Teaching Hospital, NJ
+                                                        $p.doctor.medical_center.name
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Medicinska sestra</strong><br>
-                                                        Thirteen, 13
+                                                        #foreach($nurse in $p.doctor.nurses)
+                                                        	$nurse.first_name $nurse.last_name
+                                                    	#end
                                                     </div>   
                                             	#end                                                
                                                 </div>
