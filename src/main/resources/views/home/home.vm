@@ -130,7 +130,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading"Bolezni>Bolezni</div>
+                                            <div class="panel-heading">Bolezni</div>
                                             <div class="panel-body">
                                             #if($p.checkups.isEmpty())
                                             	<div class="col-md-6">
@@ -176,7 +176,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading"Bolezni>Alergije</div>
+                                            <div class="panel-heading">Alergije</div>
                                             <div class="panel-body">
                                             #if($p.checkups.isEmpty())
                                             	<div class="col-md-6">
@@ -220,7 +220,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading"Bolezni>Diete</div>
+                                            <div class="panel-heading">Diete</div>
                                             <div class="panel-body">
                                             #if($p.checkups.isEmpty())
                                             	<div class="col-md-6">
@@ -239,7 +239,6 @@
 			                                                        <thead>
 			                                                            <tr> 
 			                                                                <th>Dieta</th>
-			                                                                <th>Trajanje</th>
 			                                                                <th>Navodila</th>
 			                                                            </tr>
 			                                                        </thead> 
@@ -247,7 +246,6 @@
 			                                                            <tr> 
 			                                                                #if($disease.type == 1)
 				                                                                <th scope="row">$diet.name</th> 
-				                                                                <td>$diet.duration</td> 
 				                                                                <td>-</td> 
 			                                                                #end 
 			                                                            </tr> 
@@ -266,7 +264,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading"Bolezni>Zdravila</div>
+                                            <div class="panel-heading">Zdravila</div>
                                             <div class="panel-body">
                                             #if($p.checkups.isEmpty())
                                             	<div class="col-md-6">
@@ -285,12 +283,14 @@
 			                                                        <thead>
 			                                                            <tr> 
 			                                                                <th>Zdravilo</th>
+			                                                                <th>Tip</th>
 			                                                                <th>Navodila</th>
 			                                                            </tr>
 			                                                        </thead> 
 			                                                        <tbody> 
 			                                                            <tr> 
 			                                                                <th scope="row">$medicine.name</th> 
+			                                                                <td>$medicine.type</td>
 			                                                                <td>-</td> 
 			                                                            </tr> 
 			                                                        </tbody> 
@@ -306,62 +306,84 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading"Bolezni>Meritve</div>
+                                            <div class="panel-heading">Meritve</div>
                                             <div class="panel-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr> 
-                                                            	<th>Tip</th>
-                                                                <th>Datum</th>
-                                                                <th>Lokacija</th>    
-                                                            </tr>
-                                                        </thead> 
-                                                        <tbody> 
-                                                            <!-- MERITEV 1-->
-                                                            <tr onclick="$('#meritev-0').toggle(500)"> 
-                                                                <th scope="row">Sladkor</th> 
-                                                                <td>17.4.2016</td> 
-                                                                <td>Na domu</td>                                                                
-                                                            </tr>
-                                                            <tr class="info" id="meritev-0" style="display: none">
-                                                                <td colspan="3">
-                                                                    <div>
-                                                                        4.1 mmol/l
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <!-- KONEC MERITVE 0 <tr onclick="$('#meritev-1').toggle(500)"> -->
-                                                        </tbody> 
-                                                    </table>
-                                                    <button type="button" class="btn btn-info">Pokaži več</button>
-                                                </div>
+                                            #if($p.checkups.isEmpty())
+                                            	<div class="col-md-6">
+													<strong>Nimate meritev!</strong><br>
+												</div>
+											#else
+                                            	#foreach($checkup in $p.checkups)
+	                                            	#if($checkup.readings.isEmpty())
+														<div class="col-md-6">
+															<strong>Nimate meritev!</strong><br>
+														</div>
+													#else
+														#foreach($reading in $checkup.readings)
+															<div class="table-responsive">
+			                                                    <table class="table table-hover">
+			                                                        <thead>
+			                                                            <tr> 
+			                                                                <th>Tip</th>
+			                                                                <th>Datum</th>
+			                                                                <th>Lokacija</th>
+			                                                            </tr>
+			                                                        </thead> 
+			                                                        <tbody> 
+			                                                            <tr onclick="$('#meritev-0').toggle(500)"> 
+			                                                                <th scope="row">$reading.type</th> 
+			                                                                <td>$reading.date</td> 
+			                                                                <td>-</td>                                                                
+			                                                            </tr>
+			                                                            <tr class="info" id="meritev-0" style="display: none">
+			                                                                <td colspan="3">
+			                                                                    <div>
+			                                                                        -
+			                                                                    </div>
+			                                                                </td>
+			                                                            </tr>
+			                                                        </tbody> 
+			                                                    </table>                                                  
+			                                                </div>
+			                                                <button type="button" class="btn btn-info">Pokaži več</button>
+														#end
+                                                	#end
+                                                #end
+                                        	#end 
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>                                   
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading"Bolezni>Prihajajoči pregledi</div>
+                                            <div class="panel-heading">Prihajajoči pregledi</div>
                                             <div class="panel-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr> 
-                                                                <th>Datum</th> 
-                                                                <th>Zdravnik</th>
-                                                            </tr>
-                                                        </thead> 
-                                                        <tbody> 
-                                                            <tr> 
-                                                                <th scope="row">17.5.2016</th> 
-                                                                <td>dr. med. Lisa Cuddy</td> 
-                                                            </tr>                                                           
-                                                        </tbody> 
-                                                    </table>
+												#if($p.appointments.isEmpty())
+													<div class="col-md-6">
+														<strong>Nimate prihajajočih pregledov!</strong><br>
+													</div>
+												#else
+                                                <div class="table-responsive">                                               	
+	                                                    <table class="table table-hover">                                                   	
+	                                                        <thead>
+	                                                            <tr> 
+	                                                               <th>Datum</th> 
+                                                                   <th>Zdravnik</th>
+	                                                            </tr>
+	                                                        </thead>
+	                                                        #foreach($appointment in $p.appointments)                                                        
+	                                                        <tbody> 
+	                                                            <tr> 
+	                                                                <th scope="row">$appointment.date</th> 
+	                                                                <td>$appointment.doctor.first_name $appointment.doctor.last_name</td> 
+	                                                            </tr> 
+	                                                        </tbody> 
+	                                                        #end
+	                                                    </table>                                                   
                                                 </div>
-                                                <button type="button" class="btn btn-info">Naroči na pregled</button>
+                                                <button type="button" class="btn btn-info">Pokaži več</button>
+												#end                                            
                                             </div>
                                         </div>
                                     </div>
