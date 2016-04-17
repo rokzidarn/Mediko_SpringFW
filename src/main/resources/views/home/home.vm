@@ -99,25 +99,33 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Zadnji pregledi</div>
                                             <div class="panel-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr> 
-                                                                <th>Datum</th> 
-                                                                <th>Zdravnik</th>
-                                                                <th>Diagnoza</th>
-                                                            </tr>
-                                                        </thead> 
-                                                        <tbody> 
-                                                            <tr> 
-                                                                <th scope="row">17.4.2016</th> 
-                                                                <td>dr. med. Gregory House</td> 
-                                                                <td>Gripa</td>
-                                                            </tr> 
-                                                        </tbody> 
-                                                    </table>
+												#if($p.checkups.isEmpty())
+													<div class="col-md-6">
+														<strong>Nimate pregledov!</strong><br>
+													</div>
+												#else
+                                                <div class="table-responsive">                                               	
+	                                                    <table class="table table-hover">                                                   	
+	                                                        <thead>
+	                                                            <tr> 
+	                                                                <th>Datum</th> 
+	                                                                <th>Zdravnik</th>
+	                                                                <th>Razlog</th>
+	                                                            </tr>
+	                                                        </thead>
+	                                                        #foreach($checkup in $p.checkups)                                                        
+	                                                        <tbody> 
+	                                                            <tr> 
+	                                                                <th scope="row">$checkup.date</th> 
+	                                                                <td>$checkup.doctor.first_name $checkup.doctor.last_name</td> 
+	                                                                <td>$checkup.reason</td>
+	                                                            </tr> 
+	                                                        </tbody> 
+	                                                        #end
+	                                                    </table>                                                   
                                                 </div>
                                                 <button type="button" class="btn btn-info">Pokaži več</button>
+												#end                                            
                                             </div>
                                         </div>
                                     </div>

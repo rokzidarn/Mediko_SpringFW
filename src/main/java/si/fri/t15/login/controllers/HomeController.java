@@ -14,7 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.base.models.UserData;
+import si.fri.t15.models.Checkup;
+import si.fri.t15.models.Diet;
+import si.fri.t15.models.Disease;
+import si.fri.t15.models.Medicine;
 import si.fri.t15.models.PO_Box;
+import si.fri.t15.models.Result_Checkup;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
 
@@ -72,6 +77,27 @@ public class HomeController extends ControllerBase{
 		if(p.getDoctor()!=null)	{	
 			Hibernate.initialize(p.getDoctor().getMedical_center());
 			Hibernate.initialize(p.getDoctor().getNurses());
+		}
+		
+		if(p.getCheckups()!=null){	
+			//Hibernate.initialize(((Checkup) p.getCheckups()));
+			
+			for(Checkup c : p.getCheckups()){
+				Hibernate.initialize(c);
+				Hibernate.initialize(c.getDoctor());
+				for(Disease d : c.getDiseases()){
+					Hibernate.initialize(d);
+				}
+				for(Diet di : c.getDiets()){
+					Hibernate.initialize(di);
+				}
+				for(Medicine m : c.getMedicines()){
+					Hibernate.initialize(m);
+				}
+				for(Result_Checkup r : c.getResultCheckups()){
+					Hibernate.initialize(r);
+				}
+			}
 		}
 		
 		//Naloži lazy podatke
