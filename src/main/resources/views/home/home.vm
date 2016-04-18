@@ -45,7 +45,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Kartica ZZZS</strong><br>
-                                                        xxxxxxxxxx
+                                                        $selectedPatient.id
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,9 +78,9 @@
                                                         $p.doctor.medical_center.name
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <strong>Medicinska sestra</strong><br>
-                                                        #if(!$p.doctor.nurses)
-                                                        /
+                                                    	#if(!$p.doctor.nurses)
+                                                        <strong>Medicinska sestra</strong><br>                                                      
+                                                        	/
                                                         #else
 	                                                        #foreach($nurse in $p.doctor.nurses)
 	                                                        	$nurse.first_name $nurse.last_name

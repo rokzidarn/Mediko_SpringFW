@@ -19,6 +19,7 @@ import si.fri.t15.models.Diet;
 import si.fri.t15.models.Disease;
 import si.fri.t15.models.Medicine;
 import si.fri.t15.models.Result_Checkup;
+import si.fri.t15.models.user.NurseData;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
 
@@ -72,7 +73,12 @@ public class HomeController extends ControllerBase{
 		PatientData p = em.merge(userSession.getSelectedPatient());
 		
 		Hibernate.initialize(p.getPo_box());
-		Hibernate.initialize(p.getDoctor());		
+		Hibernate.initialize(p.getDoctor());
+		
+		for(NurseData n : p.getDoctor().getNurses()){
+			Hibernate.initialize(n);
+		}
+		
 		Hibernate.initialize(p.getAppointments());
 		
 		if(p.getAppointments()!=null){
