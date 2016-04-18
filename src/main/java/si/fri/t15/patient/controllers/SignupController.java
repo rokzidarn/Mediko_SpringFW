@@ -2,7 +2,6 @@ package si.fri.t15.patient.controllers;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
 
