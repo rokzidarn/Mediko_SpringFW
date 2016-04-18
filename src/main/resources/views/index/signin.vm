@@ -32,8 +32,7 @@
 									</p>
 									<p class="text-center">
 										<input type="submit" class="btn btn-danger" value="Pozabljeno geslo?">
-									</p>	
-									<a href="mediko_dev/../../home" class="btn btn-primary btn-lg" role="button">DOMOV</a>							
+									</p>								
 								</form>									
                             </div>
                         </div>

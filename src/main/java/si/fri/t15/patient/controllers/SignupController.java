@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -74,7 +75,6 @@ public class SignupController extends ControllerBase {
 		
 		model.addAttribute("path", "/mediko_dev/");
 		model.addAttribute("title", "Ustvari Račun");
-		model.addAttribute("user","none");
 		model.addAttribute("page", "register");
 		
 		return new ModelAndView("signup");
@@ -135,6 +135,8 @@ public class SignupController extends ControllerBase {
 		}
 		
 		signUpConfirmationMail(newUser, tString, activationToken);
+		
+		request.getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, "auth.message.confirm_mail");
 		
 		return new ModelAndView("redirect:/login");
 	}
