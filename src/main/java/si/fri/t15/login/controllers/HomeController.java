@@ -75,8 +75,10 @@ public class HomeController extends ControllerBase{
 		Hibernate.initialize(p.getPo_box());
 		Hibernate.initialize(p.getDoctor());
 		
-		for(NurseData n : p.getDoctor().getNurses()){
-			Hibernate.initialize(n);
+		if(p.getDoctor()!=null){
+			for(NurseData n : p.getDoctor().getNurses()){
+				Hibernate.initialize(n);
+			}
 		}
 		
 		Hibernate.initialize(p.getAppointments());
