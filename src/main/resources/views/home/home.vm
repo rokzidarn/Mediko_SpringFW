@@ -31,6 +31,12 @@
                                 <div class="patient-name">
                                     $user.username
                                 </div>
+                                #if($user.lastLogin)
+                                	<div class="patient-name">
+                                	<h4>Zadnja prijava</h4>
+                                	<h4>$user.lastLogin</h4>
+                                	</div>
+                                #end
                             </div>
                             <div class="sidebar-seperator"></div>
                             #sidemenu($usertype $page $subpage)
