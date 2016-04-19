@@ -19,7 +19,12 @@
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">
                             <div class="sidebar-topbar">
                                 <div class="logo" style="color:#eee">
-                                    
+                                    #if($user.lastLogin)
+                                        <div style="padding-left: 10px;">
+                                            <h6>Zadnja prijava</h6>
+                                            <h6>$user.lastLogin</h6>
+                                        </div>
+                                    #end
                                 </div>
                                 <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
                                 </div>
@@ -31,12 +36,6 @@
                                 <div class="patient-name">
                                     $user.username
                                 </div>
-                                #if($user.lastLogin)
-                                	<div class="patient-name">
-                                	<h4>Zadnja prijava</h4>
-                                	<h4>$user.lastLogin</h4>
-                                	</div>
-                                #end
                             </div>
                             <div class="sidebar-seperator"></div>
                             #sidemenu($usertype $page $subpage)
