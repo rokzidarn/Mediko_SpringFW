@@ -13,7 +13,7 @@ import si.fri.t15.models.user.PatientData;
 @Repository
 public interface MedicineRepository extends CrudRepository<Medicine, Integer> {
 
-	@Query("SELECT c.medicines FROM Checkup c"
+	@Query("SELECT c.medicines FROM Checkup c "
 			+ "WHERE c.patient = :patient")
 	List<List<Medicine>> findByPatient(@Param(value = "patient") PatientData patient);
 	

@@ -18,6 +18,17 @@ public class Disease implements Serializable{
 	@Column(name="Name", length=45, nullable=false)
 	private String name;
 	
+	@Column(name="isAllergy", nullable=false)
+	private int isAllergy;
+	
+	public int getIsAllergy() {
+		return isAllergy;
+	}
+
+	public void setIsAllergy(int isAllergy) {
+		this.isAllergy = isAllergy;
+	}
+	
 	public Disease() {
 	}	
 	
