@@ -12,29 +12,33 @@
                                 <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
                                 <div class="content-title">$title</div>
                             </div>
-                            <div class="content">                             
+                            <div class="content">  
+                            	#if($registrationSuccess)
+                            		<p>#springMessage($registrationSuccess)</p>
+                            	#end                           
 								<form method="POST" action="#springUrl("/admin/createMedicalWorker")">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 									<h4><p class="text-center"> Osnovni podatki<small> (obvezno)</small> </p></h4>
 									<div class="form-group">
-										#springBind("command.email")
+										#if($command) #springBind("command.email") #end
 										<label for="emailInput">Email naslov</label>
-										<input type="email" class="form-control" id="emailInput" name="${status.expression}" value="$!status.value" placeholder="Email" required>
+										<input type="email" class="form-control" id="emailInput" name="email" value="$!status.value" placeholder="Email" required>
 										#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 									</div>
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												#springBind("command.password")
+												#if($command) #springBind("command.password") #end
 												<label for="passwordInput">Geslo</label>
-												<input type="password" class="form-control" id="passwordInput" name="${status.expression}" value="$!status.value" placeholder="Geslo" required pattern="(?=.*\d).{8,}" onchange="form.passwordInputRepeat.pattern = this.value;">
+												<input type="password" class="form-control" id="passwordInput" name="password" value="$!status.value" placeholder="Geslo" required pattern="(?=.*\d).{8,}" onchange="form.passwordInputRepeat.pattern = this.value;">
 												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												#springBind("command.passwordrepeat")
+												#if($command) #springBind("command.repeatpassword") #end
 												<label for="passwordInputRepeat">Ponovi geslo</label>
-												<input type="password" class="form-control" id="passwordInputRepeat" name="${status.expression}" value="$!status.value" placeholder="Ponovi geslo" required pattern="">
+												<input type="password" class="form-control" id="passwordInputRepeat" name="repeatpassword" value="$!status.value" placeholder="Ponovi geslo">
 												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
@@ -44,9 +48,9 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												#springBind("command.title")
+												#if($command) #springBind("command.title") #end
 												<label for="titleInput">Naziv</label>
-												<input type="text" class="form-control" id="titleInput" name="${status.expression}" value="$!status.value" placeholder="Naziv">
+												<input type="text" class="form-control" id="titleInput" name="title" value="$!status.value" placeholder="Naziv">
 												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
@@ -54,18 +58,18 @@
 											<div class="form-group">
 												<label for="workerType">Tip</label>
 												<div class="row">
-													#springBind("command.type")
+													#if($command) #springBind("command.type") #end
 													<div class="col-md-6">
 														<div class="radio">
 															<label>
-																<input type="radio" name="${status.expression}" value="$!status.value" id="doctorRadio" value="doctor" checked>Zdravnik
+																<input type="radio" name="type" value="Doctor" id="doctorRadio" checked>Zdravnik
 															</label>
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="radio">
 															<label>
-																<input type="radio" name="${status.expression}" value="$!status.value" id="nurseRadion" value="nurse">Medicinska sestra
+																<input type="radio" name="type" value="Nurse" id="nurseRadion">Medicinska sestra
 															</label>
 														</div>
 													</div>
@@ -77,17 +81,17 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												#springBind("command.first_name")
+												#if($command) #springBind("command.first_name") #end
 												<label for="firstNameInput">Ime</label>
-												<input type="text" class="form-control" id="firstNameInput" name="${status.expression}" value="$!status.value" placeholder="Ime">
+												<input type="text" class="form-control" id="firstNameInput" name="first_name" value="$!status.value" placeholder="Ime">
 												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												#springBind( "command.last_name" )
+												#if($command) #springBind( "command.last_name" ) #end
 												<label for="lastNameInput">Priimek</label>
-												<input type="text" class="form-control" id="lastNameInput" name="${status.expression}" value="$!status.value" placeholder="Priimek">
+												<input type="text" class="form-control" id="lastNameInput" name="last_name" value="$!status.value" placeholder="Priimek">
 												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
@@ -107,14 +111,6 @@
                                     
                                 </div>
                                 <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
-                                </div>
-                            </div>
-                            <div class="patient">
-                                <div class="patient-image patient-male">
-
-                                </div>
-                                <div class="patient-name">
-                                    Janez Novak
                                 </div>
                             </div>
                             <div class="sidebar-seperator"></div>

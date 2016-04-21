@@ -10,9 +10,9 @@ import org.springframework.validation.Validator;
 
 public class CreateMedicalWorkerValidator implements Validator{
 	private static final int MINIMUM_PASSWORD_LENGTH = 6;
-	private static final String FNAME = "/^[a-zA-Z ]{2,16}$/";
-	private static final String LNAME = "/^[a-zA-Z ]{2,24}$/";
-	private static final String TITLE = "/^[0-9a-zA-Z-_]{4,24}$/";	
+	private static final String FNAME = "^[a-zA-Z ]{2,16}$";
+	private static final String LNAME = "^[a-zA-Z ]{2,24}$";
+	private static final String TITLE = "^[0-9a-zA-Z-_]{4,24}$";	
 
 	@Override
 	public boolean supports(Class<?> c) {
@@ -60,7 +60,7 @@ public class CreateMedicalWorkerValidator implements Validator{
 		   pattern = Pattern.compile(FNAME);  
 		   matcher = pattern.matcher(u.getFirst_name());  
 		   if (!matcher.matches()) {  
-		    errors.rejectValue("name", "name.containNonChar",  
+		    errors.rejectValue("first_name", "name.containNonChar",  
 		      "Enter a valid first name");  
 		   }  
 		  }  
@@ -69,7 +69,7 @@ public class CreateMedicalWorkerValidator implements Validator{
 		   pattern = Pattern.compile(LNAME);  
 		   matcher = pattern.matcher(u.getLast_name());  
 		   if (!matcher.matches()) {  
-		    errors.rejectValue("name", "name.containNonChar",  
+		    errors.rejectValue("last_name", "name.containNonChar",  
 		      "Enter a valid last name");  
 		   }  
 		  }  
@@ -78,7 +78,7 @@ public class CreateMedicalWorkerValidator implements Validator{
 		   pattern = Pattern.compile(TITLE);  
 		   matcher = pattern.matcher(u.getTitle());  
 		   if (!matcher.matches()) {  
-		    errors.rejectValue("name", "name.containNonChar",  
+		    errors.rejectValue("title", "name.containNonChar",  
 		      "Enter a valid title");  
 		   }  
 		  }  
