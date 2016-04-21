@@ -15,11 +15,11 @@ import si.fri.t15.models.user.PatientData;
 public interface DiseaseRepository extends CrudRepository<Disease, Integer> {
 
 	@Query("SELECT c.diseases FROM Checkup c, IN(c.diseases) d "
-			+ "WHERE c.patient = :patient AND d.is_allergy = 0")
+			+ "WHERE c.patient = :patient AND d.isAllergy = 0")
 	List<List<Disease>> findByPatient(@Param(value = "patient") PatientData patient);
 	
 	@Query("SELECT c.diseases FROM Checkup c, IN(c.diseases) d "
-			+ "WHERE c.patient = :patient AND d.is_allergy = 1")
+			+ "WHERE c.patient = :patient AND d.isAllergy = 1")
 	List<List<Disease>> findAllergyByPatient(@Param(value = "patient") PatientData patient);
 	
 }
