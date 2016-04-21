@@ -103,7 +103,12 @@
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">
                             <div class="sidebar-topbar">
                                 <div class="logo" style="color:#eee">
-                                    
+                                    #if($user.lastLogin)
+                                        <div style="padding-left: 10px;">
+                                            <h6>Zadnja prijava</h6>
+                                            <h6>$user.lastLogin</h6>
+                                        </div>
+                                    #end
                                 </div>
                                 <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
                                 </div>
