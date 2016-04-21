@@ -44,7 +44,94 @@
 									<p class="text-center">
 										<input type="submit" class="btn btn-default btn-lg" value="Ustvari">
 									</p>								
-								</form>									
+								</form>
+                                <p class="text-center">
+                                    <button class="btn btn-default" onclick="$('#extra').slideToggle(500)">Dodaj uporabniški profil</button>
+                                </p>
+                                <div id="extra" style="display: none">
+                                    <form method="POST" action="">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    #if($command) #springBind( "command.firstName" ) #end
+                                                    <label for="firstNameInput">Ime</label>
+                                                    <input type="text" class="form-control" id="firstNameInput" name="firstName" placeholder="Ime">
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    #if($command) #springBind( "command.lastName" ) #end
+                                                    <label for="lastNameInput">Priimek</label>
+                                                    <input type="text" class="form-control" id="lastNameInput" name="lastName" placeholder="Priimek">
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="sex">Spol</label>
+                                                    <div class="row">
+                                                        #if($command) #springBind( "command.sex" ) #end
+                                                        <div class="col-md-6">
+                                                            <div class="radio">
+                                                                <label>
+                                                                    <input type="radio" name="sex" id="femaleRadio" value="f" checked>Ženski
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="radio">
+                                                                <label>
+                                                                    <input type="radio" name="sex" id="maleRadio" value="m">Moški
+
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    #if($command) #springBind( "command.birth" ) #end
+                                                    <label for="birth">Rojstvo</label>
+                                                    <input type="date" id="birth" class="form-control" name="birth" value="1950-01-01">
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    #if($command) #springBind( "command.address" ) #end
+                                                    <label for="streetInput">Ulica in hišna številka</label>
+                                                    <input type="text" class="form-control" id="streetInput" name="address" placeholder="Ulica in hišna številka">
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    #if($command) #springBind( "command.pobox" ) #end
+                                                    <label for="postOfficeInput">Pošta</label>
+                                                    <select class="form-control" id="postOfficeInput" name="pobox">
+                                                        #foreach($po_box in $po_boxes)
+                                                        <option value="$po_box.getPO_BoxId()">$po_box.getPO_BoxId() - $po_box.getCity()</option>
+                                                        #end
+                                                    </select>
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <p class="text-center">
+                                            <!--<input type="submit" class="btn btn-default btn-lg" value="Ustvari">-->
+                                        </p>
+                                        
+                                    </form>
+                                </div>								
                             </div>
                         </div>
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">
