@@ -1,6 +1,6 @@
 #macro(sidemenu $usertype $page $subpage)
 	<div class="side-menu">
-		#if($usertype && ($usertype == "user" || $usertype == "admin"))
+		#if($usertype == "user")
 		    <a href="#springUrl('/dashboard')">
 		        <div class="side-menu-item #if($page && $page=="home")side-menu-item-selected #end">
 		        NADZORNA PLOŠČA
@@ -28,7 +28,7 @@
 					</div>
 				</a>
 			#end
-	    #else
+	    #elseif(!$usertype)
 		 	<a href="#">
 		        <div class="side-menu-item #if($page && $page=="login")side-menu-item-selected #end">
 		        PRIJAVA
@@ -60,7 +60,7 @@
 				</a>
 			#end
 		#end
-		#if($user)
+		#if($user || $usertype)
 			<div class="form-group">
 				<form action="#springUrl('/logout')" method="POST">						
 					<div><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></div>
