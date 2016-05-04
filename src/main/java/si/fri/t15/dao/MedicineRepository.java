@@ -17,4 +17,8 @@ public interface MedicineRepository extends CrudRepository<Medicine, Integer> {
 			+ "WHERE c.patient = :patient")
 	List<List<Medicine>> findByPatient(@Param(value = "patient") PatientData patient);
 	
+	@Query("SELECT c.medicines FROM Checkup c "
+			+ "WHERE c.id = :id")
+	List<List<Medicine>> findByCheckupID(@Param(value = "id") int id);
+	
 }
