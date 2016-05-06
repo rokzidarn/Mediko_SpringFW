@@ -12,33 +12,49 @@
                                 <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
                                 <div class="content-title">$title</div>
                             </div>
-                            <div class="content">
-                                
-                                <div class="row">
-                                    <div class="col-md-6">
+                            <div class="content">	
+                            	<div class="row">
+                                    <div class="col-md-8">
                                         <div class="panel panel-default">
-                                        <div class="panel-heading">PREGLED #$idc</div>
-                                            <div class="panel-body">
-                                                <div class="row">
-                                                	<div class="col-md-6">
-                                                        <strong>Razlog</strong><br>
-                                                        	$reason
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong>Pacient</strong><br>
-                                                        	$pdata.first_name $pdata.last_name, ($pdata.id)
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong>Zdravnik</strong><br>
-                                                        	dr. $ddata.first_name $ddata.last_name
-                                                    </div>
-	                                            </div>
-	                                    	</div>                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
+                                        <div class="panel-heading">PREGLED številka ${idc}</div>							
+											<p>Pacient: ${pdata.getFirst_name()} ${pdata.getLast_name()} ${pdata.getId()}</p>
+											<p>Zdravnik: ${ddata.getFirst_name()} ${ddata.getLast_name()}</p>
+											<p>Razlog: $reason</p>
+										</div>
+									</div>
+								</div>
+                            	<div class="row">
+                                    <div class="col-md-8">
+                                        <div class="panel panel-default">
+                                        <div class="panel-heading">DIAGNOZA</div>	
+											#if(!$diseases)
+												<p>Ni bolezni!</p>
+											#else
+												<p>Bolezni:</p>
+												#foreach( $disease in $diseases )
+												   <p>${disease.getName()}</p>
+												#end
+											#end
+											#if(!$medicines)
+												<p>Ni zdravil!</p>
+											#else
+												<p>Zdravila:</p>
+												#foreach( $medicine in $medicines )
+												   <p>${medicine.getName()}, ${medicine.getType()}</p>
+												#end
+											#end
+											#if(!$diets)
+												<p>Ni diet!</p>
+											#else
+												<p>Diete: </p>
+												#foreach( $diet in $diets )
+												   <p>${diet.getName()}</p>
+												#end
+											#end		
+										</div>
+									</div>
+								</div>																			
+							</div> 			
                         </div>
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">
                             <div class="sidebar-topbar">
