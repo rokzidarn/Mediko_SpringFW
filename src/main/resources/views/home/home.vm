@@ -272,33 +272,7 @@
 												</div>
 											#else
                                             	#foreach($checkup in $p.checkups)
-	                                            	#if($checkup.medicines.isEmpty())
-														<div class="col-md-6">
-															<strong>Nimate zdravil!</strong><br>
-														</div>
-													#else
-														#foreach($medicine in $checkup.medicines)
-															<div class="table-responsive">
-			                                                    <table class="table table-hover">
-			                                                        <thead>
-			                                                            <tr> 
-			                                                                <th>Zdravilo</th>
-			                                                                <th>Tip</th>
-			                                                                <th>Navodila</th>
-			                                                            </tr>
-			                                                        </thead> 
-			                                                        <tbody> 
-			                                                            <tr> 
-			                                                                <th scope="row">$medicine.name</th> 
-			                                                                <td>$medicine.type</td>
-			                                                                <td>-</td> 
-			                                                            </tr> 
-			                                                        </tbody> 
-			                                                    </table>                                                  
-			                                                </div>
-			                                                <button type="button" class="btn btn-info">Pokaži več</button>
-														#end
-                                                	#end
+	                                            	
                                                 #end
                                         	#end 
                                             </div>

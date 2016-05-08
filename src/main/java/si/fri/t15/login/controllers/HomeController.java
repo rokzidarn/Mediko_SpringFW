@@ -105,9 +105,9 @@ public class HomeController extends ControllerBase{
 				for(Diet di : c.getDiets()){
 					Hibernate.initialize(di);
 				}
-				for(Medicine m : c.getMedicines()){
-					Hibernate.initialize(m);
-				}
+				//for(Medicine m : c.getMedicines()){
+				//	Hibernate.initialize(m);
+				//}
 				for(Result_Checkup r : c.getResultCheckups()){
 					Hibernate.initialize(r);
 				}
