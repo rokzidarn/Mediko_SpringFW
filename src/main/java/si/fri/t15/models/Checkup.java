@@ -43,6 +43,43 @@ public class Checkup implements Serializable{
 		      inverseJoinColumns=@JoinColumn(name="M_ID", referencedColumnName="idMedicine"))
 	private List<Medicine> medicines;
 	
+	public List<Disease> getDiseases() {
+		return diseases;
+	}
+
+	public void setDiseases(List<Disease> diseases) {
+		this.diseases = diseases;
+	}
+
+	public List<Medicine> getMedicines() {
+		return medicines;
+	}
+
+	public void setMedicines(List<Medicine> medicines) {
+		this.medicines = medicines;
+	}
+
+	public List<Diet> getDiets() {
+		return diets;
+	}
+
+	public void setDiets(List<Diet> diets) {
+		this.diets = diets;
+	}
+
+	public List<Result_Checkup> getResultCheckups() {
+		return resultCheckups;
+	}
+
+	public void setResultCheckups(List<Result_Checkup> resultCheckups) {
+		this.resultCheckups = resultCheckups;
+	}
+	
+	public DoctorData getDoctor() {
+		return doctor;
+	}
+
+
 	@ManyToMany
 	@JoinTable(
 		      name="Checkup_Diet",
