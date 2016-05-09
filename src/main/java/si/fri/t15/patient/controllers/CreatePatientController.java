@@ -110,11 +110,7 @@ public class CreatePatientController extends ControllerBase{
 		patient.setFirst_name(command.getFirstName());
 		patient.setLast_name(command.getLastName());
 		patient.setSex(command.getSex());
-		//Birth
-		String[]dateValues = command.getBirth().split("-");
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Integer.parseInt(dateValues[0]),Integer.parseInt(dateValues[0]),Integer.parseInt(dateValues[0]));
-		patient.setBirth_date(new Date(calendar.getTimeInMillis()));
+		patient.setBirth_date(Date.valueOf(command.getBirth()));
 		
 		patient.setAddress(command.getAddress());
 		

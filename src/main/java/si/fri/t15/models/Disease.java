@@ -13,7 +13,7 @@ public class Disease implements Serializable{
 	@Id
 	@Column(name="idDisease", length=4, nullable=false, updatable=false, unique=true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private String id;
 	
 	@Column(name="Name", length=45, nullable=false)
 	private String name;
@@ -32,11 +32,11 @@ public class Disease implements Serializable{
 	public Disease() {
 	}	
 	
-	public int getDiseaseId() {
+	public String getDiseaseId() {
 		return this.id;
 	}
 
-	public void setDiseaseId(int id) {
+	public void setDiseaseId(String id) {
 		this.id = id;
 	}	
 	

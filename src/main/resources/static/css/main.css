@@ -82,6 +82,54 @@ a:link, a:hover, a:active{
 	font-family: 'Roboto', sans-serif;
 }
 
+.selected-patient-title{
+	color:#ddd;
+	font-size: 14px;
+	font-family: 'Roboto', sans-serif;
+	padding-left:20px;
+	padding-top: 10px;
+	font-weight: 500;
+}
+.selected-patient{
+	color:#36B8D5;
+	font-size: 15px;
+	font-family: 'Roboto', sans-serif;
+	padding-left:20px;
+	padding-top: 0px;
+	padding-bottom:10px;
+	font-weight: 500;
+}
+.selected-patient-edit{
+	float:right;
+	padding-right:20px;	
+}
+.available-patients-container{
+	max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.patient-select-item{
+	color:#ddd;
+	padding: 5px;
+	padding-left: 20px;
+	font-size: 14px;
+	font-family: 'Roboto', sans-serif;
+}
+
+.patient-select-item:hover{
+	color:#36B8D5;
+	background-color: rgba(0,0,0,0.1);
+}
+.patient-select-item-selected{
+	border-left: 2px solid #36B8D5;
+
+}
+.patient-select-item-selected:hover{
+	color:#ddd;
+}
+
 
 .side-menu{
 	padding-top: 20px;
