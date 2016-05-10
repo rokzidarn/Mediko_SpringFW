@@ -40,7 +40,7 @@
                                                     </div>                                                                                                   
                                                     <div class="col-md-6">
                                                         <strong>Naslov in kraj</strong><br>
-                                                        $selectedPatient.address<br>$p.po_box.getPO_BoxId() $p.po_box.city
+                                                        $selectedPatient.address<br>$p.po_box.city
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Kartica ZZZS</strong><br>
