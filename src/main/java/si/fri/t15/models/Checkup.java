@@ -130,6 +130,4 @@ public class Checkup implements Serializable{
 	public DoctorData getDoctor() {
 		return doctor;
 	}
-	
-	
 }

@@ -17,9 +17,10 @@
                                     <div class="col-md-8">
                                         <div class="panel panel-default">
                                         <div class="panel-heading">PREGLED številka ${idc}</div>							
-											<p>Pacient: ${pdata.getFirst_name()} ${pdata.getLast_name()} ${pdata.getId()}</p>
-											<p>Zdravnik: ${ddata.getFirst_name()} ${ddata.getLast_name()}</p>
-											<p>Razlog: $reason</p>
+											<p>Pacient: ${pdata.getFirst_name()} ${pdata.getLast_name()}, ${pdata.getPo_box().city}, ZZZS: ${pdata.getId()}</p>
+											<p>Zdravnik: ${ddata.getFirst_name()} ${ddata.getLast_name()}, ${ddata.getMedical_center().name}</p>
+											<p>Razlog: $reason </p>
+                                            <p>Datum: $date</p>
 										</div>
 									</div>
 								</div>
@@ -27,7 +28,7 @@
                                     <div class="col-md-8">
                                         <div class="panel panel-default">
                                         <div class="panel-heading">DIAGNOZA</div>	
-											#if(!$diseases)
+											#if($diseases.isEmpty())
 												<p>Ni bolezni!</p>
 											#else
 												<p>Bolezni:</p>
@@ -35,7 +36,7 @@
 												   <p>${disease.getName()}</p>
 												#end
 											#end
-											#if(!$medicines)
+											#if($medicines.isEmpty())
 												<p>Ni zdravil!</p>
 											#else
 												<p>Zdravila:</p>
@@ -43,7 +44,7 @@
 												   <p>${medicine.getName()}, ${medicine.getType()}</p>
 												#end
 											#end
-											#if(!$diets)
+											#if($diets.isEmpty())
 												<p>Ni diet!</p>
 											#else
 												<p>Diete: </p>
