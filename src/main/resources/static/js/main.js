@@ -1,4 +1,5 @@
 $( document ).ready(function(){
+	
 	$("#caretaker").hide();
 	$( window  ).on('resize', function(){
 		hideSidebar();
@@ -23,6 +24,9 @@ $( document ).ready(function(){
 	    	$("#caretaker").hide();
 	    }
 	});
+	
+	//SET CONTENT HEIGT!
+	$(".content-container").css("min-height",$("#sidebarContent").height()+50);
 });
 
 function showSidebar(){

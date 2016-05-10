@@ -28,6 +28,7 @@ a:link, a:hover, a:active{
 	right: 0px;
 	top: 0px;
 	bottom: 0px;
+	overflow:auto;
 }
 
 .sidebar-visible{
