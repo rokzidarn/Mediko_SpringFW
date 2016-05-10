@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import si.fri.t15.base.models.UserData;
@@ -16,12 +18,19 @@ import si.fri.t15.models.Checkup;
 import si.fri.t15.models.Medical_Center;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name="DoctorData.GetAvailableDoctors", query="SELECT d FROM DoctorData d WHERE d.type=:type AND (d.id = :users OR maxPatients > (SELECT count(p) FROM PatientData p WHERE p.doctor = d))")
+
+})
 public class DoctorData extends UserData {
 
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="Type", length=15, nullable=true, updatable=true)
 	private String type;
+	
+	@Column(nullable=false, updatable=true)
+	private int maxPatients;
 	
 	@OneToMany(mappedBy="doctor")
 	private List<PatientData> patients;

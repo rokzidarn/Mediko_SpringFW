@@ -43,7 +43,8 @@ public class HomeController extends ControllerBase{
 				}
 			}
 		}					
-		return "redirect:/dashboard";
+		String referer = request.getHeader("Referer");
+	    return "redirect:"+ referer;
 	}
 	
 	@Transactional
@@ -73,7 +74,7 @@ public class HomeController extends ControllerBase{
 		//List<Medicine> medicines = pdata.getMedicines();
 		List<Diet> diets = pdata.getDiets();
 		List<Result_Checkup> results = pdata.getResults();
-		List<PatientData> caretaker = (List<PatientData>) pdata.getCaretaker();
+		PatientData caretaker = (PatientData) pdata.getCaretaker();
 		
 		model.addAttribute("fname", fname);
 		model.addAttribute("lname", lname);
