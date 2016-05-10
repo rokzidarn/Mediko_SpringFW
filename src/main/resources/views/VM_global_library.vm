@@ -11,11 +11,18 @@
 		        PREGLEDI
 		        </div>
 		    </a>
-		    <a href="#">
-		        <div class="side-menu-item #if($page && $page=="doctor")side-menu-item-selected #end">
+		    <a href="#springUrl('/doctors/select')">
+		        <div class="side-menu-item #if($page && $page=="doctors")side-menu-item-selected #end">
 		        ZDRAVNIK
 		        </div>
 		    </a>
+		    #if($page == "doctors")
+				<a href="#springUrl('/doctors/select')">
+					<div class="side-submenu-item #if($subpage=="selectDoctors")side-submenu-item-selected #end">
+						IZBERI ZDRAVNIKE
+					</div>
+				</a>
+			#end
 		    <a href="#springUrl('/patient/createPatient')">
 		        <div class="side-menu-item #if($page && $page=="patient")side-menu-item-selected #end">
 		        PACIENTI

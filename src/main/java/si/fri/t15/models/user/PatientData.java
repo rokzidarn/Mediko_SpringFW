@@ -31,6 +31,9 @@ public class PatientData extends UserData {
 	@ManyToOne
 	private DoctorData doctor;
 	
+	@ManyToOne
+	private DoctorData dentist;
+	
 	@OneToMany(mappedBy="patient")
 	private List<Appointment> appointments;
 	
@@ -202,6 +205,14 @@ public class PatientData extends UserData {
 
 	public void setPo_number(int po_number) {
 		this.po_number = po_number;
+	}
+
+	public DoctorData getDentist() {
+		return dentist;
+	}
+
+	public void setDentist(DoctorData dentist) {
+		this.dentist = dentist;
 	}
 
 }
