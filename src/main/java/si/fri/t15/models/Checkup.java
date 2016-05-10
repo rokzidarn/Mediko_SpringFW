@@ -9,7 +9,10 @@ import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 
 @Entity
-@NamedQuery(name="Checkup.findAll", query="SELECT c FROM Checkup c")
+@NamedQueries({
+	@NamedQuery(name="Checkup.findAll", query="SELECT c FROM Checkup c"),
+	@NamedQuery(name="Checkup.findCheckup", query="SELECT c FROM Checkup c WHERE c.id=?1")
+})
 public class Checkup implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -35,13 +38,58 @@ public class Checkup implements Serializable{
 		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idCheckup"),
 		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDisease"))
 	private List<Disease> diseases;
-	
+
 	@ManyToMany
 	@JoinTable(
 		      name="Checkup_Medicine",
 		      joinColumns=@JoinColumn(name="C_ID", referencedColumnName="idCheckup"),
 		      inverseJoinColumns=@JoinColumn(name="M_ID", referencedColumnName="idMedicine"))
 	private List<Medicine> medicines;
+
+	@ManyToMany
+	@JoinTable(
+		      name="Checkup_Diet",
+		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idCheckup"),
+		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDiet"))
+	private List<Diet> diets;
+	
+	@OneToMany(mappedBy="checkup")
+	private List<Result_Checkup> resultCheckups;
+	
+	public DoctorData getDoctor() {
+		return doctor;
+	}
+	
+	public Checkup() {
+	}	
+	
+	public int getCheckupId() {
+		return this.id;
+	}
+
+	public void setCheckupId(int id) {
+		this.id = id;
+	}	
+	
+	public String getReason() {
+		return this.reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	
+	public PatientData getPatient() {
+		return this.patient;
+	}
+
+	public void setPatient(PatientData patient) {
+		this.patient = patient;
+	}
+
+	public void setDoctor(DoctorData doctor) {
+		this.doctor = doctor;
+	}
 	
 	public List<Disease> getDiseases() {
 		return diseases;
@@ -74,50 +122,12 @@ public class Checkup implements Serializable{
 	public void setResultCheckups(List<Result_Checkup> resultCheckups) {
 		this.resultCheckups = resultCheckups;
 	}
-	
-	public DoctorData getDoctor() {
-		return doctor;
+
+	public int getId() {
+		return id;
 	}
 
-
-	@ManyToMany
-	@JoinTable(
-		      name="Checkup_Diet",
-		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idCheckup"),
-		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDiet"))
-	private List<Diet> diets;
-	
-	@OneToMany(mappedBy="checkup")
-	private List<Result_Checkup> resultCheckups;
-	
-	public Checkup() {
-	}	
-	
-	public int getCheckupId() {
-		return this.id;
-	}
-
-	public void setCheckupId(int id) {
+	public void setId(int id) {
 		this.id = id;
-	}	
-	
-	public String getReason() {
-		return this.reason;
-	}
-
-	public void setReason(String reason) {
-		this.reason = reason;
-	}
-	
-	public PatientData getPatient() {
-		return this.patient;
-	}
-
-	public void setPatient(PatientData patient) {
-		this.patient = patient;
-	}
-
-	public void setDoctor(DoctorData doctor) {
-		this.doctor = doctor;
 	}
 }

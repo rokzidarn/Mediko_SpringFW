@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     #parse("../common/head.vm")
@@ -56,33 +55,33 @@
                                             <div class="panel-heading">Zdravniki</div>
                                             <div class="panel-body">
                                                <div class="row">
-                                               	#if(!$p.doctor)
+                                               	#if(!$doctor)
                                                		<div class="col-md-6">
                                                         <strong>Nimate še izbranega zdravnika!</strong><br>
                                                     </div>
                                                 #else
                                                     <div class="col-md-6">
-                                                        <strong>Ime</strong><br>
-                                                        $p.doctor.first_name
+                                                        <strong>Ime</strong><br>=
+                                                        $doctor.first_name
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Priimek</strong><br>
-                                                        $p.doctor.last_name
+                                                        $doctor.last_name
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Tip</strong><br>
-                                                        $p.doctor.type
+                                                        $doctor.type
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Zdravstvena ustanova</strong><br>
-                                                        $p.doctor.medical_center.name
+                                                        $doctor.medical_center.name
                                                     </div>
                                                     <div class="col-md-6">
-                                                    	#if(!$p.doctor.nurses)
-                                                        <strong>Medicinska sestra</strong><br>                                                      
-                                                        	/
+                                                    	#if(!$doctor.nurses)
+                                                        <strong>Medicinska sestra</strong><br>  
+                                                        /
                                                         #else
-	                                                        #foreach($nurse in $p.doctor.nurses)
+	                                                        #foreach($nurse in $doctor.nurses)
 	                                                        	$nurse.first_name $nurse.last_name
 	                                                    	#end
                                                     	#end
@@ -98,13 +97,13 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Zadnji pregledi</div>
                                             <div class="panel-body">
-												#if($p.checkups.isEmpty())
+												#if($checkups.isEmpty())
 													<div class="col-md-6">
 														<strong>Nimate pregledov!</strong><br>
 													</div>
 												#else
-                                                <div class="table-responsive">                                               	
-	                                                    <table class="table table-hover">                                                   	
+                                                <div class="table-responsive">            	
+	                                                    <table class="table table-hover">
 	                                                        <thead>
 	                                                            <tr> 
 	                                                                <th>Datum</th> 
@@ -112,150 +111,120 @@
 	                                                                <th>Razlog</th>
 	                                                            </tr>
 	                                                        </thead>
-	                                                        #foreach($checkup in $p.checkups)                                                        
+	                                                        #foreach($checkup in $checkups)
 	                                                        <tbody> 
 	                                                            <tr> 
-	                                                                <th scope="row">$checkup.date</th> 
-	                                                                <td>$checkup.doctor.first_name $checkup.doctor.last_name</td> 
+	                                                                <th scope="row">$checkup.appointment.date</th>
+	                                                                <td>dr. $checkup.doctor.last_name</td> 
 	                                                                <td>$checkup.reason</td>
 	                                                            </tr> 
 	                                                        </tbody> 
 	                                                        #end
 	                                                    </table>                                                   
-                                                </div>
-                                                <button type="button" class="btn btn-info">Pokaži več</button>
-												#end                                            
+                                                    </div>
+                                                    <button type="button" class="btn btn-info">Pokaži več</button>
+											     #end                                            
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>								
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Bolezni</div>
                                             <div class="panel-body">
-                                            #if($p.checkups.isEmpty())
+                                            #if($diseases.isEmpty())
                                             	<div class="col-md-6">
 													<strong>Nimate bolezni!</strong><br>
 												</div>
 											#else
-                                            	#foreach($checkup in $p.checkups)
-	                                            	#if($checkup.diseases.isEmpty())
-														<div class="col-md-6">
-															<strong>Nimate bolezni!</strong><br>
-														</div>
-													#else
-														#foreach($disease in $checkup.diseases)
-															<div class="table-responsive">
-			                                                    <table class="table table-hover">
-			                                                        <thead>
-			                                                            <tr> 
-			                                                                <th>Razlog</th>
-			                                                                <th>Bolezen</th>
-			                                                                <th>Dodatno</th>
-			                                                            </tr>
-			                                                        </thead> 
-			                                                        <tbody> 
-			                                                            <tr> 
-			                                                            	#if($disease.type == 0)
-				                                                                <th scope="row">$checkup.reason</th> 
-				                                                                <td>$disease.name</td> 
-				                                                                <td>-</td> 
-			                                                                #end
-			                                                            </tr> 
-			                                                        </tbody> 
-			                                                    </table>                                                  
-			                                                </div>
-			                                                <button type="button" class="btn btn-info">Pokaži več</button>
-														#end
-                                                	#end
-                                                #end
-                                        	#end 
+												<div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr> 
+                                                                <th>Bolezen</th>
+                                                                <th>Dodatno</th>
+                                                            </tr>
+                                                        </thead> 
+                                        	           #foreach($disease in $diseases)																	
+                                                        <tbody> 
+                                                            <tr> 
+                                                            	#if($disease.getIsAllergy()==0)
+	                                                                <td>$disease.name</td> 
+	                                                                <td>-</td> 
+                                                                #end
+                                                            </tr> 
+                                                        </tbody> 		                                               
+                                                        #end 
+                                                    </table>
+                                                </div>  
+                                                <button type="button" class="btn btn-info">Pokaži več</button>                                                
+                                	       #end                                      												
 											</div>
-                                        </div>
-                                    </div>
+										</div>
+									</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Alergije</div>
                                             <div class="panel-body">
-                                            #if($p.checkups.isEmpty())
+                                            #if($diseases.isEmpty())
                                             	<div class="col-md-6">
 													<strong>Nimate alergij!</strong><br>
 												</div>
 											#else
-                                            	#foreach($checkup in $p.checkups)
-	                                            	#if($checkup.diseases.isEmpty())
-														<div class="col-md-6">
-															<strong>Nimate alergij!</strong><br>
-														</div>
-													#else
-														#foreach($disease in $checkup.diseases)
-															<div class="table-responsive">
-			                                                    <table class="table table-hover">
-			                                                        <thead>
-			                                                            <tr> 
-			                                                                <th>Razlog</th>
-			                                                                <th>Alergija</th>
-			                                                                <th>Dodatno</th>
-			                                                            </tr>
-			                                                        </thead> 
-			                                                        <tbody> 
-			                                                            <tr> 
-			                                                                #if($disease.type == 1)
-				                                                                <th scope="row">$checkup.reason</th> 
-				                                                                <td>$disease.name</td> 
-				                                                                <td>-</td> 
-			                                                                #end 
-			                                                            </tr> 
-			                                                        </tbody> 
-			                                                    </table>                                                  
-			                                                </div>
-			                                                <button type="button" class="btn btn-info">Pokaži več</button>
+												<div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr> 
+                                                                <th>Alergija</th>
+                                                                <th>Dodatno</th>
+                                                            </tr>
+                                                        </thead> 
+                                        	           #foreach($allergy in $diseases)													
+                                                        <tbody> 
+                                                            <tr> 
+                                                            	#if($allergy.getIsAllergy() == 1)
+	                                                                <td>$allergy.name</td> 
+	                                                                <td>-</td> 
+                                                                #end
+                                                            </tr> 
+                                                        </tbody> 		                                               
 														#end
-                                                	#end
-                                                #end
-                                        	#end 
-                                            </div>
-                                        </div>
+                                                    </table>
+                                                </div> 
+                                                <button type="button" class="btn btn-info">Pokaži več</button>                                                 
+                                        	#end                                      												
+											</div>
+										</div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Diete</div>
                                             <div class="panel-body">
-                                            #if($p.checkups.isEmpty())
+                                            #if($diets.isEmpty())
                                             	<div class="col-md-6">
 													<strong>Nimate diet!</strong><br>
 												</div>
 											#else
-                                            	#foreach($checkup in $p.checkups)
-	                                            	#if($checkup.diets.isEmpty())
-														<div class="col-md-6">
-															<strong>Nimate diet!</strong><br>
-														</div>
-													#else
-														#foreach($diet in $checkup.diets)
-															<div class="table-responsive">
-			                                                    <table class="table table-hover">
-			                                                        <thead>
-			                                                            <tr> 
-			                                                                <th>Dieta</th>
-			                                                                <th>Navodila</th>
-			                                                            </tr>
-			                                                        </thead> 
-			                                                        <tbody> 
-			                                                            <tr> 
-			                                                                #if($disease.type == 1)
-				                                                                <th scope="row">$diet.name</th> 
-				                                                                <td>-</td> 
-			                                                                #end 
-			                                                            </tr> 
-			                                                        </tbody> 
-			                                                    </table>                                                  
-			                                                </div>
-			                                                <button type="button" class="btn btn-info">Pokaži več</button>
-														#end
-                                                	#end
-                                                #end
+    											<div class="table-responsive">
+    	                                            <table class="table table-hover">
+    	                                                <thead>
+    	                                                    <tr> 
+    	                                                        <th>Dieta</th>
+    	                                                        <th>Navodila</th>
+    	                                                    </tr>
+    	                                                </thead>
+                                                	   #foreach($diet in $diets)													 
+                                                        <tbody> 
+                                                            <tr> 
+                                                                <th scope="row">$diet.getName()</th> 
+                                                                <td>-</td> 
+                                                            </tr> 
+                                                        </tbody>                              
+    													#end
+                                                    </table>                                                  
+                                                </div>
+                                    			<button type="button" class="btn btn-info">Pokaži več</button>
                                         	#end 
                                             </div>
                                         </div>
@@ -266,15 +235,33 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Zdravila</div>
                                             <div class="panel-body">
-                                            #if($p.checkups.isEmpty())
+                                            #if($medicines.isEmpty())
                                             	<div class="col-md-6">
 													<strong>Nimate zdravil!</strong><br>
 												</div>
-											#else
-                                            	#foreach($checkup in $p.checkups)
-	                                            	
-                                                #end
-                                        	#end 
+											#else														
+												<div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr> 
+                                                                <th>Zdravilo</th>
+                                                                <th>Tip</th>
+                                                                <th>Navodila</th>
+                                                            </tr>
+                                                        </thead> 
+                                                        #foreach($medicine in $medicines)  
+                                                        <tbody> 
+                                                            <tr> 
+                                                                <th scope="row">$medicine.getName()</th> 
+                                                                <td>$medicine.type</td>
+                                                                <td>-</td> 
+                                                            </tr> 
+                                                        </tbody> 
+                                                        #end
+                                                    </table>                                                  
+                                                </div>
+                                                <button type="button" class="btn btn-info">Pokaži več</button>
+											#end
                                             </div>
                                         </div>
                                     </div>
@@ -282,47 +269,39 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Meritve</div>
                                             <div class="panel-body">
-                                            #if($p.checkups.isEmpty())
+                                            #if($results.isEmpty())
                                             	<div class="col-md-6">
 													<strong>Nimate meritev!</strong><br>
 												</div>
-											#else
-                                            	#foreach($checkup in $p.checkups)
-	                                            	#if($checkup.readings.isEmpty())
-														<div class="col-md-6">
-															<strong>Nimate meritev!</strong><br>
-														</div>
-													#else
-														#foreach($reading in $checkup.readings)
-															<div class="table-responsive">
-			                                                    <table class="table table-hover">
-			                                                        <thead>
-			                                                            <tr> 
-			                                                                <th>Tip</th>
-			                                                                <th>Datum</th>
-			                                                                <th>Lokacija</th>
-			                                                            </tr>
-			                                                        </thead> 
-			                                                        <tbody> 
-			                                                            <tr onclick="$('#meritev-0').toggle(500)"> 
-			                                                                <th scope="row">$reading.type</th> 
-			                                                                <td>$reading.date</td> 
-			                                                                <td>-</td>                                                                
-			                                                            </tr>
-			                                                            <tr class="info" id="meritev-0" style="display: none">
-			                                                                <td colspan="3">
-			                                                                    <div>
-			                                                                        -
-			                                                                    </div>
-			                                                                </td>
-			                                                            </tr>
-			                                                        </tbody> 
-			                                                    </table>                                                  
-			                                                </div>
-			                                                <button type="button" class="btn btn-info">Pokaži več</button>
-														#end
-                                                	#end
-                                                #end
+											#else                                           	
+												<div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr> 
+                                                                <th>Tip</th>
+                                                                <th>Datum</th>
+                                                                <th>Lokacija</th>
+                                                            </tr>
+                                                        </thead>
+                                                        #foreach($result in $results) 
+                                                        <tbody> 
+                                                            <tr onclick="$('#meritev-0').toggle(500)"> 
+                                                                <th scope="row">$result.type</th> 
+                                                                <td>$result.date</td> 
+                                                                <td>-</td>                                                                
+                                                            </tr>
+                                                            <tr class="info" id="meritev-0" style="display: none">
+                                                                <td colspan="3">
+                                                                    <div>
+                                                                        -
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody> 
+                                                        #end
+                                                    </table>                                               
+                                                </div> 
+                                                <button type="button" class="btn btn-info">Pokaži več</button>                                              
                                         	#end 
                                             </div>
                                         </div>
@@ -333,7 +312,7 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Prihajajoči pregledi</div>
                                             <div class="panel-body">
-												#if($p.appointments.isEmpty())
+												#if($appointments.isEmpty())
 													<div class="col-md-6">
 														<strong>Nimate prihajajočih pregledov!</strong><br>
 													</div>
@@ -346,18 +325,18 @@
                                                                    <th>Zdravnik</th>
 	                                                            </tr>
 	                                                        </thead>
-	                                                        #foreach($appointment in $p.appointments)                                                        
+	                                                        #foreach($appointment in $appointments)                                                        
 	                                                        <tbody> 
 	                                                            <tr> 
 	                                                                <th scope="row">$appointment.date</th> 
-	                                                                <td>$appointment.doctor.first_name $appointment.doctor.last_name</td> 
+	                                                                <td>dr. $appointment.doctor.last_name</td> 
 	                                                            </tr> 
 	                                                        </tbody> 
 	                                                        #end
 	                                                    </table>                                                   
-                                                </div>
-                                                <button type="button" class="btn btn-info">Pokaži več</button>
-												#end                                            
+                                                </div>                                               
+												#end  
+												<button type="button" class="btn btn-info">Naroči</button>                                          
                                             </div>
                                         </div>
                                     </div>
