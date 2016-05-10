@@ -59,7 +59,7 @@ public class SelectDoctorsController extends ControllerBase{
 		
 		//Get selected user doctors Ids
 		int selectedDoctor = (userSession.getSelectedPatient().getDoctor() != null)?userSession.getSelectedPatient().getDoctor().getId():-1;
-		int selectedDentist = (userSession.getSelectedPatient().getDentist() != null)?userSession.getSelectedPatient().getDentist().getId():-1; //need fix
+		int selectedDentist = (userSession.getSelectedPatient().getDentist() != null)?userSession.getSelectedPatient().getDentist().getId():-1;
 		
 		//GET DOCTORS
 		Query doctorsQuery = em.createNamedQuery("DoctorData.GetAvailableDoctors");
@@ -108,7 +108,7 @@ public class SelectDoctorsController extends ControllerBase{
 		
 		//Get selected user doctors Ids
 		int selectedDoctor = (userSession.getSelectedPatient().getDoctor() != null)?userSession.getSelectedPatient().getDoctor().getId():-1;
-		int selectedDentist = (userSession.getSelectedPatient().getDentist() != null)?userSession.getSelectedPatient().getDentist().getId():-1; //need fix
+		int selectedDentist = (userSession.getSelectedPatient().getDentist() != null)?userSession.getSelectedPatient().getDentist().getId():-1;
 		
 		//GET DOCTORS
 		Query doctorsQuery = em.createNamedQuery("DoctorData.GetAvailableDoctors");
@@ -161,7 +161,13 @@ public class SelectDoctorsController extends ControllerBase{
 		}
 		
 		em.persist(selectedPatient);
-		userSession.setSelectedPatient(selectedPatient);
+		if(selectedPatient.getId() == ((PatientData)user.getData()).getId()){
+			userSession.setData(selectedPatient);
+			userSession.setSelectedPatient(selectedPatient);
+		}else{
+			userSession.setSelectedPatient(selectedPatient);
+		}
+		
 		
 		//
 		if(result.hasErrors()){
