@@ -19,10 +19,18 @@ import si.fri.t15.models.Medical_Center;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="DoctorData.GetAvailableDoctors", query="SELECT d FROM DoctorData d WHERE d.type=:type AND (d.id = :users OR maxPatients > (SELECT count(p) FROM PatientData p WHERE p.doctor = d))")
-
+	@NamedQuery(name="DoctorData.GetAvailableDoctors", query="SELECT d FROM DoctorData d WHERE d.type=:type AND (d.id = :users OR maxPatients > (SELECT count(p) FROM PatientData p WHERE p.doctor = d OR p.dentist = d))"),
+	@NamedQuery(name="DoctorData.GetDoctorById", query="SELECT d FROM DoctorData d WHERE d.id=:id")
 })
 public class DoctorData extends UserData {
+
+	public int getMaxPatients() {
+		return maxPatients;
+	}
+
+	public void setMaxPatients(int maxPatients) {
+		this.maxPatients = maxPatients;
+	}
 
 	private static final long serialVersionUID = 1L;
 

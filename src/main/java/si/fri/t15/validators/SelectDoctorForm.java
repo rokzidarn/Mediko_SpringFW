@@ -11,84 +11,27 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 
 public class SelectDoctorForm {
-	
-	@NotNull
-    @Size(min=6, max=16)
-    @Pattern(regexp="/^[0-9a-zA-Z-_]{6,16}$/")
-    private String firstName;
-	
-	@NotNull
-    @Size(min=6, max=16)
-    @Pattern(regexp="/^[0-9a-zA-Z-_]{6,16}$/")
-    private String lastName;
-	
-	@NotNull
-	@Pattern(regexp="/[fm]{1}/")
-	private char sex;
 
 	@NotNull
-	@Size(min=10,max=10)
-	@Pattern(regexp="/[0-9]{4}-[0-9]{2}-[0-9]{2}/")
-	private String birth;
+	private int doctor;
 	
+	public int getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(int doctor) {
+		this.doctor = doctor;
+	}
+
+	public int getDentist() {
+		return dentist;
+	}
+
+	public void setDentist(int dentist) {
+		this.dentist = dentist;
+	}
+
 	@NotNull
-	@Size(min=2,max=100)
-	@Pattern(regexp="/^*{2,100}$/")
-	private String address;
-	
-	@NotNull
-	@Size(max=4,min=4)
-	private int pobox;
-	
-	public String getAddress() {
-		return address;
-	}
+	private int dentist;
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public int getPobox() {
-		return pobox;
-	}
-
-	public void setPobox(int pobox) {
-		this.pobox = pobox;
-	}
-
-	
-
-	public String getBirth() {
-		return birth;
-	}
-
-	public void setBirth(String birth) {
-		this.birth = birth;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	
-	public char getSex() {
-		return sex;
-	}
-
-	public void setSex(char sex) {
-		this.sex = sex;
-	}
-	
-	
 }
