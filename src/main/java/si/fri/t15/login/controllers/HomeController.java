@@ -1,17 +1,14 @@
 package si.fri.t15.login.controllers;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
-
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.Appointment;
 import si.fri.t15.models.Checkup;
@@ -19,13 +16,13 @@ import si.fri.t15.models.Diet;
 import si.fri.t15.models.Disease;
 import si.fri.t15.models.Medicine;
 import si.fri.t15.models.Result_Checkup;
-import si.fri.t15.models.user.NurseData;
+import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
+import org.springframework.transaction.annotation.Transactional;
 
 @Controller
 public class HomeController extends ControllerBase{
-	
 	@Autowired
 	EntityManager em;
 	
@@ -45,20 +42,14 @@ public class HomeController extends ControllerBase{
 					break;
 				}
 			}
-		}
-			
-		
+		}					
 		return "redirect:/dashboard";
 	}
 	
 	@Transactional
 	@RequestMapping(value = "/dashboard")
 	public String home(Model model, HttpServletRequest request, @AuthenticationPrincipal User userSession) {
-		//model.addAttribute("login", "login");
-		//model.addAttribute("_csrf", (CsrfToken) request.getAttribute(CsrfToken.class.getName()));
-		//model.addAttribute("trans", getTranslation("login.title", request));
 		
-		//REDIRECT ČE NIMA PATIENT DATA
 		if(userSession.getData() == null){
 			return "redirect:/createProfile";
 		}
@@ -67,53 +58,36 @@ public class HomeController extends ControllerBase{
 			userSession.setSelectedPatient((PatientData)userSession.getData());
 		}
 		
-		//Side menu variables
 		String userType = "user";
 		User user = em.merge(userSession);
-		PatientData p = em.merge(userSession.getSelectedPatient());
+		PatientData pdata = em.merge(userSession.getSelectedPatient());		
+		String fname = pdata.getFirst_name();
+		String lname = pdata.getLast_name();
 		
-		Hibernate.initialize(p.getPo_box());
-		Hibernate.initialize(p.getDoctor());
+		//user == patient
+		DoctorData personal_doctor = pdata.getDoctor();
+		List <Appointment> appointments = pdata.getAppointments();
+		List <Checkup> checkups = pdata.getCheckups();
 		
-		if(p.getDoctor()!=null){
-			for(NurseData n : p.getDoctor().getNurses()){
-				Hibernate.initialize(n);
-			}
-		}
+		List<Disease> diseases = pdata.getDiseases();
+		//List<Medicine> medicines = pdata.getMedicines();
+		List<Diet> diets = pdata.getDiets();
+		List<Result_Checkup> results = pdata.getResults();
+		List<PatientData> caretaker = (List<PatientData>) pdata.getCaretaker();
 		
-		Hibernate.initialize(p.getAppointments());
+		model.addAttribute("fname", fname);
+		model.addAttribute("lname", lname);
+		model.addAttribute("doctor", personal_doctor);
 		
-		if(p.getAppointments()!=null){
-			for(Appointment a : p.getAppointments()){
-				Hibernate.initialize(a.getDoctor());
-			}
-		}
-			
-		if(p.getDoctor()!=null)	{	
-			Hibernate.initialize(p.getDoctor().getMedical_center());
-			Hibernate.initialize(p.getDoctor().getNurses());
-		}
+		model.addAttribute("checkups", checkups);		
+		model.addAttribute("diseases", diseases); 
+		//model.addAttribute("medicines", medicines); 
+		model.addAttribute("diets", diets); 
+		model.addAttribute("results", results); 
 		
-		if(p.getCheckups()!=null){	
-			//Hibernate.initialize(((Checkup) p.getCheckups()));			
-			for(Checkup c : p.getCheckups()){
-				Hibernate.initialize(c);
-				Hibernate.initialize(c.getDoctor());
-				for(Disease d : c.getDiseases()){
-					Hibernate.initialize(d);
-				}
-				for(Diet di : c.getDiets()){
-					Hibernate.initialize(di);
-				}
-				//for(Medicine m : c.getMedicines()){
-				//	Hibernate.initialize(m);
-				//}
-				for(Result_Checkup r : c.getResultCheckups()){
-					Hibernate.initialize(r);
-				}
-			}
-		}
-		
+		model.addAttribute("appointments", appointments); 
+		model.addAttribute("caretaker", caretaker); 
+				
 		//Naloži lazy podatke
 		if(user.getData().getClass().equals(PatientData.class)){
 			((PatientData)user.getData()).getPatients();
@@ -122,14 +96,15 @@ public class HomeController extends ControllerBase{
 		if(user.getUserRoles().contains("ROLE_ADMIN")) {
 			userType = "admin";
 		}
+		
 		model.addAttribute("usertype", userType);
 		model.addAttribute("selectedPatient", userSession.getSelectedPatient());
-		model.addAttribute("p", p);
+		model.addAttribute("p", pdata);
 		model.addAttribute("page", "home");
 		model.addAttribute("path", "/mediko_dev/");
-		//Page variables
 		model.addAttribute("title", "NADZORNA PLOŠČA MEDIKO");
 		model.addAttribute("user", user);
+		
 		return "home";
-	}
+	}	
 }

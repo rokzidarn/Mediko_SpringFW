@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 
 @Entity
 @NamedQuery(name="Disease.findAll", query="SELECT d FROM Disease d")
