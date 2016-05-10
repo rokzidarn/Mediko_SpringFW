@@ -112,13 +112,13 @@
 	                                                            </tr>
 	                                                        </thead>
 	                                                        #foreach($checkup in $checkups)
-	                                                        <tbody> 
-	                                                            <tr> 
-	                                                                <th scope="row">$checkup.appointment.date</th>
-	                                                                <td>dr. $checkup.doctor.last_name</td> 
-	                                                                <td>$checkup.reason</td>
-	                                                            </tr> 
-	                                                        </tbody> 
+    	                                                        <tbody class="checkup-table-tbody" onclick="opencheckup('#springUrl('/checkup/')'+ ${checkup.id})"> 
+    	                                                            <tr> 
+    	                                                                <th scope="row">$checkup.appointment.date</th>
+    	                                                                <td>dr. $checkup.doctor.last_name</td> 
+    	                                                                <td>$checkup.reason</td>
+    	                                                            </tr> 
+    	                                                        </tbody> 
 	                                                        #end
 	                                                    </table>                                                   
                                                     </div>
