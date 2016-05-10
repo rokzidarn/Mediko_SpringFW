@@ -67,10 +67,9 @@ public class SelectDoctorsController extends ControllerBase{
 		doctorsQuery.setParameter("users",selectedDoctor); 
 		List<DoctorData> doctors = (List<DoctorData>)doctorsQuery.getResultList();
 		
-		Query dentistsQuery = em.createNamedQuery("DoctorData.GetAvailableDoctors");
-		dentistsQuery.setParameter("type", "Dentist");
-		dentistsQuery.setParameter("users", selectedDentist);
-		List<DoctorData> dentists = (List<DoctorData>)dentistsQuery.getResultList();
+		doctorsQuery.setParameter("type", "Dentist");
+		doctorsQuery.setParameter("users", selectedDentist);
+		List<DoctorData> dentists = (List<DoctorData>)doctorsQuery.getResultList();
 		
 		
 		model.addAttribute("doctors", doctors);
@@ -116,10 +115,9 @@ public class SelectDoctorsController extends ControllerBase{
 		doctorsQuery.setParameter("users",selectedDoctor); 
 		List<DoctorData> doctors = (List<DoctorData>)doctorsQuery.getResultList();
 		
-		Query dentistsQuery = em.createNamedQuery("DoctorData.GetAvailableDoctors");
-		dentistsQuery.setParameter("type", "Dentist");
-		dentistsQuery.setParameter("users", selectedDentist);
-		List<DoctorData> dentists = (List<DoctorData>)dentistsQuery.getResultList();
+		doctorsQuery.setParameter("type", "Dentist");
+		doctorsQuery.setParameter("users", selectedDentist);
+		List<DoctorData> dentists = (List<DoctorData>)doctorsQuery.getResultList();
 		
 		model.addAttribute("doctors", doctors);
 		model.addAttribute("selectedDoctor", selectedDoctor);
