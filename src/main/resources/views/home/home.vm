@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     #parse("../common/head.vm")
     <body>
@@ -61,7 +61,7 @@
                                                     </div>
                                                 #else
                                                     <div class="col-md-6">
-                                                        <strong>Ime</strong><br>=
+                                                        <strong>Ime</strong><br>
                                                         $doctor.first_name
                                                     </div>
                                                     <div class="col-md-6">

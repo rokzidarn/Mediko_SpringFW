@@ -45,7 +45,7 @@ public class Checkup implements Serializable{
 		      joinColumns=@JoinColumn(name="C_ID", referencedColumnName="idCheckup"),
 		      inverseJoinColumns=@JoinColumn(name="M_ID", referencedColumnName="idMedicine"))
 	private List<Medicine> medicines;
-
+	
 	@ManyToMany
 	@JoinTable(
 		      name="Checkup_Diet",
@@ -55,10 +55,6 @@ public class Checkup implements Serializable{
 	
 	@OneToMany(mappedBy="checkup")
 	private List<Result_Checkup> resultCheckups;
-	
-	public DoctorData getDoctor() {
-		return doctor;
-	}
 	
 	public Checkup() {
 	}	
@@ -129,5 +125,9 @@ public class Checkup implements Serializable{
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public DoctorData getDoctor() {
+		return doctor;
 	}
 }

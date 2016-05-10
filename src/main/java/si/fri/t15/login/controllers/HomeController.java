@@ -14,6 +14,7 @@ import si.fri.t15.models.Appointment;
 import si.fri.t15.models.Checkup;
 import si.fri.t15.models.Diet;
 import si.fri.t15.models.Disease;
+import si.fri.t15.models.Medicine;
 import si.fri.t15.models.Result_Checkup;
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
@@ -41,7 +42,7 @@ public class HomeController extends ControllerBase{
 					break;
 				}
 			}
-		}
+		}					
 		return "redirect:/dashboard";
 	}
 	
@@ -86,6 +87,7 @@ public class HomeController extends ControllerBase{
 		
 		model.addAttribute("appointments", appointments); 
 		model.addAttribute("caretaker", caretaker); 
+				
 		//Naloži lazy podatke
 		if(user.getData().getClass().equals(PatientData.class)){
 			((PatientData)user.getData()).getPatients();
