@@ -67,6 +67,7 @@ public class HomeController extends ControllerBase{
 		
 		//user == patient
 		DoctorData personal_doctor = pdata.getDoctor();
+		DoctorData personalDentist = pdata.getDentist();
 		List <Appointment> appointments = pdata.getAppointments();
 		List <Checkup> checkups = pdata.getCheckups();
 		
@@ -79,6 +80,7 @@ public class HomeController extends ControllerBase{
 		model.addAttribute("fname", fname);
 		model.addAttribute("lname", lname);
 		model.addAttribute("doctor", personal_doctor);
+		model.addAttribute("dentist", personalDentist);
 		
 		model.addAttribute("checkups", checkups);		
 		model.addAttribute("diseases", diseases); 

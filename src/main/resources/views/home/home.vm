@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">Zdravniki</div>
+                                            <div class="panel-heading">Osebni zdravniki</div>
                                             <div class="panel-body">
                                                <div class="row">
                                                	#if(!$doctor)
@@ -87,6 +87,47 @@
                                                     	#end
                                                     </div>   
                                             	#end                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Zobozdravnik</div>
+                                            <div class="panel-body">
+                                               <div class="row">
+                                                #if(!$dentist)
+                                                    <div class="col-md-6">
+                                                        <strong>Nimate še izbranega Zobozdravnika!</strong><br>
+                                                    </div>
+                                                #else
+                                                    <div class="col-md-6">
+                                                        <strong>Ime</strong><br>
+                                                        $dentist.first_name
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <strong>Priimek</strong><br>
+                                                        $dentist.last_name
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <strong>Tip</strong><br>
+                                                        $dentist.type
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <strong>Zdravstvena ustanova</strong><br>
+                                                        $dentist.medical_center.name
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        #if(!$dentist.nurses)
+                                                        <strong>Medicinska sestra</strong><br>  
+                                                        /
+                                                        #else
+                                                            #foreach($nurse in $dentist.nurses)
+                                                                $nurse.first_name $nurse.last_name
+                                                            #end
+                                                        #end
+                                                    </div>   
+                                                #end                                                
                                                 </div>
                                             </div>
                                         </div>
