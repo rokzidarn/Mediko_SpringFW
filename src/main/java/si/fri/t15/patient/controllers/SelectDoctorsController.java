@@ -135,26 +135,34 @@ public class SelectDoctorsController extends ControllerBase{
 		
 		//Check if doctor can take another patient
 		if(selectedDoctor != command.getDoctor()){
-			Query doctorQuery = em.createNamedQuery("DoctorData.GetDoctorById");
-			doctorQuery.setParameter("id", command.getDoctor());
-			DoctorData newSelectedDoctor = (DoctorData)doctorQuery.getSingleResult();
-			if(newSelectedDoctor != null && newSelectedDoctor.getType().equals("Doctor") && newSelectedDoctor.getPatients().size() < newSelectedDoctor.getMaxPatients()){
-				//Set doctor
-				selectedPatient.setDoctor(newSelectedDoctor);
+			if(command.getDoctor() != -1){
+				Query doctorQuery = em.createNamedQuery("DoctorData.GetDoctorById");
+				doctorQuery.setParameter("id", command.getDoctor());
+				DoctorData newSelectedDoctor = (DoctorData)doctorQuery.getSingleResult();
+				if(newSelectedDoctor != null && newSelectedDoctor.getType().equals("Doctor") && newSelectedDoctor.getPatients().size() < newSelectedDoctor.getMaxPatients()){
+					//Set doctor
+					selectedPatient.setDoctor(newSelectedDoctor);
+				}else{
+					result.rejectValue("doctor", "field.format", "Pri izbiri zdravnika je prišlo do napake!");
+				}
 			}else{
-				result.rejectValue("doctor", "field.format", "Pri izbiri zdravnika je prišlo do napake!");
+				selectedPatient.setDoctor(null);
 			}
 		}
 		
 		if(selectedDentist != command.getDentist()){
-			Query doctorQuery = em.createNamedQuery("DoctorData.GetDoctorById");
-			doctorQuery.setParameter("id", command.getDentist());
-			DoctorData newSelectedDentist = (DoctorData)doctorQuery.getSingleResult();
-			if(newSelectedDentist != null && newSelectedDentist.getType().equals("Dentist") && newSelectedDentist.getPatients().size() < newSelectedDentist.getMaxPatients()){
-				//Set dentist
-				selectedPatient.setDentist(newSelectedDentist);
+			if(command.getDentist() != -1){
+				Query doctorQuery = em.createNamedQuery("DoctorData.GetDoctorById");
+				doctorQuery.setParameter("id", command.getDentist());
+				DoctorData newSelectedDentist = (DoctorData)doctorQuery.getSingleResult();
+				if(newSelectedDentist != null && newSelectedDentist.getType().equals("Dentist") && newSelectedDentist.getPatients().size() < newSelectedDentist.getMaxPatients()){
+					//Set dentist
+					selectedPatient.setDentist(newSelectedDentist);
+				}else{
+					result.rejectValue("dentist", "field.format", "Pri izbiri zobozdravnika je prišlo do napake!");
+				}
 			}else{
-				result.rejectValue("dentist", "field.format", "Pri izbiri zobozdravnika je prišlo do napake!");
+				selectedPatient.setDentist(null);
 			}
 		}
 		
