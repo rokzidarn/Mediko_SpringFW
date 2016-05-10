@@ -114,8 +114,8 @@
 	                                                        #foreach($checkup in $checkups)
 	                                                        <tbody> 
 	                                                            <tr> 
-	                                                                <th scope="row">$checkup.date</th>
-	                                                                <td>$checkup.doctor.first_name $checkup.doctor.last_name</td> 
+	                                                                <th scope="row">$checkup.appointment.date</th>
+	                                                                <td>dr. $checkup.doctor.last_name</td> 
 	                                                                <td>$checkup.reason</td>
 	                                                            </tr> 
 	                                                        </tbody> 
@@ -147,7 +147,7 @@
                                         	           #foreach($disease in $diseases)																	
                                                         <tbody> 
                                                             <tr> 
-                                                            	#if($disease.is_allergy == 0)
+                                                            	#if($disease.getIsAllergy()==0)
 	                                                                <td>$disease.name</td> 
 	                                                                <td>-</td> 
                                                                 #end
@@ -183,7 +183,7 @@
                                         	           #foreach($allergy in $diseases)													
                                                         <tbody> 
                                                             <tr> 
-                                                            	#if($allergy.is_allergy == 1)
+                                                            	#if($allergy.getIsAllergy() == 1)
 	                                                                <td>$allergy.name</td> 
 	                                                                <td>-</td> 
                                                                 #end
@@ -214,10 +214,10 @@
     	                                                        <th>Navodila</th>
     	                                                    </tr>
     	                                                </thead>
-                                                	   #foreach($diets in $diets)													 
+                                                	   #foreach($diet in $diets)													 
                                                         <tbody> 
                                                             <tr> 
-                                                                <th scope="row">$diet.name</th> 
+                                                                <th scope="row">$diet.getName()</th> 
                                                                 <td>-</td> 
                                                             </tr> 
                                                         </tbody>                              
@@ -252,7 +252,7 @@
                                                         #foreach($medicine in $medicines)  
                                                         <tbody> 
                                                             <tr> 
-                                                                <th scope="row">$medicine.name</th> 
+                                                                <th scope="row">$medicine.getName()</th> 
                                                                 <td>$medicine.type</td>
                                                                 <td>-</td> 
                                                             </tr> 
@@ -329,7 +329,7 @@
 	                                                        <tbody> 
 	                                                            <tr> 
 	                                                                <th scope="row">$appointment.date</th> 
-	                                                                <td>$appointment.doctor.first_name $appointment.doctor.last_name</td> 
+	                                                                <td>dr. $appointment.doctor.last_name</td> 
 	                                                            </tr> 
 	                                                        </tbody> 
 	                                                        #end

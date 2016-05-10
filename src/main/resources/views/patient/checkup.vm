@@ -16,22 +16,22 @@
                             	<div class="row">
                                     <div class="col-md-8">
                                         <div class="panel panel-default">
-                                        <div class="panel-heading">PREGLED številka ${idc}</div>							
-											<p>Pacient: ${pdata.getFirst_name()} ${pdata.getLast_name()}, ${pdata.getPo_box().city}, ZZZS: ${pdata.getId()}</p>
-											<p>Zdravnik: ${ddata.getFirst_name()} ${ddata.getLast_name()}, ${ddata.getMedical_center().name}</p>
-											<p>Razlog: $reason </p>
-                                            <p>Datum: $date</p>
+                                        <div class="panel-heading"><strong>PREGLED številka ${idc}</strong></div>							
+											<p><strong>Pacient:</strong> ${pdata.getFirst_name()} ${pdata.getLast_name()}, ${pdata.getPo_box().city}, ZZZS: ${pdata.getId()}</p>
+											<p><strong>Zdravnik:</strong> ${ddata.getFirst_name()} ${ddata.getLast_name()}, ${ddata.getMedical_center().name}</p>
+											<p><strong>Razlog:</strong> $reason </p>
+                                            <p><strong>Datum:</strong> $date</p>
 										</div>
 									</div>
 								</div>
                             	<div class="row">
                                     <div class="col-md-8">
                                         <div class="panel panel-default">
-                                        <div class="panel-heading">DIAGNOZA</div>	
+                                        <div class="panel-heading"><strong>DIAGNOZA</strong></div>	
 											#if($diseases.isEmpty())
 												<p>Ni bolezni!</p>
 											#else
-												<p>Bolezni:</p>
+												<p><strong>Bolezni:</strong></p>
 												#foreach( $disease in $diseases )
 												   <p>${disease.getName()}</p>
 												#end
@@ -39,7 +39,7 @@
 											#if($medicines.isEmpty())
 												<p>Ni zdravil!</p>
 											#else
-												<p>Zdravila:</p>
+												<p><strong>Zdravila:</strong></p>
 												#foreach( $medicine in $medicines )
 												   <p>${medicine.getName()}, ${medicine.getType()}</p>
 												#end
@@ -47,7 +47,7 @@
 											#if($diets.isEmpty())
 												<p>Ni diet!</p>
 											#else
-												<p>Diete: </p>
+												<p><strong>Diete:</strong></p>
 												#foreach( $diet in $diets )
 												   <p>${diet.getName()}</p>
 												#end

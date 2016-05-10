@@ -56,12 +56,13 @@ public class CheckupController extends ControllerBase {
 		//model.addAttribute("medicines", curr.getMedicines());
 		
 		//Side menu variables
-		model.addAttribute("usertype", "admin");
-		model.addAttribute("page", "admin");
-		model.addAttribute("subpage", "addDoctor");	
+		model.addAttribute("usertype", userType);
+		model.addAttribute("selectedPatient", userSession.getSelectedPatient());
+		model.addAttribute("page", "home");
 		model.addAttribute("path", "/mediko_dev/");
 		//Page variables
-		model.addAttribute("title", "Pregled");
+		model.addAttribute("title", "PREGLED");
+		model.addAttribute("user", user);
 		return "checkup";
 	}
 }
