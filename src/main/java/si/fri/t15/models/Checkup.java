@@ -9,7 +9,10 @@ import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 
 @Entity
-@NamedQuery(name="Checkup.findAll", query="SELECT c FROM Checkup c")
+@NamedQueries({
+	@NamedQuery(name="Checkup.findAll", query="SELECT c FROM Checkup c"),
+	@NamedQuery(name="Checkup.findCheckup", query="SELECT c FROM Checkup c WHERE c.id=?1")
+})
 public class Checkup implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -35,7 +38,7 @@ public class Checkup implements Serializable{
 		      joinColumns=@JoinColumn(name="M_ID", referencedColumnName="idCheckup"),
 		      inverseJoinColumns=@JoinColumn(name="D_ID", referencedColumnName="idDisease"))
 	private List<Disease> diseases;
-	
+
 	@ManyToMany
 	@JoinTable(
 		      name="Checkup_Medicine",
@@ -83,4 +86,50 @@ public class Checkup implements Serializable{
 	public void setDoctor(DoctorData doctor) {
 		this.doctor = doctor;
 	}
+	
+	public List<Disease> getDiseases() {
+		return diseases;
+	}
+
+	public void setDiseases(List<Disease> diseases) {
+		this.diseases = diseases;
+	}
+
+	public List<Medicine> getMedicines() {
+		return medicines;
+	}
+
+	public void setMedicines(List<Medicine> medicines) {
+		this.medicines = medicines;
+	}
+
+	public List<Diet> getDiets() {
+		return diets;
+	}
+
+	public void setDiets(List<Diet> diets) {
+		this.diets = diets;
+	}
+
+	public List<Result_Checkup> getResultCheckups() {
+		return resultCheckups;
+	}
+
+	public void setResultCheckups(List<Result_Checkup> resultCheckups) {
+		this.resultCheckups = resultCheckups;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public DoctorData getDoctor() {
+		return doctor;
+	}
+	
+	
 }
