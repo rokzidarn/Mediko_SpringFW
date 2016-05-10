@@ -24,6 +24,10 @@ public class Checkup implements Serializable{
 	@Column(name="Reason", length=45, nullable=false)
 	private String reason;
 	
+	@OneToOne
+	private Appointment appointment;
+	
+
 	@ManyToOne
 	@JoinColumn(name="Patient_idPatient")
 	private PatientData patient;
@@ -73,6 +77,14 @@ public class Checkup implements Serializable{
 
 	public void setReason(String reason) {
 		this.reason = reason;
+	}
+	
+	public Appointment getAppointment() {
+		return appointment;
+	}
+
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
 	}
 	
 	public PatientData getPatient() {

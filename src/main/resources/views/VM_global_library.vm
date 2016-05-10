@@ -28,6 +28,18 @@
 					</div>
 				</a>
 			#end
+			<a href="#springUrl('/settings/password')">
+		        <div class="side-menu-item #if($page=="settings")side-menu-item-selected #end">
+		        NASTAVITVE
+		        </div>
+		    </a>
+		    #if($page == "settings")
+				<a href="#springUrl('/settings/password')">
+					<div class="side-submenu-item #if($subpage=="changePassword")side-submenu-item-selected #end">
+						SPREMENI GESLO
+					</div>
+				</a>
+			#end
 	    #elseif(!$usertype)
 		 	<a href="#">
 		        <div class="side-menu-item #if($page && $page=="login")side-menu-item-selected #end">
