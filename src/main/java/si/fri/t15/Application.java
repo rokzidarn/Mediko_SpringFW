@@ -17,6 +17,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import si.fri.t15.dao.UserDetailsService;
 import si.fri.t15.login.controllers.SessionEndedListener;
+import si.fri.t15.validators.ChangePasswordValidator;
 import si.fri.t15.validators.CreateMedicalWorkerValidator;
 import si.fri.t15.validators.CreatePatientValidator;
 import si.fri.t15.validators.SignUpValidator;
@@ -101,6 +102,11 @@ public class Application extends WebMvcConfigurerAdapter {
 	@Bean
 	public CreatePatientValidator createPatientValidator(){
 		return new CreatePatientValidator();
+	}
+	
+	@Bean
+	public ChangePasswordValidator changePasswordValidator(){
+		return new ChangePasswordValidator();
 	}
 	
 	@Bean
