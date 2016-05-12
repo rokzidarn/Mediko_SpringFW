@@ -2,6 +2,7 @@ package si.fri.t15.login.controllers;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.Appointment;
 import si.fri.t15.models.Checkup;
@@ -32,20 +35,77 @@ public class HomeController extends ControllerBase{
 		
 		User user = em.merge(userSession);
 		
-		if(user.getData().getId() == patientId){
-			userSession.setSelectedPatient((PatientData)userSession.getData());
-		}else{
-			
-			for(PatientData patient : ((PatientData)user.getData()).getPatients()){
+		if(user.getData().getClass().equals(PatientData.class)){
+			if(user.getData().getId() == patientId){
+				userSession.setSelectedPatient((PatientData)userSession.getData());
+			}else{
+				for(PatientData patient : ((PatientData)user.getData()).getPatients()){
+					if(patient.getId() == patientId){
+						userSession.setSelectedPatient(patient);
+						break;
+					}
+				}
+			}
+			String referer = request.getHeader("Referer");
+		    return "redirect:"+ referer;
+		}else if(user.getData().getClass().equals(DoctorData.class)){
+			for(PatientData patient : ((DoctorData)user.getData()).getPatients()){
 				if(patient.getId() == patientId){
 					userSession.setSelectedPatient(patient);
 					break;
 				}
 			}
-		}					
-		String referer = request.getHeader("Referer");
-	    return "redirect:"+ referer;
+			
+		}
+		return "redirect:/dashboard";
+							
+		
 	}
+	
+	@Transactional
+	@RequestMapping(value = "/dashboard/patient/")
+	public String selectPatient(Model model, HttpServletRequest request, @AuthenticationPrincipal User userSession, @RequestParam(value = "patient", required = false) String selectedPatientIdParam) {
+		if(!userSession.getData().getClass().equals(DoctorData.class)){
+			return "redirect:/dashboard";
+		}
+		User user = em.merge(userSession);
+		String userType = "user";
+		
+		DoctorData doctor = (DoctorData)em.merge(userSession.getData());
+		
+		
+		if(selectedPatientIdParam != null){
+			return "redirect:/dashboard/patient/"+selectedPatientIdParam;
+			//int selectedPatientId = Integer.parseInt(selectedPatientIdParam);
+			/*for(PatientData patient : doctor.getPatients()){
+				if(patient.getId() == selectedPatientId){
+					userSession.setSelectedPatient(patient);
+					break;
+				}
+			}*/
+			//return "redirect:/dashboard";
+		}
+		
+		int selectedPateintId = -1;
+		if(userSession.getSelectedPatient() != null){
+			selectedPateintId = userSession.getSelectedPatient().getId();
+		}
+		
+		
+		
+		model.addAttribute("patients", doctor.getPatients());
+		
+		model.addAttribute("selectedPatient", selectedPateintId);
+		model.addAttribute("page", "home");
+		model.addAttribute("path", "/mediko_dev/");
+		model.addAttribute("title", "NADZORNA PLOŠČA MEDIKO");
+		model.addAttribute("user", user);
+		model.addAttribute("usertype", userType);
+		
+		return "selectPatient";
+			
+	}
+	
 	
 	@Transactional
 	@RequestMapping(value = "/dashboard")
@@ -55,59 +115,113 @@ public class HomeController extends ControllerBase{
 			return "redirect:/createProfile";
 		}
 		
-		if(userSession.getData().getClass().equals(PatientData.class) && userSession.getSelectedPatient() == null){
-			userSession.setSelectedPatient((PatientData)userSession.getData());
-		}
-		
-		String userType = "user";
 		User user = em.merge(userSession);
-		PatientData pdata = em.merge(userSession.getSelectedPatient());		
-		String fname = pdata.getFirst_name();
-		String lname = pdata.getLast_name();
 		
-		//user == patient
-		DoctorData personal_doctor = pdata.getDoctor();
-		DoctorData personalDentist = pdata.getDentist();
-		List <Appointment> appointments = pdata.getAppointments();
-		List <Checkup> checkups = pdata.getCheckups();
+		if(userSession.getData().getClass().equals(PatientData.class)){
+			if(userSession.getData().getClass().equals(PatientData.class) && userSession.getSelectedPatient() == null){
+				userSession.setSelectedPatient((PatientData)userSession.getData());
+			}
+			
+			String userType = "user";
+			
+			PatientData pdata = em.merge(userSession.getSelectedPatient());		
+			String fname = pdata.getFirst_name();
+			String lname = pdata.getLast_name();
+			
+			//user == patient
+			DoctorData personal_doctor = pdata.getDoctor();
+			List <Appointment> appointments = pdata.getAppointments();
+			List <Checkup> checkups = pdata.getCheckups();
+			
+			List<Disease> diseases = pdata.getDiseases();
+			//List<Medicine> medicines = pdata.getMedicines();
+			List<Diet> diets = pdata.getDiets();
+			List<Result_Checkup> results = pdata.getResults();
+			PatientData caretaker = (PatientData) pdata.getCaretaker();
+			
+			model.addAttribute("fname", fname);
+			model.addAttribute("lname", lname);
+			model.addAttribute("doctor", personal_doctor);
+			
+			model.addAttribute("checkups", checkups);		
+			model.addAttribute("diseases", diseases); 
+			//model.addAttribute("medicines", medicines); 
+			model.addAttribute("diets", diets); 
+			model.addAttribute("results", results); 
+			
+			model.addAttribute("appointments", appointments); 
+			model.addAttribute("caretaker", caretaker); 
+					
+			//Naloži lazy podatke
+			if(user.getData().getClass().equals(PatientData.class)){
+				((PatientData)user.getData()).getPatients();
+			}
+			
+			if(user.getUserRoles().contains("ROLE_ADMIN")) {
+				userType = "admin";
+			}
+			
+			model.addAttribute("usertype", userType);
+			model.addAttribute("selectedPatient", userSession.getSelectedPatient());
+			model.addAttribute("p", pdata);
+			model.addAttribute("page", "home");
+			model.addAttribute("path", "/mediko_dev/");
+			model.addAttribute("title", "NADZORNA PLOŠČA MEDIKO");
+			model.addAttribute("user", user);
+			
+			return "home";
+		}else if(userSession.getData().getClass().equals(DoctorData.class)){
+			
+			String userType = "user";
 		
-		List<Disease> diseases = pdata.getDiseases();
-		//List<Medicine> medicines = pdata.getMedicines();
-		List<Diet> diets = pdata.getDiets();
-		List<Result_Checkup> results = pdata.getResults();
-		PatientData caretaker = (PatientData) pdata.getCaretaker();
-		
-		model.addAttribute("fname", fname);
-		model.addAttribute("lname", lname);
-		model.addAttribute("doctor", personal_doctor);
-		model.addAttribute("dentist", personalDentist);
-		
-		model.addAttribute("checkups", checkups);		
-		model.addAttribute("diseases", diseases); 
-		//model.addAttribute("medicines", medicines); 
-		model.addAttribute("diets", diets); 
-		model.addAttribute("results", results); 
-		
-		model.addAttribute("appointments", appointments); 
-		model.addAttribute("caretaker", caretaker); 
-				
-		//Naloži lazy podatke
-		if(user.getData().getClass().equals(PatientData.class)){
-			((PatientData)user.getData()).getPatients();
+			DoctorData doctor = (DoctorData)em.merge(userSession.getData());
+			
+			if(userSession.getSelectedPatient() == null){
+				return "redirect:/dashboard/patient/";
+			}
+			
+			PatientData pdata = em.merge(userSession.getSelectedPatient());		
+			String fname = pdata.getFirst_name();
+			String lname = pdata.getLast_name();
+			
+			//user == patient
+			DoctorData personal_doctor = pdata.getDoctor();
+			List <Appointment> appointments = pdata.getAppointments();
+			List <Checkup> checkups = pdata.getCheckups();
+			
+			List<Disease> diseases = pdata.getDiseases();
+			//List<Medicine> medicines = pdata.getMedicines();
+			List<Diet> diets = pdata.getDiets();
+			List<Result_Checkup> results = pdata.getResults();
+			PatientData caretaker = (PatientData) pdata.getCaretaker();
+			
+			model.addAttribute("fname", fname);
+			model.addAttribute("lname", lname);
+			model.addAttribute("doctor", personal_doctor);
+			
+			model.addAttribute("checkups", checkups);		
+			model.addAttribute("diseases", diseases); 
+			//model.addAttribute("medicines", medicines); 
+			model.addAttribute("diets", diets); 
+			model.addAttribute("results", results); 
+			
+			model.addAttribute("appointments", appointments); 
+			model.addAttribute("caretaker", caretaker); 
+			
+			model.addAttribute("selectedPatient", userSession.getSelectedPatient());
+			
+			model.addAttribute("isDoctor", true);
+			model.addAttribute("page", "home");
+			model.addAttribute("path", "/mediko_dev/");
+			model.addAttribute("title", "NADZORNA PLOŠČA MEDIKO");
+			model.addAttribute("user", user);
+			model.addAttribute("usertype", userType);
+			
+			return "home";
+			
 		}
-		
-		if(user.getUserRoles().contains("ROLE_ADMIN")) {
-			userType = "admin";
+		else{
+			return "home";
 		}
-		
-		model.addAttribute("usertype", userType);
-		model.addAttribute("selectedPatient", userSession.getSelectedPatient());
-		model.addAttribute("p", pdata);
-		model.addAttribute("page", "home");
-		model.addAttribute("path", "/mediko_dev/");
-		model.addAttribute("title", "NADZORNA PLOŠČA MEDIKO");
-		model.addAttribute("user", user);
-		
-		return "home";
 	}	
 }

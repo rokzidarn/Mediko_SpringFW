@@ -40,12 +40,20 @@
                                                     </div>                                                                                                   
                                                     <div class="col-md-6">
                                                         <strong>Naslov in kraj</strong><br>
-                                                        $selectedPatient.address<br>$p.po_box.city
+                                                        $selectedPatient.address<br>$selectedPatient.po_box.city
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Kartica ZZZS</strong><br>
                                                         $selectedPatient.id
                                                     </div>
+                                                    #if($isDoctor)
+                                                        <div class="col-md-12 text-center">
+                                                            <br>
+                                                            <a href="#springUrl('/dashboard/patient/')">
+                                                                <button type="button" class="btn btn-info">Spremeni pacienta</button>
+                                                            </a>
+                                                        </div>
+                                                    #end
                                                 </div>
                                             </div>
                                         </div>
@@ -406,8 +414,10 @@
                                         $user.username
                                     </div>
                                 </div>
-                                <div class="sidebar-seperator"></div>
-                                #patientPicker($user)
+                                #if(!$isDoctor)
+                                    <div class="sidebar-seperator"></div>
+                                    #patientPicker($user)
+                                #end
                                 <div class="sidebar-seperator"></div>
                                 #sidemenu($usertype $page $subpage)
                                 <div class="sidebar-seperator"></div>
