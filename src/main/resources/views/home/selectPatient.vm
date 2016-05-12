@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    #parse("../common/head.vm")
+    <body>
+    	<div class="container">
+            <div class="row">
+                <div class="panel panel-default main-panel">
+                    <div class="main-container">
+                        <div class="content-container">
+                            <div class="content-topbar">
+                                <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
+                                <div class="content-title">$title</div>
+                            </div>
+                            <div class="content">
+                                <form method="GET" action="">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">                                 
+                                                <label for="patientInput">Izbrani pacient</label>
+                                                <select class="form-control" id="patientInput" name="patient">
+                                                    <option #if(-1 == $selectedPatient) selected #end value="-1">Ni izbran</option>
+                                                    #foreach($patient in $patients)
+                                                    <option #if($patient.id == $selectedPatient) selected #end value="$patient.id">$patient.first_name $patient.last_name</option>
+                                                    #end
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <p class="text-center">
+                                        <input type="submit" class="btn btn-default btn-lg" value="Potrdi">
+                                    </p>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                        <div id="sidebar" class="sidebar hidden-sm hidden-xs">
+                            <div id="sidebarContent">
+                                <div class="sidebar-topbar">
+                                    <div class="logo" style="color:#eee">
+                                        #if($user.lastLogin)
+                                            <div style="padding-left: 10px;">
+                                                <h6>Zadnja prijava</h6>
+                                                <h6>$user.lastLogin</h6>
+                                            </div>
+                                        #end
+                                    </div>
+                                    <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                    </div>
+                                </div>
+                                <div class="patient">
+                                    <div class="patient-image patient-male">
+
+                                    </div>
+                                    <div class="patient-name">
+                                        $user.username
+                                    </div>
+                                </div>
+                                <div class="sidebar-seperator"></div>
+                                #sidemenu($usertype $page $subpage)
+                                <div class="sidebar-seperator"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
