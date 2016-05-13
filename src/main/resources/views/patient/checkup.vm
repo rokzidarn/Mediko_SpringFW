@@ -34,27 +34,79 @@
 											#if($diseases.isEmpty())
 												<p>Ni bolezni!</p>
 											#else
-												<p><strong>Bolezni:</strong></p>
-												#foreach( $disease in $diseases )
-												   <p>${disease.getName()}</p>
-												#end
-											#end
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr> 
+                                                                <th>Bolezeni</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        #foreach($disease in $diseases)                                                                         
+                                                            <tbody> 
+                                                                <tr>                                                                 
+                                                                    <td scope="row">$disease.name</td> 
+                                                                    <td><a style="color:#36B8D5" href="http://lmgtfy.com/?q=$disease.name">Povezava</a></td> 
+                                                                </tr> 
+                                                            </tbody>                                              
+                                                        #end 
+                                                    </table>
+                                                </div>                                         
+                                           #end      
 											#if($medicines.isEmpty())
 												<p>Ni zdravil!</p>
 											#else
-												<p><strong>Zdravila:</strong></p>
-												#foreach( $medicine in $medicines )
-												   <p>${medicine.getName()}, ${medicine.getType()}</p>
-												#end
+												<div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr> 
+                                                                <th>Zdravila</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead> 
+                                                        #foreach($medicine in $medicines) 
+                                                            <tbody> 
+                                                                <tr> 
+                                                                    <td scope="row">$medicine.getName()</td> 
+                                                                    <td><a style="color:#36B8D5" href="$medicine.link">Navodila</a></td> 
+                                                                </tr> 
+                                                            </tbody> 
+                                                        #end
+                                                    </table>                                                  
+                                                </div>
 											#end
 											#if($diets.isEmpty())
 												<p>Ni diet!</p>
 											#else
-												<p><strong>Diete:</strong></p>
-												#foreach( $diet in $diets )
-												   <p>${diet.getName()}</p>
-												#end
-											#end		
+												<div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr> 
+                                                                <th>Diete</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        #foreach($diet in $diets)
+                                                            <tbody> 
+                                                                <tr> 
+                                                                    <td scope="row">$diet.getName()</td> 
+                                                                    <td>
+                                                                        #foreach($instruction in $diet.getInstructions_Diets())
+                                                                            #if($velocityCount!=1) <br> #end
+                                                                            <a style="color:#36B8D5" href="$instruction.getText()">Navodila</a>
+                                                                        #end
+                                                                    </td> 
+                                                                </tr> 
+                                                            </tbody> 
+                                                                                  
+                                                        #end
+                                                    </table>                                                  
+                                                </div>
+											#end
+                                            #if($instructions.length() > 0)
+                                                <p><strong>Navodila:</strong></p> 
+                                                $instructions	
+                                            #end
 										</div>
                                     </div>
 								</div>																			

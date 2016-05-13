@@ -46,6 +46,7 @@ public class CheckupController extends ControllerBase {
 		DoctorData d = curr.getDoctor();
 				
 		model.addAttribute("idc", id); 
+		model.addAttribute("instructions", curr.getInstructions());
 		model.addAttribute("reason", curr.getReason());	
 		model.addAttribute("date", curr.getAppointment().getDate());	
 		model.addAttribute("pdata", p); 
@@ -53,7 +54,7 @@ public class CheckupController extends ControllerBase {
 				
 		model.addAttribute("diseases", curr.getDiseases()); 
 		model.addAttribute("diets", curr.getDiets()); 
-		//model.addAttribute("medicines", curr.getMedicines());
+		model.addAttribute("medicines", curr.getMedicines());
 		
 		//Side menu variables
 		model.addAttribute("usertype", userType);

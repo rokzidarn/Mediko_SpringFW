@@ -164,7 +164,7 @@
                                                                 #if($velocityCount  <= 5)
         	                                                        <tbody class="checkup-table-tbody" onclick="opencheckup('#springUrl('/checkup/')'+ ${checkup.id})"> 
         	                                                            <tr> 
-        	                                                                <th scope="row">$checkup.appointment.date</th>
+        	                                                                <td scope="row">$checkup.appointment.date</td>
         	                                                                <td>dr. $checkup.doctor.last_name</td> 
         	                                                                <td>$checkup.reason</td>
         	                                                            </tr> 
@@ -274,7 +274,7 @@
                                                             #if($velocityCount  <= 5)
                                                                 <tbody> 
                                                                     <tr> 
-                                                                        <th scope="row">$diet.getName()</th> 
+                                                                        <td scope="row">$diet.getName()</td> 
                                                                         <td>
                                                                             #foreach($instruction in $diet.getInstructions_Diets())
                                                                                 #if($velocityCount!=1) <br> #end
@@ -308,7 +308,6 @@
                                                         <thead>
                                                             <tr> 
                                                                 <th>Zdravilo</th>
-                                                                <th>Tip</th>
                                                                 <th>Navodila</th>
                                                             </tr>
                                                         </thead> 
@@ -316,9 +315,8 @@
                                                             #if($velocityCount  <= 5)
                                                                 <tbody> 
                                                                     <tr> 
-                                                                        <th scope="row">$medicine.getName()</th> 
-                                                                        <td>$medicine.type</td>
-                                                                        <td>-</td> 
+                                                                        <td scope="row">$medicine.getName()</td> 
+                                                                        <td><a style="color:#36B8D5" href="$medicine.link">Povezava</a></td> 
                                                                     </tr> 
                                                                 </tbody> 
                                                             #end
@@ -352,7 +350,7 @@
                                                             #if($velocityCount  <= 5)
                                                                 <tbody> 
                                                                     <tr onclick="$('#meritev-$velocityCount').toggle(500)"> 
-                                                                        <th scope="row">$result.type</th> 
+                                                                        <td scope="row">$result.type</td> 
                                                                         <td>$result.checkup.appointment.date</td> 
                                                                         <td>-</td>                                                                
                                                                     </tr>
@@ -397,7 +395,7 @@
                                                                 #if($velocityCount  <= 5)                                                   
         	                                                        <tbody> 
         	                                                            <tr> 
-        	                                                                <th scope="row">$appointment.date</th> 
+        	                                                                <td scope="row">$appointment.date</td> 
         	                                                                <td>dr. $appointment.doctor.last_name</td> 
         	                                                            </tr> 
         	                                                        </tbody> 
