@@ -18,9 +18,23 @@ public class Result_Checkup implements Serializable{
 	@Column(name="Text", length=225, nullable=false)
 	private String text;
 	
+	@Column(name="Value", length=225, nullable=false)
+	private String value;
+	
+	@Column(name="Type", length=225, nullable=false)
+	private String type;
+	
 	@OneToMany(mappedBy="result_checkup")
 	private List<Reading_Data> reading_datas;
 	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="Checkup_idCheckup")
 	private Checkup checkup;
@@ -58,5 +72,13 @@ public class Result_Checkup implements Serializable{
 
 	public void setCheckup(Checkup checkup) {
 		this.checkup = checkup;
+	}
+	
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 }
