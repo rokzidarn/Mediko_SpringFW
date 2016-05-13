@@ -44,7 +44,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Kartica ZZZS</strong><br>
-                                                        $selectedPatient.id
+                                                        $selectedPatient.cardNumber
                                                     </div>
                                                     #if($isDoctor)
                                                         <div class="col-md-12 text-center">

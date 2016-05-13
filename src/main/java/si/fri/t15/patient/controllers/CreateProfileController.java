@@ -137,8 +137,14 @@ public class CreateProfileController extends ControllerBase{
 		if (UserType.ADMIN.equals(user.getUserType())) {
 			userType = "admin";
 		}
-
-		PatientData pData = (PatientData) user.getData();
+		
+		PatientData pData;
+		if (user.getSelectedPatient() != null) {
+			pData = user.getSelectedPatient();
+		}
+		else {
+			pData = (PatientData) user.getData();
+		}
 		model.addAttribute("user", user);
 		model.addAttribute("usertype", userType);
 		model.addAttribute("page", "home");
