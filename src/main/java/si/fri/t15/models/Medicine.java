@@ -18,6 +18,9 @@ public class Medicine implements Serializable{
 	@Column(name="Name", length=45, nullable=false)
 	private String name;
 	
+	@Column(name="Link", length=255, nullable=false)
+	private String link;
+	
 	@Column(name="Type", nullable=false)
 	private char type;
 	
@@ -81,5 +84,13 @@ public class Medicine implements Serializable{
 		instruction.setMedicine(null);
 
 		return instruction;
+	}
+	
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 }

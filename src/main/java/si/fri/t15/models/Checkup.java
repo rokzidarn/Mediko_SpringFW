@@ -24,6 +24,9 @@ public class Checkup implements Serializable{
 	@Column(name="Reason", length=45, nullable=false)
 	private String reason;
 	
+	@Column(name="Instructions", length=255, nullable=false)
+	private String instructions;
+
 	@OneToOne
 	private Appointment appointment;
 	
@@ -141,5 +144,13 @@ public class Checkup implements Serializable{
 
 	public DoctorData getDoctor() {
 		return doctor;
+	}
+	
+	public String getInstructions() {
+		return instructions;
+	}
+
+	public void setInstructions(String instructions) {
+		this.instructions = instructions;
 	}
 }

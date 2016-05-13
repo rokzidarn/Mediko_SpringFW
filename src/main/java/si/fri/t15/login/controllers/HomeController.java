@@ -135,7 +135,7 @@ public class HomeController extends ControllerBase{
 			List <Checkup> checkups = pdata.getCheckups();
 			
 			List<Disease> diseases = pdata.getDiseases();
-			//List<Medicine> medicines = pdata.getMedicines();
+			List<Medicine> medicines = pdata.getMedicines();
 			List<Diet> diets = pdata.getDiets();
 			List<Result_Checkup> results = pdata.getResults();
 			PatientData caretaker = (PatientData) pdata.getCaretaker();
@@ -147,7 +147,7 @@ public class HomeController extends ControllerBase{
 			
 			model.addAttribute("checkups", checkups);		
 			model.addAttribute("diseases", diseases); 
-			//model.addAttribute("medicines", medicines); 
+			model.addAttribute("medicines", medicines); 
 			model.addAttribute("diets", diets); 
 			model.addAttribute("results", results); 
 			
@@ -194,7 +194,7 @@ public class HomeController extends ControllerBase{
 			List <Checkup> checkups = pdata.getCheckups();
 			
 			List<Disease> diseases = pdata.getDiseases();
-			//List<Medicine> medicines = pdata.getMedicines();
+			List<Medicine> medicines = pdata.getMedicines();
 			List<Diet> diets = pdata.getDiets();
 			List<Result_Checkup> results = pdata.getResults();
 			PatientData caretaker = (PatientData) pdata.getCaretaker();
@@ -208,7 +208,7 @@ public class HomeController extends ControllerBase{
 			
 			model.addAttribute("checkups", checkups);		
 			model.addAttribute("diseases", diseases); 
-			//model.addAttribute("medicines", medicines); 
+			model.addAttribute("medicines", medicines); 
 			model.addAttribute("diets", diets); 
 			model.addAttribute("results", results); 
 			
