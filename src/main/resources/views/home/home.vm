@@ -161,13 +161,15 @@
 	                                                            </tr>
 	                                                        </thead>
 	                                                        #foreach($checkup in $checkups)
-    	                                                        <tbody class="checkup-table-tbody" onclick="opencheckup('#springUrl('/checkup/')'+ ${checkup.id})"> 
-    	                                                            <tr> 
-    	                                                                <th scope="row">$checkup.appointment.date</th>
-    	                                                                <td>dr. $checkup.doctor.last_name</td> 
-    	                                                                <td>$checkup.reason</td>
-    	                                                            </tr> 
-    	                                                        </tbody> 
+                                                                #if($velocityCount  <= 5)
+        	                                                        <tbody class="checkup-table-tbody" onclick="opencheckup('#springUrl('/checkup/')'+ ${checkup.id})"> 
+        	                                                            <tr> 
+        	                                                                <th scope="row">$checkup.appointment.date</th>
+        	                                                                <td>dr. $checkup.doctor.last_name</td> 
+        	                                                                <td>$checkup.reason</td>
+        	                                                            </tr> 
+        	                                                        </tbody> 
+                                                                #end
 	                                                        #end
 	                                                    </table>                                                   
                                                     </div>
@@ -194,16 +196,18 @@
                                                                 <th>Bolezen</th>
                                                                 <th>Dodatno</th>
                                                             </tr>
-                                                        </thead> 
-                                        	           #foreach($disease in $diseases)																	
-                                                        <tbody> 
-                                                            <tr> 
-                                                            	#if($disease.getIsAllergy()==0)
-	                                                                <td>$disease.name</td> 
-	                                                                <td>-</td> 
-                                                                #end
-                                                            </tr> 
-                                                        </tbody> 		                                               
+                                                        </thead>
+                                                        #set( $count = 0 )
+                                	                    #foreach($disease in $diseases)                   														
+                                                            <tbody> 
+                                                                <tr> 
+                                                                	#if($disease.getIsAllergy()==0 && $count < 5)
+    	                                                                <td>$disease.name</td> 
+    	                                                                <td>-</td> 
+                                                                        #set( $count = $count + 1 )
+                                                                    #end
+                                                                </tr> 
+                                                            </tbody>                                              
                                                         #end 
                                                     </table>
                                                 </div>  
@@ -230,12 +234,14 @@
                                                                 <th>Dodatno</th>
                                                             </tr>
                                                         </thead> 
-                                        	           #foreach($allergy in $diseases)													
+                                                        #set( $count = 0 )
+                                        	           #foreach($allergy in $diseases)											
                                                         <tbody> 
                                                             <tr> 
-                                                            	#if($allergy.getIsAllergy() == 1)
+                                                            	#if($allergy.getIsAllergy() == 1 && $count < 5)
 	                                                                <td>$allergy.name</td> 
 	                                                                <td>-</td> 
+                                                                    #set( $count = $count + 1 )
                                                                 #end
                                                             </tr> 
                                                         </tbody> 		                                               
@@ -264,18 +270,20 @@
     	                                                        <th>Navodila</th>
     	                                                    </tr>
     	                                                </thead>
-                                                	   #foreach($diet in $diets)													 
-                                                        <tbody> 
-                                                            <tr> 
-                                                                <th scope="row">$diet.getName()</th> 
-                                                                <td>
-                                                                    #foreach($instruction in $diet.getInstructions_Diets())
-                                                                        #if($velocityCount!=1) <br> #end
-                                                                        <a style="color:#36B8D5" href="$instruction.getText()">$instruction.getText()</a>
-                                                                    #end
-                                                                </td> 
-                                                            </tr> 
-                                                        </tbody>                              
+                                                	    #foreach($diet in $diets)
+                                                            #if($velocityCount  <= 5)
+                                                                <tbody> 
+                                                                    <tr> 
+                                                                        <th scope="row">$diet.getName()</th> 
+                                                                        <td>
+                                                                            #foreach($instruction in $diet.getInstructions_Diets())
+                                                                                #if($velocityCount!=1) <br> #end
+                                                                                <a style="color:#36B8D5" href="$instruction.getText()">$instruction.getText()</a>
+                                                                            #end
+                                                                        </td> 
+                                                                    </tr> 
+                                                                </tbody> 
+                                                            #end                             
     													#end
                                                     </table>                                                  
                                                 </div>
@@ -304,14 +312,16 @@
                                                                 <th>Navodila</th>
                                                             </tr>
                                                         </thead> 
-                                                        #foreach($medicine in $medicines)  
-                                                        <tbody> 
-                                                            <tr> 
-                                                                <th scope="row">$medicine.getName()</th> 
-                                                                <td>$medicine.type</td>
-                                                                <td>-</td> 
-                                                            </tr> 
-                                                        </tbody> 
+                                                        #foreach($medicine in $medicines) 
+                                                            #if($velocityCount  <= 5)
+                                                                <tbody> 
+                                                                    <tr> 
+                                                                        <th scope="row">$medicine.getName()</th> 
+                                                                        <td>$medicine.type</td>
+                                                                        <td>-</td> 
+                                                                    </tr> 
+                                                                </tbody> 
+                                                            #end
                                                         #end
                                                     </table>                                                  
                                                 </div>
@@ -338,22 +348,24 @@
                                                                 <th>Lokacija</th>
                                                             </tr>
                                                         </thead>
-                                                        #foreach($result in $results) 
-                                                        <tbody> 
-                                                            <tr onclick="$('#meritev-$velocityCount').toggle(500)"> 
-                                                                <th scope="row">$result.type</th> 
-                                                                <td>$result.checkup.appointment.date</td> 
-                                                                <td>-</td>                                                                
-                                                            </tr>
-                                                            <tr class="info" id="meritev-$velocityCount" style="display: none">
-                                                                <td colspan="3">
-                                                                    <div>
-                                                                        $result.value <br>
-                                                                        $result.text
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody> 
+                                                        #foreach($result in $results)
+                                                            #if($velocityCount  <= 5)
+                                                                <tbody> 
+                                                                    <tr onclick="$('#meritev-$velocityCount').toggle(500)"> 
+                                                                        <th scope="row">$result.type</th> 
+                                                                        <td>$result.checkup.appointment.date</td> 
+                                                                        <td>-</td>                                                                
+                                                                    </tr>
+                                                                    <tr class="info" id="meritev-$velocityCount" style="display: none">
+                                                                        <td colspan="3">
+                                                                            <div>
+                                                                                $result.value <br>
+                                                                                $result.text
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody> 
+                                                            #end
                                                         #end
                                                     </table>                                               
                                                 </div> 
@@ -381,13 +393,15 @@
                                                                    <th>Zdravnik</th>
 	                                                            </tr>
 	                                                        </thead>
-	                                                        #foreach($appointment in $appointments)                                                        
-	                                                        <tbody> 
-	                                                            <tr> 
-	                                                                <th scope="row">$appointment.date</th> 
-	                                                                <td>dr. $appointment.doctor.last_name</td> 
-	                                                            </tr> 
-	                                                        </tbody> 
+	                                                        #foreach($appointment in $appointments)
+                                                                #if($velocityCount  <= 5)                                                   
+        	                                                        <tbody> 
+        	                                                            <tr> 
+        	                                                                <th scope="row">$appointment.date</th> 
+        	                                                                <td>dr. $appointment.doctor.last_name</td> 
+        	                                                            </tr> 
+        	                                                        </tbody> 
+                                                                #end
 	                                                        #end
 	                                                    </table>                                                   
                                                 </div>                                               
