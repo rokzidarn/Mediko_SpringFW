@@ -142,7 +142,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Zadnji pregledi</div>
                                             <div class="panel-body">
@@ -175,7 +175,9 @@
 											     #end                                            
                                             </div>
                                         </div>
-                                    </div>								
+                                    </div>
+                                </div>
+                                <div class="row">						
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Bolezni</div>
@@ -210,8 +212,7 @@
 											</div>
 										</div>
 									</div>
-                                </div>
-                                <div class="row">
+                                
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Alergije</div>
@@ -246,7 +247,7 @@
 											</div>
 										</div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Diete</div>
                                             <div class="panel-body">
@@ -267,7 +268,12 @@
                                                         <tbody> 
                                                             <tr> 
                                                                 <th scope="row">$diet.getName()</th> 
-                                                                <td>-</td> 
+                                                                <td>
+                                                                    #foreach($instruction in $diet.getInstructions_Diets())
+                                                                        #if($velocityCount!=1) <br> #end
+                                                                        <a style="color:#36B8D5" href="$instruction.getText()">$instruction.getText()</a>
+                                                                    #end
+                                                                </td> 
                                                             </tr> 
                                                         </tbody>                              
     													#end
