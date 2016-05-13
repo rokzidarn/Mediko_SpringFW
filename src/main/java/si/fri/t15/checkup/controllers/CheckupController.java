@@ -59,7 +59,7 @@ public class CheckupController extends ControllerBase {
 		//Side menu variables
 		model.addAttribute("usertype", userType);
 		model.addAttribute("selectedPatient", userSession.getSelectedPatient());
-		model.addAttribute("page", "home");
+		model.addAttribute("page", "checkup");
 		model.addAttribute("path", "/mediko_dev/");
 		//Page variables
 		model.addAttribute("title", "PREGLED");
