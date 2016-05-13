@@ -170,7 +170,7 @@ public class HomeController extends ControllerBase{
 					upcoming.add(a);
 				}
 			}
-			model.addAttribute("appointments", upcoming);
+			model.addAttribute("upcoming", upcoming);
 			model.addAttribute("caretaker", caretaker); 
 					
 			//Naloži lazy podatke
