@@ -348,7 +348,8 @@
                                                             <tr class="info" id="meritev-$velocityCount" style="display: none">
                                                                 <td colspan="3">
                                                                     <div>
-                                                                        -
+                                                                        $result.value <br>
+                                                                        $result.text
                                                                     </div>
                                                                 </td>
                                                             </tr>
