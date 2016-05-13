@@ -35,6 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.dao.UserRepository;
+import si.fri.t15.models.PO_Box;
 import si.fri.t15.models.UserRole;
 import si.fri.t15.models.user.User;
 import si.fri.t15.validators.SignUpForm;
@@ -71,6 +72,10 @@ public class SignupController extends ControllerBase {
 	
 	@RequestMapping(value = "/signup", method=RequestMethod.GET)
 	public ModelAndView signupGET(Model model, HttpServletRequest request) {
+		
+		Query allPOBoxQuery = em.createNamedQuery("PO_Box.findAll");
+		List<PO_Box> poBoxes = allPOBoxQuery.getResultList();
+		model.addAttribute("po_boxes",poBoxes);
 		
 		model.addAttribute("path", "/mediko_dev/");
 		model.addAttribute("title", "Ustvari Račun");

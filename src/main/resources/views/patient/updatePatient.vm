@@ -15,31 +15,28 @@
                             <div class="content">
                                	
                                	
-								<form method="POST" action="">
+								<form method="POST" action="#springUrl('/updateProfile')">
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												#if($command) #springBind( "command.cardNumber" ) #end
 												<label for="cardNumberInput">Št. kartice zdravstvenega zavarovanja</label>
-												<input type="text" class="form-control" id="CardNumberInput" name="cardNumber" placeholder="Št. kartice zdravstvenega zavarovanja">
+												<input type="text" class="form-control" id="CardNumberInput" name="cardNumber" placeholder="Št. kartice zdravstvenega zavarovanja" value="$pData.cardNumber">
 												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 									</div>
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												#if($command) #springBind( "command.firstName" ) #end
 												<label for="firstNameInput">Ime</label>
-												<input type="text" class="form-control" id="firstNameInput" name="firstName" placeholder="Ime">
+												<input type="text" class="form-control" id="firstNameInput" name="firstName" placeholder="Ime" value="$pData.getFirst_name()">
 												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												#if($command) #springBind( "command.lastName" ) #end
 												<label for="lastNameInput">Priimek</label>
-												<input type="text" class="form-control" id="lastNameInput" name="lastName" placeholder="Priimek">
+												<input type="text" class="form-control" id="lastNameInput" name="lastName" placeholder="Priimek" value="$pData.getLast_name()">
 												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
@@ -49,18 +46,17 @@
 											<div class="form-group">
 												<label for="sex">Spol</label>
 												<div class="row">
-													#if($command) #springBind( "command.sex" ) #end
 													<div class="col-md-6">
 														<div class="radio">
 															<label>
-																<input type="radio" name="sex" id="femaleRadio" value="f" checked>Ženski
+																<input type="radio" name="sex" id="femaleRadio" value="f" #if($pData.sex == 'f') checked #end>Ženski
 															</label>
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="radio">
 															<label>
-																<input type="radio" name="sex" id="maleRadio" value="m">Moški
+																<input type="radio" name="sex" id="maleRadio" value="m" #if($pData.sex == 'm') checked #end>Moški
 
 															</label>
 														</div>
@@ -71,9 +67,8 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												#if($command) #springBind( "command.birth" ) #end
 												<label for="birth">Rojstvo</label>
-												<input type="date" id="birth" class="form-control" name="birth" value="1950-01-01">
+												<input type="date" id="birth" class="form-control" name="birth" value="$pData.getBirth_date()">
 												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
@@ -81,15 +76,13 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												#if($command) #springBind( "command.address" ) #end
 												<label for="streetInput">Ulica in hišna številka</label>
-												<input type="text" class="form-control" id="streetInput" name="address" placeholder="Ulica in hišna številka">
+												<input type="text" class="form-control" id="streetInput" name="address" placeholder="Ulica in hišna številka" value="$pData.address">
 												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												#if($command) #springBind( "command.pobox" ) #end
 												<label for="postOfficeInput">Pošta</label>
 												<select class="form-control" id="postOfficeInput" name="pobox">
 													#foreach($po_box in $po_boxes)
@@ -102,7 +95,7 @@
 									</div>
 									<br />
 									<p class="text-center">
-										<input type="submit" class="btn btn-default btn-lg" value="Ustvari">
+										<input type="submit" class="btn btn-default btn-lg" value="Posodobi">
 									</p>
 									
 								</form>

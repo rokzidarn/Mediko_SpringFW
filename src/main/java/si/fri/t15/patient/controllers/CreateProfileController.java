@@ -11,7 +11,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -27,6 +26,7 @@ import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.PO_Box;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
+import si.fri.t15.models.user.User.UserType;
 import si.fri.t15.validators.CreatePatientForm;
 import si.fri.t15.validators.CreatePatientValidator;
 
@@ -55,7 +55,7 @@ public class CreateProfileController extends ControllerBase{
 		//Side menu variables
 		String userType = "user";
 		user = em.merge(user);
-		if(user.getUserRoles().contains("ROLE_ADMIN")) {
+		if(UserType.ADMIN.equals(user.getUserType())) {
 			userType = "admin";
 		}
 		model.addAttribute("user",user);
@@ -82,7 +82,7 @@ public class CreateProfileController extends ControllerBase{
 		//Side menu variables
 		String userType = "user";
 		//user = em.merge(user);
-		if(user.getUserRoles().contains("ROLE_ADMIN")) {
+		if(UserType.ADMIN.equals(user.getUserType())) {
 			userType = "admin";
 		}
 		model.addAttribute("user",user);
@@ -127,6 +127,52 @@ public class CreateProfileController extends ControllerBase{
 		
 		return new ModelAndView("redirect:/dashboard");
 	
+	}
+	
+	@RequestMapping(value="/updateProfile", method=RequestMethod.GET)
+	public String updateProfileGET(Model model, HttpServletRequest request, @AuthenticationPrincipal User user) {
+
+		// Side menu variables
+		String userType = "user";
+		if (UserType.ADMIN.equals(user.getUserType())) {
+			userType = "admin";
+		}
+
+		PatientData pData = (PatientData) user.getData();
+		model.addAttribute("user", user);
+		model.addAttribute("usertype", userType);
+		model.addAttribute("page", "home");
+		// Page variables
+		model.addAttribute("title", "Uredi profil");
+		
+		// Post office numbers;
+		Query allPOBoxQuery = em.createNamedQuery("PO_Box.findAll");
+		List<PO_Box> poBoxes = allPOBoxQuery.getResultList();
+		model.addAttribute("po_boxes", poBoxes);
+		
+		model.addAttribute("pData", pData);
+
+		return "updatePatient";
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/updateProfile", method = RequestMethod.POST)
+	public String updateProfilePOST(Model model, @ModelAttribute("command") @Valid CreatePatientForm command,
+			HttpServletRequest request, @AuthenticationPrincipal User user) {
+		
+		PatientData pData = (PatientData) user.getData();
+		
+		pData.setAddress(command.getAddress());
+		pData.setBirth_date(Date.valueOf(command.getBirth()));
+		pData.setCardNumber(command.getCardNumber());
+		pData.setFirst_name(command.getFirstName());
+		pData.setLast_name(command.getLastName());
+		pData.setPo_number(command.getPobox());
+		pData.setSex(command.getSex());
+		
+		em.merge(pData);
+
+		return "redirect:/dashboard";
 	}
 
 }

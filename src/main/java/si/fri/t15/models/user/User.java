@@ -1,6 +1,7 @@
 package si.fri.t15.models.user;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
+import org.springframework.data.annotation.Transient;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,12 +24,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import si.fri.t15.base.models.UserData;
 import si.fri.t15.models.UserRole;
+import si.fri.t15.models.UserRole.Role;;
 
 @Entity
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements UserDetails, CredentialsContainer{
 	
 	private static final long serialVersionUID = 1L;
+	
+	public enum UserType {
+		USER, NURSE, DOCTOR, ADMIN;
+	}
 	
 	@Id
 	@Column(name="Username", length=45, unique=true, nullable=false)
@@ -176,5 +183,23 @@ public class User implements UserDetails, CredentialsContainer{
 		this.selectedPatient = selectedPatient;
 	}
 	
+	public UserType getUserType() {
+		boolean admin = false;
+		UserType type = UserType.USER;
+		for (UserRole userRole : userRoles) {
+			if (userRole.equals(Role.ROLE_ADMIN)) {
+				admin = true;
+			} else if (userRole.equals(Role.ROLE_DOCTOR)) {
+				type = UserType.DOCTOR;
+			} else if (userRole.equals(Role.ROLE_NURSE)) {
+				type = UserType.NURSE;
+			}
+		}
+		if (admin) {
+			return UserType.ADMIN;
+		} else {
+			return type;
+		}
+	}
 	
 }

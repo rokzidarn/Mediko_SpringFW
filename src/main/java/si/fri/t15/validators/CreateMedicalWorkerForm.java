@@ -38,6 +38,21 @@ public class CreateMedicalWorkerForm {
 	@Pattern(regexp="/^[a-zA-Z ]{2,24}$/")
     private String last_name;
 	
+	@NotNull
+	@Size(min=2, max=16)
+	@Pattern(regexp="/^[0-9]*$/")
+    private String sizz;
+	
+	@NotNull
+	@Size(min=9, max=9)
+	@Pattern(regexp="/^.*$/")
+    private String phoneNumber;
+	
+	@NotNull
+	@Size(min=50)
+	@Pattern(regexp="/^[0-9]*$/")
+    private int maxPatients;
+	
     public String getEmail() {
 		return email;
 	}
@@ -92,5 +107,29 @@ public class CreateMedicalWorkerForm {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getSizz() {
+		return sizz;
+	}
+
+	public void setSizz(String sizz) {
+		this.sizz = sizz;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public int getMaxPatients() {
+		return maxPatients;
+	}
+
+	public void setMaxPatients(int maxPatients) {
+		this.maxPatients = maxPatients;
 	}
 }

@@ -1,12 +1,14 @@
 package si.fri.t15.login.controllers;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,7 @@ import si.fri.t15.models.Result_Checkup;
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
-import org.springframework.transaction.annotation.Transactional;
+import si.fri.t15.models.user.User.UserType;
 
 @Controller
 public class HomeController extends ControllerBase{
@@ -111,6 +113,10 @@ public class HomeController extends ControllerBase{
 	@RequestMapping(value = "/dashboard")
 	public String home(Model model, HttpServletRequest request, @AuthenticationPrincipal User userSession) {
 		
+		if(UserType.ADMIN.equals(userSession.getUserType())) {
+			return "redirect:/admin/createMedicalWorker";
+		}
+		
 		if(userSession.getData() == null){
 			return "redirect:/createProfile";
 		}
@@ -159,7 +165,7 @@ public class HomeController extends ControllerBase{
 				((PatientData)user.getData()).getPatients();
 			}
 			
-			if(user.getUserRoles().contains("ROLE_ADMIN")) {
+			if(UserType.ADMIN.equals(user.getUserType())) {
 				userType = "admin";
 			}
 			

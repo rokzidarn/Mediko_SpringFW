@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import si.fri.t15.base.controllers.ControllerBase;
+import si.fri.t15.base.models.UserData;
 import si.fri.t15.models.UserRole;
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.NurseData;
@@ -76,14 +77,26 @@ public class CreateMedicalWorkerController extends ControllerBase{
 		Set<UserRole> userRoles = new HashSet<>();
 		
 		Query userRoleQuery = em.createNamedQuery("UserRole.findByRole");
-		userRoleQuery.setParameter("role", "ROLE_USER");
-		userRoles.add((UserRole) userRoleQuery.getSingleResult());
+		UserData uData;
+		if (command.getType() == "Nurse") {
+			uData = new NurseData();
+		} else {
+			DoctorData dData = new DoctorData();
+			dData.setMaxPatients(command.getMaxPatients());
+			dData.setType(command.getTitle());
+			uData = dData;
+		}
+		uData.setFirst_name(command.getFirst_name());
+		uData.setLast_name(command.getLast_name());
+		uData.setPhoneNumber(command.getPhoneNumber());
+		user.setData(uData);
 		
 		userRoleQuery.setParameter("role", "ROLE_" + command.getType().toUpperCase());
 
 		userRoles.add((UserRole) userRoleQuery.getSingleResult());
 		user.setUserRoles(userRoles);
 		
+		em.persist(uData);
 		em.persist(user);
 		
 		return new ModelAndView("redirect:/admin/createMedicalWorker?successfulRegistration=true");

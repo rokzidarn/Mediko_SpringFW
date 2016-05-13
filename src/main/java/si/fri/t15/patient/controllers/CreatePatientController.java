@@ -1,7 +1,6 @@
 package si.fri.t15.patient.controllers;
 
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,7 +10,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -27,6 +25,7 @@ import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.PO_Box;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
+import si.fri.t15.models.user.User.UserType;
 import si.fri.t15.validators.CreatePatientForm;
 import si.fri.t15.validators.CreatePatientValidator;
 
@@ -55,7 +54,7 @@ public class CreatePatientController extends ControllerBase{
 		//Side menu variables
 		String userType = "user";
 		user = em.merge(user);
-		if(user.getUserRoles().contains("ROLE_ADMIN")) {
+		if(UserType.ADMIN.equals(user.getUserType())) {
 			userType = "admin";
 		}
 		model.addAttribute("user",user);
@@ -83,7 +82,7 @@ public class CreatePatientController extends ControllerBase{
 		//Side menu variables
 		String userType = "user";
 		user = em.merge(user);
-		if(user.getUserRoles().contains("ROLE_ADMIN")) {
+		if(UserType.ADMIN.equals(user.getUserType())) {
 			userType = "admin";
 		}
 		model.addAttribute("user",user);
