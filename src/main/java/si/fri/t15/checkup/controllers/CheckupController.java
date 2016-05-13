@@ -47,7 +47,7 @@ public class CheckupController extends ControllerBase {
 				
 		model.addAttribute("idc", id); 
 		model.addAttribute("reason", curr.getReason());	
-		//model.addAttribute("date", curr.getAppointment());	
+		model.addAttribute("date", curr.getAppointment().getDate());	
 		model.addAttribute("pdata", p); 
 		model.addAttribute("ddata", d); 
 				
