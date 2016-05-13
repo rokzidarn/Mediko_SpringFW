@@ -40,3 +40,7 @@ function hideSidebar(){
 	$("#sidebar").addClass("hidden-xs");
 	$("#sidebar").removeClass("sidebar-visible");
 }
+
+function opencheckup(link){
+	window.location.href = link;
+}
