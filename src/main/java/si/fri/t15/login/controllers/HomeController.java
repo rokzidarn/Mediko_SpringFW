@@ -163,6 +163,7 @@ public class HomeController extends ControllerBase{
 				userType = "admin";
 			}
 			
+			
 			model.addAttribute("usertype", userType);
 			model.addAttribute("selectedPatient", userSession.getSelectedPatient());
 			model.addAttribute("p", pdata);
@@ -197,6 +198,8 @@ public class HomeController extends ControllerBase{
 			List<Diet> diets = pdata.getDiets();
 			List<Result_Checkup> results = pdata.getResults();
 			PatientData caretaker = (PatientData) pdata.getCaretaker();
+			
+			
 			
 			model.addAttribute("fname", fname);
 			model.addAttribute("lname", lname);

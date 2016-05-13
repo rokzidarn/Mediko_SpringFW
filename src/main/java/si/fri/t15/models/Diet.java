@@ -17,7 +17,7 @@ public class Diet implements Serializable{
 	@Column(name="Name", length=45, nullable=false)
 	private String name;
 	
-	@OneToMany(mappedBy="diet")
+	@OneToMany(mappedBy="diet" , fetch=FetchType.EAGER)
 	private List<Instructions_Diet> instruction_diets;
 	
 	@ManyToMany(mappedBy="diets")
