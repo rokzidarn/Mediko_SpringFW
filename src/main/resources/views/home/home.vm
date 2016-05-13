@@ -334,12 +334,12 @@
                                                         </thead>
                                                         #foreach($result in $results) 
                                                         <tbody> 
-                                                            <tr onclick="$('#meritev-0').toggle(500)"> 
+                                                            <tr onclick="$('#meritev-$velocityCount').toggle(500)"> 
                                                                 <th scope="row">$result.type</th> 
-                                                                <td>$result.date</td> 
+                                                                <td>$result.checkup.appointment.date</td> 
                                                                 <td>-</td>                                                                
                                                             </tr>
-                                                            <tr class="info" id="meritev-0" style="display: none">
+                                                            <tr class="info" id="meritev-$velocityCount" style="display: none">
                                                                 <td colspan="3">
                                                                     <div>
                                                                         -

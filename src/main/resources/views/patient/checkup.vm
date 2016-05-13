@@ -14,20 +14,23 @@
                             </div>
                             <div class="content">	
                             	<div class="row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <div class="panel panel-default">
-                                        <div class="panel-heading"><strong>PREGLED številka ${idc}</strong></div>							
-											<p><strong>Pacient:</strong> ${pdata.getFirst_name()} ${pdata.getLast_name()}, ${pdata.getPo_box().city}, ZZZS: ${pdata.getId()}</p>
-											<p><strong>Zdravnik:</strong> ${ddata.getFirst_name()} ${ddata.getLast_name()}, ${ddata.getMedical_center().name}</p>
-											<p><strong>Razlog:</strong> $reason </p>
-                                            <p><strong>Datum:</strong> $date</p>
+                                            <div class="panel-heading"><strong>PREGLED številka ${idc}</strong></div>
+                                            <div class="panel-body">
+    											<p><strong>Pacient:</strong> ${pdata.getFirst_name()} ${pdata.getLast_name()}, ${pdata.getPo_box().city}, ZZZS: ${pdata.getId()}</p>
+    											<p><strong>Zdravnik:</strong> ${ddata.getFirst_name()} ${ddata.getLast_name()}, ${ddata.getMedical_center().name}</p>
+    											<p><strong>Razlog:</strong> $reason </p>
+                                                <p><strong>Datum:</strong> $date</p>
+                                            </div>
 										</div>
 									</div>
 								</div>
                             	<div class="row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <div class="panel panel-default">
                                         <div class="panel-heading"><strong>DIAGNOZA</strong></div>	
+                                        <div class="panel-body">
 											#if($diseases.isEmpty())
 												<p>Ni bolezni!</p>
 											#else
@@ -53,7 +56,7 @@
 												#end
 											#end		
 										</div>
-									</div>
+                                    </div>
 								</div>																			
 							</div> 			
                         </div>
