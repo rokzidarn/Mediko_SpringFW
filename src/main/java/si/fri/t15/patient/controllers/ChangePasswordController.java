@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
+import si.fri.t15.models.user.User.UserType;
 import si.fri.t15.validators.ChangePasswordForm;
 import si.fri.t15.validators.ChangePasswordValidator;
 
@@ -51,7 +52,7 @@ public class ChangePasswordController extends ControllerBase {
 	{
 		String userType = "user";
 		User user = em.merge(userSession);
-		if(user.getUserRoles().contains("ROLE_ADMIN")) {
+		if(UserType.ADMIN.equals(user.getUserType())) {
 			userType = "admin";
 		}
 		model.addAttribute("user",user);
@@ -70,7 +71,7 @@ public class ChangePasswordController extends ControllerBase {
 		
 		String userType = "user";
 		User user = em.merge(userSession);
-		if(user.getUserRoles().contains("ROLE_ADMIN")) {
+		if(UserType.ADMIN.equals(user.getUserType())) {
 			userType = "admin";
 		}
 		model.addAttribute("user",user);

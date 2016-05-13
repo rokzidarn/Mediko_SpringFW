@@ -1,14 +1,18 @@
 package si.fri.t15.models.user;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+
+import org.hibernate.Hibernate;
 
 import si.fri.t15.base.models.UserData;
 import si.fri.t15.models.Appointment;
@@ -25,6 +29,10 @@ public class PatientData extends UserData {
 	private static final long serialVersionUID = 1L;
 
 	private static final boolean Checkup = false;
+	
+	public enum Relationship {
+		SIBLING, PARENT, GRANDPARENT, FOSTER_PARENT, SIGNIFICANT_OTHER, CARETAKER
+	}
 	
 	@ManyToOne
 	private PatientData caretaker;
@@ -49,6 +57,18 @@ public class PatientData extends UserData {
 	@OneToMany(mappedBy="caretaker")
 	private List<PatientData> patients;
 	
+	@Column(name="Address", length=100, nullable=false, updatable=true)
+	private String address;
+	
+	@Column(name="Birth_date",nullable=false, updatable=true)
+	private Date birth_date;
+	
+	@Column(name="Sex",  nullable=false, updatable=true)
+	private char sex;
+	
+	@Column( nullable=false, updatable=true)
+	private String cardNumber;
+	
 	@Transient
 	private List<Medicine> medicines;	
 	
@@ -59,6 +79,7 @@ public class PatientData extends UserData {
 	        List<Checkup> allCheckups = this.getCheckups();
 	        
 			for (Checkup c : allCheckups){
+				Hibernate.initialize(c.getMedicines());
 				for(Medicine m : c.getMedicines()){
 					this.medicines.add(m);
 				}
@@ -214,6 +235,38 @@ public class PatientData extends UserData {
 
 	public void setDentist(DoctorData dentist) {
 		this.dentist = dentist;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Date getBirth_date() {
+		return birth_date;
+	}
+
+	public void setBirth_date(Date birth_date) {
+		this.birth_date = birth_date;
+	}
+
+	public char getSex() {
+		return sex;
+	}
+
+	public void setSex(char sex) {
+		this.sex = sex;
+	}
+
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
 	}
 
 }

@@ -13,6 +13,10 @@ import org.hibernate.validator.constraints.Email;
 public class CreatePatientForm {
 	
 	@NotNull
+    @Pattern(regexp="/^[0-9]{9}$/")
+    private String cardNumber;
+	
+	@NotNull
     @Size(min=6, max=16)
     @Pattern(regexp="/^[0-9a-zA-Z-_]{6,16}$/")
     private String firstName;
@@ -88,6 +92,14 @@ public class CreatePatientForm {
 
 	public void setSex(char sex) {
 		this.sex = sex;
+	}
+
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
 	}
 	
 	

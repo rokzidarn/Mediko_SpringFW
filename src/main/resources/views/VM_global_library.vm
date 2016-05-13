@@ -59,9 +59,9 @@
 		        </div>
 		    </a>
 	    #end
-		#if($usertype && $usertype == "admin")
+		#if($usertype == "admin")
 			<div class="side-menu-seperator"></div>
-			<a href="#">
+			<a href="#springUrl('/admin/createMedicalWorker')">
 				<div class="side-menu-item #if($page && $page=="admin")side-menu-item-selected #end">
 					ADMINISTRACIJA
 				</div>

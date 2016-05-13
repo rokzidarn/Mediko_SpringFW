@@ -430,7 +430,7 @@
 
                                     </div>
                                     <div class="patient-name">
-                                        $user.username
+                                       <a href="#springUrl('/updateProfile')" class="patient-name"> $user.username</a>
                                     </div>
                                 </div>
                                 #if(!$isDoctor)

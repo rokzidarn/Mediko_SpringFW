@@ -52,6 +52,15 @@
                                     <form method="POST" action="">
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                         <div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													#if($command) #springBind( "command.cardNumber" ) #end
+													<label for="cardNumberInput">Št. kartice zdravstvenega zavarovanja</label>
+													<input type="text" class="form-control" id="CardNumberInput" name="cardNumber" placeholder="Št. kartice zdravstvenega zavarovanja">
+													#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												</div>
+										</div>
+                                        <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     #if($command) #springBind( "command.firstName" ) #end
