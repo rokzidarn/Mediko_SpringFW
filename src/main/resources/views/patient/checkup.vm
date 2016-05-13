@@ -12,7 +12,10 @@
                                 <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
                                 <div class="content-title">$title</div>
                             </div>
-                            <div class="content">	
+                            <div class="content">
+                            	#if($appointments)	
+                            		<p>Naslednji pregled: $appointments.get(0).date</p>
+                            	#end
                             	<div class="row">
                                     <div class="col-md-12">
                                         <div class="panel panel-default">
