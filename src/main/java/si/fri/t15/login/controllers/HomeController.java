@@ -1,5 +1,8 @@
 package si.fri.t15.login.controllers;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -158,6 +161,16 @@ public class HomeController extends ControllerBase{
 			model.addAttribute("results", results); 
 			
 			model.addAttribute("appointments", appointments); 
+			
+			Date now = new Date(Calendar.getInstance().getTime().getTime());
+			List<Appointment> upcoming = new ArrayList<Appointment>();
+			for (Appointment a : pdata.getAppointments()) {
+				Date date = a.getDate();
+				if (date.compareTo(now) > 0) {
+					upcoming.add(a);
+				}
+			}
+			model.addAttribute("appointments", upcoming);
 			model.addAttribute("caretaker", caretaker); 
 					
 			//Naloži lazy podatke

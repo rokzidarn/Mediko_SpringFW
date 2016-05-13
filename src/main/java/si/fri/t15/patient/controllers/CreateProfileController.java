@@ -166,7 +166,13 @@ public class CreateProfileController extends ControllerBase{
 	public String updateProfilePOST(Model model, @ModelAttribute("command") @Valid CreatePatientForm command,
 			HttpServletRequest request, @AuthenticationPrincipal User user) {
 		
-		PatientData pData = (PatientData) user.getData();
+		PatientData pData;
+		if (user.getSelectedPatient() != null) {
+			pData = user.getSelectedPatient();
+		}
+		else {
+			pData = (PatientData) user.getData();
+		}
 		
 		pData.setAddress(command.getAddress());
 		pData.setBirth_date(Date.valueOf(command.getBirth()));

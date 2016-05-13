@@ -64,16 +64,6 @@ public class CheckupController extends ControllerBase {
 		model.addAttribute("diets", curr.getDiets()); 
 		model.addAttribute("medicines", curr.getMedicines());
 		
-		Date now = new Date(Calendar.getInstance().getTime().getTime());
-		List<Appointment> upcoming = new ArrayList<Appointment>();
-		for (Appointment a : p.getAppointments()) {
-			Date date = a.getDate();
-			if (date.compareTo(now) > 0) {
-				upcoming.add(a);
-			}
-		}
-		model.addAttribute("appointments", upcoming);
-		
 		//Side menu variables
 		model.addAttribute("usertype", userType);
 		model.addAttribute("selectedPatient", userSession.getSelectedPatient());
