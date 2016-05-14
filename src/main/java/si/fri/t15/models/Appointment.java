@@ -3,6 +3,8 @@ package si.fri.t15.models;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 
@@ -48,6 +50,7 @@ public class Appointment implements Serializable{
 		this.date = date;
 	}
 	
+	@JsonIgnore
 	public DoctorData getDoctor() {
 		return this.doctor;
 	}
@@ -56,6 +59,7 @@ public class Appointment implements Serializable{
 		this.doctor = doctor;
 	}
 	
+	@JsonIgnore
 	public PatientData getPatient() {
 		return this.patient;
 	}

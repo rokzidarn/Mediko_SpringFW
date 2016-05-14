@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 
@@ -86,10 +88,12 @@ public class Checkup implements Serializable{
 		return appointment;
 	}
 
+	@JsonIgnore
 	public void setAppointment(Appointment appointment) {
 		this.appointment = appointment;
 	}
 	
+	@JsonIgnore
 	public PatientData getPatient() {
 		return this.patient;
 	}
@@ -102,6 +106,7 @@ public class Checkup implements Serializable{
 		this.doctor = doctor;
 	}
 	
+	@JsonIgnore 
 	public List<Disease> getDiseases() {
 		return diseases;
 	}
@@ -110,6 +115,7 @@ public class Checkup implements Serializable{
 		this.diseases = diseases;
 	}
 
+	@JsonIgnore 
 	public List<Medicine> getMedicines() {
 		return medicines;
 	}
@@ -118,6 +124,7 @@ public class Checkup implements Serializable{
 		this.medicines = medicines;
 	}
 
+	@JsonIgnore 
 	public List<Diet> getDiets() {
 		return diets;
 	}
@@ -126,6 +133,7 @@ public class Checkup implements Serializable{
 		this.diets = diets;
 	}
 
+	@JsonIgnore 
 	public List<Result_Checkup> getResultCheckups() {
 		return resultCheckups;
 	}
@@ -142,6 +150,7 @@ public class Checkup implements Serializable{
 		this.id = id;
 	}
 
+	@JsonIgnore 
 	public DoctorData getDoctor() {
 		return doctor;
 	}
