@@ -397,7 +397,7 @@
         	                                                            <tr> 
         	                                                                <td scope="row">$appointment.getDate()</td> 
         	                                                                <td>dr. $appointment.doctor.last_name</td> 
-                                                                            #if(!$isDoctor)
+                                                                            #if($isDoctor)
                                                                                 <td>
                                                                                     <form action="${path}appointment/${appointment.getIdAppointment()}" method="POST">
                                                                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

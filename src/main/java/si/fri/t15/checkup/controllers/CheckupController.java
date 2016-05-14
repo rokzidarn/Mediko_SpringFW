@@ -95,7 +95,7 @@ public class CheckupController extends ControllerBase {
 		Checkup checkup = qu2.setParameter(1, id).getSingleResult();
 		int idc = checkup.getCheckupId(); //dobimo id novo nastalega checkupa, naredi se preusmeritev
 		
-		return new ModelAndView("redirect:/checkup/{idc}/insert");
+		return new ModelAndView("redirect:/checkup/"+idc+"/insert");
 	}
 	
 	@Transactional
