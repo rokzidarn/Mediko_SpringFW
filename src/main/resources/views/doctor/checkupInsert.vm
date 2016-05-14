@@ -117,7 +117,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <form method="POST" action="">
+                                                        <form method="POST" action="${path}checkup/{idc}/disease/${idisease.id}">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                             #if($command) #springBind( "command.idisease" ) #end
                                                             <label for="idiseaseInput">Izberite bolezen: </label>
@@ -126,14 +126,14 @@
                                                                     <option value="${idisease.id}">$idisease.name</option>
                                                                 #end
                                                             </select>
-                                                            #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
-                                                            <a href="${path}checkup/{idc}/disease/${idisease.id}" class="btn btn-primary" role="button" name="insertDisease">VNESI BOLEZEN</a>    
+                                                            #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end  
+                                                            <button type="submit" class="btn btn-info">VNESI BOLEZEN</button>   
                                                         </form>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <form method="POST" action="">
+                                                        <form method="POST" action="${path}checkup/{idc}/diet/${idiet.id}">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                             #if($command) #springBind( "command.idiet" ) #end
                                                             <label for="idietInput">Izberite dieto: </label>
@@ -142,7 +142,7 @@
                                                                     <option value="${idiet.id}">$idiidietsease.name</option>
                                                                 #end
                                                             </select>
-                                                            <a href="${path}checkup/{idc}/diet/${idiet.id}" class="btn btn-primary" role="button" name="insertDiet">VNESI DIETO</a>    
+                                                            <button type="submit" class="btn btn-info">VNESI DIETO</button>    
                                                             #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
                                                         </form>
                                                     </div>
@@ -151,7 +151,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <form method="POST" action="">
+                                                        <form method="POST" action="${path}checkup/{idc}/medicine/${imedicine.id}">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                             #if($command) #springBind( "command.imedicine" ) #end
                                                             <label for="imedicineInput">Izberite zdravilo: </label>
@@ -161,7 +161,7 @@
                                                                 #end
                                                             </select>
                                                             #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
-                                                            <a href="${path}checkup/{idc}/medicine/${imedicine.id}" class="btn btn-primary" role="button" name="insertMedicine">VNESI ZDRAVILO</a>    
+                                                            <button type="submit" class="btn btn-info">VNESI ZDRAVILO</button>    
                                                         </form>
                                                     </div>
                                                 </div>
@@ -170,7 +170,8 @@
                                         </div>
                                     </div>
                                 </div>                                                                          
-                            </div>          
+                            </div> 
+                            <button type="button" class="btn btn-primary"><a href="${path}dashboard">KONČAJ</a></button>         
                         </div>
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">
                             <div class="sidebar-topbar">

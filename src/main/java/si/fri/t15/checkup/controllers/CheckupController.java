@@ -1,13 +1,9 @@
 package si.fri.t15.checkup.controllers;
 
 import javax.servlet.http.HttpServletRequest;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.Appointment;
 import si.fri.t15.models.Checkup;
@@ -82,15 +77,16 @@ public class CheckupController extends ControllerBase {
 	
 	@Transactional
 	@RequestMapping(value = "/appointment/{id}", method=RequestMethod.POST)
-	public ModelAndView appointmentCheckup(@PathVariable("id") int id,Model model, HttpServletRequest request) {
+	public ModelAndView appointmentCheckup(@PathVariable("id") int id, Model model, HttpServletRequest request) {
 		TypedQuery<Appointment> qu = em.createNamedQuery("Appointment.findAppointment", Appointment.class);
-		qu.setParameter(1,id);
 		Appointment curr = qu.setParameter(1, id).getSingleResult(); //dobimo appointment, ki je bil izbran
 		
 		Checkup recent = new Checkup();
 		recent.setAppointment(curr);
 		recent.setDoctor(curr.getDoctor());
-		recent.setPatient(curr.getPatient()); 
+		recent.setPatient(curr.getPatient());
+		recent.setReason("Neznan vzrok!");
+		recent.setInstructions("Dopiši navodila!");
 		
 		em.persist(recent); //ustvarimo checkup, ki se ustvari iz podatkov appointmenta
 		
@@ -112,7 +108,6 @@ public class CheckupController extends ControllerBase {
 		
 		//trenutni podatki o pregledu, kar je vpisano
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
-		qu.setParameter(1,id);
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
 		
 		DoctorData d = curr.getDoctor();
@@ -151,7 +146,7 @@ public class CheckupController extends ControllerBase {
 		return new ModelAndView("checkupInsert");
 	}
 	
-	@Transactional
+	@Transactional //params = "insertDisease"
 	@RequestMapping(value = "/checkup/{id}/disease/{idd}", method=RequestMethod.POST) //<a> gumb redirecta sem, kjer se vstavlja
 	public ModelAndView insertDisease(@PathVariable("id") int id, @PathVariable("idd") int idd,Model model, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
@@ -160,16 +155,17 @@ public class CheckupController extends ControllerBase {
 		
 		TypedQuery<Disease> qud = em.createNamedQuery("Disease.findDisease", Disease.class);
 		Disease idisease = qud.getSingleResult();		
-		List<Disease> diseases = new ArrayList<Disease>();
+		List<Disease> diseases = curr.getDiseases();
 		diseases.add(idisease);
 		
 		curr.setDiseases(diseases); //dodajanje bolezni na checkup
+		em.merge(curr);
 		
 		return new ModelAndView("redirect:/checkup/{idc}/insert");
 	}
 	
 	@Transactional
-	@RequestMapping(value = "/checkup/{id}/diet/{idd}", method=RequestMethod.POST)
+	@RequestMapping(value = "/checkup/{id}/diet/{idd}", method=RequestMethod.POST) //params = "insertDiet"
 	public ModelAndView insertDiet(@PathVariable("id") int id, @PathVariable("idd") int idd,Model model, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
 		qu.setParameter(1,id);
@@ -177,16 +173,17 @@ public class CheckupController extends ControllerBase {
 		
 		TypedQuery<Diet> qud = em.createNamedQuery("Diet.findDiet", Diet.class);
 		Diet idiet = qud.getSingleResult();		
-		List<Diet> diets = new ArrayList<Diet>();
+		List<Diet> diets = curr.getDiets();
 		diets.add(idiet);
 		
 		curr.setDiets(diets);
+		em.merge(curr);
 		
 		return new ModelAndView("redirect:/checkup/{idc}/insert");
 	}
 	
 	@Transactional
-	@RequestMapping(value = "/checkup/{id}/medicine/{idm}", method=RequestMethod.POST)
+	@RequestMapping(value = "/checkup/{id}/medicine/{idm}", method=RequestMethod.POST) //params = "insertMedicine"
 	public ModelAndView insertMedicine(@PathVariable("id") int id, @PathVariable("idd") int idd,Model model, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
 		qu.setParameter(1,id);
@@ -194,10 +191,11 @@ public class CheckupController extends ControllerBase {
 		
 		TypedQuery<Medicine> qud = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
 		Medicine imedicine = qud.getSingleResult();		
-		List<Medicine> medicines = new ArrayList<Medicine>();
+		List<Medicine> medicines = curr.getMedicines();
 		medicines.add(imedicine);
 		
 		curr.setMedicines(medicines); 
+		em.merge(curr);
 		
 		return new ModelAndView("redirect:/checkup/{idc}/insert");
 	}

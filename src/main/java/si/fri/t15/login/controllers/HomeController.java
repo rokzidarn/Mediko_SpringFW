@@ -1,5 +1,8 @@
 package si.fri.t15.login.controllers;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -157,7 +160,17 @@ public class HomeController extends ControllerBase{
 			model.addAttribute("diets", diets); 
 			model.addAttribute("results", results); 
 			
-			model.addAttribute("appointments", appointments); 
+			Date now = new Date(Calendar.getInstance().getTime().getTime());
+			//model.addAttribute("now", now); 
+			List<Appointment> upcoming = new ArrayList<Appointment>();
+			for (Appointment a : appointments){
+				Date d = a.getDate();
+				if(d.compareTo(now)>0){
+					upcoming.add(a);
+				}
+			}
+			
+			model.addAttribute("appointments", upcoming);
 			model.addAttribute("caretaker", caretaker); 
 					
 			//Naloži lazy podatke
@@ -206,7 +219,6 @@ public class HomeController extends ControllerBase{
 			PatientData caretaker = (PatientData) pdata.getCaretaker();
 			
 			
-			
 			model.addAttribute("fname", fname);
 			model.addAttribute("lname", lname);
 			model.addAttribute("doctor", personal_doctor);
@@ -218,7 +230,17 @@ public class HomeController extends ControllerBase{
 			model.addAttribute("diets", diets); 
 			model.addAttribute("results", results); 
 			
-			model.addAttribute("appointments", appointments); 
+			Date now = new Date(Calendar.getInstance().getTime().getTime());
+			//model.addAttribute("now", now); 
+			List<Appointment> upcoming = new ArrayList<Appointment>();
+			for (Appointment a : appointments){
+				Date d = a.getDate();
+				if(d.compareTo(now)>0){
+					upcoming.add(a);
+				}
+			}
+			
+			model.addAttribute("appointments", upcoming);
 			model.addAttribute("caretaker", caretaker); 
 			
 			model.addAttribute("selectedPatient", userSession.getSelectedPatient());
