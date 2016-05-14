@@ -85,26 +85,30 @@ public class CheckupController extends ControllerBase {
 	public ModelAndView appointmentCheckup(@PathVariable("id") int id,Model model, HttpServletRequest request) {
 		TypedQuery<Appointment> qu = em.createNamedQuery("Appointment.findAppointment", Appointment.class);
 		qu.setParameter(1,id);
-		Appointment curr = qu.setParameter(1, id).getSingleResult();
+		Appointment curr = qu.setParameter(1, id).getSingleResult(); //dobimo appointment, ki je bil izbran
 		
 		Checkup recent = new Checkup();
 		recent.setAppointment(curr);
 		recent.setDoctor(curr.getDoctor());
-		recent.setPatient(curr.getPatient());
+		recent.setPatient(curr.getPatient()); 
 		
-		em.persist(recent);
+		em.persist(recent); //ustvarimo checkup, ki se ustvari iz podatkov appointmenta
 		
 		TypedQuery<Checkup> qu2 = em.createNamedQuery("Checkup.findCheckupByAppointment", Checkup.class);
 		qu2.setParameter(1,id);
 		Checkup checkup = qu2.setParameter(1, id).getSingleResult();
-		int idc = checkup.getCheckupId();
+		int idc = checkup.getCheckupId(); //dobimo id novo nastalega checkupa, naredi se preusmeritev
 		
 		return new ModelAndView("redirect:/checkup/{idc}/insert");
 	}
 	
 	@Transactional
 	@RequestMapping(value = "/checkup/{id}/insert", method=RequestMethod.GET)
-	public ModelAndView checkupInsertGet(@PathVariable("id") int id,Model model, HttpServletRequest request) {
+	public ModelAndView checkupInsertGet(@PathVariable("id") int id,Model model, HttpServletRequest request, @AuthenticationPrincipal User userSession) {
+		
+		String userType = "user";
+		User user = em.merge(userSession);
+		DoctorData doctor = (DoctorData)em.merge(userSession.getData());
 		
 		//trenutni podatki o pregledu, kar je vpisano
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
@@ -135,6 +139,14 @@ public class CheckupController extends ControllerBase {
 		TypedQuery<Medicine> qum = em.createNamedQuery("Medicine.findAll", Medicine.class);
 		List<Medicine> imedicines = qum.getResultList();		
 		model.addAttribute("imedicines", imedicines);
+		
+		model.addAttribute("selectedPatient", userSession.getSelectedPatient());
+		model.addAttribute("isDoctor", true);
+		model.addAttribute("page", "home");
+		model.addAttribute("path", "/mediko_dev/");
+		model.addAttribute("title", "NADZORNA PLOŠČA MEDIKO");
+		model.addAttribute("user", user);
+		model.addAttribute("usertype", userType);
 		
 		return new ModelAndView("checkupInsert");
 	}
