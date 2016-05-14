@@ -82,8 +82,8 @@ public class CheckupController extends ControllerBase {
 		Appointment curr = qu.setParameter(1, id).getSingleResult(); //dobimo appointment, ki je bil izbran
 		
 		TypedQuery<Checkup> qu2 = em.createNamedQuery("Checkup.findCheckupByAppointment", Checkup.class);
-		int count = qu2.setParameter(1, id).getFirstResult();
-		if(count==0){
+		List <Checkup> c = (List<Checkup>) qu2.setParameter(1, id).getResultList();
+		if(c.isEmpty()){
 		
 			Checkup recent = new Checkup();
 			recent.setAppointment(curr);
