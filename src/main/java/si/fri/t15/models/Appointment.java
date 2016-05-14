@@ -9,7 +9,10 @@ import si.fri.t15.models.user.PatientData;
 import java.sql.Date;
 
 @Entity
-@NamedQuery(name="Appointment.findAll", query="SELECT a FROM Appointment a")
+@NamedQueries({
+	@NamedQuery(name="Appointment.findAll", query="SELECT a FROM Appointment a"),
+	@NamedQuery(name="Appointment.findAppointment", query="SELECT a FROM Appointment a WHERE a.id=?1")
+})
 public class Appointment implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
