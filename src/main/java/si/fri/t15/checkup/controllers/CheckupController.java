@@ -155,4 +155,38 @@ public class CheckupController extends ControllerBase {
 		
 		return new ModelAndView("redirect:/checkup/{idc}/insert");
 	}
+	
+	@Transactional
+	@RequestMapping(value = "/checkup/{id}/diet/{idd}", method=RequestMethod.POST)
+	public ModelAndView insertDiet(@PathVariable("id") int id, @PathVariable("idd") int idd,Model model, HttpServletRequest request) {
+		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
+		qu.setParameter(1,id);
+		Checkup curr = qu.setParameter(1, id).getSingleResult();
+		
+		TypedQuery<Diet> qud = em.createNamedQuery("Diet.findDiet", Diet.class);
+		Diet idiet = qud.getSingleResult();		
+		List<Diet> diets = new ArrayList<Diet>();
+		diets.add(idiet);
+		
+		curr.setDiets(diets);
+		
+		return new ModelAndView("redirect:/checkup/{idc}/insert");
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/checkup/{id}/medicine/{idm}", method=RequestMethod.POST)
+	public ModelAndView insertMedicine(@PathVariable("id") int id, @PathVariable("idd") int idd,Model model, HttpServletRequest request) {
+		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
+		qu.setParameter(1,id);
+		Checkup curr = qu.setParameter(1, id).getSingleResult();
+		
+		TypedQuery<Medicine> qud = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
+		Medicine imedicine = qud.getSingleResult();		
+		List<Medicine> medicines = new ArrayList<Medicine>();
+		medicines.add(imedicine);
+		
+		curr.setMedicines(medicines); 
+		
+		return new ModelAndView("redirect:/checkup/{idc}/insert");
+	}
 }
