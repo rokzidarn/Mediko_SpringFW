@@ -81,21 +81,30 @@ public class CheckupController extends ControllerBase {
 		TypedQuery<Appointment> qu = em.createNamedQuery("Appointment.findAppointment", Appointment.class);
 		Appointment curr = qu.setParameter(1, id).getSingleResult(); //dobimo appointment, ki je bil izbran
 		
-		Checkup recent = new Checkup();
-		recent.setAppointment(curr);
-		recent.setDoctor(curr.getDoctor());
-		recent.setPatient(curr.getPatient());
-		recent.setReason("Neznan vzrok!");
-		recent.setInstructions("Dopiši navodila!");
-		
-		em.persist(recent); //ustvarimo checkup, ki se ustvari iz podatkov appointmenta
-		
 		TypedQuery<Checkup> qu2 = em.createNamedQuery("Checkup.findCheckupByAppointment", Checkup.class);
-		qu2.setParameter(1,id);
-		Checkup checkup = qu2.setParameter(1, id).getSingleResult();
-		int idc = checkup.getCheckupId(); //dobimo id novo nastalega checkupa, naredi se preusmeritev
+		int count = qu2.setParameter(1, id).getFirstResult();
+		if(count==0){
 		
-		return new ModelAndView("redirect:/checkup/"+idc+"/insert");
+			Checkup recent = new Checkup();
+			recent.setAppointment(curr);
+			recent.setDoctor(curr.getDoctor());
+			recent.setPatient(curr.getPatient());
+			recent.setReason("Neznan vzrok!");
+			recent.setInstructions("Dopiši navodila!");
+			
+			em.persist(recent); //ustvarimo checkup, ki se ustvari iz podatkov appointmenta
+			
+			TypedQuery<Checkup> qu3 = em.createNamedQuery("Checkup.findCheckupByAppointment", Checkup.class);
+			Checkup checkupc = qu3.setParameter(1, id).getSingleResult();
+			int idc = checkupc.getCheckupId(); //dobimo id novo nastalega checkupa, naredi se preusmeritev
+			
+			return new ModelAndView("redirect:/checkup/"+idc+"/insert");
+		}
+		else{
+			TypedQuery<Checkup> qu4 = em.createNamedQuery("Checkup.findCheckupByAppointment", Checkup.class);
+			Checkup checkup = qu4.setParameter(1, id).getSingleResult();
+			return new ModelAndView("redirect:/checkup/"+checkup.getCheckupId()+"/insert");
+		}
 	}
 	
 	@Transactional
@@ -150,11 +159,10 @@ public class CheckupController extends ControllerBase {
 	@RequestMapping(value = "/checkup/{id}/disease/{idd}", method=RequestMethod.POST) //<a> gumb redirecta sem, kjer se vstavlja
 	public ModelAndView insertDisease(@PathVariable("id") int id, @PathVariable("idd") int idd,Model model, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
-		qu.setParameter(1,id);
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
 		
 		TypedQuery<Disease> qud = em.createNamedQuery("Disease.findDisease", Disease.class);
-		Disease idisease = qud.getSingleResult();		
+		Disease idisease = qud.setParameter(1, id).getSingleResult();		
 		List<Disease> diseases = curr.getDiseases();
 		diseases.add(idisease);
 		
@@ -172,7 +180,7 @@ public class CheckupController extends ControllerBase {
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
 		
 		TypedQuery<Diet> qud = em.createNamedQuery("Diet.findDiet", Diet.class);
-		Diet idiet = qud.getSingleResult();		
+		Diet idiet = qud.setParameter(1, id).getSingleResult();		
 		List<Diet> diets = curr.getDiets();
 		diets.add(idiet);
 		
@@ -190,7 +198,7 @@ public class CheckupController extends ControllerBase {
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
 		
 		TypedQuery<Medicine> qud = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
-		Medicine imedicine = qud.getSingleResult();		
+		Medicine imedicine = qud.setParameter(1, id).getSingleResult();		
 		List<Medicine> medicines = curr.getMedicines();
 		medicines.add(imedicine);
 		

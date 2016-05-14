@@ -125,7 +125,7 @@
                                                                 #foreach($idisease in $idiseases)
                                                                     <option value="${idisease.id}">$idisease.name</option>
                                                                 #end
-                                                            </select>
+                                                            </select><br>
                                                             #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end  
                                                             <button type="submit" class="btn btn-info">VNESI BOLEZEN</button>   
                                                         </form>
@@ -139,9 +139,9 @@
                                                             <label for="idietInput">Izberite dieto: </label>
                                                             <select id="idietInput" class="form-control">
                                                                 #foreach($idiet in $idiets)
-                                                                    <option value="${idiet.id}">$idiidietsease.name</option>
+                                                                    <option value="${idiet.id}">$idiet.name</option>
                                                                 #end
-                                                            </select>
+                                                            </select><br>
                                                             <button type="submit" class="btn btn-info">VNESI DIETO</button>    
                                                             #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
                                                         </form>
@@ -159,7 +159,7 @@
                                                                 #foreach($imedicine in $imedicines)
                                                                     <option value="${imedicine.id}">$imedicine.name</option>
                                                                 #end
-                                                            </select>
+                                                            </select><br>
                                                             #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
                                                             <button type="submit" class="btn btn-info">VNESI ZDRAVILO</button>    
                                                         </form>
@@ -170,8 +170,9 @@
                                         </div>
                                     </div>
                                 </div>                                                                          
-                            </div> 
-                            <button type="button" class="btn btn-primary"><a href="${path}dashboard">KONČAJ</a></button>         
+                            </div> <br>
+                            <button type="button" class="btn btn-info"><a style="color: white"href="${path}dashboard">KONČAJ</a></button><br>
+                            <br>       
                         </div>
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">
                             <div class="sidebar-topbar">
