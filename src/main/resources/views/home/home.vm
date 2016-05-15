@@ -44,7 +44,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Kartica ZZZS</strong><br>
-                                                        $selectedPatient.id
+                                                        $selectedPatient.cardNumber
                                                     </div>
                                                     #if($isDoctor)
                                                         <div class="col-md-12 text-center">
@@ -378,7 +378,7 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Prihajajoči pregledi</div>
                                             <div class="panel-body">
-												#if($appointments.isEmpty())
+												#if($upcoming.isEmpty())
 													<div class="col-md-6">
 														<strong>Nimate prihajajočih pregledov!</strong><br>
 													</div>
@@ -391,7 +391,7 @@
                                                                    <th>Zdravnik</th>
 	                                                            </tr>
 	                                                        </thead>
-	                                                        #foreach($appointment in $appointments)
+	                                                        #foreach($appointment in $upcoming)
                                                                 #if($velocityCount  <= 5)                                                   
         	                                                        <tbody> 
         	                                                            <tr> 
