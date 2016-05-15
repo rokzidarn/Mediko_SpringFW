@@ -20,20 +20,21 @@
                                             <div class="panel-body">
                                                 <p><strong>Pacient:</strong> ${pdata.getFirst_name()} ${pdata.getLast_name()}, ${pdata.getPo_box().city}, ZZZS: ${pdata.getId()}</p>
                                                 <p><strong>Zdravnik:</strong> ${ddata.getFirst_name()} ${ddata.getLast_name()}, ${ddata.getMedical_center().name}</p>
-                                                 #if(!$reason)
+                                                 #if($reason.equals("/"))
                                                     <p>Vnesite razlog!</p>
-                                                    <form method="POST" action="">
+                                                    <form method="POST" action="${path}/checkup/${idc}/reason">
                                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
-                                                                    #if($command) #springBind( "command.reason" ) #end
+                                                                    #if($commandr) #springBind( "commandr.reason" ) #end
                                                                     <label for="reasonInput">Razlog</label>
                                                                     <input type="text" class="form-control" id="reasonInput" name="reason" placeholder="Razlog">
                                                                     #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <button type="submit" class="btn btn-info">VNESI RAZLOG</button> 
                                                     </form>
                                                  #else
                                                     <p><strong>Razlog:</strong> $reason </p>
@@ -117,7 +118,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <form method="POST" action="${path}checkup/{idc}/disease/${idisease.id}">
+                                                        <form method="POST" action="${path}checkup/${idc}/disease/${idisease.id}">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                             #if($command) #springBind( "command.idisease" ) #end
                                                             <label for="idiseaseInput">Izberite bolezen: </label>
@@ -133,7 +134,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <form method="POST" action="${path}checkup/{idc}/diet/${idiet.id}">
+                                                        <form method="POST" action="${path}checkup/${idc}/diet/${idiet.id}">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                             #if($command) #springBind( "command.idiet" ) #end
                                                             <label for="idietInput">Izberite dieto: </label>
@@ -151,7 +152,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <form method="POST" action="${path}checkup/{idc}/medicine/${imedicine.id}">
+                                                        <form method="POST" action="${path}checkup/${idc}/medicine/${imedicine.id}">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                             #if($command) #springBind( "command.imedicine" ) #end
                                                             <label for="imedicineInput">Izberite zdravilo: </label>

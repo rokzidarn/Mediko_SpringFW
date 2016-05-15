@@ -1,6 +1,8 @@
 package si.fri.t15.checkup.controllers;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -8,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +26,9 @@ import si.fri.t15.models.Medicine;
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
+import si.fri.t15.validators.InsertReasonForm;
+import si.fri.t15.validators.InsertReasonValidator;
+
 import org.springframework.transaction.annotation.Transactional;
 
 @Controller
@@ -28,6 +36,15 @@ public class CheckupController extends ControllerBase {
 	
 	@Autowired
 	EntityManager em;
+	
+	@Autowired
+	InsertReasonValidator insertReasonValidator;
+	
+	@InitBinder("commandr")
+	protected void initBinder(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(insertReasonValidator);
+	}
 	
 	@Transactional
 	@RequestMapping(value = "/checkup/{id}")
@@ -89,8 +106,8 @@ public class CheckupController extends ControllerBase {
 			recent.setAppointment(curr);
 			recent.setDoctor(curr.getDoctor());
 			recent.setPatient(curr.getPatient());
-			recent.setReason("Neznan vzrok!");
-			recent.setInstructions("Dopiši navodila!");
+			recent.setReason("/");
+			recent.setInstructions("/");
 			
 			em.persist(recent); //ustvarimo checkup, ki se ustvari iz podatkov appointmenta
 			
@@ -155,9 +172,22 @@ public class CheckupController extends ControllerBase {
 		return new ModelAndView("checkupInsert");
 	}
 	
+	@Transactional
+	@RequestMapping(value = "/checkup/{id}/reason", method=RequestMethod.POST)
+	public ModelAndView insertReason(@PathVariable("id") int id, @ModelAttribute("command") @Valid InsertReasonForm commandr, Model model, HttpServletRequest request) {
+		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
+		Checkup curr = qu.setParameter(1, id).getSingleResult();
+		
+		String reason = commandr.getReason();
+		curr.setReason(reason);
+		em.merge(curr);
+		
+		return new ModelAndView("redirect:/checkup/"+id+"/insert");
+	}
+	
 	@Transactional //params = "insertDisease"
-	@RequestMapping(value = "/checkup/{id}/disease/{idd}", method=RequestMethod.POST) //<a> gumb redirecta sem, kjer se vstavlja
-	public ModelAndView insertDisease(@PathVariable("id") int id, @PathVariable("idd") int idd,Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/checkup/{id}/disease/{idd}", method=RequestMethod.POST) //gumb redirecta sem, kjer se vstavlja
+	public ModelAndView insertDisease(@PathVariable("id") int id, @PathVariable("idd") int idd, Model model, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
 		
@@ -169,7 +199,7 @@ public class CheckupController extends ControllerBase {
 		curr.setDiseases(diseases); //dodajanje bolezni na checkup
 		em.merge(curr);
 		
-		return new ModelAndView("redirect:/checkup/{idc}/insert");
+		return new ModelAndView("redirect:/checkup/"+id+"/insert");
 	}
 	
 	@Transactional
@@ -187,7 +217,7 @@ public class CheckupController extends ControllerBase {
 		curr.setDiets(diets);
 		em.merge(curr);
 		
-		return new ModelAndView("redirect:/checkup/{idc}/insert");
+		return new ModelAndView("redirect:/checkup/"+id+"/insert");
 	}
 	
 	@Transactional
@@ -205,6 +235,6 @@ public class CheckupController extends ControllerBase {
 		curr.setMedicines(medicines); 
 		em.merge(curr);
 		
-		return new ModelAndView("redirect:/checkup/{idc}/insert");
+		return new ModelAndView("redirect:/checkup/"+id+"/insert");
 	}
 }
