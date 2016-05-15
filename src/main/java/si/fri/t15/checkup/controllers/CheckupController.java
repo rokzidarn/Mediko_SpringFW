@@ -37,6 +37,8 @@ import si.fri.t15.validators.InsertMedicineForm;
 import si.fri.t15.validators.InsertMedicineValidator;
 import si.fri.t15.validators.InsertReasonForm;
 import si.fri.t15.validators.InsertReasonValidator;
+import si.fri.t15.validators.InsertResultForm;
+import si.fri.t15.validators.InsertResultValidator;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -89,6 +91,15 @@ public class CheckupController extends ControllerBase {
 	protected void initBinderDG(HttpServletRequest request,
 			ServletRequestDataBinder binder) {
 		binder.setValidator(insertDiagnosisValidator);
+	}
+	
+	@Autowired
+	InsertResultValidator insertResultValidator;
+	
+	@InitBinder("commandrs")
+	protected void initBinderRS(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(insertResultValidator);
 	}
 	
 	@Transactional
@@ -286,12 +297,12 @@ public class CheckupController extends ControllerBase {
 	
 	@Transactional
 	@RequestMapping(value = "/checkup/{id}/result", method=RequestMethod.POST)
-	public ModelAndView insertResult(@PathVariable("id") int id, @RequestParam("iresult") String r, @RequestParam("itype") String type, @ModelAttribute("commandr") @Valid InsertMedicineForm commandm, HttpServletRequest request) {
+	public ModelAndView insertResult(@PathVariable("id") int id, @RequestParam("iresult") String r, @RequestParam("itype") String type, @ModelAttribute("commandrs") @Valid InsertResultForm commandrs, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
 		qu.setParameter(1,id);
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
 		
-		
+		//TODO vstavljanje!
 		
 		em.merge(curr);
 		

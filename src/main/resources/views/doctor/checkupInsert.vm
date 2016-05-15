@@ -169,14 +169,18 @@
                                                     <div class="form-group">
                                                         <form method="POST" action="${path}checkup/${idc}/results">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                            #if($commandr) #springBind( "commandr.itype" ) #end
+                                                            #if($commandrs) #springBind( "commandrs.itype" ) #end
+                                                            <label for="rTypeInput">Izberite tip meritev: </label>
                                                             <select id="rTypeInput" name="itype" class="form-control">
-                                                                <option value="0">Krvni Tlak</option>
+                                                                <option value="0">Krvni tlak</option>
                                                                 <option value="1">Glukoza</option>
                                                             </select><br>
-                                                            #if($commandr) #springBind( "commandr.iresult" ) #end
+                                                            #if($commandrs) #springBind( "commandrs.iresult" ) #end
                                                             <label for="iresultInput">Vnesite rezultat: </label>
-                                                            <input type="text" class="form-control" id="iresultInput" name="iresult" placeholder="Rezultat"><br>#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                            <input type="text" class="form-control" id="iresultInput" name="iresult" placeholder="Rezultat"><br>
+                                                            #if($commandrs) #springBind( "commandrs.itext" ) #end
+                                                            <label for="itextInput">Vnesite komentar: </label>
+                                                            <input type="text" class="form-control" id="itextInput" name="itext" placeholder="Komentar"><br>#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
                                                             <button type="submit" class="btn btn-info">VNESI MERITEV</button>    
                                                         </form>
                                                     </div>

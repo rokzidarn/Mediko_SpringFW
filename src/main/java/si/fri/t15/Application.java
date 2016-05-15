@@ -25,6 +25,7 @@ import si.fri.t15.validators.InsertDietValidator;
 import si.fri.t15.validators.InsertDiseaseValidator;
 import si.fri.t15.validators.InsertMedicineValidator;
 import si.fri.t15.validators.InsertReasonValidator;
+import si.fri.t15.validators.InsertResultValidator;
 import si.fri.t15.validators.SelectDoctorValidator;
 import si.fri.t15.validators.SignUpValidator;
 
@@ -143,6 +144,11 @@ public class Application extends WebMvcConfigurerAdapter {
 	@Bean
 	public InsertDiagnosisValidator insertDiagnosisValidator(){
 		return new InsertDiagnosisValidator();
+	}
+	
+	@Bean
+	public InsertResultValidator insertResultValidator(){
+		return new InsertResultValidator();
 	}
 	
 	@Bean
