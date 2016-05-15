@@ -18,6 +18,7 @@
                                             <div class="panel-heading">Osebni Podatki</div>
                                             <div class="panel-body">
                                                 <div class="row">
+                                                    <div id="selectedPatientId" class="hidden">$selectedPatient.id</div>
                                                     <div class="col-md-6">
                                                         <strong>Ime</strong><br>
                                                         $selectedPatient.first_name
@@ -151,7 +152,7 @@
 														<strong>Nimate pregledov!</strong><br>
 													</div>
 												#else
-                                                <div class="table-responsive">            	
+                                                    <div class="table-responsive">            	
 	                                                    <table class="table table-hover">
 	                                                        <thead>
 	                                                            <tr> 
@@ -160,20 +161,25 @@
 	                                                                <th>Razlog</th>
 	                                                            </tr>
 	                                                        </thead>
+                                                            <tbody class="checkup-table-tbody">
 	                                                        #foreach($checkup in $checkups)
                                                                 #if($velocityCount  <= 5)
-        	                                                        <tbody class="checkup-table-tbody" onclick="opencheckup('#springUrl('/checkup/')'+ ${checkup.id})"> 
-        	                                                            <tr> 
+        	                                                            <tr onclick="opencheckup('#springUrl('/checkup/')'+ ${checkup.id})">
         	                                                                <td scope="row">$checkup.appointment.date</td>
         	                                                                <td>dr. $checkup.doctor.last_name</td> 
         	                                                                <td>$checkup.reason</td>
         	                                                            </tr> 
-        	                                                        </tbody> 
                                                                 #end
-	                                                        #end
-	                                                    </table>                                                   
+                                                            #end
+	                                                        </tbody> 
+                                                            <tbody id="checkupMoreTbody" class="checkup-table-tbody">
+                                                                
+                                                            </tbody>
+                                                        </table>                                                
                                                     </div>
-                                                    <button type="button" class="btn btn-info">Pokaži več</button>
+                                                    #if($checkups.size() > 5)
+                                                        <button id="showMoreCheckup" type="button" class="btn btn-info">Pokaži več</button>
+                                                    #end
 											     #end                                            
                                             </div>
                                         </div>
@@ -198,20 +204,25 @@
                                                             </tr>
                                                         </thead>
                                                         #set( $count = 0 )
-                                	                    #foreach($disease in $diseases)                   														
-                                                            <tbody> 
-                                                                <tr> 
-                                                                	#if($disease.getIsAllergy()==0 && $count < 5)
-    	                                                                <td>$disease.name</td> 
-    	                                                                <td>-</td> 
-                                                                        #set( $count = $count + 1 )
-                                                                    #end
-                                                                </tr> 
-                                                            </tbody>                                              
+                                                        <tbody> 
+                                                        #foreach($disease in $diseases)                                                             
+                                                            <tr> 
+                                                            	#if($disease.getIsAllergy()==0 && $count < 5)
+	                                                                <td>$disease.name</td> 
+	                                                                <td>-</td> 
+                                                                    #set( $count = $count + 1 )
+                                                                #end
+                                                            </tr> 
                                                         #end 
+                                                        </tbody>
+                                                        <tbody id="diseaseMoreTbody" class="checkup-table-tbody">
+                                                                
+                                                        </tbody>                                         
                                                     </table>
-                                                </div>  
-                                                <button type="button" class="btn btn-info">Pokaži več</button>                                                
+                                                </div>
+                                                #if($count == 5)
+                                                    <button id="showMoreDisease" type="button" class="btn btn-info">Pokaži več</button> 
+                                                #end                                               
                                 	       #end                                      												
 											</div>
 										</div>
@@ -235,8 +246,8 @@
                                                             </tr>
                                                         </thead> 
                                                         #set( $count = 0 )
-                                        	           #foreach($allergy in $diseases)											
                                                         <tbody> 
+                                                        #foreach($allergy in $diseases)                                          
                                                             <tr> 
                                                             	#if($allergy.getIsAllergy() == 1 && $count < 5)
 	                                                                <td>$allergy.name</td> 
@@ -244,11 +255,16 @@
                                                                     #set( $count = $count + 1 )
                                                                 #end
                                                             </tr> 
-                                                        </tbody> 		                                               
-														#end
+                                                        #end
+                                                        </tbody> 	
+                                                        <tbody id="alergyMoreTbody" class="checkup-table-tbody">
+                                                                
+                                                        </tbody>  	                                               
                                                     </table>
                                                 </div> 
-                                                <button type="button" class="btn btn-info">Pokaži več</button>                                                 
+                                                #if($count == 5)
+                                                    <button id="showMoreAlergy" type="button" class="btn btn-info">Pokaži več</button> 
+                                                #end                                               
                                         	#end                                      												
 											</div>
 										</div>
@@ -270,24 +286,29 @@
     	                                                        <th>Navodila</th>
     	                                                    </tr>
     	                                                </thead>
-                                                	    #foreach($diet in $diets)
+                                                        <tbody> 
+                                                        #foreach($diet in $diets)
                                                             #if($velocityCount  <= 5)
-                                                                <tbody> 
-                                                                    <tr> 
-                                                                        <td scope="row">$diet.getName()</td> 
-                                                                        <td>
-                                                                            #foreach($instruction in $diet.getInstructions_Diets())
-                                                                                #if($velocityCount!=1) <br> #end
-                                                                                <a style="color:#36B8D5" href="$instruction.getText()">$instruction.getText()</a>
-                                                                            #end
-                                                                        </td> 
-                                                                    </tr> 
-                                                                </tbody> 
+                                                                <tr> 
+                                                                    <td scope="row">$diet.getName()</td> 
+                                                                    <td>
+                                                                        #foreach($instruction in $diet.getInstructions_Diets())
+                                                                            #if($velocityCount!=1) <br> #end
+                                                                            <a style="color:#36B8D5" href="$instruction.getText()">$instruction.getText()</a>
+                                                                        #end
+                                                                    </td> 
+                                                                </tr> 
                                                             #end                             
-    													#end
+                                                        #end
+                                                        </tbody>
+                                                        <tbody id="dietMoreTbody" class="checkup-table-tbody">
+                                                                
+                                                        </tbody> 
                                                     </table>                                                  
                                                 </div>
-                                    			<button type="button" class="btn btn-info">Pokaži več</button>
+                                                #if($diets.size() > 5)
+                                    			<button id="showMoreDiet" type="button" class="btn btn-info">Pokaži več</button>
+                                                #end
                                         	#end 
                                             </div>
                                         </div>
@@ -311,19 +332,24 @@
                                                                 <th>Navodila</th>
                                                             </tr>
                                                         </thead> 
+                                                        <tbody> 
                                                         #foreach($medicine in $medicines) 
                                                             #if($velocityCount  <= 5)
-                                                                <tbody> 
-                                                                    <tr> 
-                                                                        <td scope="row">$medicine.getName()</td> 
-                                                                        <td><a style="color:#36B8D5" href="$medicine.link">Povezava</a></td> 
-                                                                    </tr> 
-                                                                </tbody> 
+                                                                <tr> 
+                                                                    <td scope="row">$medicine.getName()</td> 
+                                                                    <td><a style="color:#36B8D5" href="$medicine.link">Povezava</a></td> 
+                                                                </tr> 
                                                             #end
                                                         #end
+                                                        </tbody>
+                                                        <tbody id="medicineMoreTbody">
+
+                                                        </tbody>
                                                     </table>                                                  
                                                 </div>
-                                                <button type="button" class="btn btn-info">Pokaži več</button>
+                                                #if($medicines.size() > 5)
+                                                <button id="showMoreMedicine" type="button" class="btn btn-info">Pokaži več</button>
+                                                #end
 											#end
                                             </div>
                                         </div>
@@ -366,8 +392,10 @@
                                                             #end
                                                         #end
                                                     </table>                                               
-                                                </div> 
-                                                <button type="button" class="btn btn-info">Pokaži več</button>                                              
+                                                </div>
+                                                #if($results.size() > 5)
+                                                <button type="button" class="btn btn-info">Pokaži več</button>
+                                                #end                                          
                                         	#end 
                                             </div>
                                         </div>

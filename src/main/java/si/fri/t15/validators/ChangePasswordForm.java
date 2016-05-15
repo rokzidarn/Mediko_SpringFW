@@ -18,12 +18,12 @@ public class ChangePasswordForm {
 	
 	@NotNull
     @Size(min=6, max=16)
-    @Pattern(regexp="/^[0-9a-zA-Z-_]{6,16}$/")
+    @Pattern(regexp="/^[0-9a-zA-Z-_]{8,16}$/")
     private String password;
     
     @NotNull
     @Size(min=6, max=16)
-    @Pattern(regexp="/^[0-9a-zA-Z-_]{6,16}$/")
+    @Pattern(regexp="/^[0-9a-zA-Z-_]{8,16}$/")
     private String repeatpassword;
 
 	public String getEmail() {

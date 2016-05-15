@@ -12,6 +12,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import si.fri.t15.base.models.UserData;
 import si.fri.t15.models.Appointment;
 import si.fri.t15.models.Checkup;
@@ -70,6 +72,7 @@ public class DoctorData extends UserData {
 		this.type = type;
 	}
 	
+	@JsonIgnore 
 	public List<PatientData> getPatients() {
 		return this.patients;
 	}
@@ -78,6 +81,7 @@ public class DoctorData extends UserData {
 		this.patients = patients;
 	}
 	
+	@JsonIgnore 
 	public List<Appointment> getAppointments() {
 		return this.appointments;
 	}
@@ -86,6 +90,7 @@ public class DoctorData extends UserData {
 		this.appointments = appointments;
 	}
 	
+	@JsonIgnore 
 	public List<Checkup> getCheckups() {
 		return this.checkups;
 	}
@@ -108,6 +113,7 @@ public class DoctorData extends UserData {
 		return checkup;
 	}
 	
+	@JsonIgnore 
 	public Medical_Center getMedical_center() {
 		return medical_center;
 	}
@@ -116,6 +122,7 @@ public class DoctorData extends UserData {
 		this.medical_center = medical_center;
 	}
 
+	@JsonIgnore 
 	public List<NurseData> getNurses() {
 		return nurses;
 	}
