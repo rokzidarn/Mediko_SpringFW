@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @NamedQuery(name="Instructions_Diet.findAll", query="SELECT i FROM Instructions_Diet i")
 public class Instructions_Diet implements Serializable{
@@ -65,6 +67,7 @@ public class Instructions_Diet implements Serializable{
 		return this.diet;
 	}
 
+	@JsonIgnore 
 	public void setDiet(Diet diet) {
 		this.diet = diet;
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -113,15 +114,37 @@ public class PatientData extends UserData {
 	    if (this.diseases == null) {
 
 	        this.diseases = new ArrayList<Disease>();
+	        this.alergyDiseases = new ArrayList<Disease>();
+	        this.nonAlergyDiseases = new ArrayList<Disease>();
 	        List<Checkup> allCheckups = this.getCheckups();
 	        
 			for (Checkup c : allCheckups){
 				for(Disease d : c.getDiseases()){
 					this.diseases.add(d);
+					if(d.getIsAllergy()==0){
+						nonAlergyDiseases.add(d);
+					}else{
+						alergyDiseases.add(d);
+					}
 				}
 	        }
 	    }
 	    return this.diseases;
+	}
+	
+	
+	@Transient
+	private List<Disease> alergyDiseases;
+	@Transient
+	private List<Disease> nonAlergyDiseases;
+	
+	public List<Disease> getDiseases(int alergy){
+		getDiseases();
+		if(alergy == 1){
+			return alergyDiseases;
+		}else{
+			return nonAlergyDiseases;
+		}
 	}
 	
 	@Transient
