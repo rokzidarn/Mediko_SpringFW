@@ -118,11 +118,11 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <form method="POST" action="${path}checkup/${idc}/disease/${idisease.id}">
+                                                        <form method="POST" action="${path}checkup/${idc}/disease">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                            #if($command) #springBind( "command.idisease" ) #end
+                                                            #if($commandd) #springBind( "commandd.idisease" ) #end
                                                             <label for="idiseaseInput">Izberite bolezen: </label>
-                                                            <select id="idiseaseInput" class="form-control">
+                                                            <select id="idiseaseInput" name="idisease" class="form-control">
                                                                 #foreach($idisease in $idiseases)
                                                                     <option value="${idisease.id}">$idisease.name</option>
                                                                 #end
@@ -134,9 +134,9 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <form method="POST" action="${path}checkup/${idc}/diet/${idiet.id}">
+                                                        <form method="POST" action="${path}checkup/${idc}/diet">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                            #if($command) #springBind( "command.idiet" ) #end
+                                                            #if($commanddi) #springBind( "commanddi.idiet" ) #end
                                                             <label for="idietInput">Izberite dieto: </label>
                                                             <select id="idietInput" class="form-control">
                                                                 #foreach($idiet in $idiets)
@@ -152,9 +152,9 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <form method="POST" action="${path}checkup/${idc}/medicine/${imedicine.id}">
+                                                        <form method="POST" action="${path}checkup/${idc}/medicine">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                            #if($command) #springBind( "command.imedicine" ) #end
+                                                            #if($commandm) #springBind( "commandm.imedicine" ) #end
                                                             <label for="imedicineInput">Izberite zdravilo: </label>
                                                             <select id="imedicineInput" class="form-control">
                                                                 #foreach($imedicine in $imedicines)

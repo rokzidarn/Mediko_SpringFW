@@ -26,6 +26,12 @@ import si.fri.t15.models.Medicine;
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
+import si.fri.t15.validators.InsertDietForm;
+import si.fri.t15.validators.InsertDietValidator;
+import si.fri.t15.validators.InsertDiseaseForm;
+import si.fri.t15.validators.InsertDiseaseValidator;
+import si.fri.t15.validators.InsertMedicineForm;
+import si.fri.t15.validators.InsertMedicineValidator;
 import si.fri.t15.validators.InsertReasonForm;
 import si.fri.t15.validators.InsertReasonValidator;
 
@@ -41,9 +47,36 @@ public class CheckupController extends ControllerBase {
 	InsertReasonValidator insertReasonValidator;
 	
 	@InitBinder("commandr")
-	protected void initBinder(HttpServletRequest request,
+	protected void initBinderR(HttpServletRequest request,
 			ServletRequestDataBinder binder) {
 		binder.setValidator(insertReasonValidator);
+	}
+	
+	@Autowired
+	InsertDiseaseValidator insertDiseaseValidator;
+	
+	@InitBinder("commandd")
+	protected void initBinderD(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(insertDiseaseValidator);
+	}
+	
+	@Autowired
+	InsertDietValidator insertDietValidator;
+	
+	@InitBinder("commanddi")
+	protected void initBinderDI(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(insertDietValidator);
+	}
+	
+	@Autowired
+	InsertMedicineValidator insertMedicineValidator;
+	
+	@InitBinder("commanddm")
+	protected void initBinderM(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(insertMedicineValidator);
 	}
 	
 	@Transactional
@@ -174,7 +207,7 @@ public class CheckupController extends ControllerBase {
 	
 	@Transactional
 	@RequestMapping(value = "/checkup/{id}/reason", method=RequestMethod.POST)
-	public ModelAndView insertReason(@PathVariable("id") int id, @ModelAttribute("command") @Valid InsertReasonForm commandr, Model model, HttpServletRequest request) {
+	public ModelAndView insertReason(@PathVariable("id") int id, @ModelAttribute("commandr") @Valid InsertReasonForm commandr, Model model, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
 		
@@ -186,13 +219,15 @@ public class CheckupController extends ControllerBase {
 	}
 	
 	@Transactional //params = "insertDisease"
-	@RequestMapping(value = "/checkup/{id}/disease/{idd}", method=RequestMethod.POST) //gumb redirecta sem, kjer se vstavlja
-	public ModelAndView insertDisease(@PathVariable("id") int id, @PathVariable("idd") int idd, Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/checkup/{id}/disease", method=RequestMethod.POST) //gumb redirecta sem, kjer se vstavlja
+	public ModelAndView insertDisease(@PathVariable("id") int id, @ModelAttribute("commandd") @Valid InsertDiseaseForm commandd, Model model, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
 		
+		int idd = 1;
+		
 		TypedQuery<Disease> qud = em.createNamedQuery("Disease.findDisease", Disease.class);
-		Disease idisease = qud.setParameter(1, id).getSingleResult();		
+		Disease idisease = qud.setParameter(1, idd).getSingleResult();				
 		List<Disease> diseases = curr.getDiseases();
 		diseases.add(idisease);
 		
@@ -203,14 +238,16 @@ public class CheckupController extends ControllerBase {
 	}
 	
 	@Transactional
-	@RequestMapping(value = "/checkup/{id}/diet/{idd}", method=RequestMethod.POST) //params = "insertDiet"
-	public ModelAndView insertDiet(@PathVariable("id") int id, @PathVariable("idd") int idd,Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/checkup/{id}/diet", method=RequestMethod.POST) //params = "insertDiet"
+	public ModelAndView insertDiet(@PathVariable("id") int id, @ModelAttribute("commanddi") @Valid InsertDietForm commanddi, Model model, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
 		qu.setParameter(1,id);
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
 		
+		int iddi = 1;
+		
 		TypedQuery<Diet> qud = em.createNamedQuery("Diet.findDiet", Diet.class);
-		Diet idiet = qud.setParameter(1, id).getSingleResult();		
+		Diet idiet = qud.setParameter(1, iddi).getSingleResult();		
 		List<Diet> diets = curr.getDiets();
 		diets.add(idiet);
 		
@@ -221,14 +258,16 @@ public class CheckupController extends ControllerBase {
 	}
 	
 	@Transactional
-	@RequestMapping(value = "/checkup/{id}/medicine/{idm}", method=RequestMethod.POST) //params = "insertMedicine"
-	public ModelAndView insertMedicine(@PathVariable("id") int id, @PathVariable("idd") int idd,Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/checkup/{id}/medicine", method=RequestMethod.POST) //params = "insertMedicine"
+	public ModelAndView insertMedicine(@PathVariable("id") int id, @ModelAttribute("commandm") @Valid InsertMedicineForm commandm, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
 		qu.setParameter(1,id);
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
 		
+		int idm = 1;
+		
 		TypedQuery<Medicine> qud = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
-		Medicine imedicine = qud.setParameter(1, id).getSingleResult();		
+		Medicine imedicine = qud.setParameter(1, idm).getSingleResult();		
 		List<Medicine> medicines = curr.getMedicines();
 		medicines.add(imedicine);
 		

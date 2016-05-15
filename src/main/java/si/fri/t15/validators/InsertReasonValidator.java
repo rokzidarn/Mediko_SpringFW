@@ -12,7 +12,7 @@ public class InsertReasonValidator implements Validator{
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmpty(errors, "firstName", "field.required", "Zahtevano polje");
+		ValidationUtils.rejectIfEmpty(errors, "reason", "field.required", "Zahtevano polje");
 		InsertReasonForm r = (InsertReasonForm) target;
 		if(r.getReason().equals("/")){
 			r.setReason("Neznan vzrok!");
