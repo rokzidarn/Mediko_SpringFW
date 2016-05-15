@@ -27,6 +27,8 @@ import si.fri.t15.models.Medicine;
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
+import si.fri.t15.validators.InsertDiagnosisForm;
+import si.fri.t15.validators.InsertDiagnosisValidator;
 import si.fri.t15.validators.InsertDietForm;
 import si.fri.t15.validators.InsertDietValidator;
 import si.fri.t15.validators.InsertDiseaseForm;
@@ -78,6 +80,15 @@ public class CheckupController extends ControllerBase {
 	protected void initBinderM(HttpServletRequest request,
 			ServletRequestDataBinder binder) {
 		binder.setValidator(insertMedicineValidator);
+	}
+	
+	@Autowired
+	InsertDiagnosisValidator insertDiagnosisValidator;
+	
+	@InitBinder("commanddg")
+	protected void initBinderDG(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(insertDiagnosisValidator);
 	}
 	
 	@Transactional
@@ -177,6 +188,7 @@ public class CheckupController extends ControllerBase {
 		model.addAttribute("ddata", d); 
 		model.addAttribute("pdata", p); 
 		model.addAttribute("reason", curr.getReason()); 
+		model.addAttribute("diagnosis", curr.getInstructions()); 
 		
 		model.addAttribute("diseases", curr.getDiseases()); 
 		model.addAttribute("diets", curr.getDiets()); 
@@ -267,6 +279,33 @@ public class CheckupController extends ControllerBase {
 		medicines.add(imedicine);
 		
 		curr.setMedicines(medicines); 
+		em.merge(curr);
+		
+		return new ModelAndView("redirect:/checkup/"+id+"/insert");
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/checkup/{id}/result", method=RequestMethod.POST)
+	public ModelAndView insertResult(@PathVariable("id") int id, @RequestParam("iresult") String r, @RequestParam("itype") String type, @ModelAttribute("commandr") @Valid InsertMedicineForm commandm, HttpServletRequest request) {
+		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
+		qu.setParameter(1,id);
+		Checkup curr = qu.setParameter(1, id).getSingleResult();
+		
+		
+		
+		em.merge(curr);
+		
+		return new ModelAndView("redirect:/checkup/"+id+"/insert");
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/checkup/{id}/diagnosis", method=RequestMethod.POST)
+	public ModelAndView insertDiagnosis(@PathVariable("id") int id, @RequestParam("idiagnosis") String dtext, @ModelAttribute("commanddg") @Valid InsertDiagnosisForm commanddg, HttpServletRequest request) {
+		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
+		qu.setParameter(1,id);
+		Checkup curr = qu.setParameter(1, id).getSingleResult();
+		
+		curr.setInstructions(dtext);		
 		em.merge(curr);
 		
 		return new ModelAndView("redirect:/checkup/"+id+"/insert");
