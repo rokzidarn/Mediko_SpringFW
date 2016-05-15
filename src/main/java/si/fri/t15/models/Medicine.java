@@ -6,7 +6,11 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name="Medicine.findAll", query="SELECT m FROM Medicine m")
+@NamedQueries({
+	@NamedQuery(name="Medicine.findAll", query="SELECT m FROM Medicine m"),
+	@NamedQuery(name="Medicine.findMedicine", query="SELECT m FROM Medicine m WHERE m.id=?1")
+})
+
 public class Medicine implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

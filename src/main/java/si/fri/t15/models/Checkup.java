@@ -13,7 +13,8 @@ import si.fri.t15.models.user.PatientData;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Checkup.findAll", query="SELECT c FROM Checkup c"),
-	@NamedQuery(name="Checkup.findCheckup", query="SELECT c FROM Checkup c WHERE c.id=?1")
+	@NamedQuery(name="Checkup.findCheckup", query="SELECT c FROM Checkup c WHERE c.id=?1"),
+	@NamedQuery(name="Checkup.findCheckupByAppointment", query="SELECT c FROM Checkup c WHERE c.appointment.id=?1")
 })
 public class Checkup implements Serializable{
 	private static final long serialVersionUID = 1L;

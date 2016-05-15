@@ -5,7 +5,10 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name="Reading_Data.findAll", query="SELECT r FROM Reading_Data r")
+@NamedQueries({
+	@NamedQuery(name="Reading_Data.findAll", query="SELECT r FROM Reading_Data r"),
+	@NamedQuery(name="Reading_Data.findByCheckup", query="SELECT r FROM Reading_Data r WHERE r.result_checkup.id=?1"),
+})
 public class Reading_Data implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

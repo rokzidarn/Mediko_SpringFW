@@ -48,7 +48,7 @@ public class Reading implements Serializable{
 		return this.date;
 	}
 
-	public void Date(Date date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	

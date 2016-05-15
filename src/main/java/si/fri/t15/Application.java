@@ -20,6 +20,12 @@ import si.fri.t15.login.controllers.SessionEndedListener;
 import si.fri.t15.validators.ChangePasswordValidator;
 import si.fri.t15.validators.CreateMedicalWorkerValidator;
 import si.fri.t15.validators.CreatePatientValidator;
+import si.fri.t15.validators.InsertDiagnosisValidator;
+import si.fri.t15.validators.InsertDietValidator;
+import si.fri.t15.validators.InsertDiseaseValidator;
+import si.fri.t15.validators.InsertMedicineValidator;
+import si.fri.t15.validators.InsertReasonValidator;
+import si.fri.t15.validators.InsertResultValidator;
 import si.fri.t15.validators.SelectDoctorValidator;
 import si.fri.t15.validators.SignUpValidator;
 
@@ -113,6 +119,36 @@ public class Application extends WebMvcConfigurerAdapter {
 	@Bean
 	public SelectDoctorValidator selectDoctorValidator(){
 		return new SelectDoctorValidator();
+	}
+	
+	@Bean
+	public InsertReasonValidator insertReasonValidator(){
+		return new InsertReasonValidator();
+	}
+	
+	@Bean
+	public InsertDiseaseValidator insertDiseaseValidator(){
+		return new InsertDiseaseValidator();
+	}
+	
+	@Bean
+	public InsertDietValidator insertDietValidator(){
+		return new InsertDietValidator();
+	}
+	
+	@Bean
+	public InsertMedicineValidator insertMedicineValidator(){
+		return new InsertMedicineValidator();
+	}
+	
+	@Bean
+	public InsertDiagnosisValidator insertDiagnosisValidator(){
+		return new InsertDiagnosisValidator();
+	}
+	
+	@Bean
+	public InsertResultValidator insertResultValidator(){
+		return new InsertResultValidator();
 	}
 	
 	@Bean

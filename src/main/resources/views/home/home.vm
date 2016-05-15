@@ -395,8 +395,16 @@
                                                                 #if($velocityCount  <= 5)                                                   
         	                                                        <tbody> 
         	                                                            <tr> 
-        	                                                                <td scope="row">$appointment.date</td> 
+        	                                                                <td scope="row">$appointment.getDate()</td> 
         	                                                                <td>dr. $appointment.doctor.last_name</td> 
+                                                                            #if($isDoctor)
+                                                                                <td>
+                                                                                    <form action="${path}appointment/${appointment.getIdAppointment()}" method="POST">
+                                                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                                                        <button type="submit" class="btn btn-info">VNESI</button>
+                                                                                    </form>
+                                                                                </td> 
+                                                                            #end
         	                                                            </tr> 
         	                                                        </tbody> 
                                                                 #end
