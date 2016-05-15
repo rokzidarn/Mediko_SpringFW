@@ -110,7 +110,7 @@
                                                     </table>                                                  
                                                 </div>
                                             #end
-                                            #if($results_checkup.isEmpty())
+                                            #if(!$results_checkup)
                                                 <br><p>Vnesite meritve!</p>
                                             #else
                                                 <div class="table-responsive">
@@ -121,11 +121,11 @@
                                                                 <th>Tip</th>
                                                             </tr>
                                                         </thead> 
-                                                        #foreach($result.reading_datas in $results_checkup) 
+                                                        #foreach($rd in $results_checkup.getReading_Datas()) 
                                                             <tbody> 
                                                                 <tr> 
-                                                                    <td scope="row">$result.reading_data.data $result.reading_data.data.unit</td> 
-                                                                     <td scope="row">$result.reading_data.type</td> 
+                                                                    <td scope="row">$rd.getData() &nbsp; &nbsp; $rd.getUnit()</td>
+                                                                    <td scope="row">$results_checkup.getType()</td>
                                                                 </tr> 
                                                             </tbody> 
                                                         #end
