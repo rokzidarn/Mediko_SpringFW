@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.Appointment;
@@ -220,11 +221,9 @@ public class CheckupController extends ControllerBase {
 	
 	@Transactional //params = "insertDisease"
 	@RequestMapping(value = "/checkup/{id}/disease", method=RequestMethod.POST) //gumb redirecta sem, kjer se vstavlja
-	public ModelAndView insertDisease(@PathVariable("id") int id, @ModelAttribute("commandd") @Valid InsertDiseaseForm commandd, Model model, HttpServletRequest request) {
+	public ModelAndView insertDisease(@PathVariable("id") int id, @RequestParam("idisease") String idd ,@ModelAttribute("commandd") @Valid InsertDiseaseForm commandd, Model model, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
-		
-		int idd = 1;
 		
 		TypedQuery<Disease> qud = em.createNamedQuery("Disease.findDisease", Disease.class);
 		Disease idisease = qud.setParameter(1, idd).getSingleResult();				
@@ -239,12 +238,10 @@ public class CheckupController extends ControllerBase {
 	
 	@Transactional
 	@RequestMapping(value = "/checkup/{id}/diet", method=RequestMethod.POST) //params = "insertDiet"
-	public ModelAndView insertDiet(@PathVariable("id") int id, @ModelAttribute("commanddi") @Valid InsertDietForm commanddi, Model model, HttpServletRequest request) {
+	public ModelAndView insertDiet(@PathVariable("id") int id, @RequestParam("idiet") int iddi, @ModelAttribute("commanddi") @Valid InsertDietForm commanddi, Model model, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
 		qu.setParameter(1,id);
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
-		
-		int iddi = 1;
 		
 		TypedQuery<Diet> qud = em.createNamedQuery("Diet.findDiet", Diet.class);
 		Diet idiet = qud.setParameter(1, iddi).getSingleResult();		
@@ -259,12 +256,10 @@ public class CheckupController extends ControllerBase {
 	
 	@Transactional
 	@RequestMapping(value = "/checkup/{id}/medicine", method=RequestMethod.POST) //params = "insertMedicine"
-	public ModelAndView insertMedicine(@PathVariable("id") int id, @ModelAttribute("commandm") @Valid InsertMedicineForm commandm, HttpServletRequest request) {
+	public ModelAndView insertMedicine(@PathVariable("id") int id, @RequestParam("imedicine") int idm, @ModelAttribute("commandm") @Valid InsertMedicineForm commandm, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
 		qu.setParameter(1,id);
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
-		
-		int idm = 1;
 		
 		TypedQuery<Medicine> qud = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
 		Medicine imedicine = qud.setParameter(1, idm).getSingleResult();		

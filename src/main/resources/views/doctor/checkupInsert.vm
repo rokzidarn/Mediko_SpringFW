@@ -70,7 +70,7 @@
                                                 </div>                                         
                                             #end      
                                             #if($medicines.isEmpty())
-                                                <p>Vnesite zdravil!</p>
+                                                <p>Vnesite zdravila!</p>
                                             #else
                                                 <div class="table-responsive">
                                                     <table class="table table-hover">
@@ -91,7 +91,7 @@
                                                 </div>
                                             #end
                                             #if($diets.isEmpty())
-                                                <p>Ni diet!</p>
+                                                <p>Vnesite diete!</p>
                                             #else
                                                 <div class="table-responsive">
                                                     <table class="table table-hover">
@@ -124,7 +124,7 @@
                                                             <label for="idiseaseInput">Izberite bolezen: </label>
                                                             <select id="idiseaseInput" name="idisease" class="form-control">
                                                                 #foreach($idisease in $idiseases)
-                                                                    <option value="${idisease.id}">$idisease.name</option>
+                                                                    <option value="${idisease.getDiseaseId()}">$idisease.name</option>
                                                                 #end
                                                             </select><br>
                                                             #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end  
@@ -138,9 +138,9 @@
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                             #if($commanddi) #springBind( "commanddi.idiet" ) #end
                                                             <label for="idietInput">Izberite dieto: </label>
-                                                            <select id="idietInput" class="form-control">
+                                                            <select id="idietInput" name="idiet" class="form-control">
                                                                 #foreach($idiet in $idiets)
-                                                                    <option value="${idiet.id}">$idiet.name</option>
+                                                                    <option value="${idiet.getDietId()}">$idiet.name</option>
                                                                 #end
                                                             </select><br>
                                                             <button type="submit" class="btn btn-info">VNESI DIETO</button>    
@@ -156,9 +156,9 @@
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                             #if($commandm) #springBind( "commandm.imedicine" ) #end
                                                             <label for="imedicineInput">Izberite zdravilo: </label>
-                                                            <select id="imedicineInput" class="form-control">
+                                                            <select id="imedicineInput" name="imedicine" class="form-control">
                                                                 #foreach($imedicine in $imedicines)
-                                                                    <option value="${imedicine.id}">$imedicine.name</option>
+                                                                    <option value="${imedicine.getMedicineId()}">$imedicine.name</option>
                                                                 #end
                                                             </select><br>
                                                             #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
