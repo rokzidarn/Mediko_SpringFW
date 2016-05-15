@@ -18,17 +18,12 @@ public class InsertResultValidator implements Validator{
 				
 		InsertResultForm r = (InsertResultForm) target;
 		
-		if(!r.getItype().equals("Krvni tlak")){
+		if(!r.getItype().equals("Krvni tlak") || !r.getItype().equals("Glukoza")){
 			errors.rejectValue("itype", "field.format",
 					"Izberi ustrezen tip meritve");
 		}
 		
-		if(!r.getItype().equals("Krvni tlak")){
-			errors.rejectValue("itype", "field.format",
-					"Izberi ustrezen tip meritve");
-		}
-		
-		if(r.getItype().equals("Glukoza") && (Integer.parseInt(r.getIresult())<2 || Integer.parseInt(r.getIresult())>25)){
+		else if(r.getItype().equals("Glukoza") && (Integer.parseInt(r.getIresult())<2 || Integer.parseInt(r.getIresult())>25)){
 			errors.rejectValue("iresult", "field.format",
 					"Neveljavna meritev glukoze!");
 		}
