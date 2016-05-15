@@ -18,7 +18,7 @@ public class InsertResultValidator implements Validator{
 				
 		InsertResultForm r = (InsertResultForm) target;
 		
-		if(!r.getItype().equals("Krvni tlak") || !r.getItype().equals("Glukoza")){
+		if(!r.getItype().equals("Krvni tlak") && !r.getItype().equals("Glukoza")){
 			errors.rejectValue("itype", "field.format",
 					"Izberi ustrezen tip meritve");
 		}
