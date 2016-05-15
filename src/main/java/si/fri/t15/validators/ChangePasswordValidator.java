@@ -13,7 +13,7 @@ import org.springframework.validation.ValidationUtils;
 
 public class ChangePasswordValidator implements Validator{
 
-	private static final int MINIMUM_PASSWORD_LENGTH = 6;
+	private static final int MINIMUM_PASSWORD_LENGTH = 8;
 
 	@Override
 	public boolean supports(Class<?> c) {
@@ -32,13 +32,31 @@ public class ChangePasswordValidator implements Validator{
 				&& u.getPassword().trim().length() < MINIMUM_PASSWORD_LENGTH) {
 			errors.rejectValue("password", "field.min.length",
 					new Object[] { Integer.valueOf(MINIMUM_PASSWORD_LENGTH) },
-					"The password must be at least [" + MINIMUM_PASSWORD_LENGTH
-							+ "] characters in length.");
+					"Geslo mora vsebovati najmanj [" + MINIMUM_PASSWORD_LENGTH
+							+ "] znakov.");
 		}
 		
 		if (u.getRepeatpassword() != null && u.getPassword() != null && !u.getRepeatpassword().equals(u.getPassword())) {
 			errors.rejectValue("repeatpassword", "field.format",
-					"Passwords do not match");
+					"Gesli se ne ujemata.");
+		}
+		
+		if(u.getPassword() != null){
+			if(u.getPassword().indexOf('0') != -1 ||
+					u.getPassword().indexOf('1') != -1 ||
+					u.getPassword().indexOf('2') != -1 ||
+					u.getPassword().indexOf('3') != -1 ||
+					u.getPassword().indexOf('4') != -1 ||
+					u.getPassword().indexOf('5') != -1 ||
+					u.getPassword().indexOf('6') != -1 ||
+					u.getPassword().indexOf('7') != -1 ||
+					u.getPassword().indexOf('8') != -1 ||
+					u.getPassword().indexOf('9') != -1)
+			{	
+			}else{
+				errors.rejectValue("password", "field.format",
+						"Geslo ne vsebuje številk.");
+			}
 		}
 		
 	}
