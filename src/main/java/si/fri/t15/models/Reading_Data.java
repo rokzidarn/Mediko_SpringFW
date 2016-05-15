@@ -15,7 +15,7 @@ public class Reading_Data implements Serializable{
 	private int id;
 	
 	@Column(name="Data", nullable=false)
-	private float data;
+	private String data;
 	
 	@Column(name="Unit", length=15, nullable=false)
 	private String unit;
@@ -43,11 +43,11 @@ public class Reading_Data implements Serializable{
 		this.id = id;
 	}	
 	
-	public float getData() {
+	public String getData() {
 		return this.data;
 	}
 
-	public void setData(float data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 	
