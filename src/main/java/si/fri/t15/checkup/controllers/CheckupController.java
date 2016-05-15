@@ -147,7 +147,6 @@ public class CheckupController extends ControllerBase {
 		model.addAttribute("usertype", userType);
 		model.addAttribute("selectedPatient", userSession.getSelectedPatient());
 		model.addAttribute("page", "checkup");
-		model.addAttribute("path", "/mediko_dev/");
 		//Page variables
 		model.addAttribute("title", "PREGLED");
 		model.addAttribute("user", user);
@@ -229,7 +228,6 @@ public class CheckupController extends ControllerBase {
 		model.addAttribute("selectedPatient", userSession.getSelectedPatient());
 		model.addAttribute("isDoctor", true);
 		model.addAttribute("page", "home");
-		model.addAttribute("path", "/mediko_dev/");
 		model.addAttribute("title", "NADZORNA PLOŠČA MEDIKO");
 		model.addAttribute("user", user);
 		model.addAttribute("usertype", userType);
