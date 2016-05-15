@@ -110,6 +110,28 @@
                                                     </table>                                                  
                                                 </div>
                                             #end
+                                            #if($results_checkup.isEmpty())
+                                                <br><p>Vnesite meritve!</p>
+                                            #else
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr> 
+                                                                <th>Meritev</th>
+                                                                <th>Tip</th>
+                                                            </tr>
+                                                        </thead> 
+                                                        #foreach($result.reading_datas in $results_checkup) 
+                                                            <tbody> 
+                                                                <tr> 
+                                                                    <td scope="row">$result.reading_data.data $result.reading_data.data.unit</td> 
+                                                                     <td scope="row">$result.reading_data.type</td> 
+                                                                </tr> 
+                                                            </tbody> 
+                                                        #end
+                                                    </table>                                                  
+                                                </div>
+                                            #end
                                         </div>
                                         <br>
                                         <div class="panel-heading"><strong>VNOS PODATKOV</strong></div>  
@@ -172,8 +194,8 @@
                                                             #if($commandrs) #springBind( "commandrs.itype" ) #end
                                                             <label for="rTypeInput">Izberite tip meritev: </label>
                                                             <select id="rTypeInput" name="itype" class="form-control">
-                                                                <option value="0">Krvni tlak</option>
-                                                                <option value="1">Glukoza</option>
+                                                                <option value="Krvni tlak">Krvni tlak</option>
+                                                                <option value="Glukoza">Glukoza</option>
                                                             </select><br>
                                                             #if($commandrs) #springBind( "commandrs.iresult" ) #end
                                                             <label for="iresultInput">Vnesite rezultat: </label>
@@ -222,7 +244,7 @@
                                     </div>
                                 </div>                                                                          
                             </div> <br>
-                            <button type="button" class="btn btn-info"><a style="color: white"href="#">NAROČI PACIENTA</a></button><br>
+                            <button type="button" class="btn btn-info"><a style="color: white"href="#">NAROČI PACIENTA</a></button><br><br>
                             <button type="button" class="btn btn-info"><a style="color: white"href="${path}dashboard">KONČAJ</a></button><br>
                             <br>       
                         </div>

@@ -5,7 +5,7 @@ import javax.validation.constraints.Pattern;
 
 public class InsertResultForm {
 	@NotNull
-	@Pattern(regexp="/^(Krvni tlak|Glukoza)$/")
+	//@Pattern(regexp="/^(Krvni tlak|Glukoza)$/")
     private String itype;
 	
 	@NotNull

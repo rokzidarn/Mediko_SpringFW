@@ -3,6 +3,8 @@ package si.fri.t15.checkup.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -24,6 +26,9 @@ import si.fri.t15.models.Checkup;
 import si.fri.t15.models.Diet;
 import si.fri.t15.models.Disease;
 import si.fri.t15.models.Medicine;
+import si.fri.t15.models.Reading;
+import si.fri.t15.models.Reading_Data;
+import si.fri.t15.models.Result_Checkup;
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
@@ -204,6 +209,7 @@ public class CheckupController extends ControllerBase {
 		model.addAttribute("diseases", curr.getDiseases()); 
 		model.addAttribute("diets", curr.getDiets()); 
 		model.addAttribute("medicines", curr.getMedicines());
+		model.addAttribute("results_checkup", curr.getResultCheckups());
 		
 		//vse možne bolezni, zdravila, diete iz baze, iz česar bo izbiral zdravnik DDL
 		TypedQuery<Disease> qud = em.createNamedQuery("Disease.findAll", Disease.class);
@@ -296,15 +302,38 @@ public class CheckupController extends ControllerBase {
 	}
 	
 	@Transactional
-	@RequestMapping(value = "/checkup/{id}/result", method=RequestMethod.POST)
-	public ModelAndView insertResult(@PathVariable("id") int id, @RequestParam("iresult") String r, @RequestParam("itype") String type, @ModelAttribute("commandrs") @Valid InsertResultForm commandrs, HttpServletRequest request) {
+	@RequestMapping(value = "/checkup/{id}/results", method=RequestMethod.POST)
+	public ModelAndView insertResult(@PathVariable("id") int id, @RequestParam("iresult") String r, @RequestParam("itype") String type, @RequestParam("itext") String text, @ModelAttribute("commandrs") @Valid InsertResultForm commandrs, HttpServletRequest request) {
 		TypedQuery<Checkup> qu = em.createNamedQuery("Checkup.findCheckup", Checkup.class);
 		qu.setParameter(1,id);
 		Checkup curr = qu.setParameter(1, id).getSingleResult();
 		
-		//TODO vstavljanje!
+		Date today = new Date(Calendar.getInstance().getTime().getTime());
 		
-		em.merge(curr);
+		Reading read = new Reading();
+		read.setType(type);
+		read.setDate(today);
+		em.persist(read); //kreiranje novega readinga
+		//v bazi vidim da ni povezave na reading_data a v jpa je, se tisti pobriše?
+		
+		Result_Checkup rc = new Result_Checkup();
+		rc.setCheckup(curr);
+		rc.setText(text);
+		rc.setType(type);
+		em.persist(rc);
+		//v result_checkup je redundanten atribut value, ker se piše v reading_data!
+		
+		Reading_Data rd = new Reading_Data();
+		rd.setData(r);
+		if(type.equals("Krvni tlak")){
+			rd.setUnit("sbp/dbp");
+		}
+		else if(type.equals("Glukoza")){
+			rd.setUnit("g/mmol");
+		}
+		rd.setReading(read);
+		rd.setResult_Checkup(rc);
+		em.persist(rd);
 		
 		return new ModelAndView("redirect:/checkup/"+id+"/insert");
 	}
