@@ -102,7 +102,6 @@ public class HomeController extends ControllerBase{
 		
 		model.addAttribute("selectedPatient", selectedPateintId);
 		model.addAttribute("page", "home");
-		model.addAttribute("path", "/mediko_dev/");
 		model.addAttribute("title", "NADZORNA PLOŠČA MEDIKO");
 		model.addAttribute("user", user);
 		model.addAttribute("usertype", userType);
@@ -187,7 +186,6 @@ public class HomeController extends ControllerBase{
 			model.addAttribute("selectedPatient", userSession.getSelectedPatient());
 			model.addAttribute("p", pdata);
 			model.addAttribute("page", "home");
-			model.addAttribute("path", "/mediko_dev/");
 			model.addAttribute("title", "NADZORNA PLOŠČA MEDIKO");
 			model.addAttribute("user", user);
 			
@@ -248,7 +246,6 @@ public class HomeController extends ControllerBase{
 			
 			model.addAttribute("isDoctor", true);
 			model.addAttribute("page", "home");
-			model.addAttribute("path", "/mediko_dev/");
 			model.addAttribute("title", "NADZORNA PLOŠČA MEDIKO");
 			model.addAttribute("user", user);
 			model.addAttribute("usertype", userType);
