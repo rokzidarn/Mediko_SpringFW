@@ -219,19 +219,29 @@ public class HomeController extends ControllerBase{
 			PatientData caretaker = (PatientData) pdata.getCaretaker();
 			
 			
-			
 			model.addAttribute("fname", fname);
 			model.addAttribute("lname", lname);
 			model.addAttribute("doctor", personal_doctor);
 			model.addAttribute("dentist",personalDentist);
 			
+			model.addAttribute("appointments", appointments);
 			model.addAttribute("checkups", checkups);		
 			model.addAttribute("diseases", diseases); 
 			model.addAttribute("medicines", medicines); 
 			model.addAttribute("diets", diets); 
 			model.addAttribute("results", results); 
 			
-			model.addAttribute("appointments", appointments); 
+			Date now = new Date(Calendar.getInstance().getTime().getTime());
+			//model.addAttribute("now", now); 
+			List<Appointment> upcoming = new ArrayList<Appointment>();
+			for (Appointment a : appointments){
+				Date d = a.getDate();
+				if(d.compareTo(now)>0){
+					upcoming.add(a);
+				}
+			}
+			
+			model.addAttribute("upcoming", upcoming);
 			model.addAttribute("caretaker", caretaker); 
 			
 			model.addAttribute("selectedPatient", userSession.getSelectedPatient());

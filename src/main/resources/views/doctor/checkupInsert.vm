@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    #parse("../common/head.vm")
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="panel panel-default main-panel">
+                    <div class="main-container">
+                        <div class="content-container">
+                            <div class="content-topbar">
+                                <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
+                                <div class="content-title">$title</div>
+                            </div>
+                            <div class="content">   
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading"><strong>PREGLED številka ${idc}</strong></div>
+                                            <div class="panel-body">
+                                                <p><strong>Pacient:</strong> ${pdata.getFirst_name()} ${pdata.getLast_name()}, ${pdata.getPo_box().city}, ZZZS: ${pdata.getId()}</p>
+                                                <p><strong>Zdravnik:</strong> ${ddata.getFirst_name()} ${ddata.getLast_name()}, ${ddata.getMedical_center().name}</p>
+                                                 #if($reason.equals("/"))
+                                                    <form method="POST" action="${path}/checkup/${idc}/reason">
+                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    #if($commandr) #springBind( "commandr.reason" ) #end
+                                                                    <label for="reasonInput">Razlog</label>
+                                                                    <input type="text" class="form-control" id="reasonInput" name="reason" placeholder="Vnesite razlog!">
+                                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-info">VNESI RAZLOG</button> 
+                                                    </form>
+                                                 #else
+                                                    <p><strong>Razlog:</strong> $reason </p>
+                                                #end
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                        <div class="panel-heading"><strong>DIAGNOZA</strong></div>  
+                                        <div class="panel-body">
+                                            #if($diseases.isEmpty())
+                                                <p>Vnesite bolezni!</p>
+                                            #else
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr> 
+                                                                <th>Bolezni</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        #foreach($disease in $diseases)                                                                         
+                                                            <tbody> 
+                                                                <tr>                                                                 
+                                                                    <td scope="row">$disease.name</td> 
+                                                                </tr> 
+                                                            </tbody>                                              
+                                                        #end 
+                                                    </table>
+                                                </div>                                         
+                                            #end      
+                                            #if($medicines.isEmpty())
+                                                <p>Vnesite zdravila!</p>
+                                            #else
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr> 
+                                                                <th>Zdravila</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead> 
+                                                        #foreach($medicine in $medicines) 
+                                                            <tbody> 
+                                                                <tr> 
+                                                                    <td scope="row">$medicine.getName()</td> 
+                                                                </tr> 
+                                                            </tbody> 
+                                                        #end
+                                                    </table>                                                  
+                                                </div>
+                                            #end
+                                            #if($diets.isEmpty())
+                                                <p>Vnesite diete!</p>
+                                            #else
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr> 
+                                                                <th>Diete</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        #foreach($diet in $diets)
+                                                            <tbody> 
+                                                                <tr> 
+                                                                    <td scope="row">$diet.getName()</td> 
+                                                                </tr> 
+                                                            </tbody>                                                                               
+                                                        #end
+                                                    </table>                                                  
+                                                </div>
+                                            #end
+                                            #if(!$results_checkup)
+                                                <br><p>Vnesite meritve!</p>
+                                            #else
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr> 
+                                                                <th>Meritev</th>
+                                                                <th>Tip</th>
+                                                            </tr>
+                                                        </thead> 
+                                                        #foreach($rd in $results_checkup.getReading_Datas()) 
+                                                            <tbody> 
+                                                                <tr> 
+                                                                    <td scope="row">$rd.getData() &nbsp; &nbsp; $rd.getUnit()</td>
+                                                                    <td scope="row">$results_checkup.getType()</td>
+                                                                </tr> 
+                                                            </tbody> 
+                                                        #end
+                                                    </table>                                                  
+                                                </div>
+                                            #end
+                                        </div>
+                                        <br>
+                                        <div class="panel-heading"><strong>VNOS PODATKOV</strong></div>  
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <form method="POST" action="${path}checkup/${idc}/disease">
+                                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                            #if($commandd) #springBind( "commandd.idisease" ) #end
+                                                            <label for="idiseaseInput">Izberite bolezen: </label>
+                                                            <select id="idiseaseInput" name="idisease" class="form-control">
+                                                                #foreach($idisease in $idiseases)
+                                                                    <option value="${idisease.getDiseaseId()}">$idisease.name</option>
+                                                                #end
+                                                            </select><br>
+                                                            #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end  
+                                                            <button type="submit" class="btn btn-info">VNESI BOLEZEN</button>   
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <form method="POST" action="${path}checkup/${idc}/diet">
+                                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                            #if($commanddi) #springBind( "commanddi.idiet" ) #end
+                                                            <label for="idietInput">Izberite dieto: </label>
+                                                            <select id="idietInput" name="idiet" class="form-control">
+                                                                #foreach($idiet in $idiets)
+                                                                    <option value="${idiet.getDietId()}">$idiet.name</option>
+                                                                #end
+                                                            </select><br>
+                                                            <button type="submit" class="btn btn-info">VNESI DIETO</button>    
+                                                            #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <form method="POST" action="${path}checkup/${idc}/medicine">
+                                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                            #if($commandm) #springBind( "commandm.imedicine" ) #end
+                                                            <label for="imedicineInput">Izberite zdravilo: </label>
+                                                            <select id="imedicineInput" name="imedicine" class="form-control">
+                                                                #foreach($imedicine in $imedicines)
+                                                                    <option value="${imedicine.getMedicineId()}">$imedicine.name</option>
+                                                                #end
+                                                            </select><br>
+                                                            #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                            <button type="submit" class="btn btn-info">VNESI ZDRAVILO</button>    
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <form method="POST" action="${path}checkup/${idc}/results">
+                                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                            #if($commandrs) #springBind( "commandrs.itype" ) #end
+                                                            <label for="rTypeInput">Izberite tip meritev: </label>
+                                                            <select id="rTypeInput" name="itype" class="form-control">
+                                                                <option value="Krvni tlak">Krvni tlak</option>
+                                                                <option value="Glukoza">Glukoza</option>
+                                                            </select><br>
+                                                            #if($commandrs) #springBind( "commandrs.iresult" ) #end
+                                                            <label for="iresultInput">Vnesite rezultat: </label>
+                                                            <input type="text" class="form-control" id="iresultInput" name="iresult" placeholder="Rezultat"><br>
+                                                            #if($commandrs) #springBind( "commandrs.itext" ) #end
+                                                            <label for="itextInput">Vnesite komentar: </label>
+                                                            <input type="text" class="form-control" id="itextInput" name="itext" placeholder="Komentar"><br>#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                            <button type="submit" class="btn btn-info">VNESI MERITEV</button>    
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    #if($diagnosis.equals("/"))
+                                                    <div class="form-group">
+                                                        <form method="POST" action="${path}checkup/${idc}/diagnosis">
+                                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                            #if($commanddg) #springBind( "commanddg.idiagnosis" ) #end
+                                                            <label for="itextInput">Vnesite navodilo: </label>
+                                                            <input type="text" class="form-control" id="itextInput" name="idiagnosis" placeholder="Vnesite navodilo!"><br>
+                                                            #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                            <button type="submit" class="btn btn-info">VNESI NAVODILO</button>    
+                                                        </form>
+                                                    </div>
+                                                    #else
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr> 
+                                                                    <th>NAVODILA</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>                                                                      
+                                                                <tbody> 
+                                                                    <tr>                                                                 
+                                                                        <td scope="row"><strong>$diagnosis</strong></td> 
+                                                                    </tr> 
+                                                                </tbody>                                              
+                                                        </table>
+                                                    </div>  
+                                                    #end
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                                                          
+                            </div> <br>
+                            <button type="button" class="btn btn-info"><a style="color: white"href="#">NAROČI PACIENTA</a></button><br><br>
+                            <button type="button" class="btn btn-info"><a style="color: white"href="${path}dashboard">KONČAJ</a></button><br>
+                            <br>       
+                        </div>
+                        <div id="sidebar" class="sidebar hidden-sm hidden-xs">
+                            <div class="sidebar-topbar">
+                                <div class="logo" style="color:#eee">
+                                    #if($user.lastLogin)
+                                        <div style="padding-left: 10px;">
+                                            <h6>Zadnja prijava</h6>
+                                            <h6>$user.lastLogin</h6>
+                                        </div>
+                                    #end
+                                </div>
+                                <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                </div>
+                            </div>
+                            <div class="patient">
+                                <div class="patient-image patient-male">
+
+                                </div>
+                                <div class="patient-name">
+                                    $user.username
+                                </div>
+                            </div>
+                            <div class="sidebar-seperator"></div>
+                            #sidemenu($usertype $page $subpage)
+                            <div class="sidebar-seperator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

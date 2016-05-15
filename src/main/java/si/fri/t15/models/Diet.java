@@ -6,6 +6,10 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name="Diet.findAll", query="SELECT d FROM Diet d"),
+	@NamedQuery(name="Diet.findDiet", query="SELECT d FROM Diet d WHERE d.id=?1")
+})
 public class Diet implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
