@@ -320,6 +320,7 @@ public class CheckupController extends ControllerBase {
 		rc.setCheckup(curr);
 		rc.setText(text);
 		rc.setType(type);
+		rc.setValue("0");
 		em.persist(rc);
 		//v result_checkup je redundanten atribut value, ker se piše v reading_data!
 		
