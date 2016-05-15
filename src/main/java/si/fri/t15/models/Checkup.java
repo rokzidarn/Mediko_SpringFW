@@ -88,7 +88,6 @@ public class Checkup implements Serializable{
 		return appointment;
 	}
 
-	@JsonIgnore
 	public void setAppointment(Appointment appointment) {
 		this.appointment = appointment;
 	}
@@ -150,7 +149,7 @@ public class Checkup implements Serializable{
 		this.id = id;
 	}
 
-	@JsonIgnore 
+	
 	public DoctorData getDoctor() {
 		return doctor;
 	}
