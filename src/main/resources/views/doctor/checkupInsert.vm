@@ -21,7 +21,7 @@
                                                 <p><strong>Pacient:</strong> ${pdata.getFirst_name()} ${pdata.getLast_name()}, ${pdata.getPo_box().city}, ZZZS: ${pdata.getId()}</p>
                                                 <p><strong>Zdravnik:</strong> ${ddata.getFirst_name()} ${ddata.getLast_name()}, ${ddata.getMedical_center().name}</p>
                                                  #if($reason.equals("/"))
-                                                    <form method="POST" action="${path}/checkup/${idc}/reason">
+                                                    <form method="POST" action="#springUrl('/checkup')/${idc}/reason">
                                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                         <div class="row">
                                                             <div class="col-md-12">
@@ -139,7 +139,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <form method="POST" action="${path}checkup/${idc}/disease">
+                                                        <form method="POST" action="#springUrl('/checkup')/${idc}/disease">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                             #if($commandd) #springBind( "commandd.idisease" ) #end
                                                             <label for="idiseaseInput">Izberite bolezen: </label>
@@ -155,7 +155,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <form method="POST" action="${path}checkup/${idc}/diet">
+                                                        <form method="POST" action="#springUrl('/checkup')/${idc}/diet">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                             #if($commanddi) #springBind( "commanddi.idiet" ) #end
                                                             <label for="idietInput">Izberite dieto: </label>
@@ -173,7 +173,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <form method="POST" action="${path}checkup/${idc}/medicine">
+                                                        <form method="POST" action="#springUrl('/checkup')/${idc}/medicine">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                             #if($commandm) #springBind( "commandm.imedicine" ) #end
                                                             <label for="imedicineInput">Izberite zdravilo: </label>
@@ -189,7 +189,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <form method="POST" action="${path}checkup/${idc}/results">
+                                                        <form method="POST" action="#springUrl('/checkup')/${idc}/results">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                             #if($commandrs) #springBind( "commandrs.itype" ) #end
                                                             <label for="rTypeInput">Izberite tip meritev: </label>
@@ -212,7 +212,7 @@
                                                 <div class="col-md-6">
                                                     #if($diagnosis.equals("/"))
                                                     <div class="form-group">
-                                                        <form method="POST" action="${path}checkup/${idc}/diagnosis">
+                                                        <form method="POST" action="#springUrl('/checkup')/${idc}/diagnosis">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                             #if($commanddg) #springBind( "commanddg.idiagnosis" ) #end
                                                             <label for="itextInput">Vnesite navodilo: </label>
@@ -245,7 +245,7 @@
                                 </div>                                                                          
                             </div> <br>
                             <button type="button" class="btn btn-info"><a style="color: white"href="#">NAROČI PACIENTA</a></button><br><br>
-                            <button type="button" class="btn btn-info"><a style="color: white"href="${path}dashboard">KONČAJ</a></button><br>
+                            <button type="button" class="btn btn-info"><a style="color: white"href="#springUrl('/dashboard')">KONČAJ</a></button><br>
                             <br>       
                         </div>
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">
