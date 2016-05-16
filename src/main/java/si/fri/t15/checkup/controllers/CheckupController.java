@@ -210,7 +210,10 @@ public class CheckupController extends ControllerBase {
 		model.addAttribute("diets", curr.getDiets()); 
 		model.addAttribute("medicines", curr.getMedicines());
 		List<Result_Checkup> rcc = curr.getResultCheckups();
-		model.addAttribute("results_checkup", rcc.get(0));
+		if(rcc.size()==0)
+			model.addAttribute("results_checkup", null);
+		else 
+			model.addAttribute("results_checkup", rcc.get(0));
 		
 		//vse možne bolezni, zdravila, diete iz baze, iz česar bo izbiral zdravnik DDL
 		TypedQuery<Disease> qud = em.createNamedQuery("Disease.findAll", Disease.class);
