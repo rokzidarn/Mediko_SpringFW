@@ -9,4 +9,7 @@
 	<script type="text/javascript" src="#springUrl('/js/jquery-2.2.2.min.js')"></script>
 	<script type="text/javascript" src="#springUrl('/js/bootstrap.min.js')"></script>
 	<script type="text/javascript" src="#springUrl('/js/main.js')"></script>
+ 	<script>  
+	    var appUrl = "#springUrl('/')";  
+  	</script> 
 </head>

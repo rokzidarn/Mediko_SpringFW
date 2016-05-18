@@ -56,7 +56,7 @@ function toggleShowMoreCheckup(){
 	var patientId = $("#selectedPatientId")[0].innerText;
 	if(!checkupMoreData){
 		$.ajax({
-	  		url: "../api/patient/"+patientId+"/checkup"
+	  		url: appUrl+"api/patient/"+patientId+"/checkup"
 		}).done(function(data) {
 	  		checkupMoreData = data;
 	  		if(checkupMoreData.length > 5){
@@ -92,7 +92,7 @@ function toggleShowMoreDisease(){
 	var patientId = $("#selectedPatientId")[0].innerText;
 	if(!diseaseMoreData){
 		$.ajax({
-	  		url: "../api/patient/"+patientId+"/disease/0"
+	  		url: appUrl+"api/patient/"+patientId+"/disease/0"
 		}).done(function(data) {
 	  		diseaseMoreData = data;
 	  		if(diseaseMoreData.length > 5){
@@ -123,7 +123,7 @@ function toggleShowMoreAlergy(){
 	var patientId = $("#selectedPatientId")[0].innerText;
 	if(!alergyMoreData){
 		$.ajax({
-	  		url: "../api/patient/"+patientId+"/disease/1"
+	  		url: appUrl+"api/patient/"+patientId+"/disease/1"
 		}).done(function(data) {
 	  		alergyMoreData = data;
 	  		if(alergyMoreData.length > 5){
@@ -154,7 +154,7 @@ function toggleShowMoreDiet(){
 	var patientId = $("#selectedPatientId")[0].innerText;
 	if(!dietMoreData){
 		$.ajax({
-	  		url: "../api/patient/"+patientId+"/diet"
+	  		url: appUrl+"api/patient/"+patientId+"/diet"
 		}).done(function(data) {
 	  		dietMoreData = data;
 	  		if(dietMoreData.length > 5){
@@ -194,7 +194,7 @@ function toggleShowMoreMedicine(){
 	var patientId = $("#selectedPatientId")[0].innerText;
 	if(!medicineMoreData){
 		$.ajax({
-	  		url: "../api/patient/"+patientId+"/medicine"
+	  		url: appUrl+"api/patient/"+patientId+"/medicine"
 		}).done(function(data) {
 	  		medicineMoreData = data;
 	  		if(medicineMoreData.length > 5){
