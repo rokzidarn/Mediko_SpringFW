@@ -28,11 +28,17 @@ $( document ).ready(function(){
 	//SET CONTENT HEIGT!
 	$(".content-container").css("min-height",$("#sidebarContent").height()+50);
 
+
+	//SHOW MORE ON DSAHBOARD
 	$("#showMoreCheckup").on('click', toggleShowMoreCheckup);
 	$("#showMoreDisease").on('click', toggleShowMoreDisease);
 	$("#showMoreAlergy").on('click', toggleShowMoreAlergy);
 	$("#showMoreDiet").on('click', toggleShowMoreDiet);
 	$("#showMoreMedicine").on('click', toggleShowMoreMedicine);
+
+
+	//DOCTORS SELECTED ON ORDER APPOINTMENT
+	$("#orderCheckupDoctorInput").on('change', getDoctorsAvailableAppointments);
 });
 
 function showSidebar(){
@@ -221,4 +227,28 @@ function toggleShowMoreMedicine(){
 		$("#medicineMoreTbody").toggle(500);
 
 	}
-}                                                        
+}  
+
+function getDoctorsAvailableAppointments(){
+	$("#orderCheckupAppointmentInput").prop('disabled', true);
+	$("#orderCheckupSubmit").prop('disabled',true);
+	var doctorId = this.value;
+	$.ajax({
+	  		url: appUrl+"api/doctor/"+doctorId+"/appointment/available"
+		}).done(function(data) {
+	  		console.log(data);
+	  		var appointmentsInput = $("#orderCheckupAppointmentInput");
+	  		appointmentsInput.html("");
+	  		for(var i = 0; i < data.length;i++){
+	  			
+
+	  			var option = $("<option />");
+	  			option.val(data[i].idAppointment);
+	  			option.text( data[i].date);
+
+	  			appointmentsInput.append(option);
+	  		}
+	  		appointmentsInput.prop('disabled', false);
+			$("#orderCheckupSubmit").prop('disabled',false);
+	  	});
+}                                                      

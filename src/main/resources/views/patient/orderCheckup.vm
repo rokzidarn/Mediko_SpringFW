@@ -19,8 +19,8 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 #if($command) #springBind( "command.doctor" ) #end
-                                                <label for="doctorInput">Zdravnik</label>
-                                                <select class="form-control" id="doctorInput" name="doctor">
+                                                <label for="orderCheckupDoctorInput">Zdravnik</label>
+                                                <select class="form-control" id="orderCheckupDoctorInput" name="doctor">
                                                     #if($doctors.size() == 0) <option value="-1">Ni zdravnikov</option>#end
                                                     #foreach($doctor in $doctors)
                                                         <option #if($doctor.id == $selectedDoctor.id) selected #end value="$doctor.id">dr. $doctor.first_name $doctor.last_name</option>
@@ -33,12 +33,12 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                #if($command) #springBind( "command.dentist" ) #end
-                                                <label for="dentistInput">Termin</label>
-                                                <select class="form-control" id="dentistInput" name="dentist">
-                                                    <option #if(-1 == $selectedDentist) selected #end value="-1">Ni izbran</option>
-                                                    #foreach($dentist in $dentists)
-                                                    <option #if($dentist.id == $selectedDentist) selected #end value="$dentist.id">dr. $dentist.first_name $dentist.last_name</option>
+                                                #if($command) #springBind( "command.appointment" ) #end
+                                                <label for="orderCheckupAppointmentInput">Termin</label>
+                                                <select class="form-control" id="orderCheckupAppointmentInput" name="appointment">
+                                                    
+                                                    #foreach($appointment in $appointments)
+                                                    <option value="$appointment.idAppointment">$appointment.date</option>
                                                     #end
                                                 </select>
                                                 #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
@@ -48,7 +48,7 @@
 
                                     <br />
                                     <p class="text-center">
-                                        <input type="submit" class="btn btn-default btn-lg" value="Naroči">
+                                        <input type="submit" id="orderCheckupSubmit" class="btn btn-default btn-lg" value="Naroči">
                                     </p>
                                     
                                 </form>																

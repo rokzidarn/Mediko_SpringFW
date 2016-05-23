@@ -1,5 +1,8 @@
 package si.fri.t15.checkup.controllers;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import si.fri.t15.models.Appointment;
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
@@ -49,6 +53,25 @@ public class OrderCheckupController {
 		List<DoctorData> doctors = (List<DoctorData>)em.createNamedQuery("DoctorData.GetAllDoctors").getResultList();
 		model.addAttribute("doctors",doctors);
 		model.addAttribute("selectedDoctor", (userSession.getSelectedPatient() != null)? userSession.getSelectedPatient().getDoctor() : null);
+		
+		//PLACEHOLDER; ko bomo imeli generacijo urnika se mora to popravit
+		List<Appointment> appointments = new ArrayList<Appointment>();
+		
+		Date todayDate = new Date();
+		Calendar calendar = Calendar.getInstance();
+        
+		//TODO - fix when schedule available
+		for(int i = 0; i < 7; i++){
+			Appointment appointment = new Appointment();
+			appointment.setIdAppointment(i);
+			appointment.setDate(new java.sql.Date(calendar.getTime().getTime()));
+			appointments.add(appointment);
+			calendar.add(Calendar.DATE, 1);
+			System.out.println(calendar.getTime());
+		}
+		
+		model.addAttribute("appointments",appointments);
+		
 		
 		return "orderCheckup";
 

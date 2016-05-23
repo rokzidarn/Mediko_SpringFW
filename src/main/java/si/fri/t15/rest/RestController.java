@@ -116,6 +116,7 @@ public class RestController {
 		//TODO - fix when schedule available
 		for(int i = 0; i < 7; i++){
 			Appointment appointment = new Appointment();
+			appointment.setIdAppointment(i);
 			appointment.setDate(new java.sql.Date(calendar.getTime().getTime()));
 			appointments.add(appointment);
 			calendar.add(Calendar.DATE, 1);
