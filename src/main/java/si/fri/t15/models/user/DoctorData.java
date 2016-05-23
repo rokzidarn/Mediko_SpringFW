@@ -22,7 +22,8 @@ import si.fri.t15.models.Medical_Center;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="DoctorData.GetAvailableDoctors", query="SELECT d FROM DoctorData d WHERE d.type=:type AND (d.id = :users OR maxPatients > (SELECT count(p) FROM PatientData p WHERE p.doctor = d OR p.dentist = d))"),
-	@NamedQuery(name="DoctorData.GetDoctorById", query="SELECT d FROM DoctorData d WHERE d.id=:id")
+	@NamedQuery(name="DoctorData.GetDoctorById", query="SELECT d FROM DoctorData d WHERE d.id=:id"),
+	@NamedQuery(name="DoctorData.GetAllDoctors", query="SELECT d FROM DoctorData d")
 })
 public class DoctorData extends UserData {
 
