@@ -39,6 +39,11 @@ $( document ).ready(function(){
 
 	//DOCTORS SELECTED ON ORDER APPOINTMENT
 	$("#orderCheckupDoctorInput").on('change', getDoctorsAvailableAppointments);
+
+	//Calendar
+	$(".calendar-appointment").on('click', appointmentOnCalendarClicked);
+	$(".next-week-button").on('click', nextCalendar);
+	$(".prev-week-button").on('click', previousCalendar);
 });
 
 function showSidebar(){
@@ -236,7 +241,7 @@ function getDoctorsAvailableAppointments(){
 	$.ajax({
 	  		url: appUrl+"api/doctor/"+doctorId+"/appointment/available"
 		}).done(function(data) {
-	  		console.log(data);
+	  		/*console.log(data);
 	  		var appointmentsInput = $("#orderCheckupAppointmentInput");
 	  		appointmentsInput.html("");
 	  		for(var i = 0; i < data.length;i++){
@@ -249,6 +254,42 @@ function getDoctorsAvailableAppointments(){
 	  			appointmentsInput.append(option);
 	  		}
 	  		appointmentsInput.prop('disabled', false);
-			$("#orderCheckupSubmit").prop('disabled',false);
+			$("#orderCheckupSubmit").prop('disabled',false);*/
+
+
+			//todo
+			//BUILD urnik!!!
 	  	});
-}                                                      
+}
+
+function appointmentOnCalendarClicked(){
+	var appointmentId = this.id;
+	$(".calendar-appointment").removeClass("calendar-appointment-selected");
+	$(this).addClass("calendar-appointment-selected");
+	$("#orderCheckupAppointmentInput").val(appointmentId);
+}
+
+var currentCalendar = 1;
+function nextCalendar(){
+	if(currentCalendar < 3){
+		$("#calendar"+currentCalendar).slideToggle(500);
+		currentCalendar++;
+		$("#calendar"+currentCalendar).slideToggle(500);
+	}
+
+	$(".prev-week-button").show();
+	if(currentCalendar == 3){
+		$(".next-week-button").hide();
+	}
+}         
+function previousCalendar(){
+	if(currentCalendar > 1){
+		$("#calendar"+currentCalendar).slideToggle(500);
+		currentCalendar--;
+		$("#calendar"+currentCalendar).slideToggle(500);
+	}
+	$(".next-week-button").show();
+	if(currentCalendar == 1){
+		$(".prev-week-button").hide();
+	}
+}                     

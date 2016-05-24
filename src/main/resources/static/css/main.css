@@ -234,6 +234,76 @@ a:link, a:hover, a:active{
 	cursor:pointer;
 }
 
+
+/*CALENDAR*/
+.calendar{
+	overflow: hidden;
+}
+.calendar-col-odd{
+	background-color: #DFF1FF;
+	border-top: 2px solid rgba(1,1,1,0.1);
+	border-bottom: 2px solid rgba(1,1,1,0.1);
+	margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+.calendar-col-even{
+	background-color: #C3E1F7;
+	border-top: 2px solid rgba(1,1,1,0.1);
+	border-bottom: 2px solid rgba(1,1,1,0.1);
+	margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+.calendar-date{
+	text-align: center;
+	font-size: 15px;
+	font-weight: 600;
+    margin-top: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: rgba(1,1,1,0.1) solid 2px;
+}
+.calendar-appointments{
+	padding-bottom: 5px;
+}
+.c-a-odd{
+	background-color: rgba(1,1,1,0.08)
+}
+.c-a-even{
+}
+.calendar-appointment{
+	padding: 5px;
+	cursor: default;
+}
+.calendar-appointment:hover{
+	background-color: #36B8D5;
+}
+.calendar-appointment-selected{
+	background-color: #2C9EB7;
+}
+
+.prev-week-button{
+	float:left;
+	padding: 10px;
+	color:#258094;
+	font-size: 15px;
+	cursor: pointer;
+}
+.prev-week-button:hover{
+	color: #2C9EB7;
+}
+
+.next-week-button{
+	float:right;
+	padding: 10px;
+	color:#258094;
+	font-size: 15px;
+	cursor: pointer;
+}
+.next-week-button:hover{
+	color: #2C9EB7;
+}
+
+
 @media (max-width: 992px) {
 	.content-container{
 		margin-left:0px;
