@@ -32,6 +32,9 @@ public class Instructions implements Serializable{
 	@ManyToOne
 	private Disease disease;
 	
+	@ManyToOne
+	private Diet diet;
+	
 	public Instructions() {
 	}	
 	
@@ -84,4 +87,14 @@ public class Instructions implements Serializable{
 	public void setDisease(Disease disease) {
 		this.disease = disease;
 	}
+
+	@JsonIgnore
+	public Diet getDiet() {
+		return diet;
+	}
+
+	public void setDiet(Diet diet) {
+		this.diet = diet;
+	}
+	
 }
