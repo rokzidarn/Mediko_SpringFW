@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    #parse("../common/head.vm")
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="panel panel-default main-panel">
+                    <div class="main-container">
+                        <div class="content-container">
+                            <div class="content-topbar">
+                                <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
+                                <div class="content-title">$title</div>
+                            </div>
+                            <div class="content">   
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <form method="POST" action="#springUrl('/admin')/dadd/${did}/m/${mid}">
+                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                    #if($commandm) #springBind( "commandm.disease" ) #end
+                                                    <label for="diseaseInput">Izberite bolezen: </label>
+                                                    <select id="diseaseInput" name="disease" class="form-control">
+                                                        #foreach($disease in $allDiseases)
+                                                            <option value="${disease.getDiseaseId()}">$disease.name</option>
+                                                        #end
+                                                    </select><br>
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+
+                                                    #if($commandm) #springBind( "commandm.medicine" ) #end
+                                                    <label for="medicineInput">Dodajte zdravilo: </label>
+                                                    <select id="medicineInput" name="medicine" class="form-control">
+                                                        #foreach($medicine in $allMedicines)
+                                                            <option value="${medicine.getMedicineId()}">$medicine.name</option>
+                                                        #end
+                                                    </select><br>
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                    <button type="submit" class="btn btn-info">DODAJ</button>    
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="med">Odstranite zdravilo: </label>
+                                            <div id="med" class="form-group">                                               
+                                                #foreach($curr in $diseaseMedicines)
+                                                    <form method="POST" action="#springUrl('/admin')/ddel/${did}/m/${mid}">
+                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                        #if($commandm) #springBind( "commandm.medicine" ) #end
+                                                        <input type="hidden" name="mid" value="$curr.id"/>
+                                                        <p><button type="submit" class="btn btn-info">ODSTRANI</button>&nbsp; $curr.name</p>
+                                                        #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                    </form>
+                                                #end                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>     
+                            </div>
+                            <div id="sidebar" class="sidebar hidden-sm hidden-xs">
+                                <div class="sidebar-topbar">
+                                    <div class="logo" style="color:#eee">
+                                        #if($user.lastLogin)
+                                            <div style="padding-left: 10px;">
+                                                <h6>Zadnja prijava</h6>
+                                                <h6>$user.lastLogin</h6>
+                                            </div>
+                                        #end
+                                    </div>
+                                    <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                    </div>
+                                </div>
+                                <div class="patient">
+                                    <div class="patient-image patient-male">
+
+                                    </div>
+                                    <div class="patient-name">
+                                        $user.username
+                                    </div>
+                                </div>
+                                <div class="sidebar-seperator"></div>
+                                #sidemenu($usertype $page $subpage)
+                                <div class="sidebar-seperator"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

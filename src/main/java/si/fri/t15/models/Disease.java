@@ -57,4 +57,12 @@ public class Disease implements Serializable{
 	
 	@ManyToMany(mappedBy="diseases")
 	private List<Medicine> medicines;
+
+	public List<Medicine> getMedicines() {
+		return medicines;
+	}
+
+	public void setMedicines(List<Medicine> medicines) {
+		this.medicines = medicines;
+	}
 }
