@@ -25,7 +25,7 @@ public class Disease implements Serializable{
 	@Column(name="isAllergy", nullable=false)
 	private int isAllergy;
 	
-	@OneToMany(mappedBy="disease")
+	@OneToMany(mappedBy="disease", fetch=FetchType.EAGER)
 	private List<Instructions> instructions;
 
 	public int getIsAllergy() {
