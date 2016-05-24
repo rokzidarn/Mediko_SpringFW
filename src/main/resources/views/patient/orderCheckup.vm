@@ -241,29 +241,33 @@
 							</div> 			
                         </div>
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">
-                            <div class="sidebar-topbar">
-                                <div class="logo" style="color:#eee">
-                                    #if($user.lastLogin)
-                                        <div style="padding-left: 10px;">
-                                            <h6>Zadnja prijava</h6>
-                                            <h6>$user.lastLogin</h6>
-                                        </div>
-                                    #end
+                            <div id="sidebarContent">
+                                <div class="sidebar-topbar">
+                                    <div class="logo" style="color:#eee">
+                                        #if($user.lastLogin)
+                                            <div style="padding-left: 10px;">
+                                                <h6>Zadnja prijava</h6>
+                                                <h6>$user.lastLogin</h6>
+                                            </div>
+                                        #end
+                                    </div>
+                                    <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                    </div>
                                 </div>
-                                <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
-                                </div>
-                            </div>
-                            <div class="patient">
-                                <div class="patient-image patient-male">
+                                <div class="patient">
+                                    <div class="patient-image patient-male">
 
+                                    </div>
+                                    <div class="patient-name">
+                                        $user.username
+                                    </div>
                                 </div>
-                                <div class="patient-name">
-                                    $user.username
-                                </div>
+                                <div class="sidebar-seperator"></div>
+                                #patientPicker($user)
+                                <div class="sidebar-seperator"></div>
+                                #sidemenu($usertype $page $subpage)
+                                <div class="sidebar-seperator"></div>
                             </div>
-                            <div class="sidebar-seperator"></div>
-                            #sidemenu($usertype $page $subpage)
-                            <div class="sidebar-seperator"></div>
                         </div>
                     </div>
                 </div>

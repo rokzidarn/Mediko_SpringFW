@@ -241,6 +241,7 @@ function getDoctorsAvailableAppointments(){
 	$.ajax({
 	  		url: appUrl+"api/doctor/"+doctorId+"/appointment/available"
 		}).done(function(data) {
+	  		alert(doctorId);
 	  		/*console.log(data);
 	  		var appointmentsInput = $("#orderCheckupAppointmentInput");
 	  		appointmentsInput.html("");
