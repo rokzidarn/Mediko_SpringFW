@@ -270,4 +270,8 @@
             </div>
         </div>
     </body>
+    <!-- LOAD SELECT2 -->
+    <script>
+        $("#orderCheckupDoctorInput").select2();
+    </script>
 </html>

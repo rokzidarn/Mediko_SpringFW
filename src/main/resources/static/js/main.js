@@ -254,11 +254,12 @@ function getDoctorsAvailableAppointments(){
 	  			appointmentsInput.append(option);
 	  		}
 	  		appointmentsInput.prop('disabled', false);
-			$("#orderCheckupSubmit").prop('disabled',false);*/
+			*/
 
 
 			//todo
 			//BUILD urnik!!!
+			$("#orderCheckupSubmit").prop('disabled',false);
 	  	});
 }
 
