@@ -98,9 +98,15 @@ function toggleShowMoreDisease(){
 	  		if(diseaseMoreData.length > 5){
 	  			for(var i = 5; i < diseaseMoreData.length; i++){
 
+	  				var instructions = "";
+	  				for(var k = 0; k < diseaseMoreData[i].instructions.length; k++){
+	  					if(k!=0) instructions += "<br>";
+	  					instructions+="<a style=\"color:#36B8D5\" href=\""+diseaseMoreData[i].instructions_Diets[k].text+"\">Povezava</a>";
+	  				}
+
                    	var tr =	"<tr>"+
                    				"<td>"+diseaseMoreData[i].name+"</td>"+
-                   				"<td> - </td>"+
+                   				"<td>"+((instructions == "")? "-" : instructions)+" </td>"+
                    				"</tr>";
        				$("#diseaseMoreTbody").append(tr);
        				$("#showMoreDisease").text("Skrij več");
@@ -129,9 +135,15 @@ function toggleShowMoreAlergy(){
 	  		if(alergyMoreData.length > 5){
 	  			for(var i = 5; i < alergyMoreData.length; i++){
 
+	  				var instructions = "";
+	  				for(var k = 0; k < alergyMoreData[i].instructions.length; k++){
+	  					if(k!=0) instructions += "<br>";
+	  					instructions+="<a style=\"color:#36B8D5\" href=\""+alergyMoreData[i].instructions_Diets[k].text+"\">Povezava</a>";
+	  				}
+
                    	var tr =	"<tr>"+
                    				"<td>"+alergyMoreData[i].name+"</td>"+
-                   				"<td> - </td>"+
+                   				"<td>"+((instructions == "")? "-" : instructions)+"</td>"+
                    				"</tr>";
        				$("#alergyMoreTbody").append(tr);
        				$("#showMoreAlergy").text("Skrij več");
