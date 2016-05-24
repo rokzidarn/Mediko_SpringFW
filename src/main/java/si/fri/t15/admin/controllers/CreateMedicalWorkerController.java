@@ -30,13 +30,19 @@ import org.springframework.web.servlet.ModelAndView;
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.base.models.UserData;
 import si.fri.t15.models.Appointment;
+import si.fri.t15.models.Diet;
 import si.fri.t15.models.Disease;
+import si.fri.t15.models.Instructions;
+import si.fri.t15.models.Instructions_Diet;
 import si.fri.t15.models.Medicine;
 import si.fri.t15.models.UserRole;
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.NurseData;
 import si.fri.t15.models.user.User;
 import si.fri.t15.validators.CreateMedicalWorkerForm;
+import si.fri.t15.validators.InsAddDietForm;
+import si.fri.t15.validators.InsAddDiseaseForm;
+import si.fri.t15.validators.InsAddMedicineForm;
 
 @Controller
 public class CreateMedicalWorkerController extends ControllerBase{
@@ -124,7 +130,7 @@ public class CreateMedicalWorkerController extends ControllerBase{
 	}
 	
 	@RequestMapping(value = "/admin/medicines",  method=RequestMethod.GET)
-	public ModelAndView updateMediciesGET(Model model, HttpServletRequest request) {
+	public ModelAndView updateMedicinesGET(Model model, HttpServletRequest request) {
 		
 		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findAll", Disease.class);
 		List<Disease> allDiseases = (List<Disease>) qu.getResultList(); //DDL izbira
@@ -152,7 +158,7 @@ public class CreateMedicalWorkerController extends ControllerBase{
 	}
 	
 	@RequestMapping(value = "/admin/dadd/{did}/m/{mid}",  method=RequestMethod.POST)
-	public ModelAndView addMediciesPOST(Model model, HttpServletRequest request, @PathVariable("did") String did, @PathVariable("mid") int mid) {
+	public ModelAndView addMedicinesPOST(Model model, HttpServletRequest request, @PathVariable("did") String did, @PathVariable("mid") int mid) {
 		
 		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findDisease", Disease.class);
 		Disease d = qu.setParameter(1, did).getSingleResult();
@@ -168,7 +174,7 @@ public class CreateMedicalWorkerController extends ControllerBase{
 	}
 	
 	@RequestMapping(value = "/admin/ddel/{did}/m/{mid}",  method=RequestMethod.POST)
-	public ModelAndView deleteMediciesPOST(Model model, HttpServletRequest request, @PathVariable("did") String did, @PathVariable("mid") int mid) {
+	public ModelAndView deleteMedicinesPOST(Model model, HttpServletRequest request, @PathVariable("did") String did, @PathVariable("mid") int mid) {
 		
 		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findDisease", Disease.class);
 		Disease d = qu.setParameter(1, did).getSingleResult();
@@ -181,6 +187,111 @@ public class CreateMedicalWorkerController extends ControllerBase{
 		em.merge(d);
 		
 		return new ModelAndView("medicines");
+	}
+	
+	@RequestMapping(value = "/admin/instructions",  method=RequestMethod.GET)
+	public ModelAndView updateInstructionsGET(Model model, HttpServletRequest request) {
+		
+		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findAll", Disease.class);
+		List<Disease> allDiseases = (List<Disease>) qu.getResultList(); 
+		
+		TypedQuery<Diet> qu2 = em.createNamedQuery("Diet.findAll", Diet.class);
+		List<Diet> allDiets = (List<Diet>) qu2.getResultList(); 
+		
+		TypedQuery<Medicine> qu3 = em.createNamedQuery("Medicine.findAll", Medicine.class);
+		List<Medicine> allMedicines = (List<Medicine>) qu3.getResultList();
+		
+		//AJAX DA KO IZBERE DISEASE SE IZPISEJO INSTRUCTIONS TEGA DISEASE-A		
+		TypedQuery<Disease> qux = em.createNamedQuery("Disease.findDisease", Disease.class);
+		String gripa = " virus ni ";
+		Disease d = qux.setParameter(1, gripa).getSingleResult();
+		//List <Instructions> insDiseases = d.getInstructions_Diseases(); //TODO
+		model.addAttribute("insDiseases", null);
+		//KONEC
+				
+		//AJAX DA KO IZBERE DIET SE IZPISEJO INSTRUCTIONS TEGA DIET-A
+		TypedQuery<Diet> qux2 = em.createNamedQuery("Diet.findDiet", Diet.class);
+		int celiakija = 1;
+		Diet di = qux2.setParameter(1, celiakija).getSingleResult();
+		List <Instructions_Diet> insDiets = di.getInstructions_Diets();
+		model.addAttribute("insDiets", insDiets);
+		//KONEC
+		
+		//AJAX DA KO IZBERE MEDICINE SE IZPISEJO INSTRUCTIONS TEGA MEDICINE-A
+		TypedQuery<Medicine> qux3 = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
+		int enalapril = 1;
+		Medicine m = qux3.setParameter(1, enalapril).getSingleResult();
+		List <Instructions> insMedicines = m.getInstructions();
+		model.addAttribute("insMedicines", insMedicines);
+		//KONEC
+				
+		model.addAttribute("allDiseases", allDiseases);
+		model.addAttribute("allDiets", allDiets);
+		model.addAttribute("allMedicines", allMedicines);
+		model.addAttribute("usertype", "admin");
+		model.addAttribute("page", "admin");
+		model.addAttribute("subpage", "addDoctor");	
+		model.addAttribute("path", "/mediko_dev/");
+		model.addAttribute("title", "Posodobitev navodil");
+		
+		return new ModelAndView("instructions");
+	}
+	
+	@RequestMapping(value = "/admin/dad/{did}",  method=RequestMethod.POST)
+	public ModelAndView addDiseaseInstructionsPOST(Model model, HttpServletRequest request, @PathVariable("did") String did,
+			@ModelAttribute("commandiad") @Valid InsAddDiseaseForm commandiad) {
+		
+		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findDisease", Disease.class);
+		Disease d = qu.setParameter(1, did).getSingleResult();
+		/*
+		Instructions_Disease i = new Instructions_Disease();
+		i.setName("Navodilo za "+d.getName());
+		String text = "text"; //TODO -> validacija
+		i.setText(text);
+		i.setDuration(0);
+		
+		List<Instructions_Disease>	curr = di.getInstructions_Diseases();
+		curr.add(i);
+		em.merge(d);
+		*/
+		return new ModelAndView("instructions");
+	}
+	
+	@RequestMapping(value = "/admin/diadd/{ddid}",  method=RequestMethod.POST)
+	public ModelAndView addDietInstructionsPOST(Model model, HttpServletRequest request, @PathVariable("ddid") String ddid,
+			@ModelAttribute("commandiadi") @Valid InsAddDietForm commandiadi) {
+		
+		TypedQuery<Diet> qu = em.createNamedQuery("Diet.findDiet", Diet.class);
+		Diet di = qu.setParameter(1, ddid).getSingleResult();
+		
+		Instructions_Diet i = new Instructions_Diet();
+		i.setName("Navodilo za "+di.getName());
+		String text = "text"; //TODO -> validacija
+		i.setText(text);
+		i.setDuration(0);
+		
+		List<Instructions_Diet>	curr = di.getInstructions_Diets();
+		curr.add(i);
+		em.merge(di);
+		return new ModelAndView("instructions");
+	}
+	
+	@RequestMapping(value = "/admin/madd/{mid}",  method=RequestMethod.POST)
+	public ModelAndView updateMedicineInstructionsPOST(Model model, HttpServletRequest request, @PathVariable("mid") String mid,
+			@ModelAttribute("commandiam") @Valid InsAddMedicineForm commandiam) {
+		
+		TypedQuery<Medicine> qu = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
+		Medicine m = qu.setParameter(1, mid).getSingleResult(); 
+		
+		Instructions i = new Instructions();
+		i.setName("Navodilo za "+m.getName());
+		String text = "text"; //TODO -> validacija
+		i.setText(text);
+		i.setDuration(0);
+		
+		m.addInstruction(i);
+		em.merge(m);
+		return new ModelAndView("instructions");
 	}
 }
 
