@@ -101,7 +101,7 @@ function toggleShowMoreDisease(){
 	  				var instructions = "";
 	  				for(var k = 0; k < diseaseMoreData[i].instructions.length; k++){
 	  					if(k!=0) instructions += "<br>";
-	  					instructions+="<a style=\"color:#36B8D5\" href=\""+diseaseMoreData[i].instructions_Diets[k].text+"\">Povezava</a>";
+	  					instructions+="<a style=\"color:#36B8D5\" href=\""+diseaseMoreData[i].instructions[k].text+"\">Povezava</a>";
 	  				}
 
                    	var tr =	"<tr>"+
@@ -138,7 +138,7 @@ function toggleShowMoreAlergy(){
 	  				var instructions = "";
 	  				for(var k = 0; k < alergyMoreData[i].instructions.length; k++){
 	  					if(k!=0) instructions += "<br>";
-	  					instructions+="<a style=\"color:#36B8D5\" href=\""+alergyMoreData[i].instructions_Diets[k].text+"\">Povezava</a>";
+	  					instructions+="<a style=\"color:#36B8D5\" href=\""+alergyMoreData[i].instructions[k].text+"\">Povezava</a>";
 	  				}
 
                    	var tr =	"<tr>"+
@@ -173,9 +173,9 @@ function toggleShowMoreDiet(){
 	  			for(var i = 5; i < dietMoreData.length; i++){
 
 	  				var instructions = "";
-	  				for(var k = 0; k < dietMoreData[i].instructions_Diets.length; k++){
+	  				for(var k = 0; k < dietMoreData[i].instructions.length; k++){
 	  					if(k!=0) instructions += "<br>";
-	  					instructions+="<a style=\"color:#36B8D5\" href=\""+dietMoreData[i].instructions_Diets[k].text+"\">"+dietMoreData[i].instructions_Diets[k].text+"</a>";
+	  					instructions+="<a style=\"color:#36B8D5\" href=\""+dietMoreData[i].instructions[k].text+"\">"+dietMoreData[i].instructions_Diets[k].text+"</a>";
 	  				}
 
                    	var tr =	"<tr>"+
