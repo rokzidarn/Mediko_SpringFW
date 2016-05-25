@@ -1,18 +1,16 @@
 package si.fri.t15.validators;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class InsDelDiseaseForm {
 	@NotNull
-	@Min(1)
-	int id;
+	String id;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 }
