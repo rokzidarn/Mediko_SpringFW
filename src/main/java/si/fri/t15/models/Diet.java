@@ -24,6 +24,9 @@ public class Diet implements Serializable{
 	@OneToMany(mappedBy="diet" , fetch=FetchType.EAGER)
 	private List<Instructions_Diet> instruction_diets;
 	
+	@OneToMany(mappedBy="diet")
+	private List<Instructions> instructions;
+	
 	@ManyToMany(mappedBy="diets")
 	private List<Checkup> checkups;
 	
@@ -53,4 +56,14 @@ public class Diet implements Serializable{
 	public void setInstructions_Diets(List<Instructions_Diet> instruction_diets) {
 		this.instruction_diets = instruction_diets;
 	}
+
+	public List<Instructions> getInstructions() {
+		return instructions;
+	}
+
+	public void setInstructions(List<Instructions> instructions) {
+		this.instructions = instructions;
+	}
+	
+	
 }

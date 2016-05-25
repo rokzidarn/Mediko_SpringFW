@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 
 @Entity
 @NamedQueries({
@@ -25,6 +24,9 @@ public class Disease implements Serializable{
 	@Column(name="isAllergy", nullable=false)
 	private int isAllergy;
 	
+	@OneToMany(mappedBy="disease", fetch=FetchType.EAGER)
+	private List<Instructions> instructions;
+
 	public int getIsAllergy() {
 		return isAllergy;
 	}
@@ -64,5 +66,13 @@ public class Disease implements Serializable{
 
 	public void setMedicines(List<Medicine> medicines) {
 		this.medicines = medicines;
+	}
+
+	public List<Instructions> getInstructions() {
+		return instructions;
+	}
+
+	public void setInstructions(List<Instructions> instructions) {
+		this.instructions = instructions;
 	}
 }
