@@ -2,7 +2,6 @@ package si.fri.t15.admin.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
@@ -12,14 +11,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.Diet;
@@ -27,13 +23,17 @@ import si.fri.t15.models.Disease;
 import si.fri.t15.models.Instructions;
 import si.fri.t15.models.Medicine;
 import si.fri.t15.validators.InsAddDietForm;
+import si.fri.t15.validators.InsAddDietValidator;
 import si.fri.t15.validators.InsAddDiseaseForm;
+import si.fri.t15.validators.InsAddDiseaseValidator;
 import si.fri.t15.validators.InsAddMedicineForm;
-import si.fri.t15.validators.InsertDietValidator;
-import si.fri.t15.validators.InsertDiseaseValidator;
-import si.fri.t15.validators.InsertMedicineValidator;
-import si.fri.t15.validators.InsertReasonValidator;
-import si.fri.t15.validators.InsertResultValidator;
+import si.fri.t15.validators.InsAddMedicineValidator;
+import si.fri.t15.validators.InsDelDietForm;
+import si.fri.t15.validators.InsDelDietValidator;
+import si.fri.t15.validators.InsDelDiseaseForm;
+import si.fri.t15.validators.InsDelDiseaseValidator;
+import si.fri.t15.validators.InsDelMedicineForm;
+import si.fri.t15.validators.InsDelMedicineValidator;
 
 @Controller
 public class InstructionsController extends ControllerBase{
@@ -45,7 +45,7 @@ public class InstructionsController extends ControllerBase{
 	PasswordEncoder passwordEncoder;
  
 	@Autowired
-	InsertDiseaseValidator insertDiseaseValidator;
+	InsAddDiseaseValidator insertDiseaseValidator;
 	
 	@InitBinder("commandiad")
 	protected void initBinderIAD(HttpServletRequest request,
@@ -54,7 +54,7 @@ public class InstructionsController extends ControllerBase{
 	}
 	
 	@Autowired
-	InsertDietValidator insertDietValidator;
+	InsAddDietValidator insertDietValidator;
 	
 	@InitBinder("commandiadi")
 	protected void initBinderIADI(HttpServletRequest request,
@@ -63,12 +63,39 @@ public class InstructionsController extends ControllerBase{
 	}
 	
 	@Autowired
-	InsertMedicineValidator insertMedicineValidator;
+	InsAddMedicineValidator insertMedicineValidator;
 	
 	@InitBinder("commandiam")
 	protected void initBinderIAM(HttpServletRequest request,
 			ServletRequestDataBinder binder) {
 		binder.setValidator(insertMedicineValidator);
+	}
+	
+	@Autowired
+	InsDelDietValidator insDelDietValidator;
+	
+	@InitBinder("commandiddi")
+	protected void initBinderADDI(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(insDelDietValidator);
+	}
+	
+	@Autowired
+	InsDelDiseaseValidator insDelDiseaseValidator;
+	
+	@InitBinder("commandidd")
+	protected void initBinderIDD(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(insDelDiseaseValidator);
+	}
+	
+	@Autowired
+	InsDelMedicineValidator insDelMedicineValidator;
+	
+	@InitBinder("commandidm")
+	protected void initBinderIDM(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(insDelMedicineValidator);
 	}
 
 	@RequestMapping(value = "/admin/instructions",  method=RequestMethod.GET)
@@ -181,6 +208,45 @@ public class InstructionsController extends ControllerBase{
 		i.setDuration(0);
 		i.setMedicine(m);
 		em.persist(i);
+		
+		return new ModelAndView("instructions");
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/admin/ddel",  method=RequestMethod.POST)
+	public ModelAndView delDiseaseInstructionsPOST(Model model, HttpServletRequest request,
+			@ModelAttribute("commandidd") @Valid InsDelDiseaseForm commandidd) {
+		
+		TypedQuery<Instructions> qu = em.createNamedQuery("Instructions.findInstructions", Instructions.class);
+		Instructions i = qu.setParameter(1, commandidd.getId()).getSingleResult(); 
+		
+		em.remove(i);
+		
+		return new ModelAndView("instructions");
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/admin/didel",  method=RequestMethod.POST)
+	public ModelAndView delDiseaseInstructionsPOST(Model model, HttpServletRequest request,
+			@ModelAttribute("commandiddi") @Valid InsDelDietForm commandiddi) {
+		
+		TypedQuery<Instructions> qu = em.createNamedQuery("Instructions.findInstructions", Instructions.class);
+		Instructions i = qu.setParameter(1, commandiddi.getId()).getSingleResult(); 
+		
+		em.remove(i);
+		
+		return new ModelAndView("instructions");
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/admin/mdel",  method=RequestMethod.POST)
+	public ModelAndView delDiseaseInstructionsPOST(Model model, HttpServletRequest request,
+			@ModelAttribute("commandidm") @Valid InsDelMedicineForm commandidm) {
+		
+		TypedQuery<Instructions> qu = em.createNamedQuery("Instructions.findInstructions", Instructions.class);
+		Instructions i = qu.setParameter(1, commandidm.getId()).getSingleResult(); 
+		
+		em.remove(i);
 		
 		return new ModelAndView("instructions");
 	}
