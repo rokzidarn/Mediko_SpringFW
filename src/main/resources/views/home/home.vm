@@ -209,7 +209,13 @@
                                                             <tr> 
                                                             	#if($disease.getIsAllergy()==0 && $count < 5)
 	                                                                <td>$disease.name</td> 
-	                                                                <td>-</td> 
+	                                                                <td>
+                                                                        #if($disease.instructions.size() == 0) - #end
+                                                                        #foreach($instruction in $disease.instructions)
+                                                                            #if($velocityCount!=1) <br> #end
+                                                                            <a style="color:#36B8D5" href="$instruction.getText()">Povezava</a>
+                                                                        #end
+                                                                    </td> 
                                                                     #set( $count = $count + 1 )
                                                                 #end
                                                             </tr> 
@@ -251,7 +257,13 @@
                                                             <tr> 
                                                             	#if($allergy.getIsAllergy() == 1 && $count < 5)
 	                                                                <td>$allergy.name</td> 
-	                                                                <td>-</td> 
+	                                                                <td>
+                                                                        #if($allergy.instructions.size() == 0) - #end
+                                                                        #foreach($instruction in $allergy.instructions)
+                                                                            #if($velocityCount!=1) <br> #end
+                                                                            <a style="color:#36B8D5" href="$instruction.getText()">Povezava</a>
+                                                                        #end
+                                                                    </td>  
                                                                     #set( $count = $count + 1 )
                                                                 #end
                                                             </tr> 
@@ -292,7 +304,7 @@
                                                                 <tr> 
                                                                     <td scope="row">$diet.getName()</td> 
                                                                     <td>
-                                                                        #foreach($instruction in $diet.getInstructions_Diets())
+                                                                        #foreach($instruction in $diet.instructions)
                                                                             #if($velocityCount!=1) <br> #end
                                                                             <a style="color:#36B8D5" href="$instruction.getText()">$instruction.getText()</a>
                                                                         #end
