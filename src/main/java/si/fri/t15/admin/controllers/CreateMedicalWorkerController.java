@@ -40,9 +40,16 @@ import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.NurseData;
 import si.fri.t15.models.user.User;
 import si.fri.t15.validators.CreateMedicalWorkerForm;
+import si.fri.t15.validators.CreateMedicalWorkerValidator;
 import si.fri.t15.validators.InsAddDietForm;
+import si.fri.t15.validators.InsAddDietValidator;
 import si.fri.t15.validators.InsAddDiseaseForm;
+import si.fri.t15.validators.InsAddDiseaseValidator;
 import si.fri.t15.validators.InsAddMedicineForm;
+import si.fri.t15.validators.MedAddDiseaseForm;
+import si.fri.t15.validators.MedAddDiseaseValidator;
+import si.fri.t15.validators.MedDelDiseaseForm;
+import si.fri.t15.validators.MedDelDiseaseValidator;
 
 @Controller
 public class CreateMedicalWorkerController extends ControllerBase{
@@ -53,14 +60,32 @@ public class CreateMedicalWorkerController extends ControllerBase{
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
-	@InitBinder
-	protected void initBinder(HttpServletRequest request,
+	@Autowired
+	CreateMedicalWorkerValidator createMedicalWorkerValidator;
+	
+	@InitBinder("command")
+	protected void initBinderCMW(HttpServletRequest request,
 			ServletRequestDataBinder binder) {
-		binder.setValidator(validator);
+		binder.setValidator(createMedicalWorkerValidator);
 	}
- 
-	@Resource(name="createMedicalWorkerValidator")
-	Validator validator;
+	
+	@Autowired
+	MedAddDiseaseValidator medAddDiseaseValidator;
+	
+	@InitBinder("commandadm")
+	protected void initBinderADM(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(medAddDiseaseValidator);
+	}
+	
+	@Autowired
+	MedDelDiseaseValidator medDelDiseaseValidator;
+	
+	@InitBinder("commandddm")
+	protected void initBinderDDM(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(medDelDiseaseValidator);
+	}
 	
 	@Transactional
 	@RequestMapping(value = "/admin/createMedicalWorker",  method=RequestMethod.POST)
@@ -157,14 +182,16 @@ public class CreateMedicalWorkerController extends ControllerBase{
 		return new ModelAndView("medicines");
 	}
 	
-	@RequestMapping(value = "/admin/dadd/{did}/m/{mid}",  method=RequestMethod.POST)
-	public ModelAndView addMedicinesPOST(Model model, HttpServletRequest request, @PathVariable("did") String did, @PathVariable("mid") int mid) {
+	@Transactional
+	@RequestMapping(value = "/admin/medicines/addd",  method=RequestMethod.POST)
+	public ModelAndView addMedicinesPOST(Model model, HttpServletRequest request,
+			@ModelAttribute("commandadm") @Valid MedAddDiseaseForm commandadm) {
 		
 		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findDisease", Disease.class);
-		Disease d = qu.setParameter(1, did).getSingleResult();
+		Disease d = qu.setParameter(1, commandadm.getDisease()).getSingleResult();
 		
 		TypedQuery<Medicine> qu2 = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
-		Medicine m = qu2.setParameter(1, mid).getSingleResult(); 
+		Medicine m = qu2.setParameter(1, commandadm.getMedicine()).getSingleResult(); 
 		
 		List<Medicine> currm = d.getMedicines();
 		currm.add(m);		
@@ -173,14 +200,16 @@ public class CreateMedicalWorkerController extends ControllerBase{
 		return new ModelAndView("medicines");
 	}
 	
-	@RequestMapping(value = "/admin/ddel/{did}/m/{mid}",  method=RequestMethod.POST)
-	public ModelAndView deleteMedicinesPOST(Model model, HttpServletRequest request, @PathVariable("did") String did, @PathVariable("mid") int mid) {
+	@Transactional
+	@RequestMapping(value = "/admin/medicines/deld",  method=RequestMethod.POST)
+	public ModelAndView deleteMedicinesPOST(Model model, HttpServletRequest request,
+			@ModelAttribute("commandddm") @Valid MedDelDiseaseForm commandddm) {
 		
 		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findDisease", Disease.class);
-		Disease d = qu.setParameter(1, did).getSingleResult();
+		Disease d = qu.setParameter(1, commandddm.getDisease()).getSingleResult();
 		
 		TypedQuery<Medicine> qu2 = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
-		Medicine m = qu2.setParameter(1, mid).getSingleResult(); 
+		Medicine m = qu2.setParameter(1, commandddm.getMedicine()).getSingleResult(); 
 		
 		List<Medicine> currm = d.getMedicines();
 		currm.remove(m);	

@@ -17,9 +17,9 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <form method="POST" action="#springUrl('/admin')/dadd/${did}/m/${mid}">
+                                                <form method="POST" action="#springUrl('/admin')/medicines/addd">
                                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                    #if($commandm) #springBind( "commandm.disease" ) #end
+                                                    #if($commandadm) #springBind( "commandadm.disease" ) #end
                                                     <label for="diseaseInput">Izberite bolezen: </label>
                                                     <select id="diseaseInput" name="disease" class="form-control">
                                                         #foreach($disease in $allDiseases)
@@ -28,7 +28,7 @@
                                                     </select><br>
                                                     #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
 
-                                                    #if($commandm) #springBind( "commandm.medicine" ) #end
+                                                    #if($commandadm) #springBind( "commandadm.medicine" ) #end
                                                     <label for="medicineInput">Dodajte zdravilo: </label>
                                                     <select id="medicineInput" name="medicine" class="form-control">
                                                         #foreach($medicine in $allMedicines)
@@ -44,10 +44,11 @@
                                             <label for="med">Odstranite zdravilo: </label>
                                             <div id="med" class="form-group">                                               
                                                 #foreach($curr in $diseaseMedicines)
-                                                    <form method="POST" action="#springUrl('/admin')/ddel/${did}/m/${mid}">
+                                                    <form method="POST" action="#springUrl('/admin')/medicines/deld">
                                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                        #if($commandm) #springBind( "commandm.medicine" ) #end
-                                                        <input type="hidden" name="mid" value="$curr.id"/>
+                                                        #if($commandddm) #springBind( "commandddm.medicine" ) #end
+                                                        <input type="hidden" name="disease" value="xxxxxxxx"/>
+                                                        <input type="hidden" name="medicine" value="$curr.id"/>
                                                         <p><button type="submit" class="btn btn-info">ODSTRANI</button>&nbsp; $curr.name</p>
                                                         #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
                                                     </form>

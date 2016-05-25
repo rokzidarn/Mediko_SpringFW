@@ -32,6 +32,8 @@ import si.fri.t15.validators.InsertDiseaseValidator;
 import si.fri.t15.validators.InsertMedicineValidator;
 import si.fri.t15.validators.InsertReasonValidator;
 import si.fri.t15.validators.InsertResultValidator;
+import si.fri.t15.validators.MedAddDiseaseValidator;
+import si.fri.t15.validators.MedDelDiseaseValidator;
 import si.fri.t15.validators.SelectDoctorValidator;
 import si.fri.t15.validators.SignUpValidator;
 
@@ -153,6 +155,11 @@ public class Application extends WebMvcConfigurerAdapter {
 	}
 	
 	@Bean
+	public InsertResultValidator insertResultValidator(){
+		return new InsertResultValidator();
+	}
+	
+	@Bean
 	public InsAddDietValidator insAddDietValidator(){
 		return new InsAddDietValidator();
 	}
@@ -183,9 +190,15 @@ public class Application extends WebMvcConfigurerAdapter {
 	}
 	
 	@Bean
-	public InsertResultValidator insertResultValidator(){
-		return new InsertResultValidator();
+	public MedAddDiseaseValidator medAddDiseaseValidator(){
+		return new MedAddDiseaseValidator();
 	}
+	
+	@Bean
+	public MedDelDiseaseValidator medDelDiseaseValidator(){
+		return new MedDelDiseaseValidator();
+	}
+	
 	
 	@Bean
 	public SessionEndedListener sessionEndedListener() {
