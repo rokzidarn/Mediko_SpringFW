@@ -1,10 +1,10 @@
 package si.fri.t15.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 
 @Entity
 @NamedQueries({
@@ -25,6 +25,9 @@ public class Disease implements Serializable{
 	@Column(name="isAllergy", nullable=false)
 	private int isAllergy;
 	
+	@OneToMany(mappedBy="disease", fetch=FetchType.EAGER)
+	private List<Instructions> instructions;
+
 	public int getIsAllergy() {
 		return isAllergy;
 	}
@@ -57,4 +60,22 @@ public class Disease implements Serializable{
 	
 	@ManyToMany(mappedBy="diseases")
 	private List<Medicine> medicines;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public List<Instructions> getInstructions() {
+		return instructions;
+	}
+
+	public void setInstructions(List<Instructions> instructions) {
+		this.instructions = instructions;
+	}
+	
+	
 }

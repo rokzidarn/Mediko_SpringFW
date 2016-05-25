@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @NamedQuery(name="Instructions.findAll", query="SELECT i FROM Instructions i")
 public class Instructions implements Serializable{
@@ -23,8 +25,15 @@ public class Instructions implements Serializable{
 	@Column(name="Text", length=225, nullable=false)
 	private String text;
 	
+	
 	@ManyToOne
 	private Medicine medicine;
+	
+	@ManyToOne
+	private Disease disease;
+	
+	@ManyToOne
+	private Diet diet;
 	
 	public Instructions() {
 	}	
@@ -61,6 +70,7 @@ public class Instructions implements Serializable{
 		this.text = text;
 	}
 	
+	@JsonIgnore
 	public Medicine getMedicine() {
 		return this.medicine;
 	}
@@ -68,4 +78,23 @@ public class Instructions implements Serializable{
 	public void setMedicine(Medicine medicine) {
 		this.medicine = medicine;
 	}
+	
+	@JsonIgnore
+	public Disease getDisease() {
+		return disease;
+	}
+
+	public void setDisease(Disease disease) {
+		this.disease = disease;
+	}
+
+	@JsonIgnore
+	public Diet getDiet() {
+		return diet;
+	}
+
+	public void setDiet(Diet diet) {
+		this.diet = diet;
+	}
+	
 }
