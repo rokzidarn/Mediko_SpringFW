@@ -17,7 +17,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <form method="POST" action="#springUrl('/admin')/dadd/${did}">
+                                                <form method="POST" action="#springUrl('/admin')/dadd">
                                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                     #if($commandiad) #springBind( "commandiad.disease" ) #end
                                                     <label for="diseaseInput">Izberite bolezen: </label>
@@ -37,7 +37,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <form method="POST" action="#springUrl('/admin')/diadd/${diid}">
+                                                <form method="POST" action="#springUrl('/admin')/diadd">
                                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                     #if($commandiadi) #springBind( "commandiadi.diet" ) #end
                                                     <label for="dietInput">Izberite dieto: </label>
@@ -93,7 +93,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <form method="POST" action="#springUrl('/admin')/madd/${mid}">
+                                                <form method="POST" action="#springUrl('/admin')/madd">
                                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                     #if($commandiam) #springBind( "commandiam.medicine" ) #end
                                                     <label for="medicineInput">Izberite zdravilo: </label>

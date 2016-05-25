@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.Diet;
@@ -27,6 +29,11 @@ import si.fri.t15.models.Medicine;
 import si.fri.t15.validators.InsAddDietForm;
 import si.fri.t15.validators.InsAddDiseaseForm;
 import si.fri.t15.validators.InsAddMedicineForm;
+import si.fri.t15.validators.InsertDietValidator;
+import si.fri.t15.validators.InsertDiseaseValidator;
+import si.fri.t15.validators.InsertMedicineValidator;
+import si.fri.t15.validators.InsertReasonValidator;
+import si.fri.t15.validators.InsertResultValidator;
 
 @Controller
 public class InstructionsController extends ControllerBase{
@@ -36,34 +43,34 @@ public class InstructionsController extends ControllerBase{
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
-	
-	@InitBinder
-	protected void initBinder1(HttpServletRequest request,
-			ServletRequestDataBinder binder) {
-		binder.setValidator(validator1);
-	}
  
-	@Resource(name="insAddDietValidator")
-	Validator validator1;
+	@Autowired
+	InsertDiseaseValidator insertDiseaseValidator;
 	
-	@InitBinder
-	protected void initBinder2(HttpServletRequest request,
+	@InitBinder("commandiad")
+	protected void initBinderIAD(HttpServletRequest request,
 			ServletRequestDataBinder binder) {
-		binder.setValidator(validator2);
+		binder.setValidator(insertDiseaseValidator);
 	}
- 
-	@Resource(name="insAddDiseaseValidator")
-	Validator validator2;
 	
-	@InitBinder
-	protected void initBinder3(HttpServletRequest request,
+	@Autowired
+	InsertDietValidator insertDietValidator;
+	
+	@InitBinder("commandiadi")
+	protected void initBinderIADI(HttpServletRequest request,
 			ServletRequestDataBinder binder) {
-		binder.setValidator(validator3);
+		binder.setValidator(insertDietValidator);
 	}
- 
-	@Resource(name="insAddMedicineValidator")
-	Validator validator3;
 	
+	@Autowired
+	InsertMedicineValidator insertMedicineValidator;
+	
+	@InitBinder("commandiam")
+	protected void initBinderIAM(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(insertMedicineValidator);
+	}
+
 	@RequestMapping(value = "/admin/instructions",  method=RequestMethod.GET)
 	public ModelAndView updateInstructionsGET(Model model, HttpServletRequest request) {
 		
@@ -121,16 +128,17 @@ public class InstructionsController extends ControllerBase{
 		return new ModelAndView("instructions");
 	}
 	
-	@RequestMapping(value = "/admin/dad/{did}",  method=RequestMethod.POST)
-	public ModelAndView addDiseaseInstructionsPOST(Model model, HttpServletRequest request, @PathVariable("did") String did,
+	@Transactional
+	@RequestMapping(value = "/admin/dadd",  method=RequestMethod.POST)
+	public ModelAndView addDiseaseInstructionsPOST(Model model, HttpServletRequest request,
 			@ModelAttribute("commandiad") @Valid InsAddDiseaseForm commandiad) {
 		
 		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findDisease", Disease.class);
-		Disease d = qu.setParameter(1, did).getSingleResult();
+		Disease d = qu.setParameter(1, commandiad.getDisease()).getSingleResult();
 		
 		Instructions i = new Instructions();
 		i.setName("Navodilo za "+d.getName());
-		String text = "text"; //TODO -> validacija
+		String text = commandiad.getInstruction();
 		i.setText(text);
 		i.setDuration(0);
 		i.setDisease(d);
@@ -139,16 +147,17 @@ public class InstructionsController extends ControllerBase{
 		return new ModelAndView("instructions");
 	}
 	
-	@RequestMapping(value = "/admin/diadd/{diid}",  method=RequestMethod.POST)
-	public ModelAndView addDietInstructionsPOST(Model model, HttpServletRequest request, @PathVariable("diid") String diid,
+	@Transactional
+	@RequestMapping(value = "/admin/diadd",  method=RequestMethod.POST)
+	public ModelAndView addDietInstructionsPOST(Model model, HttpServletRequest request,
 			@ModelAttribute("commandiadi") @Valid InsAddDietForm commandiadi) {
 		
 		TypedQuery<Diet> qu = em.createNamedQuery("Diet.findDiet", Diet.class);
-		Diet di = qu.setParameter(1, diid).getSingleResult();
+		Diet di = qu.setParameter(1, commandiadi.getDiet()).getSingleResult();
 		
 		Instructions i = new Instructions();
 		i.setName("Navodilo za "+di.getName());
-		String text = "text"; //TODO -> validacija
+		String text = commandiadi.getInstruction_diet();
 		i.setText(text);
 		i.setDuration(0);
 		i.setDiet(di);
@@ -157,16 +166,17 @@ public class InstructionsController extends ControllerBase{
 		return new ModelAndView("instructions");
 	}
 	
-	@RequestMapping(value = "/admin/madd/{mid}",  method=RequestMethod.POST)
-	public ModelAndView updateMedicineInstructionsPOST(Model model, HttpServletRequest request, @PathVariable("mid") String mid,
+	@Transactional
+	@RequestMapping(value = "/admin/madd",  method=RequestMethod.POST)
+	public ModelAndView updateMedicineInstructionsPOST(Model model, HttpServletRequest request,
 			@ModelAttribute("commandiam") @Valid InsAddMedicineForm commandiam) {
 		
 		TypedQuery<Medicine> qu = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
-		Medicine m = qu.setParameter(1, mid).getSingleResult(); 
+		Medicine m = qu.setParameter(1, commandiam.getMedicine()).getSingleResult(); 
 		
 		Instructions i = new Instructions();
 		i.setName("Navodilo za "+m.getName());
-		String text = "text"; //TODO -> validacija
+		String text = commandiam.getInstruction_medicine();
 		i.setText(text);
 		i.setDuration(0);
 		i.setMedicine(m);

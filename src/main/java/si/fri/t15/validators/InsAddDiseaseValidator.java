@@ -7,7 +7,7 @@ import org.springframework.validation.ValidationUtils;
 public class InsAddDiseaseValidator implements Validator{
 	@Override
 	public boolean supports(Class<?> c) {
-		return c.isAssignableFrom(SignUpForm.class);
+		return c.isAssignableFrom(InsAddDiseaseForm.class);
 	}
 
 	@Override
