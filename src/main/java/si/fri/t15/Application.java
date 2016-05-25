@@ -20,6 +20,9 @@ import si.fri.t15.login.controllers.SessionEndedListener;
 import si.fri.t15.validators.ChangePasswordValidator;
 import si.fri.t15.validators.CreateMedicalWorkerValidator;
 import si.fri.t15.validators.CreatePatientValidator;
+import si.fri.t15.validators.InsAddDietValidator;
+import si.fri.t15.validators.InsAddDiseaseValidator;
+import si.fri.t15.validators.InsAddMedicineValidator;
 import si.fri.t15.validators.InsertDiagnosisValidator;
 import si.fri.t15.validators.InsertDietValidator;
 import si.fri.t15.validators.InsertDiseaseValidator;
@@ -144,6 +147,21 @@ public class Application extends WebMvcConfigurerAdapter {
 	@Bean
 	public InsertDiagnosisValidator insertDiagnosisValidator(){
 		return new InsertDiagnosisValidator();
+	}
+	
+	@Bean
+	public InsAddDietValidator insAddDietValidator(){
+		return new InsAddDietValidator();
+	}
+	
+	@Bean
+	public InsAddDiseaseValidator insAddDiseaseValidator(){
+		return new InsAddDiseaseValidator();
+	}
+	
+	@Bean
+	public InsAddMedicineValidator insAddMedicineValidator(){
+		return new InsAddMedicineValidator();
 	}
 	
 	@Bean
