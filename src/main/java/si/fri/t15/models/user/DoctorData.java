@@ -18,6 +18,7 @@ import si.fri.t15.base.models.UserData;
 import si.fri.t15.models.Appointment;
 import si.fri.t15.models.Checkup;
 import si.fri.t15.models.Medical_Center;
+import si.fri.t15.models.WorkWeek;
 
 @Entity
 @NamedQueries({
@@ -62,6 +63,17 @@ public class DoctorData extends UserData {
 	@OneToMany(mappedBy="doctor")
 	private List<Checkup> checkups;
 	
+	@OneToMany(mappedBy="doctor")
+    private List<WorkWeek> workWeeks;
+	
+	public List<WorkWeek> getWorkWeeks() {
+		return workWeeks;
+	}
+
+	public void setWorkWeeks(List<WorkWeek> workWeeks) {
+		this.workWeeks = workWeeks;
+	}
+
 	public DoctorData() {
 	}	
 	
