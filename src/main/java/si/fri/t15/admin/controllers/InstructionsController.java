@@ -75,7 +75,7 @@ public class InstructionsController extends ControllerBase{
 	InsDelDietValidator insDelDietValidator;
 	
 	@InitBinder("commandiddi")
-	protected void initBinderADDI(HttpServletRequest request,
+	protected void initBinderIDDI(HttpServletRequest request,
 			ServletRequestDataBinder binder) {
 		binder.setValidator(insDelDietValidator);
 	}
@@ -195,7 +195,7 @@ public class InstructionsController extends ControllerBase{
 	
 	@Transactional
 	@RequestMapping(value = "/admin/madd",  method=RequestMethod.POST)
-	public ModelAndView updateMedicineInstructionsPOST(Model model, HttpServletRequest request,
+	public ModelAndView addMedicineInstructionsPOST(Model model, HttpServletRequest request,
 			@ModelAttribute("commandiam") @Valid InsAddMedicineForm commandiam) {
 		
 		TypedQuery<Medicine> qu = em.createNamedQuery("Medicine.findMedicine", Medicine.class);

@@ -65,7 +65,7 @@
                                                     <form method="POST" action="#springUrl('/admin')/ddel">
                                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                         #if($commandidd) #springBind( "commandidd.id" ) #end
-                                                        <input type="hidden" name="id" value="$curr.id"/>
+                                                        <input type="hidden" name="id" value="$curr.getInstructionsId()"/>
                                                         <p><button type="submit" class="btn btn-info">ODSTRANI</button>&nbsp; <a style="color: dodgerblue;" href="$curr.text">$curr.text</a></p>
                                                         #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
                                                     </form>
@@ -81,7 +81,7 @@
                                                     <form method="POST" action="#springUrl('/admin')/didel">
                                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                         #if($commandiddi) #springBind( "commandiddi.id" ) #end
-                                                        <input type="hidden" name="id" value="$curr.id"/>
+                                                        <input type="hidden" name="id" value="$curr.getInstructionsId()"/>
                                                         <p><button type="submit" class="btn btn-info">ODSTRANI</button>&nbsp; <a style="color: dodgerblue;" href="$curr.text">$curr.text</a></p>
                                                         #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
                                                     </form>
@@ -93,7 +93,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <form method="POST" action="#springUrl('/admin')/mdel">
+                                                <form method="POST" action="#springUrl('/admin')/madd">
                                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                     #if($commandiam) #springBind( "commandiam.medicine" ) #end
                                                     <label for="medicineInput">Izberite zdravilo: </label>
@@ -121,7 +121,7 @@
                                                     <form method="POST" action="#springUrl('/admin')/mdel">
                                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                         #if($commandidm) #springBind( "commandidm.id" ) #end
-                                                        <input type="hidden" name="id" value="$curr.id"/>
+                                                        <input type="hidden" name="id" value="$curr.getInstructionsId()"/>
                                                         <p><button type="submit" class="btn btn-info">ODSTRANI</button>&nbsp; <a style="color: dodgerblue;" href="$curr.text">$curr.text</a></p>
                                                         #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
                                                     </form>

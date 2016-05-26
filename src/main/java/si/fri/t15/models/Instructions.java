@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Instructions.findAll", query="SELECT i FROM Instructions i"),
-	@NamedQuery(name="Disease.findInstructions", query="SELECT i FROM Instructions i WHERE i.id=?1")
+	@NamedQuery(name="Instructions.findInstructions", query="SELECT i FROM Instructions i WHERE i.id=?1")
 })
 
 public class Instructions implements Serializable{
