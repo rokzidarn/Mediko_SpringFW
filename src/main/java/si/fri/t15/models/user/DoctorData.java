@@ -18,11 +18,13 @@ import si.fri.t15.base.models.UserData;
 import si.fri.t15.models.Appointment;
 import si.fri.t15.models.Checkup;
 import si.fri.t15.models.Medical_Center;
+import si.fri.t15.models.WorkWeek;
 
 @Entity
 @NamedQueries({
 	@NamedQuery(name="DoctorData.GetAvailableDoctors", query="SELECT d FROM DoctorData d WHERE d.type=:type AND (d.id = :users OR maxPatients > (SELECT count(p) FROM PatientData p WHERE p.doctor = d OR p.dentist = d))"),
-	@NamedQuery(name="DoctorData.GetDoctorById", query="SELECT d FROM DoctorData d WHERE d.id=:id")
+	@NamedQuery(name="DoctorData.GetDoctorById", query="SELECT d FROM DoctorData d WHERE d.id=:id"),
+	@NamedQuery(name="DoctorData.GetAllDoctors", query="SELECT d FROM DoctorData d")
 })
 public class DoctorData extends UserData {
 
@@ -61,6 +63,17 @@ public class DoctorData extends UserData {
 	@OneToMany(mappedBy="doctor")
 	private List<Checkup> checkups;
 	
+	@OneToMany(mappedBy="doctor")
+    private List<WorkWeek> workWeeks;
+	
+	public List<WorkWeek> getWorkWeeks() {
+		return workWeeks;
+	}
+
+	public void setWorkWeeks(List<WorkWeek> workWeeks) {
+		this.workWeeks = workWeeks;
+	}
+
 	public DoctorData() {
 	}	
 	

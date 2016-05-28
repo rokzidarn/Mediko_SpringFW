@@ -1,6 +1,8 @@
 package si.fri.t15.rest;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -31,6 +33,7 @@ public class RestController {
 	@Autowired
 	EntityManager em;
 	
+	//patient
 	@Transactional
 	@RequestMapping(value = "/api/patient/{id}/checkup", method=RequestMethod.GET)
 	@ResponseBody
@@ -100,6 +103,30 @@ public class RestController {
 			return new ArrayList<Appointment>();
 	}
 	
+	//Doctor
+	@Transactional
+	@RequestMapping(value = "/api/doctor/{id}/appointment/available", method=RequestMethod.GET)
+	@ResponseBody
+	public List<Appointment> getDoctorsAvailableAppointments(@PathVariable("id") int doctorId,HttpServletRequest request,@AuthenticationPrincipal User userSession){
+		List<Appointment> appointments = new ArrayList<Appointment>();
+		
+		Date todayDate = new Date();
+		Calendar calendar = Calendar.getInstance();
+        
+		//TODO - fix when schedule available
+		for(int i = 0; i < 7; i++){
+			Appointment appointment = new Appointment();
+			appointment.setIdAppointment(i);
+			appointment.setDate(new java.sql.Date(calendar.getTime().getTime()));
+			appointments.add(appointment);
+			calendar.add(Calendar.DATE, 1);
+			System.out.println(calendar.getTime());
+		}
+		
+		
+		
+		return appointments;
+	}
 	
 	//helpers
 	public PatientData getPatient(int patientId, User user){

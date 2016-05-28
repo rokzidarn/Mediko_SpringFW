@@ -28,11 +28,22 @@ $( document ).ready(function(){
 	//SET CONTENT HEIGT!
 	$(".content-container").css("min-height",$("#sidebarContent").height()+50);
 
+
+	//SHOW MORE ON DSAHBOARD
 	$("#showMoreCheckup").on('click', toggleShowMoreCheckup);
 	$("#showMoreDisease").on('click', toggleShowMoreDisease);
 	$("#showMoreAlergy").on('click', toggleShowMoreAlergy);
 	$("#showMoreDiet").on('click', toggleShowMoreDiet);
 	$("#showMoreMedicine").on('click', toggleShowMoreMedicine);
+
+
+	//DOCTORS SELECTED ON ORDER APPOINTMENT
+	$("#orderCheckupDoctorInput").on('change', getDoctorsAvailableAppointments);
+
+	//Calendar
+	$(".calendar-appointment").on('click', appointmentOnCalendarClicked);
+	$(".next-week-button").on('click', nextCalendar);
+	$(".prev-week-button").on('click', previousCalendar);
 });
 
 function showSidebar(){
@@ -233,4 +244,66 @@ function toggleShowMoreMedicine(){
 		$("#medicineMoreTbody").toggle(500);
 
 	}
-}                                                        
+}  
+
+function getDoctorsAvailableAppointments(){
+	$("#orderCheckupAppointmentInput").prop('disabled', true);
+	$("#orderCheckupSubmit").prop('disabled',true);
+	var doctorId = this.value;
+	$.ajax({
+	  		url: appUrl+"api/doctor/"+doctorId+"/appointment/available"
+		}).done(function(data) {
+	  		alert(doctorId);
+	  		/*console.log(data);
+	  		var appointmentsInput = $("#orderCheckupAppointmentInput");
+	  		appointmentsInput.html("");
+	  		for(var i = 0; i < data.length;i++){
+	  			
+
+	  			var option = $("<option />");
+	  			option.val(data[i].idAppointment);
+	  			option.text( data[i].date);
+
+	  			appointmentsInput.append(option);
+	  		}
+	  		appointmentsInput.prop('disabled', false);
+			*/
+
+
+			//todo
+			//BUILD urnik!!!
+			$("#orderCheckupSubmit").prop('disabled',false);
+	  	});
+}
+
+function appointmentOnCalendarClicked(){
+	var appointmentId = this.id;
+	$(".calendar-appointment").removeClass("calendar-appointment-selected");
+	$(this).addClass("calendar-appointment-selected");
+	$("#orderCheckupAppointmentInput").val(appointmentId);
+}
+
+var currentCalendar = 1;
+function nextCalendar(){
+	if(currentCalendar < 3){
+		$("#calendar"+currentCalendar).slideToggle(500);
+		currentCalendar++;
+		$("#calendar"+currentCalendar).slideToggle(500);
+	}
+
+	$(".prev-week-button").show();
+	if(currentCalendar == 3){
+		$(".next-week-button").hide();
+	}
+}         
+function previousCalendar(){
+	if(currentCalendar > 1){
+		$("#calendar"+currentCalendar).slideToggle(500);
+		currentCalendar--;
+		$("#calendar"+currentCalendar).slideToggle(500);
+	}
+	$(".next-week-button").show();
+	if(currentCalendar == 1){
+		$(".prev-week-button").hide();
+	}
+}                     

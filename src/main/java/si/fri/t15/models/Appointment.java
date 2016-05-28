@@ -9,6 +9,7 @@ import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @NamedQueries({
@@ -26,6 +27,9 @@ public class Appointment implements Serializable{
 	@Column(name="Date", nullable=false)
 	private Date date;
 	
+	@Column(nullable=false)
+	private Timestamp dateTime;
+	
 	@ManyToOne
 	@JoinColumn(name="Patient_idPatient")
 	private PatientData patient;
@@ -33,6 +37,9 @@ public class Appointment implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="Doctor_idDoctor")
 	private DoctorData doctor;
+	
+	@ManyToOne
+	private WorkDay workDay;
 	
 	public Appointment() {
 	}
