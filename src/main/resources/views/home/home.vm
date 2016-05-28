@@ -165,7 +165,7 @@
 	                                                        #foreach($checkup in $checkups)
                                                                 #if($velocityCount  <= 5)
         	                                                            <tr onclick="opencheckup('#springUrl('/checkup/')'+ ${checkup.id})">
-        	                                                                <td scope="row">$checkup.appointment.date</td>
+        	                                                                <td scope="row">$_utils.format($checkup.appointment.date)</td>
         	                                                                <td>dr. $checkup.doctor.last_name</td> 
         	                                                                <td>$checkup.reason</td>
         	                                                            </tr> 
@@ -389,7 +389,7 @@
                                                                 <tbody> 
                                                                     <tr onclick="$('#meritev-$velocityCount').toggle(500)"> 
                                                                         <td scope="row">$result.type</td> 
-                                                                        <td>$result.checkup.appointment.date</td> 
+                                                                        <td>$_utils.format($result.checkup.appointment.date)</td> 
                                                                         <td>-</td>                                                                
                                                                     </tr>
                                                                     <tr class="info" id="meritev-$velocityCount" style="display: none">
@@ -435,7 +435,7 @@
                                                                 #if($velocityCount  <= 5)                                                   
         	                                                        <tbody> 
         	                                                            <tr> 
-        	                                                                <td scope="row">$appointment.getDate()</td> 
+        	                                                                <td scope="row">$_utils.format($appointment.date)</td> 
         	                                                                <td>dr. $appointment.doctor.last_name</td> 
                                                                             #if($isDoctor)
                                                                                 <td>
@@ -466,7 +466,7 @@
                                         #if($user.lastLogin)
                                             <div style="padding-left: 10px;">
                                                 <h6>Zadnja prijava</h6>
-                                                <h6>$user.lastLogin</h6>
+                                                <h6>$_utils.format($user.lastLogin)</h6>
                                             </div>
                                         #end
                                     </div>
