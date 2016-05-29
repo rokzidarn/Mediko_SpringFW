@@ -33,6 +33,8 @@ $( document ).ready(function(){
 	$("#showMoreAlergy").on('click', toggleShowMoreAlergy);
 	$("#showMoreDiet").on('click', toggleShowMoreDiet);
 	$("#showMoreMedicine").on('click', toggleShowMoreMedicine);
+	$("#deleteMedicineB").on('click', addValueDiseaseId);
+	$("#diseaseInput").on('change', showDiseaseInstructions);
 });
 
 function showSidebar(){
@@ -49,6 +51,36 @@ function hideSidebar(){
 
 function opencheckup(link){
 	window.location.href = link;
+}
+
+function addValueDiseaseId(){
+	var e = document.getElementById("diseaseInput");
+	var diseaseId = e.options[e.selectedIndex].value;
+	$("#diseaseValue").val(diseaseId);
+}
+
+var diseaseInstructions;
+function showDiseaseInstructions(){
+	var e = document.getElementById("diseaseInput");
+	var diseaseId = e.options[e.selectedIndex].value;
+	$.ajax({
+  		url: appUrl+"admin/instructions/disease/"+diseaseId
+	}).done(function(data) {
+  		diseaseInstructions = data;
+  		$("#dis").html("");
+		for(var i = 0; i<diseaseInstructions.length; i++){
+			var dIns = diseaseInstructions[i];
+			var info = "<form method=\"POST\" action=\"#springUrl('/admin')/ddel\">
+                            <input type=\"hidden\" name=\"${_csrf.parameterName}\" value=\"${_csrf.token}\"/>
+                            #if($commandidd) #springBind( \"commandidd.id\" ) #end
+                            <input type=\"hidden\" name=\"id\" value="+dIns.id+"/>
+                            <p><button type=\"submit\" class=\"btn btn-info\">ODSTRANI</button>&nbsp; <a style=\"color: dodgerblue;\" href="+dIns.text+">"+dIns.text+"</a></p>
+                            #foreach($error in $status.errorMessages) <div class=\"alert-box alert\">$error</div> #end 
+                        </form>";
+
+			$("#dis").append(info);
+		}
+  	});
 }
 
 var checkupMoreData;

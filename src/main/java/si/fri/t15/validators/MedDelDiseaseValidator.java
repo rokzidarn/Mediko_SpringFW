@@ -22,7 +22,7 @@ public class MedDelDiseaseValidator implements Validator{
 					"Neveljavna bolezen!");
 		}
 		
-		if(u.getMedicine()<=0){
+		if(u.getMedicine()<0){
 			errors.rejectValue("medicine", "field.format",
 					"Neveljavno zdravilo!");
 		}

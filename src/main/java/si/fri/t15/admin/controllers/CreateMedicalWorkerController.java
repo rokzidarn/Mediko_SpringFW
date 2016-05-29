@@ -184,7 +184,7 @@ public class CreateMedicalWorkerController extends ControllerBase{
 	
 	@Transactional
 	@RequestMapping(value = "/admin/medicines/addd",  method=RequestMethod.POST)
-	public ModelAndView addMedicinesPOST(Model model, HttpServletRequest request,
+	public String addMedicinesPOST(Model model, HttpServletRequest request,
 			@ModelAttribute("commandadm") @Valid MedAddDiseaseForm commandadm) {
 		
 		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findDisease", Disease.class);
@@ -197,12 +197,12 @@ public class CreateMedicalWorkerController extends ControllerBase{
 		currm.add(m);		
 		em.merge(d);
 		
-		return new ModelAndView("medicines");
+		return "redirect:/admin/medicines";
 	}
 	
 	@Transactional
 	@RequestMapping(value = "/admin/medicines/deld",  method=RequestMethod.POST)
-	public ModelAndView deleteMedicinesPOST(Model model, HttpServletRequest request,
+	public String deleteMedicinesPOST(Model model, HttpServletRequest request,
 			@ModelAttribute("commandddm") @Valid MedDelDiseaseForm commandddm) {
 		
 		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findDisease", Disease.class);
@@ -215,7 +215,7 @@ public class CreateMedicalWorkerController extends ControllerBase{
 		currm.remove(m);	
 		em.merge(d);
 		
-		return new ModelAndView("medicines");
+		return "redirect:/admin/medicines";
 	}
 }
 

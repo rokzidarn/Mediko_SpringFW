@@ -14,8 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.Diet;
@@ -155,9 +158,10 @@ public class InstructionsController extends ControllerBase{
 		return new ModelAndView("instructions");
 	}
 	
+	
 	@Transactional
 	@RequestMapping(value = "/admin/dadd",  method=RequestMethod.POST)
-	public ModelAndView addDiseaseInstructionsPOST(Model model, HttpServletRequest request,
+	public String addDiseaseInstructionsPOST(Model model, HttpServletRequest request,
 			@ModelAttribute("commandiad") @Valid InsAddDiseaseForm commandiad) {
 		
 		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findDisease", Disease.class);
@@ -171,12 +175,12 @@ public class InstructionsController extends ControllerBase{
 		i.setDisease(d);
 		em.persist(i);
 		
-		return new ModelAndView("instructions");
+		return "redirect:/admin/instructions";
 	}
 	
 	@Transactional
 	@RequestMapping(value = "/admin/diadd",  method=RequestMethod.POST)
-	public ModelAndView addDietInstructionsPOST(Model model, HttpServletRequest request,
+	public String addDietInstructionsPOST(Model model, HttpServletRequest request,
 			@ModelAttribute("commandiadi") @Valid InsAddDietForm commandiadi) {
 		
 		TypedQuery<Diet> qu = em.createNamedQuery("Diet.findDiet", Diet.class);
@@ -190,12 +194,12 @@ public class InstructionsController extends ControllerBase{
 		i.setDiet(di);
 		em.persist(i);
 		
-		return new ModelAndView("instructions");
+		return "redirect:/admin/instructions";
 	}
 	
 	@Transactional
 	@RequestMapping(value = "/admin/madd",  method=RequestMethod.POST)
-	public ModelAndView addMedicineInstructionsPOST(Model model, HttpServletRequest request,
+	public String addMedicineInstructionsPOST(Model model, HttpServletRequest request,
 			@ModelAttribute("commandiam") @Valid InsAddMedicineForm commandiam) {
 		
 		TypedQuery<Medicine> qu = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
@@ -209,12 +213,12 @@ public class InstructionsController extends ControllerBase{
 		i.setMedicine(m);
 		em.persist(i);
 		
-		return new ModelAndView("instructions");
+		return "redirect:/admin/instructions";
 	}
 	
 	@Transactional
 	@RequestMapping(value = "/admin/ddel",  method=RequestMethod.POST)
-	public ModelAndView delDiseaseInstructionsPOST(Model model, HttpServletRequest request,
+	public String delDiseaseInstructionsPOST(Model model, HttpServletRequest request,
 			@ModelAttribute("commandidd") @Valid InsDelDiseaseForm commandidd) {
 		
 		TypedQuery<Instructions> qu = em.createNamedQuery("Instructions.findInstructions", Instructions.class);
@@ -222,12 +226,12 @@ public class InstructionsController extends ControllerBase{
 		
 		em.remove(i);
 		
-		return new ModelAndView("instructions");
+		return "redirect:/admin/instructions";
 	}
 	
 	@Transactional
 	@RequestMapping(value = "/admin/didel",  method=RequestMethod.POST)
-	public ModelAndView delDiseaseInstructionsPOST(Model model, HttpServletRequest request,
+	public String delDiseaseInstructionsPOST(Model model, HttpServletRequest request,
 			@ModelAttribute("commandiddi") @Valid InsDelDietForm commandiddi) {
 		
 		TypedQuery<Instructions> qu = em.createNamedQuery("Instructions.findInstructions", Instructions.class);
@@ -235,12 +239,12 @@ public class InstructionsController extends ControllerBase{
 		
 		em.remove(i);
 		
-		return new ModelAndView("instructions");
+		return "redirect:/admin/instructions";
 	}
 	
 	@Transactional
 	@RequestMapping(value = "/admin/mdel",  method=RequestMethod.POST)
-	public ModelAndView delDiseaseInstructionsPOST(Model model, HttpServletRequest request,
+	public String delDiseaseInstructionsPOST(Model model, HttpServletRequest request,
 			@ModelAttribute("commandidm") @Valid InsDelMedicineForm commandidm) {
 		
 		TypedQuery<Instructions> qu = em.createNamedQuery("Instructions.findInstructions", Instructions.class);
@@ -248,7 +252,7 @@ public class InstructionsController extends ControllerBase{
 		
 		em.remove(i);
 		
-		return new ModelAndView("instructions");
+		return "redirect:/admin/instructions";
 	}
 
 }

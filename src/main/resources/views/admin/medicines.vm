@@ -47,9 +47,9 @@
                                                     <form method="POST" action="#springUrl('/admin')/medicines/deld">
                                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                         #if($commandddm) #springBind( "commandddm.medicine" ) #end
-                                                        <input type="hidden" name="disease" value="xxxxxxxx"/>
-                                                        <input type="hidden" name="medicine" value="$curr.id"/>
-                                                        <p><button type="submit" class="btn btn-info">ODSTRANI</button>&nbsp; $curr.name</p>
+                                                        <input type="hidden" id="diseaseValue" name="disease"/>
+                                                        <input type="hidden" name="medicine" value="${curr.getMedicineId()}"/>
+                                                        <p><button type="submit" id="deleteMedicineB" class="btn btn-info">ODSTRANI</button>&nbsp; $curr.name</p>
                                                         #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
                                                     </form>
                                                 #end                                              

@@ -1,6 +1,5 @@
 package si.fri.t15.validators;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class MedDelDiseaseForm {
@@ -8,7 +7,6 @@ public class MedDelDiseaseForm {
 	private String disease;
 	
 	@NotNull
-	@Min(1)
 	private int medicine;
 
 	public String getDisease() {
