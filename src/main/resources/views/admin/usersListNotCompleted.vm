@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    #parse("../common/head.vm")
+    <body>
+    	<div class="container">
+            <div class="row">
+                <div class="panel panel-default main-panel">
+                    <div class="main-container">
+                        <div class="content-container">
+                            <div class="content-topbar">
+                                <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
+                                <div class="content-title">$title</div>
+                            </div>
+                            <div class="content">  
+                            	<div class="users-list">  
+                            		<div class="users-list-filters">
+                        				<div class="panel panel-default">
+	                            			<div class="basic-filters">
+                            					<div class="col-md-4">
+	                            					<div class="form-group">
+		                            					<label for="filterTypeInput">Uredi po:</label>
+														<select class="form-control" id="filterTypeInput">
+															<option value="fn">Ime</option>
+															<option value="ln">Priimek</option>
+															<option value="ur">Uporabniška vloga</option>
+															<option value="rd">Datum registracije</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="searchInput">Išči:</label>
+														<input class="form-control" type="text" id="searchInput" placeholder="ime ali priimek">
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="hitsNumberInput">Število izpisov:</label>
+														<select class="form-control" id="hitsNumberInput">
+															<option value="fn">Vsi</option>
+															<option value="ln">50</option>
+															<option value="ur">100</option>
+															<option value="rd">200</option>
+															<option value="rd">300</option>
+															<option value="rd">400</option>
+															<option value="rd">500</option>
+														</select>
+													</div>
+												</div>
+                            				</div>
+	                            			<div class="more-filters"></div>
+	                            			<div class="show-button">
+	                            				<div class="row">
+		                            				<div class="col-md-6">
+			                            				<div class="form-group">
+			                            					<button type="button" class="btn btn-info">Izpiši</button>
+			                            				</div>
+		                            				</div>
+		                            				<div class="col-md-6">
+		                            					<div class="form-group">
+			                            					<button type="button" class="btn btn-info">Izvozi</button>
+			                            				</div>
+		                            				</div>
+	                            				</div>
+	                            			</div>
+                            			</div>
+                            		</div> 
+                            		<div class="users-list-content">
+                            		content
+                            		</div>
+                            	</div>	
+                            </div>
+                        </div>
+                        <div id="sidebar" class="sidebar hidden-sm hidden-xs">
+                            <div class="sidebar-topbar">
+                                <div class="logo" style="color:#eee">
+                                    
+                                </div>
+                                <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                </div>
+                            </div>
+                            <div class="sidebar-seperator"></div>
+                            #sidemenu($usertype $page $subpage)
+                            <div class="sidebar-seperator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
