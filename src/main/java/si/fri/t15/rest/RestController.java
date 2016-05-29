@@ -25,6 +25,8 @@ import si.fri.t15.models.Checkup;
 import si.fri.t15.models.Diet;
 import si.fri.t15.models.Disease;
 import si.fri.t15.models.Medicine;
+import si.fri.t15.models.Result_Checkup;
+import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
 
@@ -104,6 +106,20 @@ public class RestController {
 			return new ArrayList<Appointment>();
 	}
 	
+	@Transactional
+	@RequestMapping(value = "/api/patient/{id}/result", method=RequestMethod.GET)
+	@ResponseBody
+	public List<Result_Checkup> getPatientResults(@PathVariable("id") int patientId,HttpServletRequest request,@AuthenticationPrincipal User userSession){
+		
+		User user = em.merge(userSession);
+		PatientData data = getPatient(patientId, user);
+		if(data != null){
+			return data.getResults();
+		}
+		else
+			return new ArrayList<Result_Checkup>();
+	}
+	
 	//Doctor
 	@Transactional
 	@RequestMapping(value = "/api/doctor/{id}/appointment/available", method=RequestMethod.GET)
@@ -149,11 +165,20 @@ public class RestController {
 	public PatientData getPatient(int patientId, User user){
 		PatientData data = null;
 		if(user.getData() != null){
-			if(user.getData().getId() == patientId){
-				data = (PatientData)user.getData();
-			}
-			else{
-				for(PatientData patient : ((PatientData)user.getData()).getPatients()){
+			if(user.getData().getClass().equals(PatientData.class)){
+				if(user.getData().getId() == patientId){
+					data = (PatientData)user.getData();
+				}
+				else{
+					for(PatientData patient : ((PatientData)user.getData()).getPatients()){
+						if(patient.getId() == patientId){
+							data = patient;
+							break;
+						}
+					}
+				}
+			}else if(user.getData().getClass().equals(DoctorData.class)){
+				for(PatientData patient : ((DoctorData)user.getData()).getPatients()){
 					if(patient.getId() == patientId){
 						data = patient;
 						break;

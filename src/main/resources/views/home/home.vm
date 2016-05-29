@@ -384,9 +384,10 @@
                                                                 <th>Lokacija</th>
                                                             </tr>
                                                         </thead>
+                                                        <tbody> 
                                                         #foreach($result in $results)
                                                             #if($velocityCount  <= 5)
-                                                                <tbody> 
+                                                                
                                                                     <tr onclick="$('#meritev-$velocityCount').toggle(500)"> 
                                                                         <td scope="row">$result.type</td> 
                                                                         <td>$_utils.format($result.checkup.appointment.date)</td> 
@@ -400,13 +401,16 @@
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                </tbody> 
+                                                                #end
                                                             #end
-                                                        #end
+                                                            </tbody> 
+                                                            <tbody id="resultMoreTbody">
+
+                                                            </tbody>
                                                     </table>                                               
                                                 </div>
                                                 #if($results.size() > 5)
-                                                <button type="button" class="btn btn-info">Pokaži več</button>
+                                                <button id="showMoreResult" type="button" class="btn btn-info">Pokaži več</button>
                                                 #end                                          
                                         	#end 
                                             </div>

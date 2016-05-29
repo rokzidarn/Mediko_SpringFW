@@ -35,6 +35,7 @@ $( document ).ready(function(){
 	$("#showMoreAlergy").on('click', toggleShowMoreAlergy);
 	$("#showMoreDiet").on('click', toggleShowMoreDiet);
 	$("#showMoreMedicine").on('click', toggleShowMoreMedicine);
+	$("#showMoreResult").on('click', toggleShowMoreResult);
 
 
 	//DOCTORS SELECTED ON ORDER APPOINTMENT
@@ -67,6 +68,12 @@ function opencheckup(link){
 	window.location.href = link;
 }
 
+function formatDate(dateString){
+	var date = new Date(dateString);
+
+	return ("0" + date.getDate()).slice(-2)+"."+("0" + date.getMonth()).slice(-2)+"."+date.getFullYear();
+}
+
 var checkupMoreData;
 function toggleShowMoreCheckup(){
 	var patientId = $("#selectedPatientId")[0].innerText;
@@ -83,7 +90,7 @@ function toggleShowMoreCheckup(){
         	                                                               // <td>$checkup.reason</td>
         	                                                           // </tr> 
                    	var tr =	"<tr onclick=\"opencheckup('../checkup/"+checkupMoreData[i].id+"')\">"+
-                   				"<td scope=\"row\">"+checkupMoreData[i].appointment.date+"</td>"+
+                   				"<td scope=\"row\">"+formatDate(checkupMoreData[i].appointment.date)+"</td>"+
                    				"<td>dr. "+checkupMoreData[i].doctor.last_name+"</td>"+
                    				"<td>"+checkupMoreData[i].reason+"</td>"+
                    				"</tr>";
@@ -251,6 +258,73 @@ function toggleShowMoreMedicine(){
 	}
 }  
 
+var resultMoreData;
+function toggleShowMoreResult(){
+	var patientId = $("#selectedPatientId")[0].innerText;
+	if(!resultMoreData){
+		$.ajax({
+	  		url: appUrl+"api/patient/"+patientId+"/result"
+		}).done(function(data) {
+	  		resultMoreData = data;
+	  		if(resultMoreData.length > 5){
+	  			/*
+				<tr onclick="$('#meritev-$velocityCount').toggle(500)"> 
+			        <td scope="row">$result.type</td> 
+			        <td>$_utils.format($result.checkup.appointment.date)</td> 
+			        <td>-</td>                                                                
+			    </tr>
+			    <tr class="info" id="meritev-$velocityCount" style="display: none">
+			        <td colspan="3">
+			            <div>
+			                $result.value <br>
+			                $result.text
+			            </div>
+			        </td>
+			    </tr>
+	  			*/
+	  			for(var i = 5; i < resultMoreData.length; i++){
+	  				var tr = "<tr onclick=\"$('#meritev-"+(i+1)+"').toggle(500)\">"+
+	  							"<td scope=\"row\">"+resultMoreData[i].type+"</td>"+
+	  							"<td>"+formatDate(resultMoreData[i].checkup.appointment.date)+"</td>"+
+	  							"<td>-</td>"+
+  							"</tr>"+
+  							"<tr class=\"info\" id=\"meritev-"+(i+1)+"\" style=\"display:none\">"+
+	  							"<td colspan=\"3\">"+
+		  							"<div>"+
+			  							resultMoreData[i].value+" <br>"+
+			  							resultMoreData[i].text+
+		  							"</div>"+
+	  							"</td>"+
+  							"</tr>";
+  					$("#resultMoreTbody").append(tr);
+  					$("#showMoreResult").text("Skrij več");
+	  			}
+	  			/*
+	  			for(var i = 5; i < medicineMoreData.length; i++){
+	  				//<tr> 
+                    //                                                <td scope="row">$medicine.getName()</td> 
+                     //                                               <td><a style="color:#36B8D5" href="$medicine.link">Povezava</a></td> 
+                     //                                           </tr> 
+                   	var tr =	"<tr>"+
+                   				"<td scope=\"row\">"+medicineMoreData[i].name+"</td>"+
+                   				"<td><a style=\"color:#36B8D5\" href=\""+medicineMoreData[i].link+"\">Povezava</a></td>"+
+                   				"</tr>";
+       				$("#medicineMoreTbody").append(tr);
+       				$("#showMoreMedicine").text("Skrij več");
+	  			}*/
+	  		}
+	  	});
+	}else{
+		if($("#showMoreResult").text() == "Pokaži več"){
+			$("#showMoreResult").text("Skrij več");
+		}else{
+			$("#showMoreResult").text("Pokaži več");
+		}
+		$("#resultMoreTbody").toggle(500);
+
+	}
+}
+
 function getDoctorsAvailableAppointments(){
 	$("#orderCheckupAppointmentInput").prop('disabled', true);
 	$("#orderCheckupSubmit").prop('disabled',true);
@@ -311,6 +385,7 @@ function previousCalendar(){
 	if(currentCalendar == 1){
 		$(".prev-week-button").hide();
 	}
+<<<<<<< HEAD
 }                     
 
 
@@ -364,4 +439,6 @@ function exportUserList(){
         doc.save("SeznameUporabnikov.pdf");
         $('#exportTable').removeClass("user-list-export-settings");
     });
+=======
+>>>>>>> develop
 }
