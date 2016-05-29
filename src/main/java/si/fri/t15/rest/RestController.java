@@ -105,7 +105,7 @@ public class RestController {
 	
 	@Transactional
 	@ResponseBody
-	@RequestMapping(value = "/admin/instructions/disease/{id}",  method=RequestMethod.GET)
+	@RequestMapping(value = "/api/instructions/disease/{id}",  method=RequestMethod.GET)
 	public List<Instructions> showInsDisease(Model model, HttpServletRequest request,@PathVariable("id") int id) {
 		TypedQuery<Disease> qux = em.createNamedQuery("Disease.findDisease", Disease.class);
 		Disease d = qux.setParameter(1, id).getSingleResult();
@@ -125,7 +125,7 @@ public class RestController {
 	
 	@Transactional
 	@ResponseBody
-	@RequestMapping(value = "/admin/instructions/diet/{id}",  method=RequestMethod.GET)
+	@RequestMapping(value = "/api/instructions/diet/{id}",  method=RequestMethod.GET)
 	public List<Instructions> showInsDiet(Model model, HttpServletRequest request,@PathVariable("id") int id) {
 		TypedQuery<Diet> qux = em.createNamedQuery("Diet.findDiet", Diet.class);
 		Diet di = qux.setParameter(1, id).getSingleResult();
@@ -145,7 +145,7 @@ public class RestController {
 	
 	@Transactional
 	@ResponseBody
-	@RequestMapping(value = "/admin/instructions/medicine/{id}",  method=RequestMethod.GET)
+	@RequestMapping(value = "/api/instructions/medicine/{id}",  method=RequestMethod.GET)
 	public List<Instructions> showInsMedicine(Model model, HttpServletRequest request,@PathVariable("id") int id) {
 		TypedQuery<Medicine> qux = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
 		Medicine m = qux.setParameter(1, id).getSingleResult();
@@ -165,7 +165,7 @@ public class RestController {
 	
 	@Transactional
 	@ResponseBody
-	@RequestMapping(value = "/admin/medicines/disease/{id}",  method=RequestMethod.GET)
+	@RequestMapping(value = "/api/medicines/disease/{id}",  method=RequestMethod.GET)
 	public List<Medicine> showMedicines(Model model, HttpServletRequest request,@PathVariable("id") int id) {
 		TypedQuery<Disease> qux = em.createNamedQuery("Disease.findMedicine", Disease.class);
 		Disease d = qux.setParameter(1, id).getSingleResult();
