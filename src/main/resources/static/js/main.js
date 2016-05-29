@@ -385,7 +385,6 @@ function previousCalendar(){
 	if(currentCalendar == 1){
 		$(".prev-week-button").hide();
 	}
-<<<<<<< HEAD
 }                     
 
 
@@ -439,6 +438,4 @@ function exportUserList(){
         doc.save("SeznameUporabnikov.pdf");
         $('#exportTable').removeClass("user-list-export-settings");
     });
-=======
->>>>>>> develop
 }
