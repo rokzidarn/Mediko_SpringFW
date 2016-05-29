@@ -3,6 +3,9 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     #parse("../common/head.vm")
     <body>
+    	<script>
+			var csrf = "${_csrf.token}";
+    	</script>
     	<div class="container">
             <div class="row">
                 <div class="panel panel-default main-panel">
@@ -15,16 +18,16 @@
                             <div class="content">  
                             	<div class="users-list">  
                             		<div class="users-list-filters">
-                        				<div class="panel panel-default">
+                        				<div class="panel panel-default padding-top-20">
 	                            			<div class="basic-filters">
                             					<div class="col-md-4">
 	                            					<div class="form-group">
 		                            					<label for="filterTypeInput">Uredi po:</label>
 														<select class="form-control" id="filterTypeInput">
+															<option value="rd">Datum registracije</option>
 															<option value="fn">Ime</option>
 															<option value="ln">Priimek</option>
 															<option value="ur">Uporabniška vloga</option>
-															<option value="rd">Datum registracije</option>
 														</select>
 													</div>
 												</div>
@@ -38,36 +41,70 @@
 													<div class="form-group">
 														<label for="hitsNumberInput">Število izpisov:</label>
 														<select class="form-control" id="hitsNumberInput">
-															<option value="fn">Vsi</option>
-															<option value="ln">50</option>
-															<option value="ur">100</option>
-															<option value="rd">200</option>
-															<option value="rd">300</option>
-															<option value="rd">400</option>
-															<option value="rd">500</option>
+															<option value="0">Vsi</option>
+															<option value="50">50</option>
+															<option value="100">100</option>
+															<option value="200">200</option>
+															<option value="300">300</option>
+															<option value="400">400</option>
+															<option value="500">500</option>
 														</select>
 													</div>
 												</div>
                             				</div>
 	                            			<div class="more-filters"></div>
 	                            			<div class="show-button">
-	                            				<div class="row">
-		                            				<div class="col-md-6">
-			                            				<div class="form-group">
-			                            					<button type="button" class="btn btn-info">Izpiši</button>
-			                            				</div>
-		                            				</div>
-		                            				<div class="col-md-6">
-		                            					<div class="form-group">
-			                            					<button type="button" class="btn btn-info">Izvozi</button>
-			                            				</div>
+	                            				<div class="col-md-12 text-right">
+		                            				<div class="form-group">
+		                            					<button id="getUserListNotCompletedButton" type="button" class="btn btn-info">Izpiši</button>
+		                            					<button id="exportUserListButton" type="button" class="btn btn-info">Izvozi</button>
 		                            				</div>
 	                            				</div>
+	                            				<div class="row"></div>
 	                            			</div>
                             			</div>
                             		</div> 
-                            		<div class="users-list-content">
-                            		content
+                            		<div id="exportTable" class="users-list-content">
+                            			<div class="panel panel-default">
+                            				<div class="table-responsive">
+										  		<table class="table table-hover">
+											    	<thead> 
+											    		<tr> 
+											    			<th>#</th>
+											    			<th>Email</th>
+											    			<th>Datum registracije</th>
+											    			<th>Uporabniška vloga</th>
+										    			</tr>
+									    			</thead>
+									    			<tbody id="tableTbody"> 
+									    				<tr"> 
+									    					<th scope="row">1</th> 
+									    					<td>Column content</td> 
+									    					<td>Column content</td> 
+									    					<td>Column content</td>
+								    					</tr> 
+								    					<tr> 
+								    						<th scope="row">2</th> 
+								    						<td>Column content</td> 
+								    						<td>Column content</td> 
+								    						<td>Column content</td> 
+							    						</tr> 
+							    						<tr>
+							    							<th scope="row">3</th>
+							    							<td>Column content</td> 
+							    							<td>Column content</td> 
+							    							<td>Column content</td> 
+						    							</tr> 
+						    							<tr> 
+						    								<th scope="row">4</th> 
+						    								<td>Column content</td> 
+						    								<td>Column content</td> 
+						    								<td>Column content</td> 
+					    								</tr> 
+				    								</tbody>
+										  		</table>
+											</div>
+                            			</div>
                             		</div>
                             	</div>	
                             </div>

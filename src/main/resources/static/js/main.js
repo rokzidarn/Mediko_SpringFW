@@ -44,6 +44,11 @@ $( document ).ready(function(){
 	$(".calendar-appointment").on('click', appointmentOnCalendarClicked);
 	$(".next-week-button").on('click', nextCalendar);
 	$(".prev-week-button").on('click', previousCalendar);
+
+
+	//User lists
+	$("#getUserListNotCompletedButton").on('click', getUserListNotCompleted);
+	$("#exportUserListButton").on('click', exportUserList);
 });
 
 function showSidebar(){
@@ -307,3 +312,56 @@ function previousCalendar(){
 		$(".prev-week-button").hide();
 	}
 }                     
+
+
+function getUserListNotCompleted(){
+	var filterTypeInput = $("#filterTypeInput").val();
+	var searchInput = $("#searchInput").val();
+	var hitsNumberInput = $("#hitsNumberInput").val();
+	$.ajax({
+	  method: "post",
+	  url: appUrl+"api/user/notcompleted",
+	  data: {_csrf:csrf, filterTypeInput: filterTypeInput, searchInput: searchInput,hitsNumberInput:hitsNumberInput }
+	})
+	.done(function( data ) {
+		var tableBody = $("#tableTbody");
+		tableBody.html("");
+		for(var i = 0; i < data.length; i++){
+			/*
+			<tr"> 
+				<th scope="row">1</th> 
+				<td>Column content</td> 
+				<td>Column content</td> 
+				<td>Column content</td>
+			</tr> 
+			*/
+			var tr = "<tr>"+
+				"<th scope=\"row\">"+(i+1)+"</th>"+
+				"<td>" + data[i].username+"</td>"+
+				"<td>" + data[i].registrationDate+"</td>"+
+				"<td> - </td>";
+			tableBody.append(tr);
+		}
+	});
+}
+
+function exportUserList(){
+	var doc = new jsPDF("p", "pt", "a4");
+
+    // We'll make our own renderer to skip this editor
+    var specialElementHandlers = {
+        '#editor': function(element, renderer){
+            return true;
+        }
+    };
+
+    // All units are in the set measurement for the document
+    // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+    //doc.save('Test.pdf');
+    $('#exportTable').addClass("user-list-export-settings");
+    html2pdf ($('#exportTable'),doc,function(doc){
+    	
+        doc.save("SeznameUporabnikov.pdf");
+        $('#exportTable').removeClass("user-list-export-settings");
+    });
+}

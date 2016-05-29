@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import si.fri.t15.dao.UserRepository;
@@ -126,6 +127,22 @@ public class RestController {
 		
 		
 		return appointments;
+	}
+	
+	//admin
+	@Transactional
+	@RequestMapping(value = "/api/user/notcompleted")
+	@ResponseBody
+	public List<User> getUsersNotCompleted(
+			@RequestParam(required=false, defaultValue="rd") String filterTypeInput,
+			@RequestParam(required=false, defaultValue="") String searchInput,
+			@RequestParam(required=false, defaultValue="0") int hitsNumberInput, 
+			
+			HttpServletRequest request,@AuthenticationPrincipal User userSession){
+		
+		return (List<User>)em.createNamedQuery("User.findAllWithoutUserData").getResultList();
+		
+		
 	}
 	
 	//helpers
