@@ -63,9 +63,9 @@ var diseaseInstructions;
 function showDiseaseInstructions(){
 	//var e = document.getElementById("diseaseInput");
 	//var diseaseId = e.options[e.selectedIndex].value;
-	var diseaseId = $("#dis").val();
+	var diseaseId = $("#diseaseInput").val();
 	$.ajax({
-  		url: appUrl+"admin/instructions/disease/"+diseaseId
+  		url: appUrl+"api/instructions/disease/"+diseaseId
 	}).done(function(data) {
   		diseaseInstructions = data;
   		$("#dis").empty();

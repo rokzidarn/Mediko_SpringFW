@@ -14,7 +14,7 @@ public class Disease implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="idDisease", length=4, nullable=false, updatable=false, unique=true)
+	@Column(name="idDisease", length=10, nullable=false, updatable=false, unique=true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String id;
 	
