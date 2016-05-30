@@ -25,8 +25,7 @@
 		                            					<label for="filterTypeInput">Uredi po:</label>
 														<select class="form-control" id="filterTypeInput">
 															<option value="rd">Datum registracije</option>
-															<option value="fn">Ime</option>
-															<option value="ln">Priimek</option>
+															<option value="em">Email</option>
 															<option value="ur">Uporabniška vloga</option>
 														</select>
 													</div>
@@ -34,7 +33,7 @@
 												<div class="col-md-4">
 													<div class="form-group">
 														<label for="searchInput">Išči:</label>
-														<input class="form-control" type="text" id="searchInput" placeholder="ime ali priimek">
+														<input class="form-control" type="text" id="searchInput" placeholder="email">
 													</div>
 												</div>
 												<div class="col-md-4">
@@ -52,7 +51,42 @@
 													</div>
 												</div>
                             				</div>
-	                            			<div class="more-filters"></div>
+	                            			<div class="more-filters">
+	                            				<div id="moreFilters" class="col-md-12" style="display:none">
+	                            					<div class="row">
+	                            						<div class="col-md-4">
+		                            						<div class="form-group">
+		                            							<label for="orderTypeInput">Razvrstitev:</label>
+																<select class="form-control" id="orderTypeInput">
+																	<option value="desc">Padajoče</option>
+																	<option value="asc">Naraščajoče</option>
+																</select>
+		                            						</div>
+	                            						</div>
+	                            						<div class="col-md-8">
+	                            							<div class="form-group">
+	                            								<label for="showUser">Prikaži uporabniške vloge:</label>
+	                            								<div class="checkbox">
+	                            									<label>
+	                            										<input checked type="checkbox" id="showUser" value="User"> Uporabnik
+																	</label>
+																</div>
+  																<div class="checkbox">
+  																	<label>
+  																		<input checked type="checkbox" id="showDoctors" value="Doctor"> Zdravnik
+																	</label>
+																</div>
+  																<div class="checkbox">
+  																	<label>
+  																		<input checked type="checkbox" id="showNurse" value="Nurse"> Medicinska sestra
+																	</label>
+																</div>
+	                            							</div>
+	                            						</div>
+                            						</div>
+	                            				</div>
+	                            				<div class="show-more-filters-button" onclick="$('#moreFilters').slideToggle(500);">Več nastavitev</div>
+	                            			</div>
 	                            			<div class="show-button">
 	                            				<div class="col-md-12 text-right">
 		                            				<div class="form-group">
@@ -78,29 +112,11 @@
 									    			</thead>
 									    			<tbody id="tableTbody"> 
 									    				<tr"> 
-									    					<th scope="row">1</th> 
-									    					<td>Column content</td> 
-									    					<td>Column content</td> 
-									    					<td>Column content</td>
-								    					</tr> 
-								    					<tr> 
-								    						<th scope="row">2</th> 
-								    						<td>Column content</td> 
-								    						<td>Column content</td> 
-								    						<td>Column content</td> 
-							    						</tr> 
-							    						<tr>
-							    							<th scope="row">3</th>
-							    							<td>Column content</td> 
-							    							<td>Column content</td> 
-							    							<td>Column content</td> 
-						    							</tr> 
-						    							<tr> 
-						    								<th scope="row">4</th> 
-						    								<td>Column content</td> 
-						    								<td>Column content</td> 
-						    								<td>Column content</td> 
-					    								</tr> 
+									    					<th scope="row">-</th> 
+									    					<td>-</td> 
+									    					<td>-</td> 
+									    					<td>-</td>
+								    					</tr>
 				    								</tbody>
 										  		</table>
 											</div>
@@ -126,4 +142,5 @@
             </div>
         </div>
     </body>
+    <script> getUserListNotCompleted() </script>
 </html>

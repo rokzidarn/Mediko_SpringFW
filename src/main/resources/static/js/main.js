@@ -74,6 +74,19 @@ function formatDate(dateString){
 	return ("0" + date.getDate()).slice(-2)+"."+("0" + date.getMonth()).slice(-2)+"."+date.getFullYear();
 }
 
+function usertypeLocaliaztion(userType){
+	switch(userType){
+		case "USER":
+			return "uporabnik";
+		case "DOCTOR":
+			return "zdravnik";
+		case "NURSE":
+			return "medicinska sestra";
+		case "ADMIN":
+			return "administrator";
+	}
+}
+
 var checkupMoreData;
 function toggleShowMoreCheckup(){
 	var patientId = $("#selectedPatientId")[0].innerText;
@@ -412,8 +425,8 @@ function getUserListNotCompleted(){
 			var tr = "<tr>"+
 				"<th scope=\"row\">"+(i+1)+"</th>"+
 				"<td>" + data[i].username+"</td>"+
-				"<td>" + data[i].registrationDate+"</td>"+
-				"<td> - </td>";
+				"<td>" + formatDate(data[i].registrationDate)+"</td>"+
+				"<td>"+ usertypeLocaliaztion(data[i].userType) +"</td>";
 			tableBody.append(tr);
 		}
 	});

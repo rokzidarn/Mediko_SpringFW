@@ -305,6 +305,14 @@ a:link, a:hover, a:active{
 	color: #2C9EB7;
 }
 
+.show-more-filters-button{
+	color:#258094;
+	font-size: 15px;
+	cursor: pointer;
+	padding-left:15px;
+	float:left;
+}
+
 .user-list-export-settings{
     width: 500px;
     position: absolute;
