@@ -64,4 +64,13 @@ public class Medical_Center implements Serializable{
 	public void setNurses(List<NurseData> nurses) {
 		this.nurses = nurses;
 	}
+
+	public PO_Box getPo_box() {
+		return po_box;
+	}
+
+	public void setPo_box(PO_Box po_box) {
+		this.po_box = po_box;
+	}
+	
 }

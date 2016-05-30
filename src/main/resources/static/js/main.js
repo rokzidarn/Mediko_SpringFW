@@ -35,6 +35,8 @@ $( document ).ready(function(){
 	$("#showMoreMedicine").on('click', toggleShowMoreMedicine);
 	$("#deleteMedicineB").on('click', addValueDiseaseId);
 	$("#diseaseInput").on('change', showDiseaseInstructions);
+	$("#dietInput").on('change', showDietInstructions);
+	$("#medicineInput").on('change', showMedicineInstructions);
 });
 
 function showSidebar(){
@@ -64,6 +66,9 @@ function showDiseaseInstructions(){
 	//var e = document.getElementById("diseaseInput");
 	//var diseaseId = e.options[e.selectedIndex].value;
 	var diseaseId = $("#diseaseInput").val();
+	if(diseaseId === "virus ni" || diseaseId === "virusni"){
+		diseaseId = "virus ni "
+	}
 	$.ajax({
   		url: appUrl+"api/instructions/disease/"+diseaseId
 	}).done(function(data) {
@@ -81,6 +86,54 @@ function showDiseaseInstructions(){
                         "</form>";
 
 			$("#dis").append(info);
+		}
+  	});
+}
+
+var dietInstructions;
+function showDietInstructions(){
+	var dietId = $("#dietInput").val();
+	$.ajax({
+  		url: appUrl+"api/instructions/diet/"+dietId
+	}).done(function(data) {
+  		dietInstructions = data;
+  		$("#die").empty();
+  		//document.getElementById("dis").innerHTML = "";
+		for(var i = 0; i<dietInstructions.length; i++){
+			var diIns = dietInstructions[i];
+			var info = "<form method=\"POST\" action=\"#springUrl('/admin')/didel\">"+
+                            "<input type=\"hidden\" name=\"${_csrf.parameterName}\" value=\"${_csrf.token}\"/>"+
+                            "#if($commandiddi) #springBind( \"commandiddi.id\" ) #end"+
+                            "<input type=\"hidden\" name=\"id\" value="+diIns.id+"/>"+
+                            "<p><button type=\"submit\" class=\"btn btn-info\">ODSTRANI</button>&nbsp; <a style=\"color: dodgerblue;\" href="+diIns.text+">"+diIns.text+"</a></p>"+
+                            "#foreach($error in $status.errorMessages) <div class=\"alert-box alert\">$error</div> #end"+
+                        "</form>";
+
+			$("#die").append(info);
+		}
+  	});
+}
+
+var medicineInstructions;
+function showMedicineInstructions(){
+	var medicineId = $("#medicineInput").val();
+	$.ajax({
+  		url: appUrl+"api/instructions/medicine/"+medicineId
+	}).done(function(data) {
+  		medicineInstructions = data;
+  		$("#med").empty();
+  		//document.getElementById("dis").innerHTML = "";
+		for(var i = 0; i<medicineInstructions.length; i++){
+			var mIns = medicineInstructions[i];
+			var info = "<form method=\"POST\" action=\"#springUrl('/admin')/didel\">"+
+                            "<input type=\"hidden\" name=\"${_csrf.parameterName}\" value=\"${_csrf.token}\"/>"+
+                            "#if($commandidm) #springBind( \"commandidm.id\" ) #end"+
+                            "<input type=\"hidden\" name=\"id\" value="+mIns.id+"/>"+
+                            "<p><button type=\"submit\" class=\"btn btn-info\">ODSTRANI</button>&nbsp; <a style=\"color: dodgerblue;\" href="+mIns.text+">"+mIns.text+"</a></p>"+
+                            "#foreach($error in $status.errorMessages) <div class=\"alert-box alert\">$error</div> #end"+
+                        "</form>";
+
+			$("#med").append(info);
 		}
   	});
 }

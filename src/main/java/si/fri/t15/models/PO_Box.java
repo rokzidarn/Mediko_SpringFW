@@ -5,7 +5,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name="PO_Box.findAll", query="SELECT p FROM PO_Box p")
+@NamedQueries({
+	@NamedQuery(name="PO_Box.findAll", query="SELECT p FROM PO_Box p"),
+	@NamedQuery(name="PO_Box.findPOBox", query="SELECT p FROM PO_Box p WHERE p.id=?1")
+})
+
 public class PO_Box implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
