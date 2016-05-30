@@ -97,4 +97,13 @@ public class Medicine implements Serializable{
 	public void setLink(String link) {
 		this.link = link;
 	}
+
+	public List<Disease> getDiseases() {
+		return diseases;
+	}
+
+	public void setDiseases(List<Disease> diseases) {
+		this.diseases = diseases;
+	}
+	
 }

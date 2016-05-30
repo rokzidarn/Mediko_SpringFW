@@ -193,9 +193,8 @@ public class CreateMedicalWorkerController extends ControllerBase{
 		TypedQuery<Medicine> qu2 = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
 		Medicine m = qu2.setParameter(1, commandadm.getMedicine()).getSingleResult(); 
 		
-		List<Medicine> currm = d.getMedicines();
-		currm.add(m);		
-		em.merge(d);
+		m.getDiseases().add(d);		
+		em.merge(m);
 		
 		return "redirect:/admin/medicines";
 	}
@@ -211,9 +210,8 @@ public class CreateMedicalWorkerController extends ControllerBase{
 		TypedQuery<Medicine> qu2 = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
 		Medicine m = qu2.setParameter(1, commandddm.getMedicine()).getSingleResult(); 
 		
-		List<Medicine> currm = d.getMedicines();
-		currm.remove(m);	
-		em.merge(d);
+		m.getDiseases().remove(d);
+		em.merge(m);
 		
 		return "redirect:/admin/medicines";
 	}
