@@ -49,6 +49,7 @@ $( document ).ready(function(){
 
 	//User lists
 	$("#getUserListNotCompletedButton").on('click', getUserListNotCompleted);
+	$("#getUserListNewButton").on('click', getUserListNew);
 	$("#exportUserListButton").on('click', exportUserList);
 });
 
@@ -406,9 +407,10 @@ function getUserListNotCompleted(){
 	var searchInput = $("#searchInput").val();
 	var hitsNumberInput = $("#hitsNumberInput").val();
 	var orderTypeInput = $("#orderTypeInput").val();
-	var showUser = $("#showUser").prop("checked")
-	var showDoctor = $("#showDoctor").prop("checked")
-	var showNurse = $("#showNurse").prop("checked")
+	var showUser = $("#showUser").prop("checked");
+	var showDoctor = $("#showDoctor").prop("checked");
+	var showNurse = $("#showNurse").prop("checked");
+
 	
 	$.ajax({
 	  method: "post",
@@ -422,6 +424,54 @@ function getUserListNotCompleted(){
 	  	showUser:showUser,
 	  	showDoctor:showDoctor,
 	  	showNurse:showNurse }
+	})
+	.done(function( data ) {
+		var tableBody = $("#tableTbody");
+		tableBody.html("");
+		for(var i = 0; i < data.length; i++){
+			/*
+			<tr"> 
+				<th scope="row">1</th> 
+				<td>Column content</td> 
+				<td>Column content</td> 
+				<td>Column content</td>
+			</tr> 
+			*/
+			var tr = "<tr>"+
+				"<th scope=\"row\">"+(i+1)+"</th>"+
+				"<td>" + data[i].username+"</td>"+
+				"<td>" + formatDate(data[i].registrationDate)+"</td>"+
+				"<td>"+ usertypeLocaliaztion(data[i].userType) +"</td>";
+			tableBody.append(tr);
+		}
+	});
+}
+
+function getUserListNew(){
+	var filterTypeInput = $("#filterTypeInput").val();
+	var searchInput = $("#searchInput").val();
+	var hitsNumberInput = $("#hitsNumberInput").val();
+	var orderTypeInput = $("#orderTypeInput").val();
+	var showUser = $("#showUser").prop("checked");
+	var showDoctor = $("#showDoctor").prop("checked");
+	var showNurse = $("#showNurse").prop("checked");
+	var fromInput = $("#fromInput").val();
+	var toInput = $("#toInput").val();
+	
+	$.ajax({
+	  method: "post",
+	  url: appUrl+"api/user/new",
+	  data: {
+	  	_csrf:csrf, 
+	  	filterTypeInput: filterTypeInput,
+	  	searchInput: searchInput,
+	  	hitsNumberInput:hitsNumberInput,
+	  	orderTypeInput:orderTypeInput,
+	  	showUser:showUser,
+	  	showDoctor:showDoctor,
+	  	showNurse:showNurse,
+	  	fromInput:fromInput,
+	  	toInput:toInput }
 	})
 	.done(function( data ) {
 		var tableBody = $("#tableTbody");

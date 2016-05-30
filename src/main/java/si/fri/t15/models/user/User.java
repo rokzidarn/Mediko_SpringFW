@@ -24,6 +24,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import si.fri.t15.base.models.UserData;
 import si.fri.t15.models.UserRole;
 import si.fri.t15.models.UserRole.Role;;
@@ -144,6 +146,7 @@ public class User implements UserDetails, CredentialsContainer{
 		this.passwordResetToken = passwordResetToken;
 	}
 
+	@JsonIgnore
 	public UserData getData() {
 		return data;
 	}

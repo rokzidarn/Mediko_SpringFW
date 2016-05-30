@@ -184,6 +184,11 @@ public class RestController {
 		}
 		List<User> users = (List<User>)query.getResultList();
 		for(int i = 0; i <users.size(); i++){
+			if(users.get(i).getUserType().equals(UserType.ADMIN)){
+				users.remove(i);
+				i--;
+				continue;
+			}
 			if(!showUser && users.get(i).getUserType().equals(UserType.USER)){
 				users.remove(i);
 				i--;
@@ -205,6 +210,70 @@ public class RestController {
 		
 	}
 	
+	
+	@Transactional
+	@RequestMapping(value = "/api/user/new")
+	@ResponseBody
+	public List<User> getUsersNew(
+			@RequestParam(required=false, defaultValue="rd") String filterTypeInput,
+			@RequestParam(required=false, defaultValue="") String searchInput,
+			@RequestParam(required=false, defaultValue="0") int hitsNumberInput,
+			@RequestParam(required=false, defaultValue="asc") String orderTypeInput,
+			@RequestParam(required=false, defaultValue="true") boolean showUser,
+			@RequestParam(required=false, defaultValue="true") boolean showDoctor,
+			@RequestParam(required=false, defaultValue="true") boolean showNurse,
+			@RequestParam(required=false, defaultValue="2016-01-01") String fromInput,
+			@RequestParam(required=false, defaultValue="2017-01-01") String toInput,
+			
+			HttpServletRequest request,@AuthenticationPrincipal User userSession){
+		
+		String orderBy = "registrationDate";
+		switch(filterTypeInput){
+			case "rd":
+				orderBy = "u.registrationDate";
+				break;
+			case "em":
+				orderBy = "u.username";
+				break;
+		}
+		
+		
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.registrationDate >= :fromInput AND u.registrationDate <= :toInput AND u.username LIKE :search "+"ORDER BY "+(orderBy+" "+(orderTypeInput.equals("asc")?"ASC ":"DESC ")));
+		
+		query.setParameter("fromInput",java.sql.Date.valueOf(fromInput));
+		query.setParameter("toInput", java.sql.Date.valueOf(toInput));
+		query.setParameter("search", "%"+searchInput+"%");
+		
+		
+		if(hitsNumberInput>0){
+			query.setMaxResults(hitsNumberInput);
+		}
+		
+		List<User> users = (List<User>)query.getResultList();
+		for(int i = 0; i <users.size(); i++){
+			if(users.get(i).getUserType().equals(UserType.ADMIN)){
+				users.remove(i);
+				i--;
+				continue;
+			}
+			if(!showUser && users.get(i).getUserType().equals(UserType.USER)){
+				users.remove(i);
+				i--;
+				continue;
+			}
+			if(!showDoctor && users.get(i).getUserType().equals(UserType.DOCTOR)){
+				users.remove(i);
+				i--;
+				continue;
+			}
+			if(!showNurse && users.get(i).getUserType().equals(UserType.NURSE)){
+				users.remove(i);
+				i--;
+				continue;
+			}
+		}
+		return users;
+	}
 	//helpers
 	public PatientData getPatient(int patientId, User user){
 		PatientData data = null;
