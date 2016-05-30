@@ -318,7 +318,6 @@ a:link, a:hover, a:active{
     position: absolute;
     z-index: 1;
     top: -40px;
-    left: -50px;
 }
 
 @media (max-width: 992px) {

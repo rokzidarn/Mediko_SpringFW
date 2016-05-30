@@ -26,7 +26,6 @@
 														<select class="form-control" id="filterTypeInput">
 															<option value="rd">Datum registracije</option>
 															<option value="em">Email</option>
-															<option value="ur">Uporabniška vloga</option>
 														</select>
 													</div>
 												</div>
@@ -73,7 +72,7 @@
 																</div>
   																<div class="checkbox">
   																	<label>
-  																		<input checked type="checkbox" id="showDoctors" value="Doctor"> Zdravnik
+  																		<input checked type="checkbox" id="showDoctor" value="Doctor"> Zdravnik
 																	</label>
 																</div>
   																<div class="checkbox">
@@ -98,7 +97,7 @@
 	                            			</div>
                             			</div>
                             		</div> 
-                            		<div id="exportTable" class="users-list-content">
+                            		<div id="exportTable" class="users-list-content" style="left:0">
                             			<div class="panel panel-default">
                             				<div class="table-responsive">
 										  		<table class="table table-hover">

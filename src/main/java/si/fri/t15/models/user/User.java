@@ -31,7 +31,7 @@ import si.fri.t15.models.UserRole.Role;;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="User.findAll", query="SELECT u FROM User u"),
-	@NamedQuery(name="User.findAllWithoutUserData", query="SELECT u FROM User u WHERE u.data = null")
+	@NamedQuery(name="User.findAllWithoutUserData", query="SELECT u FROM User u WHERE u.data = null AND u.username LIKE :search ")
 })
 
 public class User implements UserDetails, CredentialsContainer{

@@ -405,10 +405,23 @@ function getUserListNotCompleted(){
 	var filterTypeInput = $("#filterTypeInput").val();
 	var searchInput = $("#searchInput").val();
 	var hitsNumberInput = $("#hitsNumberInput").val();
+	var orderTypeInput = $("#orderTypeInput").val();
+	var showUser = $("#showUser").prop("checked")
+	var showDoctor = $("#showDoctor").prop("checked")
+	var showNurse = $("#showNurse").prop("checked")
+	
 	$.ajax({
 	  method: "post",
 	  url: appUrl+"api/user/notcompleted",
-	  data: {_csrf:csrf, filterTypeInput: filterTypeInput, searchInput: searchInput,hitsNumberInput:hitsNumberInput }
+	  data: {
+	  	_csrf:csrf, 
+	  	filterTypeInput: filterTypeInput,
+	  	searchInput: searchInput,
+	  	hitsNumberInput:hitsNumberInput,
+	  	orderTypeInput:orderTypeInput,
+	  	showUser:showUser,
+	  	showDoctor:showDoctor,
+	  	showNurse:showNurse }
 	})
 	.done(function( data ) {
 		var tableBody = $("#tableTbody");
@@ -446,9 +459,11 @@ function exportUserList(){
     // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
     //doc.save('Test.pdf');
     $('#exportTable').addClass("user-list-export-settings");
+    $('#exportTable').css("left",($('#exportTable').offset().left* -1)+45);
     html2pdf ($('#exportTable'),doc,function(doc){
     	
-        doc.save("SeznameUporabnikov.pdf");
+        doc.save("SeznamUporabnikov.pdf");
         $('#exportTable').removeClass("user-list-export-settings");
+        $('#exportTable').css("left","0");
     });
 }
