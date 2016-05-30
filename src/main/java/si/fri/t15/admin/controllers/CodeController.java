@@ -1,12 +1,10 @@
 package si.fri.t15.admin.controllers;
 
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,15 +16,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.Diet;
 import si.fri.t15.models.Disease;
 import si.fri.t15.models.Medical_Center;
 import si.fri.t15.models.Medicine;
 import si.fri.t15.models.PO_Box;
+import si.fri.t15.validators.AddDietForm;
+import si.fri.t15.validators.AddDietValidator;
+import si.fri.t15.validators.AddDiseaseForm;
+import si.fri.t15.validators.AddDiseaseValidator;
+import si.fri.t15.validators.AddMedCenterForm;
+import si.fri.t15.validators.AddMedCenterValidator;
+import si.fri.t15.validators.AddMedicineForm;
+import si.fri.t15.validators.AddMedicineValidator;
 import si.fri.t15.validators.CreateMedicalWorkerForm;
-import si.fri.t15.validators.CreateMedicalWorkerValidator;
 
 @Controller
 public class CodeController extends ControllerBase{
@@ -34,12 +38,39 @@ public class CodeController extends ControllerBase{
 	EntityManager em;
 	
 	@Autowired
-	CreateMedicalWorkerValidator createMedicalWorkerValidator;
+	AddDiseaseValidator addDiseaseValidator;
 	
-	@InitBinder("command")
-	protected void initBinderCMW(HttpServletRequest request,
+	@InitBinder("commandda")
+	protected void initBinderAD(HttpServletRequest request,
 			ServletRequestDataBinder binder) {
-		binder.setValidator(createMedicalWorkerValidator);
+		binder.setValidator(addDiseaseValidator);
+	}
+	
+	@Autowired
+	AddDietValidator adDietValidator;
+	
+	@InitBinder("commanddia")
+	protected void initBinderADI(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(adDietValidator);
+	}
+	
+	@Autowired
+	AddMedCenterValidator addMedCenterValidator;
+	
+	@InitBinder("commandmca")
+	protected void initBinderAMC(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(addMedCenterValidator);
+	}
+	
+	@Autowired
+	AddMedicineValidator addMedicineValidator;
+	
+	@InitBinder("commandma")
+	protected void initBinderAM(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(addMedicineValidator);
 	}
 	
 	@RequestMapping(value = "/admin/code",  method=RequestMethod.GET)
@@ -60,57 +91,57 @@ public class CodeController extends ControllerBase{
 	
 	@Transactional
 	@RequestMapping(value = "/admin/code/disease/add",  method=RequestMethod.POST)
-	public ModelAndView addDiseasePOST(Model model, @ModelAttribute("command") @Valid CreateMedicalWorkerForm command,
+	public String addDiseasePOST(Model model, @ModelAttribute("commandda") @Valid AddDiseaseForm commandda,
 			BindingResult result, HttpServletRequest request) {
 		
 		Disease d = new Disease();
-		d.setDiseaseId("asd");
-		d.setIsAllergy(0);
-		d.setName("asdasdasd");
+		d.setDiseaseId(commandda.getDid());
+		d.setIsAllergy(commandda.getDtype());
+		d.setName(commandda.getDname());
 		
 		em.persist(d);		
-		return new ModelAndView("codes");
+		return "redirect:/admin/code";
 	}
 	
 	@Transactional
 	@RequestMapping(value = "/admin/code/diet/add",  method=RequestMethod.POST)
-	public ModelAndView addDietPOST(Model model, @ModelAttribute("command") @Valid CreateMedicalWorkerForm command,
+	public String addDietPOST(Model model, @ModelAttribute("commandia") @Valid AddDietForm commandia,
 			BindingResult result, HttpServletRequest request) {
 		
 		Diet d = new Diet();
-		d.setName("asdasdasd");
+		d.setName(commandia.getDiname());
 		
 		em.persist(d);	
-		return new ModelAndView("codes");
+		return "redirect:/admin/code";
 	}
 	
 	@Transactional
 	@RequestMapping(value = "/admin/code/medicine/add",  method=RequestMethod.POST)
-	public ModelAndView addMedicinePOST(Model model, @ModelAttribute("command") @Valid CreateMedicalWorkerForm command,
+	public String addMedicinePOST(Model model, @ModelAttribute("commandma") @Valid AddMedicineForm commandma,
 			BindingResult result, HttpServletRequest request) {
 		
 		Medicine m = new Medicine();
-		m.setName("asdasd2");
+		m.setName(commandma.getMname());
 		m.setType('m');
-		m.setLink("asdasasd");
+		m.setLink("https://en.wikipedia.org/wiki/Medicine");
 		
 		em.persist(m);		
-		return new ModelAndView("codes");
+		return "redirect:/admin/code";
 	}
 	
 	@Transactional
 	@RequestMapping(value = "/admin/code/medical_center/add",  method=RequestMethod.POST)
-	public ModelAndView addMedicalCenterPOST(Model model, @ModelAttribute("command") @Valid CreateMedicalWorkerForm command,
+	public String addMedicalCenterPOST(Model model, @ModelAttribute("commandmca") @Valid AddMedCenterForm commandmca,
 			BindingResult result, HttpServletRequest request) {
 		
 		Medical_Center mc = new Medical_Center();
-		mc.setName("asdasd");
+		mc.setName(commandmca.getMcname());
 		
 		TypedQuery<PO_Box> qu = em.createNamedQuery("PO_Box.findPOBox", PO_Box.class);
-		PO_Box po = qu.setParameter(1, 8270).getSingleResult();
+		PO_Box po = qu.setParameter(1, commandmca.getPid()).getSingleResult();
 		mc.setPo_box(po);
 		
 		em.persist(mc);		
-		return new ModelAndView("codes");
+		return "redirect:/admin/code";
 	}
 }

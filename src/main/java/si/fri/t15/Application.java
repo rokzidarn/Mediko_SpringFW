@@ -17,6 +17,10 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import si.fri.t15.dao.UserDetailsService;
 import si.fri.t15.login.controllers.SessionEndedListener;
+import si.fri.t15.validators.AddDietValidator;
+import si.fri.t15.validators.AddDiseaseValidator;
+import si.fri.t15.validators.AddMedCenterValidator;
+import si.fri.t15.validators.AddMedicineValidator;
 import si.fri.t15.validators.ChangePasswordValidator;
 import si.fri.t15.validators.CreateMedicalWorkerValidator;
 import si.fri.t15.validators.CreatePatientValidator;
@@ -199,6 +203,25 @@ public class Application extends WebMvcConfigurerAdapter {
 		return new MedDelDiseaseValidator();
 	}
 	
+	@Bean
+	public AddDiseaseValidator addDiseaseValidator(){
+		return new AddDiseaseValidator();
+	}
+	
+	@Bean
+	public AddDietValidator addDietValidator(){
+		return new AddDietValidator();
+	}
+	
+	@Bean
+	public AddMedicineValidator addMedicineValidator(){
+		return new AddMedicineValidator();
+	}
+	
+	@Bean
+	public AddMedCenterValidator addMedCenterValidator(){
+		return new AddMedCenterValidator();
+	}
 	
 	@Bean
 	public SessionEndedListener sessionEndedListener() {

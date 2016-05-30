@@ -15,7 +15,7 @@ public class Disease implements Serializable{
 	
 	@Id
 	@Column(name="idDisease", length=10, nullable=false, updatable=false, unique=true)
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String id;
 	
 	@Column(name="Name", length=45, nullable=false)

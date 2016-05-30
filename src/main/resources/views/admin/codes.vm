@@ -28,8 +28,8 @@
                                                 #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
                                                 #if($commandda) #springBind( "commandda.dtype" ) #end
                                                     <label>Tip</label><br>
-                                                    <label><input type="radio" class="radio-inline" id="dallergyInput0" name="dallergy" value="0">&nbsp;Bolezen</label>&nbsp;&nbsp;&nbsp;
-                                                    <label><input type="radio" class="radio-inline" id="dallergyInput1" name="dallergy" value="1">&nbsp;Alergija</label>
+                                                    <label><input type="radio" class="radio-inline" id="dallergyInput0" name="dtype" value="0">&nbsp;Bolezen</label>&nbsp;&nbsp;&nbsp;
+                                                    <label><input type="radio" class="radio-inline" id="dallergyInput1" name="dtype" value="1">&nbsp;Alergija</label>
                                                 #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div>#end                                               
                                                 <br><br><button type="submit" class="btn btn-info">DODAJ BOLEZEN</button>    
                                             </form>
@@ -38,7 +38,7 @@
                                     <div class="col-md-6">
                                         <form method="POST" action="#springUrl('/admin')/code/diet/add">
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                            #if($commanddia) #springBind( "commandda.dname" ) #end
+                                            #if($commanddia) #springBind( "commanddia.dname" ) #end
                                                 <label for="dinameInput">Ime diete</label>
                                                 <input type="text" class="form-control" id="dinameInput" name="diname" placeholder="Vnesite ime diete!"><br>   
                                             #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div>#end
