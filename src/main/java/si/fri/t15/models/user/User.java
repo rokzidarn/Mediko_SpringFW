@@ -1,4 +1,5 @@
 package si.fri.t15.models.user;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
@@ -22,12 +24,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import si.fri.t15.base.models.UserData;
 import si.fri.t15.models.UserRole;
 import si.fri.t15.models.UserRole.Role;;
 
 @Entity
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@NamedQueries({
+	@NamedQuery(name="User.findAll", query="SELECT u FROM User u"),
+	@NamedQuery(name="User.findAllWithoutUserData", query="SELECT u FROM User u WHERE u.data = null AND u.username LIKE :search ")
+})
+
 public class User implements UserDetails, CredentialsContainer{
 	
 	private static final long serialVersionUID = 1L;
@@ -48,6 +56,9 @@ public class User implements UserDetails, CredentialsContainer{
 	
 	@Column(name="PasswordResetToken", length=15, updatable=true, unique=true)
 	private String passwordResetToken;
+	
+	@Column(name="RegistrationDate")
+	private Date registrationDate;
 	
 	@OneToOne
 	private UserData data;
@@ -135,6 +146,7 @@ public class User implements UserDetails, CredentialsContainer{
 		this.passwordResetToken = passwordResetToken;
 	}
 
+	@JsonIgnore
 	public UserData getData() {
 		return data;
 	}
@@ -183,6 +195,14 @@ public class User implements UserDetails, CredentialsContainer{
 		this.selectedPatient = selectedPatient;
 	}
 	
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
+	}
+
 	public UserType getUserType() {
 		boolean admin = false;
 		UserType type = UserType.USER;

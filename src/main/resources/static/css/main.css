@@ -177,7 +177,9 @@ a:link, a:hover, a:active{
 	color:#36B8D5;
 }
 
-
+.padding-top-20{
+	padding-top:20px;
+}
 
 .content{
 	padding: 20px;
@@ -303,6 +305,20 @@ a:link, a:hover, a:active{
 	color: #2C9EB7;
 }
 
+.show-more-filters-button{
+	color:#258094;
+	font-size: 15px;
+	cursor: pointer;
+	padding-left:15px;
+	float:left;
+}
+
+.user-list-export-settings{
+    width: 500px;
+    position: absolute;
+    z-index: 1;
+    top: -40px;
+}
 
 @media (max-width: 992px) {
 	.content-container{
