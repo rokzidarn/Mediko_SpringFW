@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Hibernate;
@@ -35,6 +36,7 @@ import si.fri.t15.models.WorkWeek;
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
+import si.fri.t15.models.user.User.UserType;
 
 @Controller
 public class RestController {
@@ -149,6 +151,69 @@ public class RestController {
 		
 		
 		return appointments;
+	}
+
+	//admin
+	@Transactional
+	@RequestMapping(value = "/api/user/notcompleted")
+	@ResponseBody
+	public List<User> getUsersNotCompleted(
+			@RequestParam(required=false, defaultValue="rd") String filterTypeInput,
+			@RequestParam(required=false, defaultValue="") String searchInput,
+			@RequestParam(required=false, defaultValue="0") int hitsNumberInput,
+			@RequestParam(required=false, defaultValue="asc") String orderTypeInput,
+			@RequestParam(required=false, defaultValue="true") boolean showUser,
+			@RequestParam(required=false, defaultValue="true") boolean showDoctor,
+			@RequestParam(required=false, defaultValue="true") boolean showNurse,
+			
+			HttpServletRequest request,@AuthenticationPrincipal User userSession){
+		
+		/*Query query = em.createNamedQuery("User.findAllWithoutUserData");
+		query.setParameter("search", "%"+searchInput+"%");*/
+		String orderBy = "registrationDate";
+		switch(filterTypeInput){
+			case "rd":
+				orderBy = "u.registrationDate";
+				break;
+			case "em":
+				orderBy = "u.username";
+				break;
+		}
+		
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.data = null AND u.username LIKE :search "+"ORDER BY "+(orderBy+" "+(orderTypeInput.equals("asc")?"ASC ":"DESC ")));
+		query.setParameter("search", "%"+searchInput+"%");
+		//+" "+(orderTypeInput.equals("asc")?"ASC":"DESC")
+		//query.setParameter("orderBy", orderBy);
+		
+		if(hitsNumberInput>0){
+			query.setMaxResults(hitsNumberInput);
+		}
+		List<User> users = (List<User>)query.getResultList();
+		for(int i = 0; i <users.size(); i++){
+			if(users.get(i).getUserType().equals(UserType.ADMIN)){
+				users.remove(i);
+				i--;
+				continue;
+			}
+			if(!showUser && users.get(i).getUserType().equals(UserType.USER)){
+				users.remove(i);
+				i--;
+				continue;
+			}
+			if(!showDoctor && users.get(i).getUserType().equals(UserType.DOCTOR)){
+				users.remove(i);
+				i--;
+				continue;
+			}
+			if(!showNurse && users.get(i).getUserType().equals(UserType.NURSE)){
+				users.remove(i);
+				i--;
+				continue;
+			}
+		}
+		return users;
+		
+		
 	}
 	
 	//Doctor
@@ -379,6 +444,70 @@ public class RestController {
 		return appointment;
 	}
 	
+	
+	@Transactional
+	@RequestMapping(value = "/api/user/new")
+	@ResponseBody
+	public List<User> getUsersNew(
+			@RequestParam(required=false, defaultValue="rd") String filterTypeInput,
+			@RequestParam(required=false, defaultValue="") String searchInput,
+			@RequestParam(required=false, defaultValue="0") int hitsNumberInput,
+			@RequestParam(required=false, defaultValue="asc") String orderTypeInput,
+			@RequestParam(required=false, defaultValue="true") boolean showUser,
+			@RequestParam(required=false, defaultValue="true") boolean showDoctor,
+			@RequestParam(required=false, defaultValue="true") boolean showNurse,
+			@RequestParam(required=false, defaultValue="2016-01-01") String fromInput,
+			@RequestParam(required=false, defaultValue="2017-01-01") String toInput,
+			
+			HttpServletRequest request,@AuthenticationPrincipal User userSession){
+		
+		String orderBy = "registrationDate";
+		switch(filterTypeInput){
+			case "rd":
+				orderBy = "u.registrationDate";
+				break;
+			case "em":
+				orderBy = "u.username";
+				break;
+		}
+		
+		
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.registrationDate >= :fromInput AND u.registrationDate <= :toInput AND u.username LIKE :search "+"ORDER BY "+(orderBy+" "+(orderTypeInput.equals("asc")?"ASC ":"DESC ")));
+		
+		query.setParameter("fromInput",java.sql.Date.valueOf(fromInput));
+		query.setParameter("toInput", java.sql.Date.valueOf(toInput));
+		query.setParameter("search", "%"+searchInput+"%");
+		
+		
+		if(hitsNumberInput>0){
+			query.setMaxResults(hitsNumberInput);
+		}
+		
+		List<User> users = (List<User>)query.getResultList();
+		for(int i = 0; i <users.size(); i++){
+			if(users.get(i).getUserType().equals(UserType.ADMIN)){
+				users.remove(i);
+				i--;
+				continue;
+			}
+			if(!showUser && users.get(i).getUserType().equals(UserType.USER)){
+				users.remove(i);
+				i--;
+				continue;
+			}
+			if(!showDoctor && users.get(i).getUserType().equals(UserType.DOCTOR)){
+				users.remove(i);
+				i--;
+				continue;
+			}
+			if(!showNurse && users.get(i).getUserType().equals(UserType.NURSE)){
+				users.remove(i);
+				i--;
+				continue;
+			}
+		}
+		return users;
+	}
 	//helpers
 	public PatientData getPatient(int patientId, User user){
 		PatientData data = null;
