@@ -20,11 +20,11 @@ public class Appointment implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="idAppointment", length=4, nullable=false, updatable=false, unique=true)
+	@Column(name="idAppointment", nullable=false, updatable=false, unique=true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="Date", nullable=false)
+	@Column(name="Date")
 	private Date date;
 	
 	@Column(nullable=false)
@@ -41,6 +41,28 @@ public class Appointment implements Serializable{
 	@ManyToOne
 	private WorkDay workDay;
 	
+	transient private boolean isTaken;
+	
+	public boolean isTaken() {
+		return patient != null;
+	}
+
+	@Column(nullable=false)
+	private boolean doctorFreeTime;
+	
+	
+	public boolean isDoctorFreeTime() {
+		return doctorFreeTime;
+	}
+
+	public void setDoctorFreeTime(boolean doctorFreeTime) {
+		this.doctorFreeTime = doctorFreeTime;
+	}
+
+	public boolean isDoctor() {
+		return (patient.equals(doctor));
+	}
+
 	public Appointment() {
 	}
 
@@ -77,4 +99,23 @@ public class Appointment implements Serializable{
 	public void setPatient(PatientData user) {
 		this.patient = user;
 	}
+	
+
+	public Timestamp getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(Timestamp dateTime) {
+		this.dateTime = dateTime;
+	}
+
+	@JsonIgnore
+	public WorkDay getWorkDay() {
+		return workDay;
+	}
+
+	public void setWorkDay(WorkDay workDay) {
+		this.workDay = workDay;
+	}
+	
 }

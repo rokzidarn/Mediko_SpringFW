@@ -45,6 +45,8 @@ $( document ).ready(function(){
 	$(".calendar-appointment").on('click', appointmentOnCalendarClicked);
 	$(".next-week-button").on('click', nextCalendar);
 	$(".prev-week-button").on('click', previousCalendar);
+	$(".save-work-week-button").on('click', saveWorkDay);
+	$(".copy-current-week").on('click', copyCurrentWeek);
 });
 
 function showSidebar(){
@@ -65,9 +67,41 @@ function opencheckup(link){
 
 function formatDate(dateString){
 	var date = new Date(dateString);
+	return formatDateFromDate(date);
+}
 
+function formatTime(timeString){
+	var date = new Date(timeString);
+	return ("0" + date.getHours()).slice(-2)+":"+("0"+date.getMinutes()).slice(-2);
+}
+
+function formatDateFromDate(date){
 	return ("0" + date.getDate()).slice(-2)+"."+("0" + date.getMonth()).slice(-2)+"."+date.getFullYear();
 }
+
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
+
+jQuery.fn.extend({
+    toggleText: function (a, b){
+        var that = this;
+            if (that.text() != a && that.text() != b){
+                that.text(a);
+            }
+            else
+            if (that.text() == a){
+                that.text(b);
+            }
+            else
+            if (that.text() == b){
+                that.text(a);
+            }
+        return this;
+    }
+});
 
 var checkupMoreData;
 function toggleShowMoreCheckup(){
@@ -362,7 +396,7 @@ function nextCalendar(){
 	if(currentCalendar < 3){
 		$("#calendar"+currentCalendar).slideToggle(500);
 		currentCalendar++;
-		$("#calendar"+currentCalendar).slideToggle(500);
+		$("#calendar"+currentCalendar).delay(500).slideToggle(500);
 	}
 
 	$(".prev-week-button").show();
@@ -374,10 +408,139 @@ function previousCalendar(){
 	if(currentCalendar > 1){
 		$("#calendar"+currentCalendar).slideToggle(500);
 		currentCalendar--;
-		$("#calendar"+currentCalendar).slideToggle(500);
+		$("#calendar"+currentCalendar).delay(500).slideToggle(500);
 	}
 	$(".next-week-button").show();
 	if(currentCalendar == 1){
 		$(".prev-week-button").hide();
 	}
+}
+
+function doctorAppointmentOnCalendarClicked(){
+	var appointmentId = $(this)[0].id;
+  	
+  	$.ajax({
+    method: "post",
+    url: appUrl+"/api/doctor/setfreetime",
+    data: {
+      _csrf:csrf, 
+      appointmentId:appointmentId}
+	})
+	.done(function( data ) {
+		if(data){
+			if(data.doctorFreeTime)
+				$("#"+data.idAppointment).addClass("doctor-free-time");
+			else
+				$("#"+data.idAppointment).removeClass("doctor-free-time");
+		}
+	});
+}
+
+function loadTimetableCalendar(){
+
+	$.ajax({
+  		url: appUrl+"api/doctor/"+doctorId+"/workweek"
+	}).done(function(data) {
+		for(var i= 0; i < data.length; i++){
+			//load calendar
+			var date = new Date(data[i].startDate);
+			for(var x = 0; x < data[i].workDays.length; x++){
+				$("#calendar"+(i+1)+"day"+(x+1)).text(formatDateFromDate(date));
+				date = addDays(date,1);
+				$("#calendar"+(i+1)+"day"+(x+1)).parent()[0].id = data[i].id;
+				if(i > 0){
+					$("#calendar"+(i+1)+"day"+(x+1)).siblings()[0].children[0].id = data[i].workDays[x].id;
+
+					if(data[i].workDays[x].start) $("#calendar"+(i+1)+"day"+(x+1)).siblings()[0].children[0].children[1].value =data[i].workDays[x].start.slice(0,5);
+					if(data[i].workDays[x].end) $("#calendar"+(i+1)+"day"+(x+1)).siblings()[0].children[0].children[3].value =data[i].workDays[x].end.slice(0,5);
+					if(data[i].workDays[x].minuteInterval) $("#calendar"+(i+1)+"day"+(x+1)).siblings()[0].children[0].children[5].value =data[i].workDays[x].minuteInterval;
+					if(data[i].workDays[x].note) $("#calendar"+(i+1)+"day"+(x+1)).siblings()[0].children[0].children[7].value =data[i].workDays[x].note;
+				}
+				if(data[i].workDays[x].appointments.length == 0){
+					$("#calendar"+(i+1)+"day"+(x+1)+"Appointments").html("<div class=\"no-appointments\">prazno</div>");
+				}else{
+                    $("#calendar"+(i+1)+"day"+(x+1)+"Appointments").html("");
+                    var appointments = data[i].workDays[x].appointments
+                    for(var a = 0; a < appointments.length; a++){
+                    	var div;
+                    	if(a%2==0)
+                    		div = "<div id=\""+appointments[a].idAppointment+"\" class=\"calendar-appointment doctor-calendar-appointment "+((appointments[a].doctorFreeTime)?"doctor-free-time":"")+" c-a-even\">"+formatTime(appointments[a].dateTime)+"</div>";
+                    	else
+                    		div = "<div id=\""+appointments[a].idAppointment+"\" class=\"calendar-appointment doctor-calendar-appointment "+((appointments[a].doctorFreeTime)?"doctor-free-time":"")+" c-a-odd\">"+formatTime(appointments[a].dateTime)+"</div>";
+
+                    	$("#calendar"+(i+1)+"day"+(x+1)+"Appointments").append(div);
+                    }
+				}
+			}
+		}
+		$(".doctor-calendar-appointment").on('click', doctorAppointmentOnCalendarClicked);
+  		/*console.log(data);
+  		var appointmentsInput = $("#orderCheckupAppointmentInput");
+  		appointmentsInput.html("");
+  		for(var i = 0; i < data.length;i++){
+  			
+
+  			var option = $("<option />");
+  			option.val(data[i].idAppointment);
+  			option.text( data[i].date);
+
+  			appointmentsInput.append(option);
+  		}
+  		appointmentsInput.prop('disabled', false);
+		*/
+
+
+		//todo
+		//BUILD urnik!!!
+		$("#orderCheckupSubmit").prop('disabled',false);
+  	});
+}
+
+function saveWorkDay(){
+	var workDayId = $(this).parent().siblings()[0].id
+	var workDayStart = $(this).parent().siblings()[0].children[1].value;
+	var workDayEnd = $(this).parent().siblings()[0].children[3].value;
+	var workDayInterval = $(this).parent().siblings()[0].children[5].value;
+	var workDayNote = $(this).parent().siblings()[0].children[7].value;
+
+	$.ajax({
+    method: "post",
+    url: appUrl+"/api/doctor/updateworkday",
+    data: {
+      _csrf:csrf, 
+      workDayId:workDayId,
+      workDayStart:workDayStart,
+      workDayEnd:workDayEnd,
+      workDayInterval:workDayInterval,
+      workDayNote:workDayNote}
+  })
+  .done(function( data ) {
+  	if(data.length > 0){
+	  	var workDayId = data[0].workDayId;
+	  	var editorId = $("#"+workDayId).parent()[0].id
+	  	$("#"+editorId).slideToggle(500);
+	  	$($("#"+workDayId).parent().siblings()[1]).toggleText('Skrij', 'Uredi');
+	  	loadTimetableCalendar();
+  	}
+  });
+
+}
+
+function copyCurrentWeek(){
+	var currentWeekId = $("#calendar1").children()[1].id;
+	var destinationWeekId = $(this).parent().parent().siblings()[0].id;
+	$.ajax({
+    method: "post",
+    url: appUrl+"/api/doctor/copyworkweek",
+    data: {
+      _csrf:csrf, 
+      currentWeekId:currentWeekId,
+      destinationWeekId:destinationWeekId}
+	})
+	.done(function( data ) {
+		console.log(data);
+		if(data.length > 0){
+	  		loadTimetableCalendar();
+		}
+	});
 }

@@ -66,6 +66,7 @@ public class DoctorData extends UserData {
 	@OneToMany(mappedBy="doctor")
     private List<WorkWeek> workWeeks;
 	
+	@JsonIgnore
 	public List<WorkWeek> getWorkWeeks() {
 		return workWeeks;
 	}
