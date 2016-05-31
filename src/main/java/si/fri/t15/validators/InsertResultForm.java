@@ -1,7 +1,6 @@
 package si.fri.t15.validators;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 public class InsertResultForm {
 	@NotNull

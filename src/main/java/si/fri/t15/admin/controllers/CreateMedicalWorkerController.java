@@ -4,13 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.Resource;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -34,12 +31,6 @@ import si.fri.t15.validators.CreateMedicalWorkerForm;
 
 @Controller
 public class CreateMedicalWorkerController extends ControllerBase{
-	
-	@Autowired
-	EntityManager em;
-	
-	@Autowired
-	PasswordEncoder passwordEncoder;
 	
 	@InitBinder
 	protected void initBinder(HttpServletRequest request,

@@ -1,15 +1,10 @@
 package si.fri.t15.patient.controllers;
 
-import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -22,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import si.fri.t15.base.controllers.ControllerBase;
-import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
 import si.fri.t15.models.user.User.UserType;
 import si.fri.t15.validators.ChangePasswordForm;
@@ -30,12 +24,6 @@ import si.fri.t15.validators.ChangePasswordValidator;
 
 @Controller
 public class ChangePasswordController extends ControllerBase {
-	
-	@Autowired
-	EntityManager em;
-	
-	@Autowired
-	PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	ChangePasswordValidator changePasswordValidator;
