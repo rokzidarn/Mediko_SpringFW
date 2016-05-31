@@ -35,12 +35,6 @@ import si.fri.t15.validators.CreateMedicalWorkerForm;
 @Controller
 public class CreateMedicalWorkerController extends ControllerBase{
 	
-	@Autowired
-	EntityManager em;
-	
-	@Autowired
-	PasswordEncoder passwordEncoder;
-	
 	@InitBinder
 	protected void initBinder(HttpServletRequest request,
 			ServletRequestDataBinder binder) {

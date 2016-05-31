@@ -32,12 +32,6 @@ import si.fri.t15.validators.ChangePasswordValidator;
 public class ChangePasswordController extends ControllerBase {
 	
 	@Autowired
-	EntityManager em;
-	
-	@Autowired
-	PasswordEncoder passwordEncoder;
-	
-	@Autowired
 	ChangePasswordValidator changePasswordValidator;
 	
 	@InitBinder("command")

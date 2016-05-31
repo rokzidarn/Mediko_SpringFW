@@ -32,9 +32,6 @@ import si.fri.t15.validators.SelectDoctorValidator;
 public class SelectDoctorsController extends ControllerBase{
 	
 	@Autowired
-	EntityManager em;
-	
-	@Autowired
 	SelectDoctorValidator selectDoctorValdiator;
 	
 	@InitBinder("command")

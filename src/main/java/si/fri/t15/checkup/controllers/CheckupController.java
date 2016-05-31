@@ -52,9 +52,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class CheckupController extends ControllerBase {
 	
 	@Autowired
-	EntityManager em;
-	
-	@Autowired
 	InsertReasonValidator insertReasonValidator;
 	
 	@InitBinder("commandr")

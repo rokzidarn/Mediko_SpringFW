@@ -31,8 +31,6 @@ import si.fri.t15.models.user.User.UserType;
 
 @Controller
 public class HomeController extends ControllerBase{
-	@Autowired
-	EntityManager em;
 	
 	@RequestMapping(value = "/dashboard/patient/{id}")
 	@Transactional

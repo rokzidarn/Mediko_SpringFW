@@ -44,13 +44,7 @@ import si.fri.t15.validators.SignUpForm;
 public class SignupController extends ControllerBase {
 	
 	@Autowired
-	PasswordEncoder passwordEncoder;
-	
-	@Autowired
 	JavaMailSender mailSender;
-	
-	@PersistenceContext
-    private EntityManager em;
 	
 	@Autowired
 	UserRepository userRepo;

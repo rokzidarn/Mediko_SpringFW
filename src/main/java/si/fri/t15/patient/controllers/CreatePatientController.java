@@ -33,9 +33,6 @@ import si.fri.t15.validators.CreatePatientValidator;
 public class CreatePatientController extends ControllerBase{
 	
 	@Autowired
-	EntityManager em;
-	
-	@Autowired
 	CreatePatientValidator createPatientValidator;
 	
 	@InitBinder("command")
