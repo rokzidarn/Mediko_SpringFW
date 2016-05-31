@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import si.fri.t15.models.user.DoctorData;
-
 @Entity
 public class WorkDay {
 	

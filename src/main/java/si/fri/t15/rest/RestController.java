@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import si.fri.t15.dao.UserRepository;
 import si.fri.t15.models.Appointment;
 import si.fri.t15.models.Checkup;
 import si.fri.t15.models.Diet;

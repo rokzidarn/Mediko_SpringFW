@@ -6,7 +6,6 @@ import javax.validation.Valid;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -45,8 +44,6 @@ import si.fri.t15.validators.InsertReasonForm;
 import si.fri.t15.validators.InsertReasonValidator;
 import si.fri.t15.validators.InsertResultForm;
 import si.fri.t15.validators.InsertResultValidator;
-
-import org.springframework.transaction.annotation.Transactional;
 
 @Controller
 public class CheckupController extends ControllerBase {
