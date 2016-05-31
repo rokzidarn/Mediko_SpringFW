@@ -37,6 +37,7 @@ $( document ).ready(function(){
 	$("#diseaseInput").on('change', showDiseaseInstructions);
 	$("#dietInput").on('change', showDietInstructions);
 	$("#medicineInput").on('change', showMedicineInstructions);
+	$("#diseaseMInput").on('change', showMedicineDisease);
 });
 
 function showSidebar(){
@@ -74,19 +75,19 @@ function showDiseaseInstructions(){
 	}).done(function(data) {
   		diseaseInstructions = data;
   		$("#dis").empty();
-  		//document.getElementById("dis").innerHTML = "";
-		for(var i = 0; i<diseaseInstructions.length; i++){
-			var dIns = diseaseInstructions[i];
-			var info = "<form method=\"POST\" action=\"#springUrl('/admin')/ddel\">"+
-                            "<input type=\"hidden\" name=\"${_csrf.parameterName}\" value=\"${_csrf.token}\"/>"+
-                            "#if($commandidd) #springBind( \"commandidd.id\" ) #end"+
-                            "<input type=\"hidden\" name=\"id\" value="+dIns.id+"/>"+
-                            "<p><button type=\"submit\" class=\"btn btn-info\">ODSTRANI</button>&nbsp; <a style=\"color: dodgerblue;\" href="+dIns.text+">"+dIns.text+"</a></p>"+
-                            "#foreach($error in $status.errorMessages) <div class=\"alert-box alert\">$error</div> #end"+
-                        "</form>";
-
-			$("#dis").append(info);
+  		$("#disSelect").empty();
+  		if(diseaseInstructions.length!=0){
+			for(var i = 0; i<diseaseInstructions.length; i++){
+				var dIns = diseaseInstructions[i];
+				var info = "<p>&nbsp;• <a style=\"color: dodgerblue;\" href="+dIns.text+">"+dIns.text+"</a></p>";
+				var dinfo = "<option value="+dIns.id+">"+dIns.text+"</option>";
+				$("#dis").append(info);
+				$("#disSelect").append(dinfo);
+			}
 		}
+		else{
+			$("#dis").append("<p>Ni navodil!</p>");
+		}	
   	});
 }
 
@@ -98,18 +99,18 @@ function showDietInstructions(){
 	}).done(function(data) {
   		dietInstructions = data;
   		$("#die").empty();
-  		//document.getElementById("dis").innerHTML = "";
-		for(var i = 0; i<dietInstructions.length; i++){
-			var diIns = dietInstructions[i];
-			var info = "<form method=\"POST\" action=\"#springUrl('/admin')/didel\">"+
-                            "<input type=\"hidden\" name=\"${_csrf.parameterName}\" value=\"${_csrf.token}\"/>"+
-                            "#if($commandiddi) #springBind( \"commandiddi.id\" ) #end"+
-                            "<input type=\"hidden\" name=\"id\" value="+diIns.id+"/>"+
-                            "<p><button type=\"submit\" class=\"btn btn-info\">ODSTRANI</button>&nbsp; <a style=\"color: dodgerblue;\" href="+diIns.text+">"+diIns.text+"</a></p>"+
-                            "#foreach($error in $status.errorMessages) <div class=\"alert-box alert\">$error</div> #end"+
-                        "</form>";
-
-			$("#die").append(info);
+  		$("#dieSelect").empty();
+  		if(dietInstructions.length!=0){
+			for(var i = 0; i<dietInstructions.length; i++){
+				var diIns = dietInstructions[i];
+				var info = "<p>&nbsp;• <a style=\"color: dodgerblue;\" href="+diIns.text+">"+diIns.text+"</a></p>";
+				var dinfo = "<option value="+diIns.id+">"+diIns.text+"</option>";
+				$("#die").append(info);
+				$("#dieSelect").append(dinfo);
+			}
+		}
+		else{
+			$("#die").append("<p>Ni navodil!</p>");
 		}
   	});
 }
@@ -122,18 +123,39 @@ function showMedicineInstructions(){
 	}).done(function(data) {
   		medicineInstructions = data;
   		$("#med").empty();
-  		//document.getElementById("dis").innerHTML = "";
-		for(var i = 0; i<medicineInstructions.length; i++){
-			var mIns = medicineInstructions[i];
-			var info = "<form method=\"POST\" action=\"#springUrl('/admin')/didel\">"+
-                            "<input type=\"hidden\" name=\"${_csrf.parameterName}\" value=\"${_csrf.token}\"/>"+
-                            "#if($commandidm) #springBind( \"commandidm.id\" ) #end"+
-                            "<input type=\"hidden\" name=\"id\" value="+mIns.id+"/>"+
-                            "<p><button type=\"submit\" class=\"btn btn-info\">ODSTRANI</button>&nbsp; <a style=\"color: dodgerblue;\" href="+mIns.text+">"+mIns.text+"</a></p>"+
-                            "#foreach($error in $status.errorMessages) <div class=\"alert-box alert\">$error</div> #end"+
-                        "</form>";
+  		$("#medSelect").empty();
+  		if(dietInstructions.length!=0){
+			for(var i = 0; i<medicineInstructions.length; i++){
+				var mIns = medicineInstructions[i];
+				var info = "<p>&nbsp;• <a style=\"color: dodgerblue;\" href="+mIns.text+">"+mIns.text+"</a></p>";
+				var dinfo = "<option value="+mIns.id+">"+mIns.text+"</option>";
+				$("#med").append(info);
+				$("#medSelect").append(dinfo);
+			}
+		}
+		else{
+			$("#med").append("<p>Ni navodil!</p>");
+		}
+  	});
+}
 
-			$("#med").append(info);
+var diseaseMedicines;
+function showMedicineDisease(){
+	var diseaseId = $("#diseaseMInput").val();
+	$.ajax({
+  		url: appUrl+"api/medicines/disease/"+diseaseId
+	}).done(function(data) {
+  		diseaseMedicines = data;
+  		$("#medD").empty();
+  		if(diseaseMedicines.length!=0){
+			for(var i = 0; i<diseaseMedicines.length; i++){
+				var mIns = diseaseMedicines[i];
+				var info = "<p>&nbsp;• "+mIns.name+"</p>";
+				$("#medD").append(info);
+			}
+		}
+		else{
+			$("#medD").append("<p>Ni zdravil!</p>");
 		}
   	});
 }

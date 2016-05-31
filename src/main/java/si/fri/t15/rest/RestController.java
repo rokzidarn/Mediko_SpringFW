@@ -166,8 +166,8 @@ public class RestController {
 	@Transactional
 	@ResponseBody
 	@RequestMapping(value = "/api/medicines/disease/{id}",  method=RequestMethod.GET)
-	public List<Medicine> showMedicines(Model model, HttpServletRequest request,@PathVariable("id") int id) {
-		TypedQuery<Disease> qux = em.createNamedQuery("Disease.findMedicine", Disease.class);
+	public List<Medicine> showMedicines(Model model, HttpServletRequest request,@PathVariable("id") String id) {
+		TypedQuery<Disease> qux = em.createNamedQuery("Disease.findDisease", Disease.class);
 		Disease d = qux.setParameter(1, id).getSingleResult();
 		
 		List<Medicine> m = d.getMedicines();

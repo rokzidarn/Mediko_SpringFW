@@ -20,8 +20,8 @@
                                                 <form method="POST" action="#springUrl('/admin')/medicines/addd">
                                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                     #if($commandadm) #springBind( "commandadm.disease" ) #end
-                                                    <label for="diseaseInput">Izberite bolezen: </label>
-                                                    <select id="diseaseInput" name="disease" class="form-control">
+                                                    <label for="diseaseMInput">Izberite bolezen: </label>
+                                                    <select id="diseaseMInput" name="disease" class="form-control">
                                                         #foreach($disease in $allDiseases)
                                                             <option value="${disease.getDiseaseId()}">$disease.name</option>
                                                         #end
@@ -41,17 +41,10 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="med">Odstranite zdravilo: </label>
-                                            <div id="med" class="form-group">                                               
+                                            <label for="medD">Zdravila bolezni: </label>
+                                            <div id="medD" class="form-group">                                               
                                                 #foreach($curr in $diseaseMedicines)
-                                                    <form method="POST" action="#springUrl('/admin')/medicines/deld">
-                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                        #if($commandddm) #springBind( "commandddm.medicine" ) #end
-                                                        <input type="hidden" id="diseaseValue" name="disease"/>
-                                                        <input type="hidden" name="medicine" value="${curr.getMedicineId()}"/>
-                                                        <p><button type="submit" id="deleteMedicineB" class="btn btn-info">ODSTRANI</button>&nbsp; $curr.name</p>
-                                                        #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
-                                                    </form>
+                                                    <p>&nbsp;• $curr.name</p>
                                                 #end                                              
                                             </div>
                                         </div>
