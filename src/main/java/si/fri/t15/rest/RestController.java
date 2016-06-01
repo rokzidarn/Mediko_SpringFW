@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.print.attribute.standard.NumberOfDocuments;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,27 +129,50 @@ public class RestController {
 	
 	//Doctor
 	@Transactional
-	@RequestMapping(value = "/api/doctor/{id}/appointment/available", method=RequestMethod.GET)
+	@RequestMapping(value = "/api/doctor/{id}/workweek/available", method=RequestMethod.GET)
 	@ResponseBody
-	public List<Appointment> getDoctorsAvailableAppointments(@PathVariable("id") int doctorId,HttpServletRequest request,@AuthenticationPrincipal User userSession){
-		List<Appointment> appointments = new ArrayList<Appointment>();
+	public Map<String, Object> getDoctorsAvailableAppointments(@PathVariable("id") int doctorId,HttpServletRequest request,@AuthenticationPrincipal User userSession){
+		List<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
 		
-		Date todayDate = new Date();
+		DoctorData doctor = em.find(DoctorData.class, doctorId);
+		
 		Calendar calendar = Calendar.getInstance();
-        
-		//TODO - fix when schedule available
-		for(int i = 0; i < 7; i++){
-			Appointment appointment = new Appointment();
-			appointment.setIdAppointment(i);
-			appointment.setDate(new java.sql.Date(calendar.getTime().getTime()));
-			appointments.add(appointment);
-			calendar.add(Calendar.DATE, 1);
-			System.out.println(calendar.getTime());
+		calendar.setFirstDayOfWeek(Calendar.MONDAY);
+		
+		while(calendar.get(Calendar.DAY_OF_WEEK) > 2){
+			calendar.add(Calendar.DATE, -1);
 		}
 		
+		for(int i = 0; i < 3; i++){
+			List<WorkWeek> workWeeksList = (List<WorkWeek>)em.createNamedQuery("WorkWeek.getWorkWeekByStartDateAndDoctor")
+					.setParameter("startDate", calendar.getTime())
+					.setParameter("doctor", doctor).getResultList();
+			
+			if(workWeeksList.isEmpty()){
+				WorkWeek workWeek = new WorkWeek();
+				workWeek.setStartDate(new java.sql.Date(calendar.getTime().getTime()));
+				workWeeks.add(workWeek);
+			}else{
+				workWeeks.add(workWeeksList.get(0));
+			}
+			
+			calendar.add(Calendar.DATE, 7);
+		}
+        
+		Calendar today = Calendar.getInstance();
+		
+		Timestamp todayTimestamp = new Timestamp(today.getTimeInMillis());
+		
+		int numberOfAppointments = em.createNamedQuery("Appointment.findByPatientDoctorAndDate")
+					.setParameter("patient", userSession.getSelectedPatient())
+					.setParameter("doctor", doctor)
+					.setParameter("date", todayTimestamp).getResultList().size();
 		
 		
-		return appointments;
+		Map<String, Object> output = new HashMap<String, Object>();
+		output.put("data", workWeeks);
+		output.put("canSelect", (numberOfAppointments == 0));
+		return output;
 	}
 
 	//admin

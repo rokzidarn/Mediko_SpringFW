@@ -34,193 +34,144 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 #if($command) #springBind( "command.appointment" ) #end
-                                                <input type="hidden" class="form-control" id="orderCheckupAppointmentInput" name="appointment" value="-1">
+                                                <input type="hidden" class="form-control" id="orderCheckupAppointmentInput" name="appointment" value="10"/>
                                                 #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
+                                    <div class="row" style="position:relative">
+                                        <div class="disable-overlay" style="display:none">
+                                            <div class="row" style="margin-top:20px">
+                                                <div class="col-md-4 col-md-offset-4">
+                                                    <div class="panel panel-danger">
+                                                        <div class="panel-heading">Izbira termina onemogočena</div>
+                                                        <div class="panel-body">
+                                                            Pri tem zdravniku že imate izbran termin, zato je izbira drugega onemogočena
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="timetableBlurDiv" class="col-md-12">
                                             <label>Termin</label>
                                             <!-- URNIK -->
                                             <div class="row">
-                                                <div id="calendar1" class="col-md-12 calendar"> 
-                                                    <div class="col-md-2 calendar-col-odd">
-                                                        <div class="calendar-date">24.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "1" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "2" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "3" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "4" class="calendar-appointment c-a-even">13:00</div>
-                                                            <div id = "5" class="calendar-appointment c-a-odd">14:00</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2 calendar-col-even">
-                                                        <div class="calendar-date">25.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "6" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "7" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "8" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "9" class="calendar-appointment c-a-even">13:00</div>
+                                                <div id="calendar1" class="col-md-12 calendar">
+                                                    <div class="row">
+                                                        <div class="col-md-12 text-right" style="margin-bottom:10px;">
+                                                            Tekoči teden
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-odd">
-                                                        <div class="calendar-date">26.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "10" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "11" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "12" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "13" class="calendar-appointment c-a-even">13:00</div>
-                                                            <div id = "14" class="calendar-appointment c-a-odd">14:00</div>
-                                                            <div id = "15" class="calendar-appointment c-a-even">15:00</div>
+                                                        <div id="calendar1day1" class="calendar-date">-</div>
+                                                        <div id="calendar1day1Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-even">
-                                                        <div class="calendar-date">27.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "16" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "17" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "18" class="calendar-appointment c-a-odd">12:00</div>
+                                                        <div id="calendar1day2" class="calendar-date">-</div>
+                                                        <div id="calendar1day2Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-odd">
-                                                        <div class="calendar-date">28.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "19" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "20" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "21" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "22" class="calendar-appointment c-a-even">13:00</div>
-                                                            <div id = "23" class="calendar-appointment c-a-odd">14:00</div>
+                                                        <div id="calendar1day3" class="calendar-date">-</div>
+                                                        <div id="calendar1day3Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-even">
-                                                        <div class="calendar-date">29.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "24" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "25" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "26" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "27" class="calendar-appointment c-a-even">13:00</div>
-                                                            <div id = "28" class="calendar-appointment c-a-odd">14:00</div>
+                                                        <div  id="calendar1day4" class="calendar-date">-</div>
+                                                        <div id="calendar1day4Appointments" lass="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div  id="calendar1day5" class="calendar-date">-</div>
+                                                        <div id="calendar1day5Appointments" lass="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div id="calendar1day6" class="calendar-date">-</div>
+                                                        <div id="calendar1day6Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div id="calendar2" style="display: none;" class="col-md-12 calendar"> 
                                                     <div class="col-md-2 calendar-col-odd">
-                                                        <div class="calendar-date">24.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "1" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "2" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "3" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "4" class="calendar-appointment c-a-even">13:00</div>
-                                                            <div id = "5" class="calendar-appointment c-a-odd">14:00</div>
+                                                        <div id="calendar2day1" class="calendar-date">-</div>
+                                                        <div id="calendar2day1Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-even">
-                                                        <div class="calendar-date">25.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "6" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "7" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "8" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "9" class="calendar-appointment c-a-even">13:00</div>
+                                                        <div id="calendar2day2" class="calendar-date">-</div>
+                                                        <div id="calendar2day2Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-odd">
-                                                        <div class="calendar-date">26.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "10" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "11" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "12" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "13" class="calendar-appointment c-a-even">13:00</div>
-                                                            <div id = "14" class="calendar-appointment c-a-odd">14:00</div>
-                                                            <div id = "15" class="calendar-appointment c-a-even">15:00</div>
+                                                        <div id="calendar2day3" class="calendar-date">-</div>
+                                                        <div id="calendar2day3Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-even">
-                                                        <div class="calendar-date">27.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "16" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "17" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "18" class="calendar-appointment c-a-odd">12:00</div>
+                                                        <div id="calendar2day4" class="calendar-date">-</div>
+                                                        <div id="calendar2day4Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-odd">
-                                                        <div class="calendar-date">28.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "19" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "20" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "21" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "22" class="calendar-appointment c-a-even">13:00</div>
-                                                            <div id = "23" class="calendar-appointment c-a-odd">14:00</div>
+                                                        <div id="calendar2day5" class="calendar-date">-</div>
+                                                        <div id="calendar2day5Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-even">
-                                                        <div class="calendar-date">29.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "24" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "25" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "26" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "27" class="calendar-appointment c-a-even">13:00</div>
-                                                            <div id = "28" class="calendar-appointment c-a-odd">14:00</div>
+                                                        <div id="calendar2day6" class="calendar-date">-</div>
+                                                        <div id="calendar2day6Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div id="calendar3" style="display: none;" class="col-md-12 calendar"> 
+                                                <div id="calendar3" style="display: none;" class="col-md-12 calendar">
                                                     <div class="col-md-2 calendar-col-odd">
-                                                        <div class="calendar-date">24.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "1" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "2" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "3" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "4" class="calendar-appointment c-a-even">13:00</div>
-                                                            <div id = "5" class="calendar-appointment c-a-odd">14:00</div>
+                                                        <div id="calendar3day1" class="calendar-date">-</div>
+                                                        <div id="calendar3day1Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-even">
-                                                        <div class="calendar-date">25.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "6" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "7" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "8" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "9" class="calendar-appointment c-a-even">13:00</div>
+                                                        <div id="calendar3day2" class="calendar-date">-</div>
+                                                        <div id="calendar3day2Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-odd">
-                                                        <div class="calendar-date">26.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "10" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "11" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "12" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "13" class="calendar-appointment c-a-even">13:00</div>
-                                                            <div id = "14" class="calendar-appointment c-a-odd">14:00</div>
-                                                            <div id = "15" class="calendar-appointment c-a-even">15:00</div>
+                                                        <div id="calendar3day3" class="calendar-date">-</div>
+                                                        <div id="calendar3day3Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-even">
-                                                        <div class="calendar-date">27.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "16" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "17" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "18" class="calendar-appointment c-a-odd">12:00</div>
+                                                        <div id="calendar3day4" class="calendar-date">-</div>
+                                                        <div id="calendar3day4Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-odd">
-                                                        <div class="calendar-date">28.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "19" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "20" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "21" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "22" class="calendar-appointment c-a-even">13:00</div>
-                                                            <div id = "23" class="calendar-appointment c-a-odd">14:00</div>
+                                                        <div id="calendar3day5" class="calendar-date">-</div>
+                                                        <div id="calendar3day5Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 calendar-col-even">
-                                                        <div class="calendar-date">29.5.2016</div>
-                                                        <div class="calendar-appointments">
-                                                            <div id = "24" class="calendar-appointment c-a-odd">10:00</div>
-                                                            <div id = "25" class="calendar-appointment c-a-even">11:00</div>
-                                                            <div id = "26" class="calendar-appointment c-a-odd">12:00</div>
-                                                            <div id = "27" class="calendar-appointment c-a-even">13:00</div>
-                                                            <div id = "28" class="calendar-appointment c-a-odd">14:00</div>
+                                                        <div id="calendar3day6" class="calendar-date">-</div>
+                                                        <div id="calendar3day6Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -277,5 +228,6 @@
     <!-- LOAD SELECT2 -->
     <script>
         $("#orderCheckupDoctorInput").select2();
+        getDoctorsAvailableAppointments();
     </script>
 </html>

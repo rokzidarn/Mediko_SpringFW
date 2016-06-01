@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import si.fri.t15.models.Appointment;
 import si.fri.t15.models.user.DoctorData;
@@ -25,6 +27,29 @@ public class OrderCheckupController {
 
 	@Autowired
 	EntityManager em;
+	
+	@Transactional
+	@RequestMapping(value = "/checkup/order", method=RequestMethod.POST)
+	public String orderCheckupInsert(
+			@RequestParam(required=false, defaultValue="-1") int appointment,
+			@RequestParam(required=false, defaultValue="-1") int doctor, Model model, HttpServletRequest request,  @AuthenticationPrincipal User userSession){
+		
+		if(appointment == -1) return "redirect:/checkup/order";
+		
+		List<Appointment> listOfAppointments = em.createNamedQuery("Appointment.findAppointment").setParameter(1,appointment).getResultList();
+		
+		if(listOfAppointments.isEmpty())return "redirect:/checkup/order";
+		
+		Appointment a = listOfAppointments.get(0);
+		
+		if(a.getDoctor()!=null && a.getDoctor().getId() != doctor) return "redirect:/checkup/order";
+		
+		a.setPatient(userSession.getSelectedPatient());
+		
+		em.merge(a);
+		
+		return "redirect:/dashboard";
+	}
 	
 	@Transactional
 	@RequestMapping(value = "/checkup/order")
@@ -47,29 +72,10 @@ public class OrderCheckupController {
 		model.addAttribute("title", "NAROČI NA PREGLED");
 		model.addAttribute("user", user);
 		
-		
 		//Get all doctors
 		List<DoctorData> doctors = (List<DoctorData>)em.createNamedQuery("DoctorData.GetAllDoctors").getResultList();
 		model.addAttribute("doctors",doctors);
 		model.addAttribute("selectedDoctor", (userSession.getSelectedPatient() != null)? userSession.getSelectedPatient().getDoctor() : null);
-		
-		//PLACEHOLDER; ko bomo imeli generacijo urnika se mora to popravit
-		List<Appointment> appointments = new ArrayList<Appointment>();
-		
-		Date todayDate = new Date();
-		Calendar calendar = Calendar.getInstance();
-        
-		//TODO - fix when schedule available
-		for(int i = 0; i < 7; i++){
-			Appointment appointment = new Appointment();
-			appointment.setIdAppointment(i);
-			appointment.setDate(new java.sql.Date(calendar.getTime().getTime()));
-			appointments.add(appointment);
-			calendar.add(Calendar.DATE, 1);
-			System.out.println(calendar.getTime());
-		}
-		
-		model.addAttribute("appointments",appointments);
 		
 		
 		return "orderCheckup";

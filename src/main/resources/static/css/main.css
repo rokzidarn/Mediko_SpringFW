@@ -276,6 +276,15 @@ a:link, a:hover, a:active{
 	padding: 5px;
 	cursor: default;
 }
+.calendar-appointment-grayed{
+	padding: 5px;
+	cursor: default;
+	color:gray;
+	padding-bottom:4px;
+	margin-bottom:1px;
+}
+
+
 .calendar-appointment:hover{
 	background-color: #36B8D5;
 }
@@ -288,9 +297,30 @@ a:link, a:hover, a:active{
 .doctor-free-time::after { 
     content: " - odsotnost";
 }
+.appointment-taken{
+	background-color:#d9534f;
+}
+.appointment-taken::after{
+	content: " - zasedeno"
+}
 .no-appointments{
 	text-align:center;
 	font-style: italic;
+}
+.blur-calendar{
+	filter: blur(5px);
+	-webkit-filter: blur(5px);
+	-moz-filter: blur(5px);
+	-o-filter: blur(5px);
+	-ms-filter: blur(5px);
+}
+.disable-overlay{
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	z-index:1;
 }
 
 .info-form{

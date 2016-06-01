@@ -14,7 +14,8 @@ import java.sql.Timestamp;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Appointment.findAll", query="SELECT a FROM Appointment a"),
-	@NamedQuery(name="Appointment.findAppointment", query="SELECT a FROM Appointment a WHERE a.id=?1")
+	@NamedQuery(name="Appointment.findAppointment", query="SELECT a FROM Appointment a WHERE a.id=?1"),
+	@NamedQuery(name="Appointment.findByPatientDoctorAndDate", query="SELECT a FROM Appointment a WHERE a.patient = :patient AND a.doctor = :doctor AND a.dateTime > :date")
 })
 public class Appointment implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -75,7 +76,7 @@ public class Appointment implements Serializable{
 	}
 
 	public Date getDate() {
-		return this.date;
+		return new Date(this.dateTime.getTime());
 	}
 
 	public void setDate(Date date) {
