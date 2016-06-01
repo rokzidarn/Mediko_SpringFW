@@ -5,13 +5,10 @@ import java.util.List;
 
 import javax.persistence.*;
 
-<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import si.fri.t15.models.user.DoctorData;
 
-=======
->>>>>>> develop
 @Entity
 @NamedQuery(name="WorkDay.getWorkdayById",query="SELECT wd FROM WorkDay wd WHERE wd.id = :id")
 public class WorkDay {
