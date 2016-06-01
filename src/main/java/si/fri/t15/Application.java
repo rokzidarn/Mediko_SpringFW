@@ -24,6 +24,10 @@ import si.fri.t15.validators.AddMedicineValidator;
 import si.fri.t15.validators.ChangePasswordValidator;
 import si.fri.t15.validators.CreateMedicalWorkerValidator;
 import si.fri.t15.validators.CreatePatientValidator;
+import si.fri.t15.validators.DeleteDietValidator;
+import si.fri.t15.validators.DeleteDiseaseValidator;
+import si.fri.t15.validators.DeleteMedCenterValidator;
+import si.fri.t15.validators.DeleteMedicineValidator;
 import si.fri.t15.validators.InsAddDietValidator;
 import si.fri.t15.validators.InsAddDiseaseValidator;
 import si.fri.t15.validators.InsAddMedicineValidator;
@@ -221,6 +225,26 @@ public class Application extends WebMvcConfigurerAdapter {
 	@Bean
 	public AddMedCenterValidator addMedCenterValidator(){
 		return new AddMedCenterValidator();
+	}
+	
+	@Bean
+	public DeleteDiseaseValidator deleteDiseaseValidator(){
+		return new DeleteDiseaseValidator();
+	}
+	
+	@Bean
+	public DeleteDietValidator deleteDietValidator(){
+		return new DeleteDietValidator();
+	}
+	
+	@Bean
+	public DeleteMedicineValidator deleteMedicineValidator(){
+		return new DeleteMedicineValidator();
+	}
+	
+	@Bean
+	public DeleteMedCenterValidator deleteMedCenterValidator(){
+		return new DeleteMedCenterValidator();
 	}
 	
 	@Bean

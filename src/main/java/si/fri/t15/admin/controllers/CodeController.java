@@ -30,7 +30,14 @@ import si.fri.t15.validators.AddMedCenterForm;
 import si.fri.t15.validators.AddMedCenterValidator;
 import si.fri.t15.validators.AddMedicineForm;
 import si.fri.t15.validators.AddMedicineValidator;
-import si.fri.t15.validators.CreateMedicalWorkerForm;
+import si.fri.t15.validators.DeleteDietForm;
+import si.fri.t15.validators.DeleteDietValidator;
+import si.fri.t15.validators.DeleteDiseaseForm;
+import si.fri.t15.validators.DeleteDiseaseValidator;
+import si.fri.t15.validators.DeleteMedCenterForm;
+import si.fri.t15.validators.DeleteMedCenterValidator;
+import si.fri.t15.validators.DeleteMedicineForm;
+import si.fri.t15.validators.DeleteMedicineValidator;
 
 @Controller
 public class CodeController extends ControllerBase{
@@ -71,6 +78,42 @@ public class CodeController extends ControllerBase{
 	protected void initBinderAM(HttpServletRequest request,
 			ServletRequestDataBinder binder) {
 		binder.setValidator(addMedicineValidator);
+	}
+	
+	@Autowired
+	DeleteDiseaseValidator deleteDiseaseValidator;
+	
+	@InitBinder("commanddd")
+	protected void initBinderDD(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(deleteDiseaseValidator);
+	}
+	
+	@Autowired
+	DeleteDietValidator deleteDietValidator;
+	
+	@InitBinder("commandid")
+	protected void initBinderDDI(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(deleteDietValidator);
+	}
+	
+	@Autowired
+	DeleteMedicineValidator deleteMedicineValidator;
+	
+	@InitBinder("commandmd")
+	protected void initBinderDM(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(deleteMedicineValidator);
+	}
+	
+	@Autowired
+	DeleteMedCenterValidator deleteMedCenterValidator;
+	
+	@InitBinder("commandmcd")
+	protected void initBinderDMC(HttpServletRequest request,
+			ServletRequestDataBinder binder) {
+		binder.setValidator(deleteMedCenterValidator);
 	}
 	
 	@RequestMapping(value = "/admin/code",  method=RequestMethod.GET)
@@ -166,11 +209,11 @@ public class CodeController extends ControllerBase{
 	
 	@Transactional
 	@RequestMapping(value = "/admin/code/disease/del",  method=RequestMethod.POST)
-	public String deleteDiseasetPOST(Model model, @ModelAttribute("commanddd") @Valid AddDiseaseForm commanddd,
+	public String deleteDiseasetPOST(Model model, @ModelAttribute("commanddd") @Valid DeleteDiseaseForm commanddd,
 			BindingResult result, HttpServletRequest request) {
 		
 		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findDisease", Disease.class);
-		Disease d = qu.setParameter(1, commanddd.getDid()).getSingleResult();
+		Disease d = qu.setParameter(1, commanddd.getIdd()).getSingleResult();
 		
 		//TODO: set
 		
@@ -180,11 +223,11 @@ public class CodeController extends ControllerBase{
 	
 	@Transactional
 	@RequestMapping(value = "/admin/code/diet/del",  method=RequestMethod.POST)
-	public String deleteDietPOST(Model model, @ModelAttribute("commandid") @Valid AddDietForm commandid,
+	public String deleteDietPOST(Model model, @ModelAttribute("commandid") @Valid DeleteDietForm commandid,
 			BindingResult result, HttpServletRequest request) {
 		
 		TypedQuery<Diet> qu = em.createNamedQuery("Diet.findDiet", Diet.class);
-		Diet d = qu.setParameter(1, commandid.getDiname()).getSingleResult();
+		Diet d = qu.setParameter(1, commandid.getIddi()).getSingleResult();
 		
 		//TODO: set
 		
@@ -194,11 +237,11 @@ public class CodeController extends ControllerBase{
 	
 	@Transactional
 	@RequestMapping(value = "/admin/code/medicine/del",  method=RequestMethod.POST)
-	public String deleteMedicinePOST(Model model, @ModelAttribute("commandmd") @Valid AddMedicineForm commandmd,
+	public String deleteMedicinePOST(Model model, @ModelAttribute("commandmd") @Valid DeleteMedicineForm commandmd,
 			BindingResult result, HttpServletRequest request) {
 		
 		TypedQuery<Medicine> qu = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
-		Medicine m = qu.setParameter(1, commandmd.getMname()).getSingleResult();
+		Medicine m = qu.setParameter(1, commandmd.getIdm()).getSingleResult();
 		
 		//TODO: set
 		
@@ -207,12 +250,12 @@ public class CodeController extends ControllerBase{
 	}
 	
 	@Transactional
-	@RequestMapping(value = "/admin/code/medical_center/add",  method=RequestMethod.POST)
-	public String deleteMedicalCenterPOST(Model model, @ModelAttribute("commandmcd") @Valid AddMedCenterForm commandmcd,
+	@RequestMapping(value = "/admin/code/medical_center/del",  method=RequestMethod.POST)
+	public String deleteMedicalCenterPOST(Model model, @ModelAttribute("commandmcd") @Valid DeleteMedCenterForm commandmcd,
 			BindingResult result, HttpServletRequest request) {
 		
 		TypedQuery<Medical_Center> qu = em.createNamedQuery("Medical_Center.findMedical_Center", Medical_Center.class);
-		Medical_Center m = qu.setParameter(1, commandmcd.getPid()).getSingleResult();
+		Medical_Center m = qu.setParameter(1, commandmcd.getIdmc()).getSingleResult();
 		
 		//TODO: set
 		

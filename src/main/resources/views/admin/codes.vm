@@ -38,11 +38,13 @@
                                             </form><br>
                                             <form method="POST" action="#springUrl('/admin')/code/disease/del">
                                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                <select name="disease" class="form-control">
+                                                 #if($commanddd) #springBind( "commanddd.idd" ) #end
+                                                <select name="idd" class="form-control">
                                                     #foreach($disease in $diseases)
                                                     <option value="${disease.getDiseaseId()}">$disease.name</option>
                                                     #end
                                                 </select><br>
+                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
                                                 <button type="submit" class="btn btn-info">ODSTRANI BOLEZEN</button> 
                                             </form>
                                             </div>
@@ -72,11 +74,13 @@
                                             </form><br>
                                             <form method="POST" action="#springUrl('/admin')/code/medical_center/del">
                                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                <select name="mc" class="form-control">
+                                                #if($commandmcd) #springBind( "commandmcd.idmc" ) #end
+                                                <select name="idmc" class="form-control">
                                                     #foreach($mc in $mcs)
                                                     <option value="${mc.getMedical_CenterId()}">$mc.name</option>
                                                     #end
                                                 </select><br>
+                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
                                                 <button type="submit" class="btn btn-info">ODSTRANI ZDRAVSTVENO USTANOVO</button> 
                                             </form>
                                         </div>
@@ -99,11 +103,13 @@
                                         </form><br>
                                         <form method="POST" action="#springUrl('/admin')/code/diet/del">
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                            <select name="diet" class="form-control">
+                                            #if($commandid) #springBind( "commandid.iddi" ) #end
+                                            <select name="iddi" class="form-control">
                                                 #foreach($diet in $diets)
                                                 <option value="${diet.getDietId()}">$diet.name</option>
                                                 #end
                                             </select><br>
+                                            #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div>#end
                                             <button type="submit" class="btn btn-info">ODSTRANI DIETO</button> 
                                         </form>
                                     </div>
@@ -123,11 +129,13 @@
                                         </form><br>
                                         <form method="POST" action="#springUrl('/admin')/code/medicine/del">
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                            <select name="medicine" class="form-control">
+                                            #if($commandmd) #springBind( "commandmd.idm" ) #end
+                                            <select name="idm" class="form-control">
                                                 #foreach($medicine in $medicines)
                                                 <option value="${medicine.getMedicineId()}">$medicine.name</option>
                                                 #end
                                             </select><br>
+                                            #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div>#end
                                             <button type="submit" class="btn btn-info">ODSTRANI ZDRAVILO</button> 
                                         </form>
                                     </div>
