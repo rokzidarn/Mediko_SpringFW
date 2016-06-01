@@ -282,6 +282,30 @@ a:link, a:hover, a:active{
 .calendar-appointment-selected{
 	background-color: #2C9EB7;
 }
+.doctor-free-time{
+	background-color:#5cb85c;
+}
+.doctor-free-time::after { 
+    content: " - odsotnost";
+}
+.no-appointments{
+	text-align:center;
+	font-style: italic;
+}
+
+.info-form{
+	padding-top:10px;
+	padding-bottom:10px;
+}
+.show-edit{
+	color:#258094;
+	font-size: 15px;
+	cursor: pointer;
+	text-align:center;
+	border-bottom: 1px solid rgba(1,1,1,0.1);
+	padding-bottom:5px;
+	margin-bottom:5px;
+}
 
 .prev-week-button{
 	float:left;
