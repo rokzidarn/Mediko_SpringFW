@@ -57,6 +57,8 @@ function opencheckup(link){
 	window.location.href = link;
 }
 
+//-------------------------------------------------------------------------------------------------------------------------
+
 function addValueDiseaseId(){
 	var e = document.getElementById("diseaseInput");
 	var diseaseId = e.options[e.selectedIndex].value;
@@ -140,6 +142,8 @@ function showMedicineInstructions(){
   	});
 }
 
+//------------------------------------------------------------------------------------------------------------------------------------------
+
 function addValueDiseaseIdMedicine(){
 	var e = document.getElementById("diseaseMInput");
 	var diseaseId = e.options[e.selectedIndex].value;
@@ -169,6 +173,8 @@ function showMedicineDisease(){
 		}
   	});
 }
+
+//---------------------------------------------------------------------------------------------------------------------------------
 
 var checkupMoreData;
 function toggleShowMoreCheckup(){

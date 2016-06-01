@@ -141,7 +141,25 @@
                                     </div>
                                 </div>
                                 </div>
-                            </div>                              
+                            </div> 
+                            <div class="row">
+                                <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><strong>ZDRAVSTVENI DELAVCI</strong></div>
+                                    <div class="panel-body">
+                                        <form method="GET" action="#springUrl('/admin')/code/medicine/add">
+                                            <select name="idm" class="form-control">
+                                                #foreach($medworker in $medworkers)
+                                                <option value="${medworker.getId()}">${medworker.data.last_name} ${medworker.data.first_name}</option>
+                                                #end
+                                            </select><br>
+                                            <button type="submit" class="btn btn-info">POSODOBI ZDRAVSTVENEGA DELAVCA</button> 
+                                        </form><br>
+                                        <a class="btn btn-info" href="#springUrl('/admin')/createMedicalWorker" role="button">DODAJ ZDRAVSTVENEGA DELAVCA</a>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
                         </div>
                             </div>
                             <div id="sidebar" class="sidebar hidden-sm hidden-xs">

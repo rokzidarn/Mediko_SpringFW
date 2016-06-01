@@ -103,6 +103,8 @@ public class RestController {
 			return new ArrayList<Appointment>();
 	}
 	
+	//--------------------------------------------------------------------------------------------------------------------------------
+	
 	@Transactional
 	@ResponseBody
 	@RequestMapping(value = "/api/instructions/disease/{id}",  method=RequestMethod.GET)
@@ -163,6 +165,8 @@ public class RestController {
 		return medicineInstructions;
 	}
 	
+	//---------------------------------------------------------------------------------------------------------------------
+	
 	@Transactional
 	@ResponseBody
 	@RequestMapping(value = "/api/medicines/disease/{id}",  method=RequestMethod.GET)
@@ -174,6 +178,8 @@ public class RestController {
 	
 		return m;
 	}
+	
+	//------------------------------------------------------------------------------------------------------------------------
 	
 	
 	//helpers

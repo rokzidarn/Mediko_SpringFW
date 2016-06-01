@@ -216,6 +216,8 @@ public class InstructionsController extends ControllerBase{
 		return "redirect:/admin/instructions";
 	}
 	
+	//--------------------------------------------------------------------------------------------------------------------------------
+	
 	@Transactional
 	@RequestMapping(value = "/admin/ddel",  method=RequestMethod.POST)
 	public String delDiseaseInstructionsPOST(Model model, HttpServletRequest request,

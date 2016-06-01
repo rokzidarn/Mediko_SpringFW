@@ -1,5 +1,6 @@
 package si.fri.t15.admin.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -22,6 +23,7 @@ import si.fri.t15.models.Disease;
 import si.fri.t15.models.Medical_Center;
 import si.fri.t15.models.Medicine;
 import si.fri.t15.models.PO_Box;
+import si.fri.t15.models.user.User;
 import si.fri.t15.validators.AddDietForm;
 import si.fri.t15.validators.AddDietValidator;
 import si.fri.t15.validators.AddDiseaseForm;
@@ -134,6 +136,17 @@ public class CodeController extends ControllerBase{
 		TypedQuery<Medical_Center> qu5 = em.createNamedQuery("Medical_Center.findAll", Medical_Center.class);
 		List<Medical_Center> mcs = (List<Medical_Center>) qu5.getResultList();
 		
+		TypedQuery<User> qu6 = em.createNamedQuery("User.findAll", User.class);
+		List<User> users = (List<User>) qu6.getResultList();
+		List<User> medworkers = new ArrayList<>();
+		
+		for(User u : users){
+			if(u.getData()!=null){ //treba popravit, da dobi samo doktorje
+				medworkers.add(u);
+			}
+		}
+		
+		model.addAttribute("medworkers", medworkers);
 		model.addAttribute("pos", pos);
 		model.addAttribute("diseases", diseases);
 		model.addAttribute("diets", diets);
@@ -216,8 +229,9 @@ public class CodeController extends ControllerBase{
 		Disease d = qu.setParameter(1, commanddd.getIdd()).getSingleResult();
 		
 		//TODO: set
+		em.remove(d);
 		
-		em.merge(d);
+		//em.merge(d);
 		return "redirect:/admin/code";
 	}
 	
