@@ -79,7 +79,24 @@ public class CodeController extends ControllerBase{
 		TypedQuery<PO_Box> qu = em.createNamedQuery("PO_Box.findAll", PO_Box.class);
 		List<PO_Box> pos = (List<PO_Box>) qu.getResultList(); 
 		
+		TypedQuery<Disease> qu2 = em.createNamedQuery("Disease.findAll", Disease.class);
+		List<Disease> diseases = (List<Disease>) qu2.getResultList();
+		
+		TypedQuery<Diet> qu3 = em.createNamedQuery("Diet.findAll", Diet.class);
+		List<Diet> diets = (List<Diet>) qu3.getResultList();
+		
+		TypedQuery<Medicine> qu4 = em.createNamedQuery("Medicine.findAll", Medicine.class);
+		List<Medicine> medicines = (List<Medicine>) qu4.getResultList();
+		
+		TypedQuery<Medical_Center> qu5 = em.createNamedQuery("Medical_Center.findAll", Medical_Center.class);
+		List<Medical_Center> mcs = (List<Medical_Center>) qu5.getResultList();
+		
 		model.addAttribute("pos", pos);
+		model.addAttribute("diseases", diseases);
+		model.addAttribute("diets", diets);
+		model.addAttribute("medicines", medicines);
+		model.addAttribute("mcs", mcs);
+		
 		model.addAttribute("usertype", "admin");
 		model.addAttribute("page", "admin");
 		model.addAttribute("subpage", "addDoctor");	
@@ -142,6 +159,64 @@ public class CodeController extends ControllerBase{
 		mc.setPo_box(po);
 		
 		em.persist(mc);		
+		return "redirect:/admin/code";
+	}
+	
+	//------------------------------------------------------------------------------------------------------------------
+	
+	@Transactional
+	@RequestMapping(value = "/admin/code/disease/del",  method=RequestMethod.POST)
+	public String deleteDiseasetPOST(Model model, @ModelAttribute("commanddd") @Valid AddDiseaseForm commanddd,
+			BindingResult result, HttpServletRequest request) {
+		
+		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findDisease", Disease.class);
+		Disease d = qu.setParameter(1, commanddd.getDid()).getSingleResult();
+		
+		//TODO: set
+		
+		em.merge(d);
+		return "redirect:/admin/code";
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/admin/code/diet/del",  method=RequestMethod.POST)
+	public String deleteDietPOST(Model model, @ModelAttribute("commandid") @Valid AddDietForm commandid,
+			BindingResult result, HttpServletRequest request) {
+		
+		TypedQuery<Diet> qu = em.createNamedQuery("Diet.findDiet", Diet.class);
+		Diet d = qu.setParameter(1, commandid.getDiname()).getSingleResult();
+		
+		//TODO: set
+		
+		em.merge(d);
+		return "redirect:/admin/code";
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/admin/code/medicine/del",  method=RequestMethod.POST)
+	public String deleteMedicinePOST(Model model, @ModelAttribute("commandmd") @Valid AddMedicineForm commandmd,
+			BindingResult result, HttpServletRequest request) {
+		
+		TypedQuery<Medicine> qu = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
+		Medicine m = qu.setParameter(1, commandmd.getMname()).getSingleResult();
+		
+		//TODO: set
+		
+		em.merge(m);
+		return "redirect:/admin/code";
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/admin/code/medical_center/add",  method=RequestMethod.POST)
+	public String deleteMedicalCenterPOST(Model model, @ModelAttribute("commandmcd") @Valid AddMedCenterForm commandmcd,
+			BindingResult result, HttpServletRequest request) {
+		
+		TypedQuery<Medical_Center> qu = em.createNamedQuery("Medical_Center.findMedical_Center", Medical_Center.class);
+		Medical_Center m = qu.setParameter(1, commandmcd.getPid()).getSingleResult();
+		
+		//TODO: set
+		
+		em.merge(m);
 		return "redirect:/admin/code";
 	}
 }
