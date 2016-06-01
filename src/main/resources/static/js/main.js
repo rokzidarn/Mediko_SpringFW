@@ -38,6 +38,7 @@ $( document ).ready(function(){
 	$("#dietInput").on('change', showDietInstructions);
 	$("#medicineInput").on('change', showMedicineInstructions);
 	$("#diseaseMInput").on('change', showMedicineDisease);
+	$("#dMButton").on('click', addValueDiseaseIdMedicine);
 });
 
 function showSidebar(){
@@ -139,6 +140,12 @@ function showMedicineInstructions(){
   	});
 }
 
+function addValueDiseaseIdMedicine(){
+	var e = document.getElementById("diseaseMInput");
+	var diseaseId = e.options[e.selectedIndex].value;
+	$("#diseaseMValue").val(diseaseId);
+}
+
 var diseaseMedicines;
 function showMedicineDisease(){
 	var diseaseId = $("#diseaseMInput").val();
@@ -147,11 +154,14 @@ function showMedicineDisease(){
 	}).done(function(data) {
   		diseaseMedicines = data;
   		$("#medD").empty();
+  		$("#medDSelect").empty();
   		if(diseaseMedicines.length!=0){
 			for(var i = 0; i<diseaseMedicines.length; i++){
-				var mIns = diseaseMedicines[i];
-				var info = "<p>&nbsp;• "+mIns.name+"</p>";
+				var mDs = diseaseMedicines[i];
+				var info = "<p>&nbsp;• "+mDs.name+"</p>";
+				var dinfo = "<option value="+mDs.id+">"+mDs.name+"</option>";
 				$("#medD").append(info);
+				$("#medDSelect").append(dinfo);
 			}
 		}
 		else{
