@@ -21,7 +21,7 @@
     											<p><strong>Pacient:</strong> ${pdata.getFirst_name()} ${pdata.getLast_name()}, ${pdata.getPo_box().city}, ZZZS: ${pdata.cardNumber}</p>
     											<p><strong>Zdravnik:</strong> ${ddata.getFirst_name()} ${ddata.getLast_name()}, ${ddata.getMedical_center().name}</p>
     											<p><strong>Razlog:</strong> $reason </p>
-                                                <p><strong>Datum:</strong> $date</p>
+                                                <p><strong>Datum:</strong> $_utils.format($date)</p>
                                             </div>
 										</div>
 									</div>
