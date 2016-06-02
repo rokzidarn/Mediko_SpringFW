@@ -106,6 +106,7 @@ public class ForgottenPasswordController extends ControllerBase {
 		User user = userRepo.findByPasswordResetToken(token);
 		if (user != null) {
 			user.setPassword(passwordEncoder.encode(command.getPassword()));
+			user.setPasswordResetToken(null);
 			request.getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, "Uspešno ponastavljanje gesla.");
 			return "redirect:/login";
 		} else {
