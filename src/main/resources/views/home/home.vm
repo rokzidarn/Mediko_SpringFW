@@ -29,7 +29,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Datum rojstva</strong><br>
-                                                        $selectedPatient.birth_date
+                                                        $_utils.format($selectedPatient.birth_date)
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Spol</strong><br>
