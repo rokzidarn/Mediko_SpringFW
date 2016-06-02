@@ -17,23 +17,16 @@
 									<p class="error">#springMessage("${SPRING_SECURITY_LAST_EXCEPTION}")</p>
 								#end
 								<form action="" method="POST">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 									<div class="form-group">
 										<label for="usernameInput">Email</label>
 										<input type="text" class="form-control" id="usernameInput" name="username"  placeholder="Email" required>	
 									</div>
-									<div class="form-group">
-										<label for="passwordInput">Geslo</label>
-										<input type="password" class="form-control" id="passwordInput" name="password"  placeholder="Geslo" required>									
-										<div><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></div>
-									</div>
 									<br />
 									<p class="text-center">
-										<input type="submit" class="btn btn-primary btn-lg" value="PRIJAVA">
-									</p>							
-								</form>
-								<p class="text-center">
-									<a class="btn btn-danger" href='#springUrl("/forgotten")'>Pozabljeno geslo?</a>
-								</p>	
+										<input type="submit" class="btn btn-danger" value="Pozabljeno geslo">
+									</p>								
+								</form>									
                             </div>
                         </div>
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">

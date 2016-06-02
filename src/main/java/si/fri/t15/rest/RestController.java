@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.Query;
 import javax.print.attribute.standard.NumberOfDocuments;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +30,7 @@ import si.fri.t15.models.Appointment;
 import si.fri.t15.models.Checkup;
 import si.fri.t15.models.Diet;
 import si.fri.t15.models.Disease;
+import si.fri.t15.models.Instructions;
 import si.fri.t15.models.Medicine;
 import si.fri.t15.models.Result_Checkup;
 import si.fri.t15.models.WorkDay;
@@ -112,7 +115,85 @@ public class RestController {
 		else
 			return new ArrayList<Appointment>();
 	}
+
+	//--------------------------------------------------------------------------------------------------------------------------------
 	
+	@Transactional
+	@ResponseBody
+	@RequestMapping(value = "/api/instructions/disease/{id}",  method=RequestMethod.GET)
+	public List<Instructions> showInsDisease(Model model, HttpServletRequest request,@PathVariable("id") String id) {
+		TypedQuery<Disease> qux = em.createNamedQuery("Disease.findDisease", Disease.class);
+		Disease d = qux.setParameter(1, id).getSingleResult();
+		
+		TypedQuery<Instructions> qu4 = em.createNamedQuery("Instructions.findAll", Instructions.class);
+		List<Instructions> allInstructions = (List<Instructions>) qu4.getResultList();
+		
+		List<Instructions> diseaseInstructions = new ArrayList<>();
+		
+		for(Instructions icurr : allInstructions){
+			if(icurr.getDisease() == d)
+				diseaseInstructions.add(icurr);
+		}
+	
+		return diseaseInstructions;
+	}
+	
+	@Transactional
+	@ResponseBody
+	@RequestMapping(value = "/api/instructions/diet/{id}",  method=RequestMethod.GET)
+	public List<Instructions> showInsDiet(Model model, HttpServletRequest request,@PathVariable("id") int id) {
+		TypedQuery<Diet> qux = em.createNamedQuery("Diet.findDiet", Diet.class);
+		Diet di = qux.setParameter(1, id).getSingleResult();
+		
+		TypedQuery<Instructions> qu4 = em.createNamedQuery("Instructions.findAll", Instructions.class);
+		List<Instructions> allInstructions = (List<Instructions>) qu4.getResultList();
+		
+		List<Instructions> dietInstructions = new ArrayList<>();
+		
+		for(Instructions icurr : allInstructions){
+			if(icurr.getDiet() == di)
+				dietInstructions.add(icurr);
+		}
+	
+		return dietInstructions;
+	}
+	
+	@Transactional
+	@ResponseBody
+	@RequestMapping(value = "/api/instructions/medicine/{id}",  method=RequestMethod.GET)
+	public List<Instructions> showInsMedicine(Model model, HttpServletRequest request,@PathVariable("id") int id) {
+		TypedQuery<Medicine> qux = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
+		Medicine m = qux.setParameter(1, id).getSingleResult();
+		
+		TypedQuery<Instructions> qu4 = em.createNamedQuery("Instructions.findAll", Instructions.class);
+		List<Instructions> allInstructions = (List<Instructions>) qu4.getResultList();
+		
+		List<Instructions> medicineInstructions = new ArrayList<>();
+		
+		for(Instructions icurr : allInstructions){
+			if(icurr.getMedicine() == m)
+				medicineInstructions.add(icurr);
+		}
+	
+		return medicineInstructions;
+	}
+	
+	//---------------------------------------------------------------------------------------------------------------------
+	
+	@Transactional
+	@ResponseBody
+	@RequestMapping(value = "/api/medicines/disease/{id}",  method=RequestMethod.GET)
+	public List<Medicine> showMedicines(Model model, HttpServletRequest request,@PathVariable("id") String id) {
+		TypedQuery<Disease> qux = em.createNamedQuery("Disease.findDisease", Disease.class);
+		Disease d = qux.setParameter(1, id).getSingleResult();
+		
+		List<Medicine> m = d.getMedicines();
+	
+		return m;
+	}
+	
+	//------------------------------------------------------------------------------------------------------------------------
+
 	@Transactional
 	@RequestMapping(value = "/api/patient/{id}/result", method=RequestMethod.GET)
 	@ResponseBody

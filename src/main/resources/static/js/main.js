@@ -36,9 +36,13 @@ $( document ).ready(function(){
 	$("#showMoreAlergy").on('click', toggleShowMoreAlergy);
 	$("#showMoreDiet").on('click', toggleShowMoreDiet);
 	$("#showMoreMedicine").on('click', toggleShowMoreMedicine);
+	$("#deleteMedicineB").on('click', addValueDiseaseId);
+	$("#diseaseInput").on('change', showDiseaseInstructions);
+	$("#dietInput").on('change', showDietInstructions);
+	$("#medicineInput").on('change', showMedicineInstructions);
+	$("#diseaseMInput").on('change', showMedicineDisease);
+	$("#dMButton").on('click', addValueDiseaseIdMedicine);
 	$("#showMoreResult").on('click', toggleShowMoreResult);
-
-
 	//DOCTORS SELECTED ON ORDER APPOINTMENT
 	$("#orderCheckupDoctorInput").on('change', getDoctorsAvailableAppointments);
 
@@ -70,6 +74,129 @@ function hideSidebar(){
 function opencheckup(link){
 	window.location.href = link;
 }
+
+//-------------------------------------------------------------------------------------------------------------------------
+
+function addValueDiseaseId(){
+	var e = document.getElementById("diseaseInput");
+	var diseaseId = e.options[e.selectedIndex].value;
+	$("#diseaseValue").val(diseaseId);
+}
+
+var diseaseInstructions;
+function showDiseaseInstructions(){
+	//var e = document.getElementById("diseaseInput");
+	//var diseaseId = e.options[e.selectedIndex].value;
+	var diseaseId = $("#diseaseInput").val();
+	if(diseaseId === "virus ni" || diseaseId === "virusni"){
+		diseaseId = "virus ni "
+	}
+	$.ajax({
+  		url: appUrl+"api/instructions/disease/"+diseaseId
+	}).done(function(data) {
+  		diseaseInstructions = data;
+  		$("#dis").empty();
+  		$("#disSelect").empty();
+  		if(diseaseInstructions.length!=0){
+			for(var i = 0; i<diseaseInstructions.length; i++){
+				var dIns = diseaseInstructions[i];
+				var info = "<p>&nbsp;• <a style=\"color: dodgerblue;\" href="+dIns.text+">"+dIns.text+"</a></p>";
+				var dinfo = "<option value="+dIns.instructionsId+">"+dIns.text+"</option>";
+				$("#dis").append(info);
+				$("#disSelect").append(dinfo);
+			}
+		}
+		else{
+			$("#disSelect").empty();
+			$("#dis").append("<p>Ni navodil!</p>");
+		}	
+  	});
+}
+
+var dietInstructions;
+function showDietInstructions(){
+	var dietId = $("#dietInput").val();
+	$.ajax({
+  		url: appUrl+"api/instructions/diet/"+dietId
+	}).done(function(data) {
+  		dietInstructions = data;
+  		$("#die").empty();
+  		$("#dieSelect").empty();
+  		if(dietInstructions.length!=0){
+			for(var i = 0; i<dietInstructions.length; i++){
+				var diIns = dietInstructions[i];
+				var info = "<p>&nbsp;• <a style=\"color: dodgerblue;\" href="+diIns.text+">"+diIns.text+"</a></p>";
+				var dinfo = "<option value="+diIns.instructionsId+">"+diIns.text+"</option>";
+				$("#die").append(info);
+				$("#dieSelect").append(dinfo);
+			}
+		}
+		else{
+			$("#dieSelect").empty();
+			$("#die").append("<p>Ni navodil!</p>");
+		}
+  	});
+}
+
+var medicineInstructions;
+function showMedicineInstructions(){
+	var medicineId = $("#medicineInput").val();
+	$.ajax({
+  		url: appUrl+"api/instructions/medicine/"+medicineId
+	}).done(function(data) {
+  		medicineInstructions = data;
+  		$("#med").empty();
+  		$("#medSelect").empty();
+  		if(medicineInstructions.length!=0){
+			for(var i = 0; i<medicineInstructions.length; i++){
+				var mIns = medicineInstructions[i];
+				var info = "<p>&nbsp;• <a style=\"color: dodgerblue;\" href="+mIns.text+">"+mIns.text+"</a></p>";
+				var dinfo = "<option value="+mIns.instructionsId+">"+mIns.text+"</option>";
+				$("#med").append(info);
+				$("#medSelect").append(dinfo);
+			}
+		}
+		else{
+			$("#medSelect").empty();
+			$("#med").append("<p>Ni navodil!</p>");
+		}
+  	});
+}
+
+//------------------------------------------------------------------------------------------------------------------------------------------
+
+function addValueDiseaseIdMedicine(){
+	var e = document.getElementById("diseaseMInput");
+	var diseaseId = e.options[e.selectedIndex].value;
+	$("#diseaseMValue").val(diseaseId);
+}
+
+var diseaseMedicines;
+function showMedicineDisease(){
+	var diseaseId = $("#diseaseMInput").val();
+	$.ajax({
+  		url: appUrl+"api/medicines/disease/"+diseaseId
+	}).done(function(data) {
+  		diseaseMedicines = data;
+  		$("#medD").empty();
+  		$("#medDSelect").empty();
+  		if(diseaseMedicines.length!=0){
+			for(var i = 0; i<diseaseMedicines.length; i++){
+				var mDs = diseaseMedicines[i];
+				var info = "<p>&nbsp;• "+mDs.name+"</p>";
+				var dinfo = "<option value="+mDs.medicineId+">"+mDs.name+"</option>";
+				$("#medD").append(info);
+				$("#medDSelect").append(dinfo);
+			}
+		}
+		else{
+			$("#medDSelect").empty();
+			$("#medD").append("<p>Ni zdravil!</p>");
+		}
+  	});
+}
+
+//---------------------------------------------------------------------------------------------------------------------------------
 
 function formatDate(dateString){
 	var date = new Date(dateString);

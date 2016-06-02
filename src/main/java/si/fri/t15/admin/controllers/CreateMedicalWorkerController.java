@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,18 +27,16 @@ import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.NurseData;
 import si.fri.t15.models.user.User;
 import si.fri.t15.validators.CreateMedicalWorkerForm;
+import si.fri.t15.validators.CreateMedicalWorkerValidator;
 
 @Controller
 public class CreateMedicalWorkerController extends ControllerBase{
 	
-	@InitBinder
+	@InitBinder("command")
 	protected void initBinder(HttpServletRequest request,
 			ServletRequestDataBinder binder) {
-		binder.setValidator(validator);
+		binder.setValidator(createMedicalWorkerValidator);
 	}
- 
-	@Resource(name="createMedicalWorkerValidator")
-	Validator validator;
 	
 	@Transactional
 	@RequestMapping(value = "/admin/createMedicalWorker",  method=RequestMethod.POST)
@@ -108,3 +105,5 @@ public class CreateMedicalWorkerController extends ControllerBase{
 		return new ModelAndView("createMedicalWorker");
 	}
 }
+
+
