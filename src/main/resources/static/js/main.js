@@ -82,7 +82,7 @@ function formatTime(timeString){
 }
 
 function formatDateFromDate(date){
-	return ("0" + date.getDate()).slice(-2)+"."+("0" + date.getMonth()).slice(-2)+"."+date.getFullYear();
+	return ("0" + date.getDate()).slice(-2)+"."+("0" + (date.getMonth()+1)).slice(-2)+"."+date.getFullYear();
 }
 
 function addDays(date, days) {
@@ -503,9 +503,9 @@ function loadTimetableCalendar(){
                     for(var a = 0; a < appointments.length; a++){
                     	var div;
                     	if(a%2==0)
-                    		div = "<div id=\""+appointments[a].idAppointment+"\" class=\"calendar-appointment doctor-calendar-appointment "+((appointments[a].doctorFreeTime)?"doctor-free-time":"")+" c-a-even\">"+formatTime(appointments[a].dateTime)+"</div>";
+                    		div = "<div id=\""+appointments[a].idAppointment+"\" class=\"calendar-appointment doctor-calendar-appointment "+((appointments[a].taken)?"appointment-taken":"")+" "+((appointments[a].doctorFreeTime)?"doctor-free-time":"")+" c-a-even\">"+formatTime(appointments[a].dateTime)+"</div>";
                     	else
-                    		div = "<div id=\""+appointments[a].idAppointment+"\" class=\"calendar-appointment doctor-calendar-appointment "+((appointments[a].doctorFreeTime)?"doctor-free-time":"")+" c-a-odd\">"+formatTime(appointments[a].dateTime)+"</div>";
+                    		div = "<div id=\""+appointments[a].idAppointment+"\" class=\"calendar-appointment doctor-calendar-appointment "+((appointments[a].taken)?"appointment-taken":"")+" "+((appointments[a].doctorFreeTime)?"doctor-free-time":"")+" c-a-odd\">"+formatTime(appointments[a].dateTime)+"</div>";
 
                     	$("#calendar"+(i+1)+"day"+(x+1)+"Appointments").append(div);
                     }

@@ -10,6 +10,7 @@ import si.fri.t15.models.user.PatientData;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 @Entity
 @NamedQueries({
@@ -43,7 +44,14 @@ public class Appointment implements Serializable{
 	private WorkDay workDay;
 	
 	transient private boolean isTaken;
+	transient private boolean canRelease;
 	
+	public boolean isCanRelease() {
+		Calendar today = Calendar.getInstance();
+		today.add(Calendar.HOUR, 12);
+		return dateTime.after(new Timestamp(today.getTimeInMillis()));
+	}
+
 	public boolean isTaken() {
 		return patient != null;
 	}

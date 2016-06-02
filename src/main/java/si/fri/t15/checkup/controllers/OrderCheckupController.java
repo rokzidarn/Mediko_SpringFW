@@ -1,5 +1,6 @@
 package si.fri.t15.checkup.controllers;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,13 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.Appointment;
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
 
 @Controller
-public class OrderCheckupController {
+public class OrderCheckupController extends ControllerBase{
 
 	@Autowired
 	EntityManager em;
@@ -61,6 +63,49 @@ public class OrderCheckupController {
 		//Side menu variables
 		String userType = "user";
 		User user = em.merge(userSession);
+		
+		if(userSession.getData().getClass().equals(PatientData.class)){
+			PatientData p = em.merge(userSession.getSelectedPatient());
+			
+			//Side menu variables
+			model.addAttribute("selectedPatient", userSession.getSelectedPatient());
+			
+			
+			//Get all doctors
+			List<DoctorData> doctors = (List<DoctorData>)em.createNamedQuery("DoctorData.GetAllDoctors").getResultList();
+			model.addAttribute("doctors",doctors);
+			model.addAttribute("selectedDoctor", (userSession.getSelectedPatient() != null)? userSession.getSelectedPatient().getDoctor() : null);
+		}else if(userSession.getData().getClass().equals(DoctorData.class)){
+		
+			DoctorData doctor = (DoctorData)user.getData();
+
+			model.addAttribute("patients", doctor.getPatients());
+			model.addAttribute("isDoctor", true);
+			
+		}
+		
+		model.addAttribute("usertype", userType);
+		
+		model.addAttribute("page", "checkup");
+		model.addAttribute("subpage", "order");
+		//Page variables
+		model.addAttribute("title", "NAROČI NA PREGLED");
+		model.addAttribute("user", user);
+		
+		return "orderCheckup";
+
+	}
+
+	@Transactional
+	@RequestMapping(value = "/checkup/list")
+	public String checkupList(Model model, HttpServletRequest request,  @AuthenticationPrincipal User userSession){
+		
+		if(userSession.getData().getClass().equals(PatientData.class) && userSession.getSelectedPatient() == null){
+			userSession.setSelectedPatient((PatientData)userSession.getData());
+		}
+		//Side menu variables
+		String userType = "user";
+		User user = em.merge(userSession);
 		PatientData p = em.merge(userSession.getSelectedPatient());
 		
 		//Side menu variables
@@ -69,16 +114,44 @@ public class OrderCheckupController {
 		model.addAttribute("page", "checkup");
 		model.addAttribute("subpage", "order");
 		//Page variables
-		model.addAttribute("title", "NAROČI NA PREGLED");
+		model.addAttribute("title", "SEZNAM NAROČENIH PREGLEDOV");
 		model.addAttribute("user", user);
 		
 		//Get all doctors
-		List<DoctorData> doctors = (List<DoctorData>)em.createNamedQuery("DoctorData.GetAllDoctors").getResultList();
-		model.addAttribute("doctors",doctors);
-		model.addAttribute("selectedDoctor", (userSession.getSelectedPatient() != null)? userSession.getSelectedPatient().getDoctor() : null);
+		List<Appointment> upcomingAppointments = new ArrayList<Appointment>();
 		
+		for(Appointment a : p.getAppointments()){
+			if(a.getDateTime().getTime() > Calendar.getInstance().getTimeInMillis()){
+				upcomingAppointments.add(a);
+			}
+		}
 		
-		return "orderCheckup";
+		model.addAttribute("upcomingAppointments", upcomingAppointments);
 
+		
+		
+		return "checkupList";
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/checkup/list", method=RequestMethod.POST)
+	public String checkupListRelease(@RequestParam(required=false, defaultValue="-1") int appointmentId, Model model, HttpServletRequest request,  @AuthenticationPrincipal User userSession){
+		
+		if(appointmentId == -1) return "redirect:/checkup/list";
+		
+		List<Appointment> listOfAppointments = em.createNamedQuery("Appointment.findAppointment").setParameter(1,appointmentId).getResultList();
+		
+		if(listOfAppointments.isEmpty())return "redirect:/checkup/list";
+		
+		Appointment a = listOfAppointments.get(0);
+		Calendar today = Calendar.getInstance();
+		today.add(Calendar.HOUR, +12);
+		
+		if(a.getDateTime().getTime() > today.getTimeInMillis()){
+			a.setPatient(null);
+			em.persist(a);
+		}
+		
+		return "redirect:/checkup/list";
 	}
 }
