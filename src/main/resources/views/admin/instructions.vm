@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    #parse("../common/head.vm")
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="panel panel-default main-panel">
+                    <div class="main-container">
+                        <div class="content-container">
+                            <div class="content-topbar">
+                                <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
+                                <div class="content-title">$title</div>
+                            </div>
+                            <div class="content">   
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <form method="POST" action="#springUrl('/admin')/dadd">
+                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                    #if($commandiad) #springBind( "commandiad.disease" ) #end
+                                                    <label for="diseaseInput">Izberite bolezen: </label>
+                                                    <select id="diseaseInput" name="disease" class="form-control">
+                                                        #foreach($disease in $allDiseases)
+                                                            <option value="${disease.getDiseaseId()}">$disease.name</option>
+                                                        #end
+                                                    </select><br>
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                    #if($commandiad) #springBind( "commandiad.instruction" ) #end
+                                                    <label for="instructionInput">Navodilo</label>
+                                                    <input type="text" class="form-control" id="instructionInput" name="instruction" placeholder="Vnesite navodilo!"><br>
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                    <button type="submit" class="btn btn-info">DODAJ NAVODILO</button>    
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <form method="POST" action="#springUrl('/admin')/diadd">
+                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                    #if($commandiadi) #springBind( "commandiadi.diet" ) #end
+                                                    <label for="dietInput">Izberite dieto: </label>
+                                                    <select id="dietInput" name="diet" class="form-control">
+                                                        #foreach($diet in $allDiets)
+                                                            <option value="${diet.getDietId()}">$diet.name</option>
+                                                        #end
+                                                    </select><br>
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                    #if($commandiadi) #springBind( "commandiadi.instruction_diet" ) #end
+                                                    <label for="instruction_dietInput">Navodilo</label>
+                                                    <input type="text" class="form-control" id="instruction_dietInput" name="instruction_diet" placeholder="Vnesite navodilo!"><br>
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                    <button type="submit" class="btn btn-info">DODAJ NAVODILO</button>  
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <br>
+                                            <label for="dis">Navodila bolezni: </label>
+                                            <div id="dis" class="form-group">                                               
+                                                #foreach($curr in $insDiseases)                                                  
+                                                    <p>&nbsp;• <a style="color: dodgerblue;" href="$curr.text">$curr.text</a></p>
+                                                #end                                              
+                                            </div><br>
+                                            <div class="form-group">
+                                                <form method="POST" action="#springUrl('/admin')/ddel">
+                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                    #if($commandidd) #springBind( "commandidd.id" ) #end
+                                                    <select id="disSelect" name="id" class="form-control">
+                                                        #foreach($curr in $insDiseases)
+                                                            <option value="${curr.getInstructionsId()}">$curr.text</option>
+                                                        #end
+                                                    </select>
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                    <br><button type="submit" class="btn btn-info">ODSTRANI NAVODILO</button>  
+                                                </form>
+                                            </div>
+                                            <br>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <br>
+                                            <label for="die">Navodila diete: </label>
+                                            <div id="die" class="form-group">                                               
+                                                #foreach($curr in $insDiets)
+                                                    <p>&nbsp;• <a style="color: dodgerblue;" href="$curr.text">$curr.text</a></p>
+                                                #end                                              
+                                            </div><br>
+                                            <div class="form-group">
+                                                <form method="POST" action="#springUrl('/admin')/didel">
+                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                    #if($commandiddi) #springBind( "commandiddi.id" ) #end
+                                                    <select id="dieSelect" name="id" class="form-control">
+                                                        #foreach($curr in $insDiets)
+                                                            <option value="${curr.getInstructionsId()}">$curr.text</option>
+                                                        #end
+                                                    </select>
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                    <br><button type="submit" class="btn btn-info">ODSTRANI NAVODILO</button>  
+                                                </form>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <form method="POST" action="#springUrl('/admin')/madd">
+                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                    #if($commandiam) #springBind( "commandiam.medicine" ) #end
+                                                    <label for="medicineInput">Izberite zdravilo: </label>
+                                                    <select id="medicineInput" name="medicine" class="form-control">
+                                                        #foreach($medicine in $allMedicines)
+                                                            <option value="${medicine.getMedicineId()}">$medicine.name</option>
+                                                        #end
+                                                    </select><br>
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                    #if($commandiam) #springBind( "commandiam.instruction_medicine" ) #end
+                                                    <label for="instruction_medicineInput">Navodilo</label>
+                                                    <input type="text" class="form-control" id="instruction_medicineInput" name="instruction_medicine" placeholder="Vnesite navodilo!"><br>
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                    <button type="submit" class="btn btn-info">DODAJ NAVODILO</button>  
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <br>
+                                            <label for="med">Navodila zdravila: </label>
+                                            <div id="med" class="form-group">                                               
+                                                #foreach($curr in $insMedicines)
+                                                    <p>&nbsp;• <a style="color: dodgerblue;" href="$curr.text">$curr.text</a></p>
+                                                #end                                              
+                                            </div><br>
+                                            <div class="form-group">
+                                                <form method="POST" action="#springUrl('/admin')/mdel">
+                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                    #if($commandidm) #springBind( "commandidm.id" ) #end
+                                                    <select id="medSelect" name="id" class="form-control">
+                                                        #foreach($curr in $insMedicines)
+                                                            <option value="${curr.getInstructionsId()}">$curr.text</option>
+                                                        #end
+                                                    </select>
+                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                    <br><button type="submit" class="btn btn-info">ODSTRANI NAVODILO</button>  
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>     
+                            </div>
+                            <div id="sidebar" class="sidebar hidden-sm hidden-xs">
+                                <div class="sidebar-topbar">
+                                    <div class="logo" style="color:#eee">
+                                        #if($user.lastLogin)
+                                            <div style="padding-left: 10px;">
+                                                <h6>Zadnja prijava</h6>
+                                                <h6>$user.lastLogin</h6>
+                                            </div>
+                                        #end
+                                    </div>
+                                    <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                    </div>
+                                </div>
+                                <div class="patient">
+                                    <div class="patient-image patient-male">
+
+                                    </div>
+                                    <div class="patient-name">
+                                        $user.username
+                                    </div>
+                                </div>
+                                <div class="sidebar-seperator"></div>
+                                #sidemenu($usertype $page $subpage)
+                                <div class="sidebar-seperator"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

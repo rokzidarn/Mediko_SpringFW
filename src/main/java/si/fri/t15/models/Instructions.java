@@ -7,7 +7,11 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@NamedQuery(name="Instructions.findAll", query="SELECT i FROM Instructions i")
+@NamedQueries({
+	@NamedQuery(name="Instructions.findAll", query="SELECT i FROM Instructions i"),
+	@NamedQuery(name="Instructions.findInstructions", query="SELECT i FROM Instructions i WHERE i.id=?1")
+})
+
 public class Instructions implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

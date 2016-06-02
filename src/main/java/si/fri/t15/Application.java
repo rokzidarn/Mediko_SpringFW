@@ -17,16 +17,32 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import si.fri.t15.dao.UserDetailsService;
 import si.fri.t15.login.controllers.SessionEndedListener;
+import si.fri.t15.validators.AddDietValidator;
+import si.fri.t15.validators.AddDiseaseValidator;
+import si.fri.t15.validators.AddMedCenterValidator;
+import si.fri.t15.validators.AddMedicineValidator;
 import si.fri.t15.validators.ChangePasswordValidator;
 import si.fri.t15.validators.CreateMedicalWorkerValidator;
 import si.fri.t15.validators.CreatePatientValidator;
 import si.fri.t15.validators.ForgottenPasswordValidator;
+import si.fri.t15.validators.DeleteDietValidator;
+import si.fri.t15.validators.DeleteDiseaseValidator;
+import si.fri.t15.validators.DeleteMedCenterValidator;
+import si.fri.t15.validators.DeleteMedicineValidator;
+import si.fri.t15.validators.InsAddDietValidator;
+import si.fri.t15.validators.InsAddDiseaseValidator;
+import si.fri.t15.validators.InsAddMedicineValidator;
+import si.fri.t15.validators.InsDelDietValidator;
+import si.fri.t15.validators.InsDelDiseaseValidator;
+import si.fri.t15.validators.InsDelMedicineValidator;
 import si.fri.t15.validators.InsertDiagnosisValidator;
 import si.fri.t15.validators.InsertDietValidator;
 import si.fri.t15.validators.InsertDiseaseValidator;
 import si.fri.t15.validators.InsertMedicineValidator;
 import si.fri.t15.validators.InsertReasonValidator;
 import si.fri.t15.validators.InsertResultValidator;
+import si.fri.t15.validators.MedAddDiseaseValidator;
+import si.fri.t15.validators.MedDelDiseaseValidator;
 import si.fri.t15.validators.SelectDoctorValidator;
 import si.fri.t15.validators.SignUpValidator;
 
@@ -155,6 +171,86 @@ public class Application extends WebMvcConfigurerAdapter {
 	@Bean
 	public InsertResultValidator insertResultValidator(){
 		return new InsertResultValidator();
+	}
+	
+	@Bean
+	public InsAddDietValidator insAddDietValidator(){
+		return new InsAddDietValidator();
+	}
+	
+	@Bean
+	public InsAddDiseaseValidator insAddDiseaseValidator(){
+		return new InsAddDiseaseValidator();
+	}
+	
+	@Bean
+	public InsAddMedicineValidator insAddMedicineValidator(){
+		return new InsAddMedicineValidator();
+	}
+	
+	@Bean
+	public InsDelMedicineValidator insDelMedicineValidator(){
+		return new InsDelMedicineValidator();
+	}
+	
+	@Bean
+	public InsDelDiseaseValidator insDelDiseaseValidator(){
+		return new InsDelDiseaseValidator();
+	}
+	
+	@Bean
+	public InsDelDietValidator insDelDietValidator(){
+		return new InsDelDietValidator();
+	}
+	
+	@Bean
+	public MedAddDiseaseValidator medAddDiseaseValidator(){
+		return new MedAddDiseaseValidator();
+	}
+	
+	@Bean
+	public MedDelDiseaseValidator medDelDiseaseValidator(){
+		return new MedDelDiseaseValidator();
+	}
+	
+	@Bean
+	public AddDiseaseValidator addDiseaseValidator(){
+		return new AddDiseaseValidator();
+	}
+	
+	@Bean
+	public AddDietValidator addDietValidator(){
+		return new AddDietValidator();
+	}
+	
+	@Bean
+	public AddMedicineValidator addMedicineValidator(){
+		return new AddMedicineValidator();
+	}
+	
+	@Bean
+	public AddMedCenterValidator addMedCenterValidator(){
+		return new AddMedCenterValidator();
+	}
+	
+	@Bean
+	public DeleteDiseaseValidator deleteDiseaseValidator(){
+		return new DeleteDiseaseValidator();
+	}
+	
+	@Bean
+	public DeleteDietValidator deleteDietValidator(){
+		return new DeleteDietValidator();
+	}
+	
+	@Bean
+	public DeleteMedicineValidator deleteMedicineValidator(){
+		return new DeleteMedicineValidator();
+	}
+	
+	@Bean
+	public DeleteMedCenterValidator deleteMedCenterValidator(){
+		return new DeleteMedCenterValidator();
 	}
 	
 	@Bean
