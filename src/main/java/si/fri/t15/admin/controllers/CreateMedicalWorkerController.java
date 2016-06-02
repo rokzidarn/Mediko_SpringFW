@@ -3,11 +3,11 @@ package si.fri.t15.admin.controllers;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.annotation.Resource;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -31,6 +31,9 @@ import si.fri.t15.validators.CreateMedicalWorkerValidator;
 
 @Controller
 public class CreateMedicalWorkerController extends ControllerBase{
+	
+	@Autowired
+	CreateMedicalWorkerValidator createMedicalWorkerValidator;
 	
 	@InitBinder("command")
 	protected void initBinder(HttpServletRequest request,
