@@ -20,6 +20,7 @@ import si.fri.t15.login.controllers.SessionEndedListener;
 import si.fri.t15.validators.ChangePasswordValidator;
 import si.fri.t15.validators.CreateMedicalWorkerValidator;
 import si.fri.t15.validators.CreatePatientValidator;
+import si.fri.t15.validators.ForgottenPasswordValidator;
 import si.fri.t15.validators.InsertDiagnosisValidator;
 import si.fri.t15.validators.InsertDietValidator;
 import si.fri.t15.validators.InsertDiseaseValidator;
@@ -114,6 +115,11 @@ public class Application extends WebMvcConfigurerAdapter {
 	@Bean
 	public ChangePasswordValidator changePasswordValidator(){
 		return new ChangePasswordValidator();
+	}
+	
+	@Bean
+	public ForgottenPasswordValidator forgottenPasswordValidator(){
+		return new ForgottenPasswordValidator();
 	}
 	
 	@Bean
