@@ -15,7 +15,7 @@
                             <div class="content">
 								<form method="POST" action="">
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-									<h4><p class="text-left">Geslo mora vsebovati vsaj 8 znakov, vključno z vsaj 1 števko.</p></h4>
+									<p>Geslo mora vsebovati vsaj 8 znakov, vključno z vsaj 1 števko.</p>
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
