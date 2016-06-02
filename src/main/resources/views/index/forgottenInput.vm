@@ -13,27 +13,32 @@
                                 <div class="content-title">$title</div>
                             </div>
                             <div class="content">
-                            	#if($SPRING_SECURITY_LAST_EXCEPTION)
-									<p class="error">#springMessage("${SPRING_SECURITY_LAST_EXCEPTION}")</p>
-								#end
-								<form action="" method="POST">
-									<div class="form-group">
-										<label for="usernameInput">Email</label>
-										<input type="text" class="form-control" id="usernameInput" name="username"  placeholder="Email" required>	
-									</div>
-									<div class="form-group">
-										<label for="passwordInput">Geslo</label>
-										<input type="password" class="form-control" id="passwordInput" name="password"  placeholder="Geslo" required>									
-										<div><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></div>
+								<form method="POST" action="">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+									<h4><p class="text-left">Geslo mora vsebovati vsaj 8 znakov, vključno z vsaj 1 števko.</p></h4>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.password" ) #end
+												<label for="passwordInput">Geslo</label>
+												<input type="password" class="form-control" id="passwordInput" name="password" value="$!status.value" placeholder="Geslo" required pattern="(?=.*\d).{8,}" onchange="form.passwordInputRepeat.pattern = this.value;">
+												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.repeatpassword" ) #end
+												<label for="passwordInputRepeat">Ponovi geslo</label>
+												<input type="password" class="form-control" id="passwordInputRepeat" name="repeatpassword" value="$!status.value" placeholder="Ponovi geslo" required>
+												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+											</div>
+										</div>
 									</div>
 									<br />
 									<p class="text-center">
-										<input type="submit" class="btn btn-primary btn-lg" value="PRIJAVA">
-									</p>							
-								</form>
-								<p class="text-center">
-									<a class="btn btn-danger" href='#springUrl("/forgotten")'>Pozabljeno geslo?</a>
-								</p>	
+										<input type="submit" class="btn btn-default btn-lg" value="Spremeni geslo">
+									</p>								
+								</form>						
                             </div>
                         </div>
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">
@@ -49,10 +54,10 @@
                                 <div class="logo-name">
                                     MEDIKO
                                 </div>
-                                <div class="sidebar-seperator"></div>
-	                            #sidemenu($usertype $page $subpage)
-	                            <div class="sidebar-seperator"></div>
                             </div>
+                            <div class="sidebar-seperator"></div>
+                            #sidemenu($usertype $page $subpage)
+                            <div class="sidebar-seperator"></div>
                         </div>
                     </div>
                 </div>
