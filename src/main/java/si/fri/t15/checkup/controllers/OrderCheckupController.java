@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,74 @@ public class OrderCheckupController extends ControllerBase{
 	@Transactional
 	@RequestMapping(value = "/checkup/order", method=RequestMethod.POST)
 	public String orderCheckupInsert(
-			@RequestParam(required=false, defaultValue="-1") int appointment,
-			@RequestParam(required=false, defaultValue="-1") int doctor, Model model, HttpServletRequest request,  @AuthenticationPrincipal User userSession){
+			@RequestParam(required=false, defaultValue="-1") String appointment,
+			@RequestParam(required=false, defaultValue="-1") int doctor,
+			@RequestParam(required=false, defaultValue="-1") int patient, Model model, HttpServletRequest request,  @AuthenticationPrincipal User userSession){
 		
-		if(appointment == -1) return "redirect:/checkup/order";
+		if(appointment == "-1") return "redirect:/checkup/order";
+		if(userSession.getData().getClass().equals(PatientData.class)){
+			int appointmentId = -1;
+			try{
+				appointmentId = Integer.parseInt(appointment);
+			}catch(Exception ex){
+				return "redirect:/checkup/order";
+			}
+			List<Appointment> listOfAppointments = em.createNamedQuery("Appointment.findAppointment").setParameter(1,appointmentId).getResultList();
+			
+			if(listOfAppointments.isEmpty())return "redirect:/checkup/order";
+			
+			Appointment a = listOfAppointments.get(0);
+			
+			if(a.getDoctor()!=null && a.getDoctor().getId() != doctor) return "redirect:/checkup/order";
+			
+			a.setPatient(userSession.getSelectedPatient());
+			a.setOrderedBy(userSession.getData());
+			
+			em.merge(a);
+			return "redirect:/dashboard";
+		}else if(userSession.getData().getClass().equals(DoctorData.class)){
+			
+			String [] appointments = appointment.split(",");
+			try{
+				Query getAppointmentQuery = em.createNamedQuery("Appointment.findAppointment");
+				for(int i = 0; i < appointments.length; i++){
+					int appointmentId = Integer.parseInt(appointments[i]);
+					getAppointmentQuery.setParameter(1, appointmentId);
+					
+					Appointment a = (Appointment)getAppointmentQuery.getSingleResult();
+					
+					if(a.getDoctor() != null && a.getDoctor().getId() != userSession.getData().getId()) return "redirect:/checkup/order";
+					
+					PatientData patientData = em.find(PatientData.class, patient);
+					
+					if(patientData == null ) return "redirect:/checkup/order";
+					
+					a.setPatient(patientData);
+					a.setOrderedBy(userSession.getData());
+					
+					em.persist(a);
+					
+				}
+				
+				return "redirect:/checkup/list";
+				
+				
+				
+				
+			}catch(Exception ex){return "redirect:/checkup/order";}
+		}
+		return "redirect:/dashboard";
+		
+		
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/checkup/order/doctor", method=RequestMethod.POST)
+	public String orderCheckupInsert(
+			@RequestParam(required=false, defaultValue="") String appointment,
+			@RequestParam(required=false, defaultValue="-1") int patient, Model model, HttpServletRequest request,  @AuthenticationPrincipal User userSession){
+		
+		/*if(appointment == -1) return "redirect:/checkup/order";
 		
 		List<Appointment> listOfAppointments = em.createNamedQuery("Appointment.findAppointment").setParameter(1,appointment).getResultList();
 		
@@ -48,9 +113,9 @@ public class OrderCheckupController extends ControllerBase{
 		
 		a.setPatient(userSession.getSelectedPatient());
 		
-		em.merge(a);
+		em.merge(a);*/
 		
-		return "redirect:/dashboard";
+		return "redirect:/checkup/order";
 	}
 	
 	@Transactional
@@ -79,6 +144,7 @@ public class OrderCheckupController extends ControllerBase{
 		
 			DoctorData doctor = (DoctorData)user.getData();
 
+			model.addAttribute("doctor", doctor);
 			model.addAttribute("patients", doctor.getPatients());
 			model.addAttribute("isDoctor", true);
 			
@@ -106,27 +172,46 @@ public class OrderCheckupController extends ControllerBase{
 		//Side menu variables
 		String userType = "user";
 		User user = em.merge(userSession);
-		PatientData p = em.merge(userSession.getSelectedPatient());
 		
-		//Side menu variables
+		if(userSession.getData().getClass().equals(PatientData.class)){
+			
+			PatientData p = em.merge(userSession.getSelectedPatient());
+			
+			//Side menu variables
+			
+			model.addAttribute("selectedPatient", userSession.getSelectedPatient());
+			
+			//Get all appointments
+			List<Appointment> upcomingAppointments = new ArrayList<Appointment>();
+			
+			for(Appointment a : p.getAppointments()){
+				if(a.getDateTime().getTime() > Calendar.getInstance().getTimeInMillis()){
+					upcomingAppointments.add(a);
+				}
+			}
+			
+			model.addAttribute("upcomingAppointments", upcomingAppointments);
+		}
+		else if(userSession.getData().getClass().equals(DoctorData.class)){
+			DoctorData doctorData = (DoctorData)user.getData();
+			
+			List<Appointment> upcomingAppointments = new ArrayList<Appointment>();
+			
+			for(Appointment a : doctorData.getAppointments()){
+				if(a.getDateTime().getTime() > Calendar.getInstance().getTimeInMillis() && a.getPatient() != null){
+					upcomingAppointments.add(a);
+				}
+			}
+			model.addAttribute("upcomingAppointments", upcomingAppointments);
+			model.addAttribute("isDoctor", true);
+		}
+		
 		model.addAttribute("usertype", userType);
-		model.addAttribute("selectedPatient", userSession.getSelectedPatient());
 		model.addAttribute("page", "checkup");
-		model.addAttribute("subpage", "order");
+		model.addAttribute("subpage", "list");
 		//Page variables
 		model.addAttribute("title", "SEZNAM NAROČENIH PREGLEDOV");
 		model.addAttribute("user", user);
-		
-		//Get all doctors
-		List<Appointment> upcomingAppointments = new ArrayList<Appointment>();
-		
-		for(Appointment a : p.getAppointments()){
-			if(a.getDateTime().getTime() > Calendar.getInstance().getTimeInMillis()){
-				upcomingAppointments.add(a);
-			}
-		}
-		
-		model.addAttribute("upcomingAppointments", upcomingAppointments);
 
 		
 		
@@ -144,11 +229,19 @@ public class OrderCheckupController extends ControllerBase{
 		if(listOfAppointments.isEmpty())return "redirect:/checkup/list";
 		
 		Appointment a = listOfAppointments.get(0);
-		Calendar today = Calendar.getInstance();
-		today.add(Calendar.HOUR, +12);
-		
-		if(a.getDateTime().getTime() > today.getTimeInMillis()){
+		if(userSession.getData().getClass().equals(PatientData.class)){
+			
+			Calendar today = Calendar.getInstance();
+			today.add(Calendar.HOUR, +12);
+			
+			if(a.getDateTime().getTime() > today.getTimeInMillis()){
+				a.setPatient(null);
+				a.setOrderedBy(null);
+				em.persist(a);
+			}
+		}else if(userSession.getData().getClass().equals(DoctorData.class)){
 			a.setPatient(null);
+			a.setOrderedBy(null);
 			em.persist(a);
 		}
 		

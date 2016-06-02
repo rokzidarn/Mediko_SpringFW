@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import si.fri.t15.base.models.UserData;
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.PatientData;
 
@@ -32,6 +33,9 @@ public class Appointment implements Serializable{
 	@Column(nullable=false)
 	private Timestamp dateTime;
 	
+	@OneToOne
+	private UserData orderedBy;
+
 	@ManyToOne
 	@JoinColumn(name="Patient_idPatient")
 	private PatientData patient;
@@ -122,9 +126,19 @@ public class Appointment implements Serializable{
 	public WorkDay getWorkDay() {
 		return workDay;
 	}
-
+	
+	
 	public void setWorkDay(WorkDay workDay) {
 		this.workDay = workDay;
+	}
+
+	@JsonIgnore
+	public UserData getOrderedBy() {
+		return orderedBy;
+	}
+
+	public void setOrderedBy(UserData orderedBy) {
+		this.orderedBy = orderedBy;
 	}
 	
 }

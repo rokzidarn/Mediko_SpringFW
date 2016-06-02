@@ -19,7 +19,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 #if($isDoctor)
-                                                    <label for="orderCheckupPatientInput">Zdravnik</label>
+                                                    <label for="orderCheckupPatientInput">Pacient</label>
                                                     <select class="form-control" id="orderCheckupPatientInput" name="patient">
                                                         #if($patients.size() == 0) <option value="-1">Ni pacientov</option>#end
                                                         #foreach($patient in $patients)
@@ -208,7 +208,7 @@
                                         #if($user.lastLogin)
                                             <div style="padding-left: 10px;">
                                                 <h6>Zadnja prijava</h6>
-                                                <h6>$user.lastLogin</h6>
+                                                <h6>$_utils.format($user.lastLogin)</h6>
                                             </div>
                                         #end
                                     </div>
@@ -239,6 +239,10 @@
     </body>
     <!-- LOAD SELECT2 -->
     <script>
+        #if($isDoctor)
+            var currentDoctorId = $doctor.id;
+        #end
+        $("#orderCheckupPatientInput").select2();
         $("#orderCheckupDoctorInput").select2();
         getDoctorsAvailableAppointments();
     </script>
