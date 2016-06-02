@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.Disease;
 import si.fri.t15.models.Medicine;
+import si.fri.t15.models.user.User;
 import si.fri.t15.validators.MedAddDiseaseForm;
 import si.fri.t15.validators.MedAddDiseaseValidator;
 import si.fri.t15.validators.MedDelDiseaseForm;
@@ -50,7 +52,7 @@ public class MedicineController extends ControllerBase{
 	}
 	
 	@RequestMapping(value = "/admin/medicines",  method=RequestMethod.GET)
-	public ModelAndView updateMedicinesGET(Model model, HttpServletRequest request) {
+	public ModelAndView updateMedicinesGET(Model model, HttpServletRequest request,  @AuthenticationPrincipal User userSession) {
 		
 		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findAll", Disease.class);
 		List<Disease> allDiseases = (List<Disease>) qu.getResultList(); //DDL izbira
@@ -66,6 +68,7 @@ public class MedicineController extends ControllerBase{
 		TypedQuery<Medicine> qu2 = em.createNamedQuery("Medicine.findAll", Medicine.class);
 		List<Medicine> allMedicines = (List<Medicine>) qu2.getResultList(); //DDL izbira za dodajanje novega
 				
+		model.addAttribute("user", userSession);
 		model.addAttribute("allDiseases", allDiseases);
 		model.addAttribute("allMedicines", allMedicines);
 		model.addAttribute("usertype", "admin");

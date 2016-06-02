@@ -83,12 +83,13 @@ function showDiseaseInstructions(){
 			for(var i = 0; i<diseaseInstructions.length; i++){
 				var dIns = diseaseInstructions[i];
 				var info = "<p>&nbsp;• <a style=\"color: dodgerblue;\" href="+dIns.text+">"+dIns.text+"</a></p>";
-				var dinfo = "<option value="+dIns.id+">"+dIns.text+"</option>";
+				var dinfo = "<option value="+dIns.instructionsId+">"+dIns.text+"</option>";
 				$("#dis").append(info);
 				$("#disSelect").append(dinfo);
 			}
 		}
 		else{
+			$("#disSelect").empty();
 			$("#dis").append("<p>Ni navodil!</p>");
 		}	
   	});
@@ -107,12 +108,13 @@ function showDietInstructions(){
 			for(var i = 0; i<dietInstructions.length; i++){
 				var diIns = dietInstructions[i];
 				var info = "<p>&nbsp;• <a style=\"color: dodgerblue;\" href="+diIns.text+">"+diIns.text+"</a></p>";
-				var dinfo = "<option value="+diIns.id+">"+diIns.text+"</option>";
+				var dinfo = "<option value="+diIns.instructionsId+">"+diIns.text+"</option>";
 				$("#die").append(info);
 				$("#dieSelect").append(dinfo);
 			}
 		}
 		else{
+			$("#dieSelect").empty();
 			$("#die").append("<p>Ni navodil!</p>");
 		}
   	});
@@ -127,16 +129,17 @@ function showMedicineInstructions(){
   		medicineInstructions = data;
   		$("#med").empty();
   		$("#medSelect").empty();
-  		if(dietInstructions.length!=0){
+  		if(medicineInstructions.length!=0){
 			for(var i = 0; i<medicineInstructions.length; i++){
 				var mIns = medicineInstructions[i];
 				var info = "<p>&nbsp;• <a style=\"color: dodgerblue;\" href="+mIns.text+">"+mIns.text+"</a></p>";
-				var dinfo = "<option value="+mIns.id+">"+mIns.text+"</option>";
+				var dinfo = "<option value="+mIns.instructionsId+">"+mIns.text+"</option>";
 				$("#med").append(info);
 				$("#medSelect").append(dinfo);
 			}
 		}
 		else{
+			$("#medSelect").empty();
 			$("#med").append("<p>Ni navodil!</p>");
 		}
   	});
@@ -163,12 +166,13 @@ function showMedicineDisease(){
 			for(var i = 0; i<diseaseMedicines.length; i++){
 				var mDs = diseaseMedicines[i];
 				var info = "<p>&nbsp;• "+mDs.name+"</p>";
-				var dinfo = "<option value="+mDs.id+">"+mDs.name+"</option>";
+				var dinfo = "<option value="+mDs.medicineId+">"+mDs.name+"</option>";
 				$("#medD").append(info);
 				$("#medDSelect").append(dinfo);
 			}
 		}
 		else{
+			$("#medDSelect").empty();
 			$("#medD").append("<p>Ni zdravil!</p>");
 		}
   	});

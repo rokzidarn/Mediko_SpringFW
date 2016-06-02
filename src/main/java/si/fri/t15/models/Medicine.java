@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Medicine.findAll", query="SELECT m FROM Medicine m"),
@@ -31,6 +33,7 @@ public class Medicine implements Serializable{
 	@ManyToMany(mappedBy="medicines")
 	private List<Checkup> checkups;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(
     		  name="Disease_Medicine",

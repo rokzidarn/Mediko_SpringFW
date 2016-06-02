@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ import si.fri.t15.models.Medical_Center;
 import si.fri.t15.models.Medicine;
 import si.fri.t15.models.PO_Box;
 import si.fri.t15.models.user.User;
+import si.fri.t15.models.user.User.UserType;
 import si.fri.t15.validators.AddDietForm;
 import si.fri.t15.validators.AddDietValidator;
 import si.fri.t15.validators.AddDiseaseForm;
@@ -119,7 +121,7 @@ public class CodeController extends ControllerBase{
 	}
 	
 	@RequestMapping(value = "/admin/code",  method=RequestMethod.GET)
-	public ModelAndView codesGET(Model model, HttpServletRequest request) {
+	public ModelAndView codesGET(Model model, HttpServletRequest request, @AuthenticationPrincipal User userSession) {
 		
 		TypedQuery<PO_Box> qu = em.createNamedQuery("PO_Box.findAll", PO_Box.class);
 		List<PO_Box> pos = (List<PO_Box>) qu.getResultList(); 
@@ -141,7 +143,7 @@ public class CodeController extends ControllerBase{
 		List<User> medworkers = new ArrayList<>();
 		
 		for(User u : users){
-			if(u.getData()!=null){ //treba popravit, da dobi samo doktorje
+			if(UserType.DOCTOR.equals(u.getUserType())){
 				medworkers.add(u);
 			}
 		}
@@ -153,6 +155,7 @@ public class CodeController extends ControllerBase{
 		model.addAttribute("medicines", medicines);
 		model.addAttribute("mcs", mcs);
 		
+		model.addAttribute("user", userSession);
 		model.addAttribute("usertype", "admin");
 		model.addAttribute("page", "admin");
 		model.addAttribute("subpage", "addDoctor");	

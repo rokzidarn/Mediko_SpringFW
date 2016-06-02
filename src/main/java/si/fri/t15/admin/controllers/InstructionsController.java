@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ import si.fri.t15.models.Diet;
 import si.fri.t15.models.Disease;
 import si.fri.t15.models.Instructions;
 import si.fri.t15.models.Medicine;
+import si.fri.t15.models.user.User;
 import si.fri.t15.validators.InsAddDietForm;
 import si.fri.t15.validators.InsAddDietValidator;
 import si.fri.t15.validators.InsAddDiseaseForm;
@@ -102,7 +104,7 @@ public class InstructionsController extends ControllerBase{
 	}
 
 	@RequestMapping(value = "/admin/instructions",  method=RequestMethod.GET)
-	public ModelAndView updateInstructionsGET(Model model, HttpServletRequest request) {
+	public ModelAndView updateInstructionsGET(Model model, HttpServletRequest request, @AuthenticationPrincipal User userSession) {
 		
 		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findAll", Disease.class);
 		List<Disease> allDiseases = (List<Disease>) qu.getResultList(); 
@@ -146,6 +148,7 @@ public class InstructionsController extends ControllerBase{
 		model.addAttribute("insMedicines", medicineInstructions);
 		//KONEC
 				
+		model.addAttribute("user", userSession);
 		model.addAttribute("allDiseases", allDiseases);
 		model.addAttribute("allDiets", allDiets);
 		model.addAttribute("allMedicines", allMedicines);
