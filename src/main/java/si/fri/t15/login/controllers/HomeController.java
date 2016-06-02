@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +29,6 @@ import si.fri.t15.models.user.User.UserType;
 
 @Controller
 public class HomeController extends ControllerBase{
-	@Autowired
-	EntityManager em;
 	
 	@RequestMapping(value = "/dashboard/patient/{id}")
 	@Transactional

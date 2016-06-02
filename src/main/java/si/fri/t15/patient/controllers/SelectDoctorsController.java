@@ -2,7 +2,6 @@ package si.fri.t15.patient.controllers;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -30,9 +29,6 @@ import si.fri.t15.validators.SelectDoctorValidator;
 
 @Controller
 public class SelectDoctorsController extends ControllerBase{
-	
-	@Autowired
-	EntityManager em;
 	
 	@Autowired
 	SelectDoctorValidator selectDoctorValdiator;

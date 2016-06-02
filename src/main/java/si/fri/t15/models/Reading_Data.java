@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Reading_Data.findAll", query="SELECT r FROM Reading_Data r"),
@@ -62,6 +64,7 @@ public class Reading_Data implements Serializable{
 		this.unit = unit;
 	}
 	
+	@JsonIgnore
 	public Reading getReading() {
 		return this.reading;
 	}
@@ -78,6 +81,7 @@ public class Reading_Data implements Serializable{
 		this.result_home = result_home;
 	}
 	
+	@JsonIgnore
 	public Result_Checkup getResult_Checkup() {
 		return this.result_checkup;
 	}

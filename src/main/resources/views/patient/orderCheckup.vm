@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    #parse("../common/head.vm")
+    <body>
+    	<div class="container">
+            <div class="row">
+                <div class="panel panel-default main-panel">
+                    <div class="main-container">
+                        <div class="content-container">
+                            <div class="content-topbar">
+                                <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
+                                <div class="content-title">$title</div>
+                            </div>
+                            <div class="content">
+                            	<form method="POST" action="">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                #if($command) #springBind( "command.doctor" ) #end
+                                                <label for="orderCheckupDoctorInput">Zdravnik</label>
+                                                <select class="form-control" id="orderCheckupDoctorInput" name="doctor">
+                                                    #if($doctors.size() == 0) <option value="-1">Ni zdravnikov</option>#end
+                                                    #foreach($doctor in $doctors)
+                                                        <option #if($doctor.id == $selectedDoctor.id) selected #end value="$doctor.id">dr. $doctor.first_name $doctor.last_name</option>
+                                                    #end
+                                                </select>
+                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                #if($command) #springBind( "command.appointment" ) #end
+                                                <input type="hidden" class="form-control" id="orderCheckupAppointmentInput" name="appointment" value="-1">
+                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Termin</label>
+                                            <!-- URNIK -->
+                                            <div class="row">
+                                                <div id="calendar1" class="col-md-12 calendar"> 
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div class="calendar-date">24.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "1" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "2" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "3" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "4" class="calendar-appointment c-a-even">13:00</div>
+                                                            <div id = "5" class="calendar-appointment c-a-odd">14:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div class="calendar-date">25.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "6" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "7" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "8" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "9" class="calendar-appointment c-a-even">13:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div class="calendar-date">26.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "10" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "11" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "12" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "13" class="calendar-appointment c-a-even">13:00</div>
+                                                            <div id = "14" class="calendar-appointment c-a-odd">14:00</div>
+                                                            <div id = "15" class="calendar-appointment c-a-even">15:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div class="calendar-date">27.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "16" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "17" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "18" class="calendar-appointment c-a-odd">12:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div class="calendar-date">28.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "19" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "20" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "21" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "22" class="calendar-appointment c-a-even">13:00</div>
+                                                            <div id = "23" class="calendar-appointment c-a-odd">14:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div class="calendar-date">29.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "24" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "25" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "26" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "27" class="calendar-appointment c-a-even">13:00</div>
+                                                            <div id = "28" class="calendar-appointment c-a-odd">14:00</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="calendar2" style="display: none;" class="col-md-12 calendar"> 
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div class="calendar-date">24.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "1" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "2" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "3" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "4" class="calendar-appointment c-a-even">13:00</div>
+                                                            <div id = "5" class="calendar-appointment c-a-odd">14:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div class="calendar-date">25.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "6" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "7" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "8" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "9" class="calendar-appointment c-a-even">13:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div class="calendar-date">26.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "10" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "11" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "12" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "13" class="calendar-appointment c-a-even">13:00</div>
+                                                            <div id = "14" class="calendar-appointment c-a-odd">14:00</div>
+                                                            <div id = "15" class="calendar-appointment c-a-even">15:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div class="calendar-date">27.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "16" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "17" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "18" class="calendar-appointment c-a-odd">12:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div class="calendar-date">28.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "19" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "20" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "21" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "22" class="calendar-appointment c-a-even">13:00</div>
+                                                            <div id = "23" class="calendar-appointment c-a-odd">14:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div class="calendar-date">29.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "24" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "25" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "26" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "27" class="calendar-appointment c-a-even">13:00</div>
+                                                            <div id = "28" class="calendar-appointment c-a-odd">14:00</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="calendar3" style="display: none;" class="col-md-12 calendar"> 
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div class="calendar-date">24.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "1" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "2" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "3" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "4" class="calendar-appointment c-a-even">13:00</div>
+                                                            <div id = "5" class="calendar-appointment c-a-odd">14:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div class="calendar-date">25.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "6" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "7" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "8" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "9" class="calendar-appointment c-a-even">13:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div class="calendar-date">26.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "10" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "11" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "12" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "13" class="calendar-appointment c-a-even">13:00</div>
+                                                            <div id = "14" class="calendar-appointment c-a-odd">14:00</div>
+                                                            <div id = "15" class="calendar-appointment c-a-even">15:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div class="calendar-date">27.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "16" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "17" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "18" class="calendar-appointment c-a-odd">12:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div class="calendar-date">28.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "19" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "20" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "21" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "22" class="calendar-appointment c-a-even">13:00</div>
+                                                            <div id = "23" class="calendar-appointment c-a-odd">14:00</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div class="calendar-date">29.5.2016</div>
+                                                        <div class="calendar-appointments">
+                                                            <div id = "24" class="calendar-appointment c-a-odd">10:00</div>
+                                                            <div id = "25" class="calendar-appointment c-a-even">11:00</div>
+                                                            <div id = "26" class="calendar-appointment c-a-odd">12:00</div>
+                                                            <div id = "27" class="calendar-appointment c-a-even">13:00</div>
+                                                            <div id = "28" class="calendar-appointment c-a-odd">14:00</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="prev-week-button" style="display: none;">Prejšni teden</div>
+                                                    <div class="next-week-button">Naslednji teden</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+                                    <p class="text-center">
+                                        <input type="submit" id="orderCheckupSubmit" class="btn btn-default btn-lg" value="Naroči">
+                                    </p>
+                                    
+                                </form>																
+							</div> 			
+                        </div>
+                        <div id="sidebar" class="sidebar hidden-sm hidden-xs">
+                            <div id="sidebarContent">
+                                <div class="sidebar-topbar">
+                                    <div class="logo" style="color:#eee">
+                                        #if($user.lastLogin)
+                                            <div style="padding-left: 10px;">
+                                                <h6>Zadnja prijava</h6>
+                                                <h6>$user.lastLogin</h6>
+                                            </div>
+                                        #end
+                                    </div>
+                                    <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                    </div>
+                                </div>
+                                <div class="patient">
+                                    <div class="patient-image patient-male">
+
+                                    </div>
+                                    <div class="patient-name">
+                                        $user.username
+                                    </div>
+                                </div>
+                                <div class="sidebar-seperator"></div>
+                                #patientPicker($user)
+                                <div class="sidebar-seperator"></div>
+                                #sidemenu($usertype $page $subpage)
+                                <div class="sidebar-seperator"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <!-- LOAD SELECT2 -->
+    <script>
+        $("#orderCheckupDoctorInput").select2();
+    </script>
+</html>

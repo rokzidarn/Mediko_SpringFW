@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -32,9 +31,6 @@ import si.fri.t15.validators.CreatePatientValidator;
 
 @Controller
 public class CreateProfileController extends ControllerBase{
-	
-	@Autowired
-	EntityManager em;
 	
 	@Autowired
 	CreatePatientValidator createPatientValidator;

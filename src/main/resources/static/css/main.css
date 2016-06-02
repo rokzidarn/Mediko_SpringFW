@@ -177,7 +177,9 @@ a:link, a:hover, a:active{
 	color:#36B8D5;
 }
 
-
+.padding-top-20{
+	padding-top:20px;
+}
 
 .content{
 	padding: 20px;
@@ -232,6 +234,114 @@ a:link, a:hover, a:active{
 
 .checkup-table-tbody{
 	cursor:pointer;
+}
+
+
+/*CALENDAR*/
+.calendar{
+	overflow: hidden;
+}
+.calendar-col-odd{
+	background-color: #DFF1FF;
+	border-top: 2px solid rgba(1,1,1,0.1);
+	border-bottom: 2px solid rgba(1,1,1,0.1);
+	margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+.calendar-col-even{
+	background-color: #C3E1F7;
+	border-top: 2px solid rgba(1,1,1,0.1);
+	border-bottom: 2px solid rgba(1,1,1,0.1);
+	margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+.calendar-date{
+	text-align: center;
+	font-size: 15px;
+	font-weight: 600;
+    margin-top: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: rgba(1,1,1,0.1) solid 2px;
+}
+.calendar-appointments{
+	padding-bottom: 5px;
+}
+.c-a-odd{
+	background-color: rgba(1,1,1,0.08)
+}
+.c-a-even{
+}
+.calendar-appointment{
+	padding: 5px;
+	cursor: default;
+}
+.calendar-appointment:hover{
+	background-color: #36B8D5;
+}
+.calendar-appointment-selected{
+	background-color: #2C9EB7;
+}
+.doctor-free-time{
+	background-color:#5cb85c;
+}
+.doctor-free-time::after { 
+    content: " - odsotnost";
+}
+.no-appointments{
+	text-align:center;
+	font-style: italic;
+}
+
+.info-form{
+	padding-top:10px;
+	padding-bottom:10px;
+}
+.show-edit{
+	color:#258094;
+	font-size: 15px;
+	cursor: pointer;
+	text-align:center;
+	border-bottom: 1px solid rgba(1,1,1,0.1);
+	padding-bottom:5px;
+	margin-bottom:5px;
+}
+
+.prev-week-button{
+	float:left;
+	padding: 10px;
+	color:#258094;
+	font-size: 15px;
+	cursor: pointer;
+}
+.prev-week-button:hover{
+	color: #2C9EB7;
+}
+
+.next-week-button{
+	float:right;
+	padding: 10px;
+	color:#258094;
+	font-size: 15px;
+	cursor: pointer;
+}
+.next-week-button:hover{
+	color: #2C9EB7;
+}
+
+.show-more-filters-button{
+	color:#258094;
+	font-size: 15px;
+	cursor: pointer;
+	padding-left:15px;
+	float:left;
+}
+
+.user-list-export-settings{
+    width: 500px;
+    position: absolute;
+    z-index: 1;
+    top: -40px;
 }
 
 @media (max-width: 992px) {

@@ -11,6 +11,13 @@
 		        PREGLEDI
 		        </div>
 		    </a>
+		    #if($page == "checkup")
+		    	<a href="#springUrl('/checkup/order')">
+					<div class="side-submenu-item #if($subpage=="order")side-submenu-item-selected #end">
+						NAROČI
+					</div>
+				</a>
+		    #end
 		    <a href="#springUrl('/doctors/select')">
 		        <div class="side-menu-item #if($page && $page=="doctors")side-menu-item-selected #end">
 		        ZDRAVNIK

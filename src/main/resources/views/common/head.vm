@@ -3,12 +3,17 @@
     <!-- css -->
 	<link rel="stylesheet" type="text/css" href="#springUrl('/css/bootstrap.min.css')">
 	<link rel="stylesheet" type="text/css" href="#springUrl('/css/main.css')">
+	<link rel="stylesheet" type="text/css" href="#springUrl('/css/select2.min.css')">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 
 	<!-- js -->
 	<script type="text/javascript" src="#springUrl('/js/jquery-2.2.2.min.js')"></script>
 	<script type="text/javascript" src="#springUrl('/js/bootstrap.min.js')"></script>
+	<script type="text/javascript" src="#springUrl('/js/select2.min.js')"></script>
 	<script type="text/javascript" src="#springUrl('/js/main.js')"></script>
+	<script type="text/javascript" src="#springUrl('/js/jspdf.min.js')"></script>
+	<script type="text/javascript" src="#springUrl('/js/html2canvas.js')"></script>
+	<script type="text/javascript" src="#springUrl('/js/html2pdf.js')"></script>
  	<script>  
 	    var appUrl = "#springUrl('/')";  
   	</script> 

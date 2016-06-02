@@ -1,8 +1,6 @@
 package si.fri.t15.base.models;
 
 import java.io.Serializable;
-import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

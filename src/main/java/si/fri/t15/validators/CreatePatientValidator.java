@@ -2,11 +2,6 @@ package si.fri.t15.validators;
 
 import org.springframework.validation.Validator;
 
-import java.util.Date;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.commons.validator.GenericValidator;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
