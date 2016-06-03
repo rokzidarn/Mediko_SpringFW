@@ -26,7 +26,7 @@
                                                         <option #if($doctor.id == $selectedDoctor.id) selected #end value="$doctor.id">dr. $doctor.first_name $doctor.last_name</option>
                                                     #end
                                                 </select>
-                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
                                             </div>
                                         </div>
                                     </div>
@@ -35,7 +35,7 @@
                                             <div class="form-group">
                                                 #if($command) #springBind( "command.appointment" ) #end
                                                 <input type="hidden" class="form-control" id="orderCheckupAppointmentInput" name="appointment" value="-1">
-                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
                                             </div>
                                         </div>
                                     </div>
