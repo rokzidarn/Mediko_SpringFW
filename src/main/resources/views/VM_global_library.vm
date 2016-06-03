@@ -6,12 +6,17 @@
 		        NADZORNA PLOŠČA
 		        </div>
 		    </a>
-		    <a href="#">
+		    <a href="#springUrl('/checkup/list')">
 		        <div class="side-menu-item #if($page && $page=="checkup")side-menu-item-selected #end">
 		        PREGLEDI
 		        </div>
 		    </a>
 		    #if($page == "checkup")
+		    	<a href="#springUrl('/checkup/list')">
+					<div class="side-submenu-item #if($subpage=="list")side-submenu-item-selected #end">
+						SEZNAM
+					</div>
+				</a>
 		    	<a href="#springUrl('/checkup/order')">
 					<div class="side-submenu-item #if($subpage=="order")side-submenu-item-selected #end">
 						NAROČI

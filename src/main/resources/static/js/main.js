@@ -3,6 +3,7 @@ $( document ).ready(function(){
 	$("#caretaker").hide();
 	$( window  ).on('resize', function(){
 		hideSidebar();
+		$("#orderCheckupDoctorInput").select2();
 	});
 
 	//WHEN PAGE LOADS
@@ -46,7 +47,6 @@ $( document ).ready(function(){
 	$("#orderCheckupDoctorInput").on('change', getDoctorsAvailableAppointments);
 
 	//Calendar
-	$(".calendar-appointment").on('click', appointmentOnCalendarClicked);
 	$(".next-week-button").on('click', nextCalendar);
 	$(".prev-week-button").on('click', previousCalendar);
 	$(".save-work-week-button").on('click', saveWorkDay);
@@ -209,7 +209,7 @@ function formatTime(timeString){
 }
 
 function formatDateFromDate(date){
-	return ("0" + date.getDate()).slice(-2)+"."+("0" + date.getMonth()).slice(-2)+"."+date.getFullYear();
+	return ("0" + date.getDate()).slice(-2)+"."+("0" + (date.getMonth()+1)).slice(-2)+"."+date.getFullYear();
 }
 
 function addDays(date, days) {
@@ -501,40 +501,141 @@ function toggleShowMoreResult(){
 }
 
 function getDoctorsAvailableAppointments(){
-	$("#orderCheckupAppointmentInput").prop('disabled', true);
 	$("#orderCheckupSubmit").prop('disabled',true);
-	var doctorId = this.value;
+	var doctorId;
+	if(typeof currentDoctorId == 'undefined')
+		doctorId = $("#orderCheckupDoctorInput")[0].value;
+	else
+		doctorId = currentDoctorId;
 	$.ajax({
-	  		url: appUrl+"api/doctor/"+doctorId+"/appointment/available"
-		}).done(function(data) {
-	  		alert(doctorId);
-	  		/*console.log(data);
-	  		var appointmentsInput = $("#orderCheckupAppointmentInput");
-	  		appointmentsInput.html("");
-	  		for(var i = 0; i < data.length;i++){
-	  			
-
-	  			var option = $("<option />");
-	  			option.val(data[i].idAppointment);
-	  			option.text( data[i].date);
-
-	  			appointmentsInput.append(option);
-	  		}
-	  		appointmentsInput.prop('disabled', false);
-			*/
-
-
-			//todo
-			//BUILD urnik!!!
-			$("#orderCheckupSubmit").prop('disabled',false);
+	  		url: appUrl+"api/doctor/"+doctorId+"/workweek/available"
+		}).done(function(outputData) {
+			if(!outputData.canSelect){
+				$(".disable-overlay").fadeIn(500);
+				$("#timetableBlurDiv").addClass("blur-calendar")
+			}else{
+				$(".disable-overlay").fadeOut(500);
+				$("#timetableBlurDiv").removeClass("blur-calendar")
+			}
+			var data = outputData.data;
+	  		for(var i= 0; i < data.length; i++){
+			//load calendar
+				var date = new Date(data[i].startDate);
+				for(var x = 0; x < 6; x++){
+					$("#calendar"+(i+1)+"day"+(x+1)).text(formatDateFromDate(date));
+					date = addDays(date,1);
+					$("#calendar"+(i+1)+"day"+(x+1)).parent()[0].id = data[i].id;
+					if(!outputData.canSelect || !data[i].workDays || data[i].workDays[x].appointments.length == 0){
+						$("#calendar"+(i+1)+"day"+(x+1)+"Appointments").html("<div class=\"no-appointments\">prazno</div>");
+					}else{
+	                    $("#calendar"+(i+1)+"day"+(x+1)+"Appointments").html("");
+	                    var appointments = data[i].workDays[x].appointments
+	                    for(var a = 0; a < appointments.length; a++){
+	                    	var div;
+	                    	if(new Date(appointments[a].dateTime) < Date.now()){
+	                    		div = "<div id=\""+appointments[a].idAppointment+"\" class=\"calendar-appointment-grayed \">"+formatTime(appointments[a].dateTime)+"</div>";
+	                    	}else{
+	                    	
+		                    	if(a%2==0)
+		                    		div = "<div id=\""+appointments[a].idAppointment+"\" class=\"calendar-appointment "+((appointments[a].doctorFreeTime || appointments[a].taken)?"appointment-taken":"")+" c-a-even\">"+formatTime(appointments[a].dateTime)+"</div>";
+		                    	else
+		                    		div = "<div id=\""+appointments[a].idAppointment+"\" class=\"calendar-appointment "+((appointments[a].doctorFreeTime || appointments[a].taken)?"appointment-taken":"")+" c-a-odd\">"+formatTime(appointments[a].dateTime)+"</div>";
+								}
+	                    	$("#calendar"+(i+1)+"day"+(x+1)+"Appointments").append(div);
+	                    }
+					}
+				}
+			}
+			$(".calendar-appointment").on('click', appointmentOnCalendarClicked);
+			if(outputData.canSelect)
+				$("#orderCheckupSubmit").prop('disabled', false);
 	  	});
 }
 
+var appointmentsArray = [];
 function appointmentOnCalendarClicked(){
-	var appointmentId = this.id;
-	$(".calendar-appointment").removeClass("calendar-appointment-selected");
-	$(this).addClass("calendar-appointment-selected");
-	$("#orderCheckupAppointmentInput").val(appointmentId);
+	if($(this)[0].className.indexOf("appointment-taken") == -1){
+		var appointmentId = this.id;
+		if(typeof currentDoctorId == 'undefined'){
+			$(".calendar-appointment").removeClass("calendar-appointment-selected");
+			$(this).addClass("calendar-appointment-selected");
+			$("#orderCheckupAppointmentInput").val(appointmentId);
+		}else{
+			if(appointmentsArray.length == 0){
+				$(this).addClass("calendar-appointment-selected");
+				appointmentsArray.push(appointmentId);
+			}else{
+				if(isTaken(appointmentId)){
+					if(removeId(appointmentId))
+						$(this).removeClass("calendar-appointment-selected");
+				}
+				else if(isConnected(appointmentId)){
+					$(this).addClass("calendar-appointment-selected");
+					appointmentsArray.push(appointmentId);
+				}
+			}
+			var inputValue ="";
+			for(var i=0; i < appointmentsArray.length; i++){
+				if(i == 0)
+					inputValue += appointmentsArray[i];
+				else
+					inputValue += ","+appointmentsArray[i];
+
+			}
+			$("#orderCheckupAppointmentInput").val(inputValue);
+		}
+	}
+
+}
+function removeId(id){
+	for(var i = 0; i < appointmentsArray.length; i++){
+		if(appointmentsArray[i] == id && (getMax() == i|| getMin() == i)){
+			appointmentsArray.splice(i, 1);
+			return true;
+		}
+	}
+	return false;
+}
+function isConnected(id){
+	for(var i = 0; i < appointmentsArray.length; i++){
+		var index =  $("#"+appointmentsArray[i]).parent().children().toArray().indexOf($("#"+appointmentsArray[i])[0]);
+		var idIndex = $("#"+id).parent().children().toArray().indexOf($("#"+id)[0]);
+		if(index == (idIndex - 1) || index == (idIndex + 1))
+			return true;
+	}
+	return false;
+}
+function getMax(){
+	var max = 0
+	for(var i = 0; i < appointmentsArray.length; i++){
+		var value = $("#"+appointmentsArray[i]).parent().children().toArray().indexOf($("#"+appointmentsArray[i])[0]);
+		var maxValue = $("#"+appointmentsArray[max]).parent().children().toArray().indexOf($("#"+appointmentsArray[max])[0]);
+		if(value > maxValue){
+			max = i;
+		}
+	} 
+	return max;
+}
+
+function getMin(){
+	var min = 0
+	for(var i = 0; i < appointmentsArray.length; i++){
+		var value = $("#"+appointmentsArray[i]).parent().children().toArray().indexOf($("#"+appointmentsArray[i])[0]);
+		var minValue = $("#"+appointmentsArray[min]).parent().children().toArray().indexOf($("#"+appointmentsArray[min])[0]);
+		if(value < minValue){
+			min = i;
+		}
+	} 
+	return min;
+}
+
+function isTaken(id){
+	for(var i = 0; i < appointmentsArray.length; i++){
+		if(appointmentsArray[i] == id){
+			return true;
+		}
+	}
+	return false;
 }
 
 var currentCalendar = 1;
@@ -610,9 +711,9 @@ function loadTimetableCalendar(){
                     for(var a = 0; a < appointments.length; a++){
                     	var div;
                     	if(a%2==0)
-                    		div = "<div id=\""+appointments[a].idAppointment+"\" class=\"calendar-appointment doctor-calendar-appointment "+((appointments[a].doctorFreeTime)?"doctor-free-time":"")+" c-a-even\">"+formatTime(appointments[a].dateTime)+"</div>";
+                    		div = "<div id=\""+appointments[a].idAppointment+"\" class=\"calendar-appointment doctor-calendar-appointment "+((appointments[a].taken)?"appointment-taken":"")+" "+((appointments[a].doctorFreeTime)?"doctor-free-time":"")+" c-a-even\">"+formatTime(appointments[a].dateTime)+"</div>";
                     	else
-                    		div = "<div id=\""+appointments[a].idAppointment+"\" class=\"calendar-appointment doctor-calendar-appointment "+((appointments[a].doctorFreeTime)?"doctor-free-time":"")+" c-a-odd\">"+formatTime(appointments[a].dateTime)+"</div>";
+                    		div = "<div id=\""+appointments[a].idAppointment+"\" class=\"calendar-appointment doctor-calendar-appointment "+((appointments[a].taken)?"appointment-taken":"")+" "+((appointments[a].doctorFreeTime)?"doctor-free-time":"")+" c-a-odd\">"+formatTime(appointments[a].dateTime)+"</div>";
 
                     	$("#calendar"+(i+1)+"day"+(x+1)+"Appointments").append(div);
                     }
@@ -620,25 +721,7 @@ function loadTimetableCalendar(){
 			}
 		}
 		$(".doctor-calendar-appointment").on('click', doctorAppointmentOnCalendarClicked);
-  		/*console.log(data);
-  		var appointmentsInput = $("#orderCheckupAppointmentInput");
-  		appointmentsInput.html("");
-  		for(var i = 0; i < data.length;i++){
-  			
 
-  			var option = $("<option />");
-  			option.val(data[i].idAppointment);
-  			option.text( data[i].date);
-
-  			appointmentsInput.append(option);
-  		}
-  		appointmentsInput.prop('disabled', false);
-		*/
-
-
-		//todo
-		//BUILD urnik!!!
-		$("#orderCheckupSubmit").prop('disabled',false);
   	});
 }
 
