@@ -77,6 +77,7 @@ public class CreateMedicalWorkerController extends ControllerBase {
 				DoctorData dData = new DoctorData();
 				dData.setMaxPatients(command.getMaxPatients());
 				dData.setType(command.getTitle());
+				dData.setSizz(command.getSizz());
 				uData = dData;
 			}
 			uData.setFirst_name(command.getFirst_name());

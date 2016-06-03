@@ -119,7 +119,7 @@ public class HomeController extends ControllerBase{
 			if (UserType.USER.equals(userSession.getUserType())) {
 				return "redirect:/createProfile";
 			} else if (UserType.DOCTOR.equals(userSession.getUserType())) {
-				return "redirect:/createDoctorProfile";
+				return "redirect:/updateDoctorProfile";
 			}
 		}
 		
@@ -196,7 +196,7 @@ public class HomeController extends ControllerBase{
 		
 			DoctorData doctor = (DoctorData)em.merge(userSession.getData());
 			
-			if(userSession.getSelectedPatient() == null){
+			if (userSession.getSelectedPatient() == null) {
 				return "redirect:/dashboard/patient/";
 			}
 			
