@@ -79,14 +79,24 @@
 				</div>
 			</a>
 			#if($page && $page == "admin")
-				<a href="#">
+				<a href="#springUrl('/admin/createMedicalWorker')">
 					<div class="side-submenu-item #if($subpage && $subpage=="addDoctor")side-submenu-item-selected #end">
 						DODAJ OSEBJE
 					</div>
 				</a>
-				<a href="#">
+				<a href="#springUrl('/admin/instructions')">
 					<div class="side-submenu-item">
-						DRUGO
+						DODAJ NAVODILA
+					</div>
+				</a>
+				<a href="#springUrl('/admin/medicines')">
+					<div class="side-submenu-item">
+						DODAJ ZDRAVILA
+					</div>
+				</a>
+				<a href="#springUrl('/admin/code')">
+					<div class="side-submenu-item">
+						DODAJ ŠIFRANTE
 					</div>
 				</a>
 			#end
