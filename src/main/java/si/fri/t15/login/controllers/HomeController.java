@@ -116,7 +116,11 @@ public class HomeController extends ControllerBase{
 		}
 		
 		if(userSession.getData() == null){
-			return "redirect:/createProfile";
+			if (UserType.USER.equals(userSession.getUserType())) {
+				return "redirect:/createProfile";
+			} else if (UserType.DOCTOR.equals(userSession.getUserType())) {
+				return "redirect:/createDoctorProfile";
+			}
 		}
 		
 		User user = em.merge(userSession);
@@ -230,7 +234,7 @@ public class HomeController extends ControllerBase{
 			List<Appointment> upcoming = new ArrayList<Appointment>();
 			for (Appointment a : appointments){
 				Date d = a.getDate();
-				if(d.compareTo(now)>0){
+				if(d != null && d.compareTo(now)>0){
 					upcoming.add(a);
 				}
 			}
