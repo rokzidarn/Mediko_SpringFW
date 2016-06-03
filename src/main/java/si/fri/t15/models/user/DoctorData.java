@@ -44,6 +44,9 @@ public class DoctorData extends UserData {
 	@Column(nullable=false, updatable=true)
 	private int maxPatients;
 	
+	@Column
+	private String sizz;
+	
 	@OneToMany(mappedBy="doctor")
 	private List<PatientData> patients;
 	
@@ -66,6 +69,7 @@ public class DoctorData extends UserData {
 	@OneToMany(mappedBy="doctor")
     private List<WorkWeek> workWeeks;
 	
+	@JsonIgnore
 	public List<WorkWeek> getWorkWeeks() {
 		return workWeeks;
 	}
@@ -170,6 +174,14 @@ public class DoctorData extends UserData {
 		nurse.removeDoctor(this);
 
 		return nurse;
+	}
+
+	public String getSizz() {
+		return sizz;
+	}
+
+	public void setSizz(String sizz) {
+		this.sizz = sizz;
 	}
 	
 }

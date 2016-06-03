@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    #parse("../common/head.vm")
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="panel panel-default main-panel">
+                    <div class="main-container">
+                        <div class="content-container">
+                            <div class="content-topbar">
+                                <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
+                                <div class="content-title">$title</div>
+                            </div>
+                            <div class="content">   
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <form method="POST" action="#springUrl('/admin')/medicines/addd">
+                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                    #if($commandadm) #springBind( "commandadm.disease" ) #end
+                                                    <label for="diseaseMInput">Izberite bolezen: </label>
+                                                    <select id="diseaseMInput" name="disease" class="form-control">
+                                                        #foreach($disease in $allDiseases)
+                                                            <option value="${disease.getDiseaseId()}">$disease.name</option>
+                                                        #end
+                                                    </select><br>
+                                                    #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end 
+
+                                                    #if($commandadm) #springBind( "commandadm.medicine" ) #end
+                                                    <label for="medicineInput">Dodajte zdravilo: </label>
+                                                    <select id="medicineInput" name="medicine" class="form-control">
+                                                        #foreach($medicine in $allMedicines)
+                                                            <option value="${medicine.getMedicineId()}">$medicine.name</option>
+                                                        #end
+                                                    </select><br>
+                                                    #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end 
+                                                    <button type="submit" class="btn btn-info">DODAJ ZDRAVILO</button>    
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="medD">Zdravila bolezni: </label>
+                                            <div id="medD" class="form-group">                                               
+                                                #foreach($curr in $diseaseMedicines)
+                                                    <p>&nbsp;• $curr.name</p>
+                                                #end                                              
+                                            </div><br>
+                                            <div class="form-group">
+                                                <form method="POST" action="#springUrl('/admin')/medicines/deld">
+                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                    #if($commandidm) #springBind( "commandddm.medicine" ) #end
+                                                    <select id="medDSelect" name="medicine" class="form-control">
+                                                        #foreach($curr in $diseaseMedicines)
+                                                            <option value="${curr.getMedicineId()}">$curr.name</option>
+                                                        #end
+                                                    </select>
+                                                    #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end 
+
+                                                    #if($commandidm) #springBind( "commandddm.disease" ) #end
+                                                    <input type="hidden" name="disease" value="" id="diseaseMValue"/>
+                                                    #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end 
+                                                    <br><button type="submit" id="dMButton" class="btn btn-info">ODSTRANI ZDRAVILO</button>  
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>     
+                            </div>
+                            <div id="sidebar" class="sidebar hidden-sm hidden-xs">
+                                <div class="sidebar-topbar">
+                                    <div class="logo" style="color:#eee">
+                                        #if($user.lastLogin)
+                                            <div style="padding-left: 10px;">
+                                                <h6>Zadnja prijava</h6>
+                                                <h6>$user.lastLogin</h6>
+                                            </div>
+                                        #end
+                                    </div>
+                                    <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                    </div>
+                                </div>
+                                <div class="patient">
+                                    <div class="patient-image patient-male">
+
+                                    </div>
+                                    <div class="patient-name">
+                                        $user.username
+                                    </div>
+                                </div>
+                                <div class="sidebar-seperator"></div>
+                                #sidemenu($usertype $page $subpage)
+                                <div class="sidebar-seperator"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,18 +1,11 @@
 package si.fri.t15.validators;
 
 import org.springframework.validation.Validator;
-
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import org.apache.commons.validator.GenericValidator;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
 public class SignUpValidator implements Validator{
-
-	private static final int MINIMUM_PASSWORD_LENGTH = 6;
-
 	@Override
 	public boolean supports(Class<?> c) {
 		return c.isAssignableFrom(SignUpForm.class);
@@ -32,41 +25,23 @@ public class SignUpValidator implements Validator{
 					"Passwords do not match");
 		}
 		
-		if (!validateEmail(u.getUsername())) {
-			errors.rejectValue("username", "field.format",
-					"Incorrect email format");
+		if(u.containsProfileData()){
+			ValidationUtils.rejectIfEmpty(errors, "cardNumber", "field.required", "Zahtevano polje");
+			ValidationUtils.rejectIfEmpty(errors, "firstName", "field.required", "Zahtevano polje");
+			ValidationUtils.rejectIfEmpty(errors, "lastName", "field.required", "Zahtevano polje");
+			ValidationUtils.rejectIfEmpty(errors, "address", "field.required", "Zahtevano polje");
+			ValidationUtils.rejectIfEmpty(errors, "phoneNumber", "field.required", "Zahtevano polje");
+			ValidationUtils.rejectIfEmpty(errors, "sex", "field.required", "Zahtevano polje");
+			ValidationUtils.rejectIfEmpty(errors, "birth", "filed.required", "Zahtevano polje");
+			ValidationUtils.rejectIfEmpty(errors, "pobox", "field.required","Zahtevano polje" );
+			ValidationUtils.rejectIfEmpty(errors, "contactFirstName", "field.required", "Zahtevano polje");
+			ValidationUtils.rejectIfEmpty(errors, "contactLastName", "field.required", "Zahtevano polje");
+			ValidationUtils.rejectIfEmpty(errors, "contactAddress", "field.required", "Zahtevano polje");
+			ValidationUtils.rejectIfEmpty(errors, "contactPhoneNumber", "field.required", "Zahtevano polje");
+			
+			if(!GenericValidator.isDate(u.getBirth(), "yyyy-MM-dd", false)){
+				errors.rejectValue("birth", "field.format","Napačen format datuma");
+			}
 		}
-
-		if (u.getPassword() != null
-				&& u.getPassword().trim().length() < MINIMUM_PASSWORD_LENGTH) {
-			errors.rejectValue("password", "field.min.length",
-					new Object[] { Integer.valueOf(MINIMUM_PASSWORD_LENGTH) },
-					"The password must be at least [" + MINIMUM_PASSWORD_LENGTH
-							+ "] characters in length.");
-		}
-	}
-	
-	private boolean validateEmail(String email) {
-		 
-		if (email == null) {
-			return false; // email is empty
-		}
- 
-		Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
- 
-		// Match the given string with the pattern
-		Matcher m = p.matcher(email);
- 
-		// check whether match is found
-		boolean matchFound = m.matches();
- 
-		StringTokenizer st = new StringTokenizer(email, ".");
-		String lastToken = null;
-		while (st.hasMoreTokens()) {
-			lastToken = st.nextToken();
-		}
- 
-		return matchFound && lastToken.length() >= 2
-				&& email.length() - 1 != lastToken.length();
-	}
+	}		
 }

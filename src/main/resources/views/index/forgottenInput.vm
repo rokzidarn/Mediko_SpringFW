@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    #parse("../common/head.vm")
+    <body>
+    	<div class="container">
+            <div class="row">
+                <div class="panel panel-default main-panel">
+                    <div class="main-container">
+                        <div class="content-container">
+                            <div class="content-topbar">
+                                <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
+                                <div class="content-title">$title</div>
+                            </div>
+                            <div class="content">
+								<form method="POST" action="">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+									<p>Geslo mora vsebovati vsaj 8 znakov, vključno z vsaj 1 števko.</p>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.password" ) #end
+												<label for="passwordInput">Geslo</label>
+												<input type="password" class="form-control" id="passwordInput" name="password" value="$!status.value" placeholder="Geslo" required pattern="(?=.*\d).{8,}" onchange="form.passwordInputRepeat.pattern = this.value;">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.repeatpassword" ) #end
+												<label for="passwordInputRepeat">Ponovi geslo</label>
+												<input type="password" class="form-control" id="passwordInputRepeat" name="repeatpassword" value="$!status.value" placeholder="Ponovi geslo" required>
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+									</div>
+									<br />
+									<p class="text-center">
+										<input type="submit" class="btn btn-default btn-lg" value="Spremeni geslo">
+									</p>								
+								</form>						
+                            </div>
+                        </div>
+                        <div id="sidebar" class="sidebar hidden-sm hidden-xs">
+                            <div class="sidebar-topbar">
+                                <div class="logo" style="color:#eee">                                    
+                                </div>
+                                <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                </div>
+                            </div>
+                            <div class="name">
+                                <div class="logo-image logo-mediko">
+                                </div>
+                                <div class="logo-name">
+                                    MEDIKO
+                                </div>
+                            </div>
+                            <div class="sidebar-seperator"></div>
+                            #sidemenu($usertype $page $subpage)
+                            <div class="sidebar-seperator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

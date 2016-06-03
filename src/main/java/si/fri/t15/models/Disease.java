@@ -1,7 +1,6 @@
 package si.fri.t15.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -15,8 +14,8 @@ public class Disease implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="idDisease", length=4, nullable=false, updatable=false, unique=true)
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="idDisease", length=10, nullable=false, updatable=false, unique=true)
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String id;
 	
 	@Column(name="Name", length=45, nullable=false)
@@ -61,12 +60,12 @@ public class Disease implements Serializable{
 	@ManyToMany(mappedBy="diseases")
 	private List<Medicine> medicines;
 
-	public String getId() {
-		return id;
+	public List<Medicine> getMedicines() {
+		return medicines;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setMedicines(List<Medicine> medicines) {
+		this.medicines = medicines;
 	}
 
 	public List<Instructions> getInstructions() {
@@ -76,6 +75,4 @@ public class Disease implements Serializable{
 	public void setInstructions(List<Instructions> instructions) {
 		this.instructions = instructions;
 	}
-	
-	
 }

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    #parse("../common/head.vm")
+    <body>
+    	<div class="container">
+            <div class="row">
+                <div class="panel panel-default main-panel">
+                    <div class="main-container">
+                        <div class="content-container">
+                            <div class="content-topbar">
+                                <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
+                                <div class="content-title">$title</div>
+                            </div>
+                            <div class="content">
+                            	<form method="POST" action="">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <!--<div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                #if($command) #springBind( "command.doctor" ) #end
+                                                <label for="orderCheckupDoctorInput">Zdravnik</label>
+                                                <select class="form-control" id="orderCheckupDoctorInput" name="doctor">
+                                                    #if($doctors.size() == 0) <option value="-1">Ni zdravnikov</option>#end
+                                                    #foreach($doctor in $doctors)
+                                                        <option #if($doctor.id == $selectedDoctor.id) selected #end value="$doctor.id">dr. $doctor.first_name $doctor.last_name</option>
+                                                    #end
+                                                </select>
+                                                #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                #if($command) #springBind( "command.appointment" ) #end
+                                                <input type="hidden" class="form-control" id="orderCheckupAppointmentInput" name="appointment" value="-1">
+                                                #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Urnik</label>
+                                            <!-- URNIK -->
+                                            <div class="row">
+                                                <div id="calendar1" class="col-md-12 calendar">
+                                                    <div class="row">
+                                                        <div class="col-md-12 text-right" style="margin-bottom:10px;">
+                                                            Tekoči teden
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div id="calendar1day1" class="calendar-date">-</div>
+                                                        <div id="calendar1day1Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div id="calendar1day2" class="calendar-date">-</div>
+                                                        <div id="calendar1day2Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div id="calendar1day3" class="calendar-date">-</div>
+                                                        <div id="calendar1day3Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div  id="calendar1day4" class="calendar-date">-</div>
+                                                        <div id="calendar1day4Appointments" lass="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div  id="calendar1day5" class="calendar-date">-</div>
+                                                        <div id="calendar1day5Appointments" lass="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div id="calendar1day6" class="calendar-date">-</div>
+                                                        <div id="calendar1day6Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="calendar2" style="display: none;" class="col-md-12 calendar"> 
+                                                    <div class="row">
+                                                        <div class="col-md-12 text-right" style="margin-bottom:10px;">
+                                                            <button type="button" class="btn btn-primary btn-sm copy-current-week">Kopiraj tekoči teden</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div id="calendar2day1" class="calendar-date">-</div>
+                                                        <div id="calendar2day1Editor" class="info-form" style="display:none">
+                                                            <div class="form-group">
+                                                                <label>Začetek:</label>
+                                                                <input class="form-control" type="time" value="07:00">
+                                                                <label>Konec:</label>
+                                                                <input class="form-control" type="time" value="15:00">
+                                                                <label>Interval:</label>
+                                                                <select class="form-control">
+                                                                    <option value="15">15</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="30">30</option>
+                                                                </select>
+                                                                <label>Opomba: </label>
+                                                                <input type="text" class="form-control" placeholder="Opomba">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="button" class="btn btn-default btn-sm save-work-week-button">Shrani</button>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="show-edit" onclick="$('#calendar2day1Editor').slideToggle(500); $(this).toggleText('Skrij', 'Uredi');">
+                                                            Uredi
+                                                        </div>
+                                                        <div id="calendar2day1Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div id="calendar2day2" class="calendar-date">-</div>
+                                                        <div id="calendar2day2Editor" class="info-form" style="display:none">
+                                                            <div class="form-group">
+                                                                <label>Začetek:</label>
+                                                                <input class="form-control" type="time" value="07:00">
+                                                                <label>Konec:</label>
+                                                                <input class="form-control" type="time" value="15:00">
+                                                                <label>Interval:</label>
+                                                                <select class="form-control">
+                                                                    <option value="15">15</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="30">30</option>
+                                                                </select>
+                                                                <label>Opomba: </label>
+                                                                <input type="text" class="form-control" placeholder="Opomba">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="button" class="btn btn-default btn-sm save-work-week-button">Shrani</button>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="show-edit" onclick="$('#calendar2day2Editor').slideToggle(500); $(this).toggleText('Skrij', 'Uredi');">
+                                                            Uredi
+                                                        </div>
+                                                        <div id="calendar2day2Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div id="calendar2day3" class="calendar-date">-</div>
+                                                        <div id="calendar2day3Editor" class="info-form" style="display:none">
+                                                            <div class="form-group">
+                                                                <label>Začetek:</label>
+                                                                <input class="form-control" type="time" value="07:00">
+                                                                <label>Konec:</label>
+                                                                <input class="form-control" type="time" value="15:00">
+                                                                <label>Interval:</label>
+                                                                <select class="form-control">
+                                                                    <option value="15">15</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="30">30</option>
+                                                                </select>
+                                                                <label>Opomba: </label>
+                                                                <input type="text" class="form-control" placeholder="Opomba">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="button" class="btn btn-default btn-sm save-work-week-button">Shrani</button>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="show-edit" onclick="$('#calendar2day3Editor').slideToggle(500); $(this).toggleText('Skrij', 'Uredi');">
+                                                            Uredi
+                                                        </div>
+                                                        <div id="calendar2day3Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div id="calendar2day4" class="calendar-date">-</div>
+                                                        <div id="calendar2day4Editor" class="info-form" style="display:none">
+                                                            <div class="form-group">
+                                                                <label>Začetek:</label>
+                                                                <input class="form-control" type="time" value="07:00">
+                                                                <label>Konec:</label>
+                                                                <input class="form-control" type="time" value="15:00">
+                                                                <label>Interval:</label>
+                                                                <select class="form-control">
+                                                                    <option value="15">15</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="30">30</option>
+                                                                </select>
+                                                                <label>Opomba: </label>
+                                                                <input type="text" class="form-control" placeholder="Opomba">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="button" class="btn btn-default btn-sm save-work-week-button">Shrani</button>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="show-edit" onclick="$('#calendar2day4Editor').slideToggle(500); $(this).toggleText('Skrij', 'Uredi');">
+                                                            Uredi
+                                                        </div>
+                                                        <div id="calendar2day4Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div id="calendar2day5" class="calendar-date">-</div>
+                                                        <div id="calendar2day5Editor" class="info-form" style="display:none">
+                                                            <div class="form-group">
+                                                                <label>Začetek:</label>
+                                                                <input class="form-control" type="time" value="07:00">
+                                                                <label>Konec:</label>
+                                                                <input class="form-control" type="time" value="15:00">
+                                                                <label>Interval:</label>
+                                                                <select class="form-control">
+                                                                    <option value="15">15</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="30">30</option>
+                                                                </select>
+                                                                <label>Opomba: </label>
+                                                                <input type="text" class="form-control" placeholder="Opomba">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="button" class="btn btn-default btn-sm save-work-week-button">Shrani</button>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="show-edit" onclick="$('#calendar2day5Editor').slideToggle(500); $(this).toggleText('Skrij', 'Uredi');">
+                                                            Uredi
+                                                        </div>
+                                                        <div id="calendar2day5Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div id="calendar2day6" class="calendar-date">-</div>
+                                                        <div id="calendar2day6Editor" class="info-form" style="display:none">
+                                                            <div class="form-group">
+                                                                <label>Začetek:</label>
+                                                                <input class="form-control" type="time" value="07:00">
+                                                                <label>Konec:</label>
+                                                                <input class="form-control" type="time" value="15:00">
+                                                                <label>Interval:</label>
+                                                                <select class="form-control">
+                                                                    <option value="15">15</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="30">30</option>
+                                                                </select>
+                                                                <label>Opomba: </label>
+                                                                <input type="text" class="form-control" placeholder="Opomba">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="button" class="btn btn-default btn-sm save-work-week-button">Shrani</button>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="show-edit" onclick="$('#calendar2day6Editor').slideToggle(500); $(this).toggleText('Skrij', 'Uredi');">
+                                                            Uredi
+                                                        </div>
+                                                        <div id="calendar2day6Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="calendar3" style="display: none;" class="col-md-12 calendar">
+                                                    <div class="row">
+                                                        <div class="col-md-12 text-right" style="margin-bottom:10px;">
+                                                            <button type="button" class="btn btn-primary btn-sm copy-current-week">Kopiraj tekoči teden</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div id="calendar3day1" class="calendar-date">-</div>
+                                                        <div id="calendar3day1Editor" class="info-form" style="display:none">
+                                                            <div class="form-group">
+                                                                <label>Začetek:</label>
+                                                                <input class="form-control" type="time" value="07:00">
+                                                                <label>Konec:</label>
+                                                                <input class="form-control" type="time" value="15:00">
+                                                                <label>Interval:</label>
+                                                                <select class="form-control">
+                                                                    <option value="15">15</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="30">30</option>
+                                                                </select>
+                                                                <label>Opomba: </label>
+                                                                <input type="text" class="form-control" placeholder="Opomba">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="button" class="btn btn-default btn-sm save-work-week-button">Shrani</button>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="show-edit" onclick="$('#calendar3day1Editor').slideToggle(500); $(this).toggleText('Skrij', 'Uredi');">
+                                                            Uredi
+                                                        </div>
+                                                        <div id="calendar3day1Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div id="calendar3day2" class="calendar-date">-</div>
+                                                        <div id="calendar3day2Editor" class="info-form" style="display:none">
+                                                            <div class="form-group">
+                                                                <label>Začetek:</label>
+                                                                <input class="form-control" type="time" value="07:00">
+                                                                <label>Konec:</label>
+                                                                <input class="form-control" type="time" value="15:00">
+                                                                <label>Interval:</label>
+                                                                <select class="form-control">
+                                                                    <option value="15">15</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="30">30</option>
+                                                                </select>
+                                                                <label>Opomba: </label>
+                                                                <input type="text" class="form-control" placeholder="Opomba">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="button" class="btn btn-default btn-sm save-work-week-button">Shrani</button>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="show-edit" onclick="$('#calendar3day2Editor').slideToggle(500); $(this).toggleText('Skrij', 'Uredi');">
+                                                            Uredi
+                                                        </div>
+                                                        <div id="calendar3day2Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div id="calendar3day3" class="calendar-date">-</div>
+                                                        <div id="calendar3day3Editor" class="info-form" style="display:none">
+                                                            <div class="form-group">
+                                                                <label>Začetek:</label>
+                                                                <input class="form-control" type="time" value="07:00">
+                                                                <label>Konec:</label>
+                                                                <input class="form-control" type="time" value="15:00">
+                                                                <label>Interval:</label>
+                                                                <select class="form-control">
+                                                                    <option value="15">15</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="30">30</option>
+                                                                </select>
+                                                                <label>Opomba: </label>
+                                                                <input type="text" class="form-control" placeholder="Opomba">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="button" class="btn btn-default btn-sm save-work-week-button">Shrani</button>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="show-edit" onclick="$('#calendar3day3Editor').slideToggle(500); $(this).toggleText('Skrij', 'Uredi');">
+                                                            Uredi
+                                                        </div>
+                                                        <div id="calendar3day3Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div id="calendar3day4" class="calendar-date">-</div>
+                                                        <div id="calendar3day4Editor" class="info-form" style="display:none">
+                                                            <div class="form-group">
+                                                                <label>Začetek:</label>
+                                                                <input class="form-control" type="time" value="07:00">
+                                                                <label>Konec:</label>
+                                                                <input class="form-control" type="time" value="15:00">
+                                                                <label>Interval:</label>
+                                                                <select class="form-control">
+                                                                    <option value="15">15</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="30">30</option>
+                                                                </select>
+                                                                <label>Opomba: </label>
+                                                                <input type="text" class="form-control" placeholder="Opomba">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="button" class="btn btn-default btn-sm save-work-week-button">Shrani</button>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="show-edit" onclick="$('#calendar3day4Editor').slideToggle(500); $(this).toggleText('Skrij', 'Uredi');">
+                                                            Uredi
+                                                        </div>
+                                                        <div id="calendar3day4Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-odd">
+                                                        <div id="calendar3day5" class="calendar-date">-</div>
+                                                        <div id="calendar3day5Editor" class="info-form" style="display:none">
+                                                            <div class="form-group">
+                                                                <label>Začetek:</label>
+                                                                <input class="form-control" type="time" value="07:00">
+                                                                <label>Konec:</label>
+                                                                <input class="form-control" type="time" value="15:00">
+                                                                <label>Interval:</label>
+                                                                <select class="form-control">
+                                                                    <option value="15">15</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="30">30</option>
+                                                                </select>
+                                                                <label>Opomba: </label>
+                                                                <input type="text" class="form-control" placeholder="Opomba">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="button" class="btn btn-default btn-sm save-work-week-button">Shrani</button>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="show-edit" onclick="$('#calendar3day5Editor').slideToggle(500); $(this).toggleText('Skrij', 'Uredi');">
+                                                            Uredi
+                                                        </div>
+                                                        <div id="calendar3day5Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 calendar-col-even">
+                                                        <div id="calendar3day6" class="calendar-date">-</div>
+                                                        <div id="calendar3day6Editor" class="info-form" style="display:none">
+                                                            <div class="form-group">
+                                                                <label>Začetek:</label>
+                                                                <input class="form-control" type="time" value="07:00">
+                                                                <label>Konec:</label>
+                                                                <input class="form-control" type="time" value="15:00">
+                                                                <label>Interval:</label>
+                                                                <select class="form-control">
+                                                                    <option value="15">15</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="30">30</option>
+                                                                </select>
+                                                                <label>Opomba: </label>
+                                                                <input type="text" class="form-control" placeholder="Opomba">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="button" class="btn btn-default btn-sm save-work-week-button">Shrani</button>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="show-edit" onclick="$('#calendar3day6Editor').slideToggle(500); $(this).toggleText('Skrij', 'Uredi');">
+                                                            Uredi
+                                                        </div>
+                                                        <div id="calendar3day6Appointments" class="calendar-appointments">
+                                                            <div class="no-appointments">prazno</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="prev-week-button" style="display: none;">Prejšni teden</div>
+                                                    <div class="next-week-button">Naslednji teden</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </form>																
+							</div> 			
+                        </div>
+                        <div id="sidebar" class="sidebar hidden-sm hidden-xs">
+                            <div id="sidebarContent">
+                                <div class="sidebar-topbar">
+                                    <div class="logo" style="color:#eee">
+                                        #if($user.lastLogin)
+                                            <div style="padding-left: 10px;">
+                                                <h6>Zadnja prijava</h6>
+                                                <h6>$user.lastLogin</h6>
+                                            </div>
+                                        #end
+                                    </div>
+                                    <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                    </div>
+                                </div>
+                                <div class="patient">
+                                    <div class="patient-image patient-male">
+
+                                    </div>
+                                    <div class="patient-name">
+                                        $user.username
+                                    </div>
+                                </div>
+                                <div class="sidebar-seperator"></div>
+                                #sidemenu($usertype $page $subpage)
+                                <div class="sidebar-seperator"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <!-- LOAD SELECT2 -->
+    <script>
+    	var csrf = "${_csrf.token}"; 
+        var doctorId = $doctor.id;
+        loadTimetableCalendar();
+    </script>
+</html>

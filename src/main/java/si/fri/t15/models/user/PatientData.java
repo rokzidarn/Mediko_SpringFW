@@ -6,9 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -30,10 +28,6 @@ public class PatientData extends UserData {
 	private static final long serialVersionUID = 1L;
 
 	private static final boolean Checkup = false;
-	
-	public enum Relationship {
-		SIBLING, PARENT, GRANDPARENT, FOSTER_PARENT, SIGNIFICANT_OTHER, CARETAKER
-	}
 	
 	@ManyToOne
 	private PatientData caretaker;
@@ -69,6 +63,9 @@ public class PatientData extends UserData {
 	
 	@Column( nullable=false, updatable=true)
 	private String cardNumber;
+
+	@OneToOne
+	private EmergencyContactData emergencyContactData;
 	
 	@Transient
 	private List<Medicine> medicines;	
@@ -290,6 +287,14 @@ public class PatientData extends UserData {
 
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
+	}
+
+	public EmergencyContactData getEmergencyContactData() {
+		return emergencyContactData;
+	}
+
+	public void setEmergencyContactData(EmergencyContactData emergencyContactData) {
+		this.emergencyContactData = emergencyContactData;
 	}
 
 }

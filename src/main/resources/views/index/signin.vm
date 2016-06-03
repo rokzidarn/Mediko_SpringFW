@@ -29,11 +29,11 @@
 									<br />
 									<p class="text-center">
 										<input type="submit" class="btn btn-primary btn-lg" value="PRIJAVA">
-									</p>
-									<p class="text-center">
-										<input type="submit" class="btn btn-danger" value="Pozabljeno geslo?">
-									</p>								
-								</form>									
+									</p>							
+								</form>
+								<p class="text-center">
+									<a class="btn btn-danger" href='#springUrl("/forgotten")'>Pozabljeno geslo?</a>
+								</p>	
                             </div>
                         </div>
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">

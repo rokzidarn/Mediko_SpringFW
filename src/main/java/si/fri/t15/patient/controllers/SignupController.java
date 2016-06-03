@@ -1,5 +1,6 @@
 package si.fri.t15.patient.controllers;
 
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,8 +9,6 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,20 +35,17 @@ import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.dao.UserRepository;
 import si.fri.t15.models.PO_Box;
 import si.fri.t15.models.UserRole;
+import si.fri.t15.models.user.EmergencyContactData;
+import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
+import si.fri.t15.validators.PatientProfileForm;
 import si.fri.t15.validators.SignUpForm;
 
 @Controller
 public class SignupController extends ControllerBase {
 	
 	@Autowired
-	PasswordEncoder passwordEncoder;
-	
-	@Autowired
 	JavaMailSender mailSender;
-	
-	@PersistenceContext
-    private EntityManager em;
 	
 	@Autowired
 	UserRepository userRepo;
@@ -59,7 +54,7 @@ public class SignupController extends ControllerBase {
 	private String domain;
 	
 	
-	@InitBinder
+	@InitBinder("command")
 	protected void initBinder(HttpServletRequest request,
 			ServletRequestDataBinder binder) {
 		binder.setValidator(validator);
@@ -86,16 +81,19 @@ public class SignupController extends ControllerBase {
 	
 	@Transactional
 	@RequestMapping(value = "/signup", method=RequestMethod.POST)
-	public ModelAndView signupPOST(Model model, @ModelAttribute("command") @Valid SignUpForm command,
-			BindingResult result, HttpServletRequest request) {
+	public ModelAndView signupPOST(Model model, @ModelAttribute("command") @Valid SignUpForm command, BindingResult result,
+			HttpServletRequest request) {
 		
 		if (result.hasErrors()) {
+			Query allPOBoxQuery = em.createNamedQuery("PO_Box.findAll");
+			List<PO_Box> poBoxes = allPOBoxQuery.getResultList();
+			model.addAttribute("po_boxes",poBoxes);
+			
 			return new ModelAndView("signup");
 		}
 		
 		User newUser = new User();
 		
-		//newUser.setEmail("DELETE THIS ROW"); //Delete, ko se bo updejtal JPA
 		newUser.setUsername(command.getUsername());
 		newUser.setPassword(passwordEncoder.encode(command.getPassword()));
 		newUser.setAccountNonExpired(true);
@@ -124,6 +122,31 @@ public class SignupController extends ControllerBase {
 		
 		String activationToken = UUID.randomUUID().toString().substring(0, 15); 
 		newUser.setPasswordResetToken(activationToken);
+		
+		if (command.containsProfileData()) {
+			EmergencyContactData eData = new EmergencyContactData();
+			eData.setAddress(command.getContactAddress());
+			eData.setFirst_name(command.getContactFirstName());
+			eData.setLast_name(command.getContactLastName());
+			eData.setPhoneNumber(command.getContactPhoneNumber());
+
+			em.persist(eData);
+
+			PatientData pData = new PatientData();
+			pData.setAddress(command.getAddress());
+			pData.setBirth_date(Date.valueOf(command.getBirth()));
+			pData.setCardNumber(command.getCardNumber());
+			pData.setFirst_name(command.getFirstName());
+			pData.setLast_name(command.getLastName());
+			pData.setPhoneNumber(command.getPhoneNumber());
+			pData.setPo_number(command.getPobox());
+			pData.setSex(command.getSex());
+
+			pData.setEmergencyContactData(eData);
+
+			em.persist(pData);
+			newUser.setData(pData);
+		}
 		
 		//save user
 		em.persist(newUser);

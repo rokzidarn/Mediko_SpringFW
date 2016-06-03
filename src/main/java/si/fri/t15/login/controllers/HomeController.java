@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +29,6 @@ import si.fri.t15.models.user.User.UserType;
 
 @Controller
 public class HomeController extends ControllerBase{
-	@Autowired
-	EntityManager em;
 	
 	@RequestMapping(value = "/dashboard/patient/{id}")
 	@Transactional
@@ -120,7 +116,11 @@ public class HomeController extends ControllerBase{
 		}
 		
 		if(userSession.getData() == null){
-			return "redirect:/createProfile";
+			if (UserType.USER.equals(userSession.getUserType())) {
+				return "redirect:/createProfile";
+			} else if (UserType.DOCTOR.equals(userSession.getUserType())) {
+				return "redirect:/updateDoctorProfile";
+			}
 		}
 		
 		User user = em.merge(userSession);
@@ -165,7 +165,7 @@ public class HomeController extends ControllerBase{
 			List<Appointment> upcoming = new ArrayList<Appointment>();
 			for (Appointment a : pdata.getAppointments()) {
 				Date date = a.getDate();
-				if (date.compareTo(now) > 0) {
+				if (date != null && date.compareTo(now) > 0) {
 					upcoming.add(a);
 				}
 			}
@@ -196,7 +196,7 @@ public class HomeController extends ControllerBase{
 		
 			DoctorData doctor = (DoctorData)em.merge(userSession.getData());
 			
-			if(userSession.getSelectedPatient() == null){
+			if (userSession.getSelectedPatient() == null) {
 				return "redirect:/dashboard/patient/";
 			}
 			
@@ -234,7 +234,7 @@ public class HomeController extends ControllerBase{
 			List<Appointment> upcoming = new ArrayList<Appointment>();
 			for (Appointment a : appointments){
 				Date d = a.getDate();
-				if(d.compareTo(now)>0){
+				if(d != null && d.compareTo(now)>0){
 					upcoming.add(a);
 				}
 			}
