@@ -35,7 +35,7 @@
                                                     <option #if($doctor.id == $selectedDoctor) selected #end value="$doctor.id">dr. $doctor.first_name $doctor.last_name</option>
                                                     #end
                                                 </select>
-                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -48,7 +48,7 @@
                                                     <option #if($dentist.id == $selectedDentist) selected #end value="$dentist.id">dr. $dentist.first_name $dentist.last_name</option>
                                                     #end
                                                 </select>
-                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
                                             </div>
                                         </div>
                                     </div>

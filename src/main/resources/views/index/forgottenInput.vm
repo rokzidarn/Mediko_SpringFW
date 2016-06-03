@@ -22,7 +22,7 @@
 												#if($command) #springBind( "command.password" ) #end
 												<label for="passwordInput">Geslo</label>
 												<input type="password" class="form-control" id="passwordInput" name="password" value="$!status.value" placeholder="Geslo" required pattern="(?=.*\d).{8,}" onchange="form.passwordInputRepeat.pattern = this.value;">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -30,7 +30,7 @@
 												#if($command) #springBind( "command.repeatpassword" ) #end
 												<label for="passwordInputRepeat">Ponovi geslo</label>
 												<input type="password" class="form-control" id="passwordInputRepeat" name="repeatpassword" value="$!status.value" placeholder="Ponovi geslo" required>
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 									</div>

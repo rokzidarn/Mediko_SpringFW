@@ -23,11 +23,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.PO_Box;
+import si.fri.t15.models.user.EmergencyContactData;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
 import si.fri.t15.models.user.User.UserType;
-import si.fri.t15.validators.CreatePatientForm;
 import si.fri.t15.validators.CreatePatientValidator;
+import si.fri.t15.validators.PatientProfileForm;
 
 @Controller
 public class CreateProfileController extends ControllerBase{
@@ -43,7 +44,7 @@ public class CreateProfileController extends ControllerBase{
  
 	@Transactional
 	@RequestMapping(value = "/createProfile", method=RequestMethod.GET)
-	public ModelAndView createPatient(Model model, HttpServletRequest request, @AuthenticationPrincipal User user) {
+	public String createPatient(Model model, HttpServletRequest request, @AuthenticationPrincipal User user) {
 		//model.addAttribute("login", "login");
 		//model.addAttribute("_csrf", (CsrfToken) request.getAttribute(CsrfToken.class.getName()));
 		//model.addAttribute("trans", getTranslation("login.title", request));
@@ -66,12 +67,12 @@ public class CreateProfileController extends ControllerBase{
 		List<PO_Box> poBoxes = allPOBoxQuery.getResultList();
 		model.addAttribute("po_boxes",poBoxes);
 		
-		return new ModelAndView( "createPatient");
+		return "createPatient";
 	}
 	
 	@RequestMapping(value = "/createProfile", method=RequestMethod.POST)
 	@Transactional
-	public ModelAndView createPatientPOST(Model model, @ModelAttribute("command") @Valid CreatePatientForm command,
+	public String createPatientPOST(Model model, @ModelAttribute("profile") @Valid PatientProfileForm profile,
 			BindingResult result, HttpServletRequest request, @AuthenticationPrincipal User user) {
 		
 		
@@ -95,24 +96,24 @@ public class CreateProfileController extends ControllerBase{
 		
 		
 		if (result.hasErrors()) {
-			return new ModelAndView("createPatient");
+			return "createPatient";
 		}
 			
 		//Create patient
 		PatientData patient = new PatientData();
-		patient.setFirst_name(command.getFirstName());
-		patient.setLast_name(command.getLastName());
-		patient.setSex(command.getSex());
+		patient.setFirst_name(profile.getFirstName());
+		patient.setLast_name(profile.getLastName());
+		patient.setSex(profile.getSex());
 		//Birth
-		String[]dateValues = command.getBirth().split("-");
+		String[]dateValues = profile.getBirth().split("-");
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Integer.parseInt(dateValues[0]),Integer.parseInt(dateValues[0]),Integer.parseInt(dateValues[0]));
 		patient.setBirth_date(new Date(calendar.getTimeInMillis()));
 		
-		patient.setAddress(command.getAddress());
+		patient.setAddress(profile.getAddress());
 		
 		//POBOX
-		PO_Box pobox = em.find(PO_Box.class, command.getPobox());
+		PO_Box pobox = em.find(PO_Box.class, profile.getPobox());
 		patient.setPo_box(pobox);
 		
 		em.persist(patient);
@@ -121,7 +122,7 @@ public class CreateProfileController extends ControllerBase{
 		
 		em.merge(user);
 		
-		return new ModelAndView("redirect:/dashboard");
+		return "redirect:/dashboard";
 	
 	}
 	
@@ -159,8 +160,13 @@ public class CreateProfileController extends ControllerBase{
 	
 	@Transactional
 	@RequestMapping(value = "/updateProfile", method = RequestMethod.POST)
-	public String updateProfilePOST(Model model, @ModelAttribute("command") @Valid CreatePatientForm command,
-			HttpServletRequest request, @AuthenticationPrincipal User user) {
+	public String updateProfilePOST(Model model, @ModelAttribute("command") @Valid PatientProfileForm command,
+			BindingResult result, HttpServletRequest request, @AuthenticationPrincipal User user) {
+		
+		String userType = "user";
+		if (UserType.ADMIN.equals(user.getUserType())) {
+			userType = "admin";
+		}
 		
 		PatientData pData;
 		if (user.getSelectedPatient() != null) {
@@ -168,6 +174,22 @@ public class CreateProfileController extends ControllerBase{
 		}
 		else {
 			pData = (PatientData) user.getData();
+		}
+		model.addAttribute("user", user);
+		model.addAttribute("usertype", userType);
+		model.addAttribute("page", "home");
+		// Page variables
+		model.addAttribute("title", "Uredi profil");
+		
+		// Post office numbers;
+		Query allPOBoxQuery = em.createNamedQuery("PO_Box.findAll");
+		List<PO_Box> poBoxes = allPOBoxQuery.getResultList();
+		model.addAttribute("po_boxes", poBoxes);
+		
+		model.addAttribute("pData", pData);
+		
+		if(result.hasErrors()) {
+			return "updatePatient";
 		}
 		
 		pData.setAddress(command.getAddress());
@@ -177,6 +199,21 @@ public class CreateProfileController extends ControllerBase{
 		pData.setLast_name(command.getLastName());
 		pData.setPo_number(command.getPobox());
 		pData.setSex(command.getSex());
+		pData.setPhoneNumber(command.getPhoneNumber());
+		
+		EmergencyContactData eData = (pData.getEmergencyContactData() == null) ? new EmergencyContactData()
+				: pData.getEmergencyContactData();
+		eData.setAddress(command.getContactAddress());
+		eData.setFirst_name(command.getContactFirstName());
+		eData.setLast_name(command.getContactLastName());
+		eData.setPhoneNumber(command.getContactPhoneNumber());
+
+		if (pData.getEmergencyContactData() == null) {
+			em.persist(eData);
+			pData.setEmergencyContactData(eData);
+		} else {
+			em.merge(eData);
+		}
 		
 		em.merge(pData);
 

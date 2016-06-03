@@ -26,7 +26,7 @@
                                                             <option value="${disease.getDiseaseId()}">$disease.name</option>
                                                         #end
                                                     </select><br>
-                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                    #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end 
 
                                                     #if($commandadm) #springBind( "commandadm.medicine" ) #end
                                                     <label for="medicineInput">Dodajte zdravilo: </label>
@@ -35,7 +35,7 @@
                                                             <option value="${medicine.getMedicineId()}">$medicine.name</option>
                                                         #end
                                                     </select><br>
-                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                    #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end 
                                                     <button type="submit" class="btn btn-info">DODAJ ZDRAVILO</button>    
                                                 </form>
                                             </div>
@@ -56,11 +56,11 @@
                                                             <option value="${curr.getMedicineId()}">$curr.name</option>
                                                         #end
                                                     </select>
-                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                    #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end 
 
                                                     #if($commandidm) #springBind( "commandddm.disease" ) #end
                                                     <input type="hidden" name="disease" value="" id="diseaseMValue"/>
-                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                    #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end 
                                                     <br><button type="submit" id="dMButton" class="btn btn-info">ODSTRANI ZDRAVILO</button>  
                                                 </form>
                                             </div>

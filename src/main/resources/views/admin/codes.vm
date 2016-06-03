@@ -24,11 +24,11 @@
                                                 #if($commandda) #springBind( "commandda.did" ) #end
                                                     <label for="didInput">ID bolezni</label>
                                                     <input type="text" class="form-control" id="didInput" name="did" placeholder="Vnesite ID bolezni!"><br>   
-                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end 
                                                 #if($commandda) #springBind( "commandda.dname" ) #end
                                                     <label for="dnameInput">Ime bolezni</label>
                                                     <input type="text" class="form-control" id="dnameInput" name="dname" placeholder="Vnesite ime bolezni!"><br>   
-                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end 
                                                 #if($commandda) #springBind( "commandda.dtype" ) #end
                                                     <label>Tip</label><br>
                                                     <label><input type="radio" class="radio-inline" id="dallergyInput0" name="dtype" value="0">&nbsp;Bolezen</label>&nbsp;&nbsp;&nbsp;
@@ -44,7 +44,7 @@
                                                     <option value="${disease.getDiseaseId()}">$disease.name</option>
                                                     #end
                                                 </select><br>
-                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
                                                 <button type="submit" class="btn btn-info">ODSTRANI BOLEZEN</button> 
                                             </form>
                                             </div>
@@ -61,7 +61,7 @@
                                                 #if($commandmca) #springBind( "commandmca.mcname" ) #end
                                                     <label for="mcInput">Ime zdravstene ustanove</label>
                                                     <input type="text" class="form-control" id="mcInput" name="mcname" placeholder="Vnesite ime zdravstvene ustanove!"><br>   
-                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end 
+                                                #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end 
                                                 #if($commandmca) #springBind( "commandmca.pid" ) #end
                                                     <label for="pidInput">Kraj in poštna številka</label>
                                                     <select id="pidInput" name="pid" class="form-control">
@@ -69,7 +69,7 @@
                                                             <option value="${po.getPO_BoxId()}">$po.getPO_BoxId() $po.getCity()</option>
                                                         #end
                                                     </select><br>  
-                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end                                          
+                                                #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end                                          
                                                 <button type="submit" class="btn btn-info">DODAJ ZDRAVSTVENO USTANOVO</button>    
                                             </form><br>
                                             <form method="POST" action="#springUrl('/admin')/code/medical_center/del">
@@ -80,7 +80,7 @@
                                                     <option value="${mc.getMedical_CenterId()}">$mc.name</option>
                                                     #end
                                                 </select><br>
-                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
                                                 <button type="submit" class="btn btn-info">ODSTRANI ZDRAVSTVENO USTANOVO</button> 
                                             </form>
                                         </div>
