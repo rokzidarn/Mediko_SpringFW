@@ -29,11 +29,11 @@ public class CreateMedicalWorkerValidator implements Validator {
 		ValidationUtils.rejectIfEmpty(errors, "type", "field.required", "Zahtevano polje.");
 
 		if (!u.getPassword().equals(u.getRepeatpassword())) {
-			errors.rejectValue("password", "field.format", "Passwords do not match");
+			errors.rejectValue("password", "field.format", "Gesli se ne ujemata.");
 		}
 
 		if (!(u.getType().equals("Nurse") || u.getType().equals("Doctor"))) {
-			errors.rejectValue("type", "field.format", "You must define the type: Doctor or Nurse!");
+			errors.rejectValue("type", "field.format", "Izberite vrsto delavca.");
 		}
 
 		if (!validateEmail(u.getEmail())) {

@@ -29,6 +29,7 @@ import si.fri.t15.validators.DeleteDietValidator;
 import si.fri.t15.validators.DeleteDiseaseValidator;
 import si.fri.t15.validators.DeleteMedCenterValidator;
 import si.fri.t15.validators.DeleteMedicineValidator;
+import si.fri.t15.validators.DoctorProfileValidator;
 import si.fri.t15.validators.InsAddDietValidator;
 import si.fri.t15.validators.InsAddDiseaseValidator;
 import si.fri.t15.validators.InsAddMedicineValidator;
@@ -136,6 +137,11 @@ public class Application extends WebMvcConfigurerAdapter {
 	@Bean
 	public ForgottenPasswordValidator forgottenPasswordValidator(){
 		return new ForgottenPasswordValidator();
+	}
+	
+	@Bean
+	public DoctorProfileValidator doctorProfileValidator() {
+		return new DoctorProfileValidator();
 	}
 	
 	@Bean

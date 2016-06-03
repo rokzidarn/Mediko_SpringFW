@@ -54,7 +54,7 @@
 
                                     </div>
                                     <div class="patient-name">
-                                        $user.username
+                                        <a href="#springUrl('/updateDoctorProfile')" class="patient-name"> $user.username</a>
                                     </div>
                                 </div>
                                 <div class="sidebar-seperator"></div>
