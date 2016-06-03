@@ -47,14 +47,12 @@ public class CreateMedicalWorkerController extends ControllerBase {
 			@ModelAttribute("command") @Valid CreateMedicalWorkerForm command, BindingResult result,
 			HttpServletRequest request) {
 
-		/*
-		 * model.addAttribute("usertype", "admin"); model.addAttribute("page",
-		 * "admin"); model.addAttribute("subpage", "addDoctor");
-		 * model.addAttribute("path", "/mediko_dev/");
-		 * model.addAttribute("title", "Dodaj osebje");
-		 */
-
 		if (result.hasErrors()) {
+			model.addAttribute("usertype", "admin");
+			model.addAttribute("page", "admin");
+			model.addAttribute("subpage", "addDoctor");
+			model.addAttribute("path", "/mediko_dev/");
+			model.addAttribute("title", "Dodaj osebje");
 			return new ModelAndView("createMedicalWorker");
 		}
 
