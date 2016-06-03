@@ -23,7 +23,7 @@
 										#if($command) #springBind("command.email") #end
 										<label for="emailInput">Email naslov</label>
 										<input type="email" class="form-control" id="emailInput" name="email" value="$!status.value" placeholder="Email" required>
-										#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+										#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 									</div>
 									<div class="row">
 										<div class="col-md-6">
@@ -31,7 +31,7 @@
 												#if($command) #springBind("command.password") #end
 												<label for="passwordInput">Geslo</label>
 												<input type="password" class="form-control" id="passwordInput" name="password" value="$!status.value" placeholder="Geslo" required pattern="(?=.*\d).{8,}" onchange="form.passwordInputRepeat.pattern = this.value;">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -39,7 +39,7 @@
 												#if($command) #springBind("command.repeatpassword") #end
 												<label for="passwordInputRepeat">Ponovi geslo</label>
 												<input type="password" class="form-control" id="passwordInputRepeat" name="repeatpassword" value="$!status.value" placeholder="Ponovi geslo">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 									</div>
@@ -63,7 +63,7 @@
 															</label>
 														</div>
 													</div>
-													#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+													#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 												</div>
 											</div>
 										</div>
@@ -76,7 +76,7 @@
 												#if($command) #springBind("command.title") #end
 												<label for="titleInput">Naziv</label>
 												<input type="text" class="form-control" id="titleInput" name="title" value="$!status.value" placeholder="Naziv">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -84,7 +84,7 @@
 												#if($command) #springBind("command.sizz") #end
 												<label for="titleInput">Šifra izvajalca</label>
 												<input type="text" class="form-control" id="sizzInput" name="sizz" value="$!status.value" placeholder="Šifra izvajalca">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 									</div>
@@ -94,7 +94,7 @@
 												#if($command) #springBind("command.first_name") #end
 												<label for="firstNameInput">Ime</label>
 												<input type="text" class="form-control" id="firstNameInput" name="first_name" value="$!status.value" placeholder="Ime">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -102,7 +102,7 @@
 												#if($command) #springBind( "command.last_name" ) #end
 												<label for="lastNameInput">Priimek</label>
 												<input type="text" class="form-control" id="lastNameInput" name="last_name" value="$!status.value" placeholder="Priimek">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -110,7 +110,7 @@
 												#if($command) #springBind( "command.phoneNumber" ) #end
 												<label for="phoneNumberInput">Tel. št.</label>
 												<input type="text" class="form-control" id="phoneNumberInput" name="phoneNumber" value="$!status.value" placeholder="Tel. št.">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -118,7 +118,7 @@
 												#if($command) #springBind( "command.maxPatients" ) #end
 												<label for="numberOfPatientsInput">Št. pacientov</label>
 												<input type="text" class="form-control" id="numberOfPatientsInput" name="maxPatients" value="$!status.value" placeholder="Št. pacientov">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 									</div>

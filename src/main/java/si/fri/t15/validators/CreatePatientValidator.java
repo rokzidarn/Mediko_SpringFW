@@ -12,19 +12,25 @@ public class CreatePatientValidator implements Validator{
 
 	@Override
 	public boolean supports(Class<?> c) {
-		return c.isAssignableFrom(CreatePatientForm.class);
+		return c.isAssignableFrom(PatientProfileForm.class);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
+		ValidationUtils.rejectIfEmpty(errors, "cardNumber", "field.required", "Zahtevano polje");
 		ValidationUtils.rejectIfEmpty(errors, "firstName", "field.required", "Zahtevano polje");
 		ValidationUtils.rejectIfEmpty(errors, "lastName", "field.required", "Zahtevano polje");
 		ValidationUtils.rejectIfEmpty(errors, "address", "field.required", "Zahtevano polje");
+		ValidationUtils.rejectIfEmpty(errors, "phoneNumber", "field.required", "Zahtevano polje");
 		ValidationUtils.rejectIfEmpty(errors, "sex", "field.required", "Zahtevano polje");
 		ValidationUtils.rejectIfEmpty(errors, "birth", "filed.required", "Zahtevano polje");
 		ValidationUtils.rejectIfEmpty(errors, "pobox", "field.required","Zahtevano polje" );
+		ValidationUtils.rejectIfEmpty(errors, "contactFirstName", "field.required", "Zahtevano polje");
+		ValidationUtils.rejectIfEmpty(errors, "contactLastName", "field.required", "Zahtevano polje");
+		ValidationUtils.rejectIfEmpty(errors, "contactAddress", "field.required", "Zahtevano polje");
+		ValidationUtils.rejectIfEmpty(errors, "contactPhoneNumber", "field.required", "Zahtevano polje");
 		
-		CreatePatientForm u = (CreatePatientForm) target;
+		PatientProfileForm u = (PatientProfileForm) target;
 		
 		if(!GenericValidator.isDate(u.getBirth(), "yyyy-MM-dd", false)){
 			errors.rejectValue("birth", "field.format","Napačen format datuma");

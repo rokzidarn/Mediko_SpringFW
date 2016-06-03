@@ -44,8 +44,8 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 #if($command) #springBind( "command.appointment" ) #end
-                                                <input type="hidden" class="form-control" id="orderCheckupAppointmentInput" name="appointment" value="10"/>
-                                                #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                <input type="hidden" class="form-control" id="orderCheckupAppointmentInput" name="appointment" value="-1">
+                                                #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
                                             </div>
                                         </div>
                                     </div>

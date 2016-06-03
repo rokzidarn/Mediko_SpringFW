@@ -20,30 +20,34 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
+												#if($command) #springBind( "command.cardNumber" ) #end
 												<label for="cardNumberInput">Št. kartice zdravstvenega zavarovanja</label>
-												<input type="text" class="form-control" id="CardNumberInput" name="cardNumber" placeholder="Št. kartice zdravstvenega zavarovanja" value="$pData.cardNumber">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												<input type="text" class="form-control" id="cardNumberInput" name="cardNumber" placeholder="Št. kartice zdravstvenega zavarovanja" value="$pData.cardNumber">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 									</div>
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
+												#if($command) #springBind( "command.firstName" ) #end
 												<label for="firstNameInput">Ime</label>
 												<input type="text" class="form-control" id="firstNameInput" name="firstName" placeholder="Ime" value="$pData.getFirst_name()">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
+												#if($command) #springBind( "command.lastName" ) #end
 												<label for="lastNameInput">Priimek</label>
 												<input type="text" class="form-control" id="lastNameInput" name="lastName" placeholder="Priimek" value="$pData.getLast_name()">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
+												#if($command) #springBind( "command.sex" ) #end
 												<label for="sex">Spol</label>
 												<div class="row">
 													<div class="col-md-6">
@@ -61,39 +65,87 @@
 															</label>
 														</div>
 													</div>
-													#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+													#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 												</div>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label for="birth">Rojstvo</label>
-												<input type="date" id="birth" class="form-control" name="birth" value="$pData.getBirth_date()">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#if($command) #springBind( "command.birth" ) #end
+												<label for="birthInput">Rojstvo</label>
+												<input type="date" id="birthInput" class="form-control" name="birth" value="$pData.getBirth_date()">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label for="streetInput">Ulica in hišna številka</label>
-												<input type="text" class="form-control" id="streetInput" name="address" placeholder="Ulica in hišna številka" value="$pData.address">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#if($command) #springBind( "command.address" ) #end
+												<label for="addressInput">Ulica in hišna številka</label>
+												<input type="text" class="form-control" id="addressInput" name="address" placeholder="Ulica in hišna številka" value="$pData.address">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
+												#if($command) #springBind( "command.pobox" ) #end
 												<label for="postOfficeInput">Pošta</label>
 												<select class="form-control" id="postOfficeInput" name="pobox">
 													#foreach($po_box in $po_boxes)
 													<option value="$po_box.getPO_BoxId()">$po_box.getPO_BoxId() - $po_box.getCity()</option>
 													#end
 												</select>
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.phoneNumber" ) #end
+												<label for="phoneNumberInput">Tel. št.</label>
+												<input type="text" class="form-control" id="phoneNumberInput" name="phoneNumber" value="$pData.phoneNumber" placeholder="Tel. št.">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 									</div>
 									<br />
+									<h4><p class="text-center"> Kontaktna oseba </small> </p></h4>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind("command.contactFirstName") #end
+												<label for="contactFirstNameInput">Ime</label>
+												<input type="text" class="form-control" id="contactFirstNameInput" name="contactFirstName" value="$pData.emergencyContactData.first_name" placeholder="Ime">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.contactLastName" ) #end
+												<label for="contactLastNameInput">Priimek</label>
+												<input type="text" class="form-control" id="contactLastNameInput" name="contactLastName" value="$pData.emergencyContactData.last_name" placeholder="Priimek">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.contactAddress" ) #end
+												<label for="contactAddressInput">Naslov</label>
+												<input type="text" class="form-control" id="contactAddressInput" name="contactAddress" value="$pData.emergencyContactData.address" placeholder="Naslov">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.contactPhoneNumber" ) #end
+												<label for="contactPhoneNumberInput">Tel. št.</label>
+												<input type="text" class="form-control" id="contactPhoneNumberInput" name="contactPhoneNumber" value="$pData.emergencyContactData.phoneNumber" placeholder="Tel. št.">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+									</div>
 									<p class="text-center">
 										<input type="submit" class="btn btn-default btn-lg" value="Posodobi">
 									</p>

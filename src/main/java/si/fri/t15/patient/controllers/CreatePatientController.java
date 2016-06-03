@@ -22,10 +22,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.models.PO_Box;
+import si.fri.t15.models.user.EmergencyContactData;
 import si.fri.t15.models.user.PatientData;
 import si.fri.t15.models.user.User;
 import si.fri.t15.models.user.User.UserType;
-import si.fri.t15.validators.CreatePatientForm;
+import si.fri.t15.validators.PatientProfileForm;
 import si.fri.t15.validators.CreatePatientValidator;
 
 @Controller
@@ -71,7 +72,7 @@ public class CreatePatientController extends ControllerBase{
 	
 	@RequestMapping(value = "/patient/createPatient", method=RequestMethod.POST)
 	@Transactional
-	public ModelAndView createPatientPOST(Model model, @ModelAttribute("command") @Valid CreatePatientForm command,
+	public ModelAndView createPatientPOST(Model model, @ModelAttribute("command") @Valid PatientProfileForm command,
 			BindingResult result, HttpServletRequest request, @AuthenticationPrincipal User user) {
 		
 		
@@ -98,15 +99,25 @@ public class CreatePatientController extends ControllerBase{
 			return new ModelAndView("createPatient");
 		}
 		
+		
+		EmergencyContactData eData = new EmergencyContactData();
+		eData.setAddress(command.getContactAddress());
+		eData.setFirst_name(command.getContactFirstName());
+		eData.setLast_name(command.getContactLastName());
+		eData.setPhoneNumber(command.getContactPhoneNumber());
+		
+		em.persist(eData);
 		//Dodajanje pacienta
 		
 		//Create patient
 		PatientData patient = new PatientData();
+		patient.setCardNumber(command.getCardNumber());
+		patient.setEmergencyContactData(eData);
 		patient.setFirst_name(command.getFirstName());
 		patient.setLast_name(command.getLastName());
 		patient.setSex(command.getSex());
 		patient.setBirth_date(Date.valueOf(command.getBirth()));
-		
+		patient.setPhoneNumber(command.getPhoneNumber());
 		patient.setAddress(command.getAddress());
 		
 		//POBOX

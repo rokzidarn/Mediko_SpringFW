@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.Email;
 
 public class CreateMedicalWorkerForm {
@@ -51,7 +52,7 @@ public class CreateMedicalWorkerForm {
 	@NotNull
 	@Size(min=50)
 	@Pattern(regexp="/^[0-9]*$/")
-    private int maxPatients;
+    private Integer maxPatients;
 	
     public String getEmail() {
 		return email;
@@ -125,11 +126,16 @@ public class CreateMedicalWorkerForm {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public int getMaxPatients() {
+	public Integer getMaxPatients() {
 		return maxPatients;
 	}
 
-	public void setMaxPatients(int maxPatients) {
+	public void setMaxPatients(Integer maxPatients) {
 		this.maxPatients = maxPatients;
+	}
+	
+	public boolean containsProfileData() {
+		return (StringUtils.isNotEmpty(title) || StringUtils.isNotEmpty(sizz) || StringUtils.isNotEmpty(first_name) || StringUtils.isNotEmpty(last_name) || StringUtils.isNotEmpty(phoneNumber)
+				|| maxPatients != null);
 	}
 }

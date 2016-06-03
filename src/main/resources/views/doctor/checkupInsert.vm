@@ -29,7 +29,7 @@
                                                                     #if($commandr) #springBind( "commandr.reason" ) #end
                                                                     <label for="reasonInput">Razlog</label>
                                                                     <input type="text" class="form-control" id="reasonInput" name="reason" placeholder="Vnesite razlog!">
-                                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                                    #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -148,7 +148,7 @@
                                                                     <option value="${idisease.getDiseaseId()}">$idisease.name</option>
                                                                 #end
                                                             </select><br>
-                                                            #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end  
+                                                            #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end  
                                                             <button type="submit" class="btn btn-info">VNESI BOLEZEN</button>   
                                                         </form>
                                                     </div>
@@ -165,7 +165,7 @@
                                                                 #end
                                                             </select><br>
                                                             <button type="submit" class="btn btn-info">VNESI DIETO</button>    
-                                                            #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                            #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
                                                         </form>
                                                     </div>
                                                 </div>
@@ -182,7 +182,7 @@
                                                                     <option value="${imedicine.getMedicineId()}">$imedicine.name</option>
                                                                 #end
                                                             </select><br>
-                                                            #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                            #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
                                                             <button type="submit" class="btn btn-info">VNESI ZDRAVILO</button>    
                                                         </form>
                                                     </div>
@@ -202,7 +202,7 @@
                                                             <input type="text" class="form-control" id="iresultInput" name="iresult" placeholder="Rezultat"><br>
                                                             #if($commandrs) #springBind( "commandrs.itext" ) #end
                                                             <label for="itextInput">Vnesite komentar: </label>
-                                                            <input type="text" class="form-control" id="itextInput" name="itext" placeholder="Komentar"><br>#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                            <input type="text" class="form-control" id="itextInput" name="itext" placeholder="Komentar"><br>#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
                                                             <button type="submit" class="btn btn-info">VNESI MERITEV</button>    
                                                         </form>
                                                     </div>
@@ -217,7 +217,7 @@
                                                             #if($commanddg) #springBind( "commanddg.idiagnosis" ) #end
                                                             <label for="itextInput">Vnesite navodilo: </label>
                                                             <input type="text" class="form-control" id="itextInput" name="idiagnosis" placeholder="Vnesite navodilo!"><br>
-                                                            #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+                                                            #foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
                                                             <button type="submit" class="btn btn-info">VNESI NAVODILO</button>    
                                                         </form>
                                                     </div>

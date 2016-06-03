@@ -20,7 +20,7 @@
 									 	#if($command) #springBind( "command.username" ) #end
 										<label for="emailInput">Email naslov</label>
 										<input type="email" class="form-control" id="emailInput" name="username" value="$!status.value" placeholder="Email" required>
-										#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+										#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 									</div>
 									<div class="row">
 										<div class="col-md-6">
@@ -28,7 +28,7 @@
 												#if($command) #springBind( "command.password" ) #end
 												<label for="passwordInput">Geslo</label>
 												<input type="password" class="form-control" id="passwordInput" name="password" value="$!status.value" placeholder="Geslo" required pattern="(?=.*\d).{8,}" onchange="form.passwordInputRepeat.pattern = this.value;">
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -36,111 +36,145 @@
 												#if($command) #springBind( "command.repeatpassword" ) #end
 												<label for="passwordInputRepeat">Ponovi geslo</label>
 												<input type="password" class="form-control" id="passwordInputRepeat" name="repeatpassword" value="$!status.value" placeholder="Ponovi geslo" required>
-												#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
 									</div>
 									<br />
+									<div class="row">
+										<div class="col-md-12">
+											<h4><p class="text-center"> Uporabniški profil (neobvezno)</p></h4>
+											<div class="form-group">
+												#if($command) #springBind( "command.cardNumber" ) #end
+												<label for="cardNumberInput">Št. kartice zdravstvenega zavarovanja</label>
+												<input type="text" class="form-control" id="cardNumberInput" name="cardNumber" placeholder="Št. kartice zdravstvenega zavarovanja" value="$!status.value">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.firstName" ) #end
+												<label for="firstNameInput">Ime</label>
+												<input type="text" class="form-control" id="firstNameInput" name="firstName" placeholder="Ime" value="$!status.value">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.lastName" ) #end
+												<label for="lastNameInput">Priimek</label>
+												<input type="text" class="form-control" id="lastNameInput" name="lastName" placeholder="Priimek" value="$!status.value">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.sex" ) #end
+												<label for="sex">Spol</label>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="radio">
+															<label>
+																<input type="radio" name="sex" id="femaleRadio" value="f" #if($!status.value == 'f') checked #end>Ženski
+															</label>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="radio">
+															<label>
+																<input type="radio" name="sex" id="maleRadio" value="m" #if($!status.value == 'm') checked #end>Moški
+
+															</label>
+														</div>
+													</div>
+													#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.birth" ) #end
+												<label for="birthInput">Rojstvo</label>
+												<input type="date" id="birthInput" class="form-control" name="birth" value="$!status.value">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.address" ) #end
+												<label for="addressInput">Ulica in hišna številka</label>
+												<input type="text" class="form-control" id="addressInput" name="address" placeholder="Ulica in hišna številka" value="$!status.value">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.pobox" ) #end
+												<label for="postOfficeInput">Pošta</label>
+												<select class="form-control" id="postOfficeInput" name="pobox">
+													#foreach($po_box in $po_boxes)
+													<option value="$po_box.getPO_BoxId()">$po_box.getPO_BoxId() - $po_box.getCity()</option>
+													#end
+												</select>
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.phoneNumber" ) #end
+												<label for="phoneNumberInput">Tel. št.</label>
+												<input type="text" class="form-control" id="phoneNumberInput" name="phoneNumber" value="$!status.value" placeholder="Tel. št.">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+									</div>
+									<br />
+									<h4><p class="text-center"> Kontaktna oseba </small> </p></h4>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind("command.contactFirstName") #end
+												<label for="contactFirstNameInput">Ime</label>
+												<input type="text" class="form-control" id="contactFirstNameInput" name="contactFirstName" value="$!status.value" placeholder="Ime">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.contactLastName" ) #end
+												<label for="contactLastNameInput">Priimek</label>
+												<input type="text" class="form-control" id="contactLastNameInput" name="contactLastName" value="$!status.value" placeholder="Priimek">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.contactAddress" ) #end
+												<label for="contactAddressInput">Naslov</label>
+												<input type="text" class="form-control" id="contactAddressInput" name="contactAddress" value="$!status.value" placeholder="Naslov">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.contactPhoneNumber" ) #end
+												<label for="contactPhoneNumberInput">Tel. št.</label>
+												<input type="text" class="form-control" id="contactPhoneNumberInput" name="contactPhoneNumber" value="$!status.value" placeholder="Tel. št.">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+									</div>
 									<p class="text-center">
 										<input type="submit" class="btn btn-default btn-lg" value="Ustvari">
 									</p>								
 								</form>
-                                <p class="text-center">
-                                    <button class="btn btn-default" onclick="$('#extra').slideToggle(500)">Dodaj uporabniški profil</button>
-                                </p>
-                                <div id="extra" style="display: none">
-                                    <form method="POST" action="">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                        <div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													#if($command) #springBind( "command.cardNumber" ) #end
-													<label for="cardNumberInput">Št. kartice zdravstvenega zavarovanja</label>
-													<input type="text" class="form-control" id="CardNumberInput" name="cardNumber" placeholder="Št. kartice zdravstvenega zavarovanja">
-													#foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
-												</div>
-										</div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    #if($command) #springBind( "command.firstName" ) #end
-                                                    <label for="firstNameInput">Ime</label>
-                                                    <input type="text" class="form-control" id="firstNameInput" name="firstName" placeholder="Ime">
-                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    #if($command) #springBind( "command.lastName" ) #end
-                                                    <label for="lastNameInput">Priimek</label>
-                                                    <input type="text" class="form-control" id="lastNameInput" name="lastName" placeholder="Priimek">
-                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="sex">Spol</label>
-                                                    <div class="row">
-                                                        #if($command) #springBind( "command.sex" ) #end
-                                                        <div class="col-md-6">
-                                                            <div class="radio">
-                                                                <label>
-                                                                    <input type="radio" name="sex" id="femaleRadio" value="f" checked>Ženski
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="radio">
-                                                                <label>
-                                                                    <input type="radio" name="sex" id="maleRadio" value="m">Moški
-
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    #if($command) #springBind( "command.birth" ) #end
-                                                    <label for="birth">Rojstvo</label>
-                                                    <input type="date" id="birth" class="form-control" name="birth" value="1950-01-01">
-                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    #if($command) #springBind( "command.address" ) #end
-                                                    <label for="streetInput">Ulica in hišna številka</label>
-                                                    <input type="text" class="form-control" id="streetInput" name="address" placeholder="Ulica in hišna številka">
-                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    #if($command) #springBind( "command.pobox" ) #end
-                                                    <label for="postOfficeInput">Pošta</label>
-                                                    <select class="form-control" id="postOfficeInput" name="pobox">
-                                                        #foreach($po_box in $po_boxes)
-                                                        <option value="$po_box.getPO_BoxId()">$po_box.getPO_BoxId() - $po_box.getCity()</option>
-                                                        #end
-                                                    </select>
-                                                    #foreach($error in $status.errorMessages) <div class="alert-box alert">$error</div> #end
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <p class="text-center">
-                                            <!--<input type="submit" class="btn btn-default btn-lg" value="Ustvari">-->
-                                        </p>
-                                        
-                                    </form>
-                                </div>								
                             </div>
                         </div>
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">
