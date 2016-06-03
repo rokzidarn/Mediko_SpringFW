@@ -25,6 +25,7 @@
 										<input type="email" class="form-control" id="emailInput" name="email" value="$!status.value" placeholder="Email" required>
 										#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 									</div>
+									<p>Geslo mora vsebovati vsaj 8 znakov, vključno z vsaj 1 števko.</p>
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
