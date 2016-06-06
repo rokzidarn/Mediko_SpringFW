@@ -32,7 +32,7 @@
 												<div class="col-md-4">
 													<div class="form-group">
 														<label for="searchInput">Išči:</label>
-														<input class="form-control" type="text" id="searchInput" placeholder="email">
+														<input class="form-control" type="text" id="searchInput" placeholder="">
 													</div>
 												</div>
 												<div class="col-md-4">

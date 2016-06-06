@@ -575,11 +575,10 @@ public class RestController {
 		}
 		
 		
-		Query query = em.createQuery("SELECT u FROM User u WHERE u.registrationDate >= :fromInput AND u.registrationDate <= :toInput AND u.username LIKE :search "+"ORDER BY "+(orderBy+" "+(orderTypeInput.equals("asc")?"ASC ":"DESC ")));
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.registrationDate >= :fromInput AND u.registrationDate <= :toInput "+"ORDER BY "+(orderBy+" "+(orderTypeInput.equals("asc")?"ASC ":"DESC ")));
 		
 		query.setParameter("fromInput",java.sql.Date.valueOf(fromInput));
 		query.setParameter("toInput", java.sql.Date.valueOf(toInput));
-		query.setParameter("search", "%"+searchInput+"%");
 		
 		
 		if(hitsNumberInput>0){
@@ -607,6 +606,26 @@ public class RestController {
 				users.remove(i);
 				i--;
 				continue;
+			}
+
+			if(searchInput.length() > 0)
+			{
+				if(users.get(i).getUsername().toLowerCase().contains(searchInput.toLowerCase()))
+				{
+					
+				}else{
+					if(users.get(i).getData() != null &&(
+							users.get(i).getData().getFirst_name().toLowerCase().contains(searchInput.toLowerCase())
+							|| users.get(i).getData().getLast_name().toLowerCase().contains(searchInput.toLowerCase())))
+					{
+						
+					}else{
+						users.remove(i);
+						i--;
+						continue;
+					}
+				}
+				
 			}
 		}
 		return users;
