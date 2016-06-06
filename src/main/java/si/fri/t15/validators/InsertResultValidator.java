@@ -23,7 +23,7 @@ public class InsertResultValidator implements Validator{
 					"Izberi ustrezen tip meritve");
 		}
 		
-		else if(r.getItype().equals("Glukoza") && (Integer.parseInt(r.getIresult())<2 || Integer.parseInt(r.getIresult())>25)){
+		else if(r.getItype().equals("Glukoza") && (Float.parseFloat(r.getIresult())<2 || Float.parseFloat(r.getIresult())>25)){
 			errors.rejectValue("iresult", "field.format",
 					"Neveljavna meritev glukoze!");
 		}

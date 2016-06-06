@@ -136,6 +136,7 @@ public class CheckupController extends ControllerBase {
 		model.addAttribute("diseases", curr.getDiseases()); 
 		model.addAttribute("diets", curr.getDiets()); 
 		model.addAttribute("medicines", curr.getMedicines());
+		model.addAttribute("rcc", curr.getResultCheckups());
 		
 		//Side menu variables
 		model.addAttribute("usertype", userType);
@@ -203,11 +204,9 @@ public class CheckupController extends ControllerBase {
 		model.addAttribute("diseases", curr.getDiseases()); 
 		model.addAttribute("diets", curr.getDiets()); 
 		model.addAttribute("medicines", curr.getMedicines());
+		
 		List<Result_Checkup> rcc = curr.getResultCheckups();
-		if(rcc.size()==0)
-			model.addAttribute("results_checkup", null);
-		else 
-			model.addAttribute("results_checkup", rcc.get(0));
+		model.addAttribute("rcc", rcc);
 		
 		//vse možne bolezni, zdravila, diete iz baze, iz česar bo izbiral zdravnik DDL
 		TypedQuery<Disease> qud = em.createNamedQuery("Disease.findAll", Disease.class);

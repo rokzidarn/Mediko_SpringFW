@@ -110,7 +110,7 @@
                                                     </table>                                                  
                                                 </div>
                                             #end
-                                            #if(!$results_checkup)
+                                            #if(!$rcc)
                                                 <br><p>Vnesite meritve!</p>
                                             #else
                                                 <div class="table-responsive">
@@ -121,11 +121,12 @@
                                                                 <th>Tip</th>
                                                             </tr>
                                                         </thead> 
-                                                        #foreach($rd in $results_checkup.getReading_Datas()) 
+                                                        #foreach($rd in $rcc) 
                                                             <tbody> 
                                                                 <tr> 
-                                                                    <td scope="row">$rd.getData() &nbsp; &nbsp; $rd.getUnit()</td>
-                                                                    <td scope="row">$results_checkup.getType()</td>
+                                                                    <td scope="row">$rd.getReading_Datas()[0].getData() &nbsp; &nbsp; 
+                                                                        $rd.getReading_Datas()[0].getUnit()</td>
+                                                                    <td scope="row">$rd.getType()</td>
                                                                 </tr> 
                                                             </tbody> 
                                                         #end
@@ -244,7 +245,7 @@
                                     </div>
                                 </div>                                                                          
                             </div> <br>
-                            <button type="button" class="btn btn-info"><a style="color: white"href="#">NAROČI PACIENTA</a></button><br><br>
+                            <button type="button" class="btn btn-info"><a style="color: white"href="#springUrl('/checkup/order')">NAROČI PACIENTA</a></button><br><br>
                             <button type="button" class="btn btn-info"><a style="color: white"href="#springUrl('/dashboard')">KONČAJ</a></button><br>
                             <br>       
                         </div>
