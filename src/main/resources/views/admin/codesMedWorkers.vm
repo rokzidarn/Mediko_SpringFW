@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    #parse("../common/head.vm")
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="panel panel-default main-panel">
+                    <div class="main-container">
+                        <div class="content-container">
+                            <div class="content-topbar">
+                                <div id="showSidebarButton" class="show-sidebar-button hidden-lg hidden-md"></div>
+                                <div class="content-title">$title</div>
+                            </div>
+                            <div class="content">   
+                                <div class="row">                                 
+                                    <div class="panel panel-default">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead> 
+                                                    <tr>
+                                                        <th>Ime</th>
+                                                        <th>Priimek</th>
+                                                        <th>ID - Email</th>
+                                                        <th>Zdravstvena ustanova</th>
+                                                        <th>Max št. pacientov</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody> 
+                                                    #foreach($curr in $all)
+                                                    <tr>        
+                                                        #if(!$curr.getData().first_name)
+                                                            <th>/</th> 
+                                                        #else
+                                                            <th>$curr.getData().first_name</th> 
+                                                        #end 
+
+                                                        #if(!$curr.getData().last_name)
+                                                            <th>/</th> 
+                                                        #else
+                                                            <th>$curr.getData().last_name</th>
+                                                        #end  
+
+                                                        <th>$curr.username</th> 
+
+                                                        #if(!$curr.getData().getMedical_center().getName())
+                                                            <th>/</th> 
+                                                        #else
+                                                             <th>$curr.getData().getMedical_center().getName()</th>
+                                                        #end 
+
+                                                        #if(!$curr.getData().getMaxPatients())
+                                                            <th>/</th> 
+                                                        #else
+                                                            <th>$curr.getData().getMaxPatients()</th>
+                                                        #end                                      
+                                                    </tr>
+                                                    #end
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>                                                       
+                            </div>
+                            </div>
+                            <div id="sidebar" class="sidebar hidden-sm hidden-xs">
+                                <div class="sidebar-topbar">
+                                    <div class="logo" style="color:#eee">
+                                        #if($user.lastLogin)
+                                            <div style="padding-left: 10px;">
+                                                <h6>Zadnja prijava</h6>
+                                                <h6>$user.lastLogin</h6>
+                                            </div>
+                                        #end
+                                    </div>
+                                    <div id="hideSidebarButton" class="hide-sidebar-button hidden-lg hidden-md">
+                                    </div>
+                                </div>
+                                <div class="patient">
+                                    <div class="patient-image patient-male">
+
+                                    </div>
+                                    <div class="patient-name">
+                                        $user.username
+                                    </div>
+                                </div>
+                                <div class="sidebar-seperator"></div>
+                                #sidemenu($usertype $page $subpage)
+                                <div class="sidebar-seperator"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
