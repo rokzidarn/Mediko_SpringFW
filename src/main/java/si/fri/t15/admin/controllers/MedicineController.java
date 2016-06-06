@@ -91,8 +91,19 @@ public class MedicineController extends ControllerBase{
 		TypedQuery<Medicine> qu2 = em.createNamedQuery("Medicine.findMedicine", Medicine.class);
 		Medicine m = qu2.setParameter(1, commandadm.getMedicine()).getSingleResult(); 
 		
-		m.getDiseases().add(d);		
-		em.merge(m);
+		//m.getDiseases().add(d);	
+		
+		boolean insert = true;
+		List<Disease> diseases = m.getDiseases();
+		for(Disease curr : diseases)
+			if(curr == d)
+				insert = false;
+		
+		//em.merge(m);
+		
+		if(insert)
+			m.getDiseases().add(d);
+			em.merge(m);
 		
 		return "redirect:/admin/medicines";
 	}
