@@ -323,10 +323,19 @@ public class CheckupController extends ControllerBase {
 		Reading_Data rd = new Reading_Data();
 		rd.setData(r);
 		if(type.equals("Krvni tlak")){
-			rd.setUnit("sbp/dbp");
+			rd.setUnit("sbp/dbp/bpm");
 		}
 		else if(type.equals("Glukoza")){
 			rd.setUnit("g/mmol");
+		}
+		else if(type.equals("Teža")){
+			rd.setUnit("kg");
+		}
+		else if(type.equals("Temperatura")){
+			rd.setUnit("°C");
+		}
+		else if(type.equals("Holesterol")){
+			rd.setUnit("skupni/LDL/HDL");
 		}
 		rd.setReading(read);
 		rd.setResult_Checkup(rc);

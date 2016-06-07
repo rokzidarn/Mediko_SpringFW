@@ -195,8 +195,11 @@
                                                             #if($commandrs) #springBind( "commandrs.itype" ) #end
                                                             <label for="rTypeInput">Izberite tip meritev: </label>
                                                             <select id="rTypeInput" name="itype" class="form-control">
-                                                                <option value="Krvni tlak">Krvni tlak</option>
-                                                                <option value="Glukoza">Glukoza</option>
+                                                                <option value="Krvni tlak">Krvni tlak (sbp/dbp/bpm)</option>
+                                                                <option value="Glukoza">Glukoza (g/mmol)</option>
+                                                                <option value="Teža tlak">Teža (kg)</option>
+                                                                <option value="Temperatura">Temperatura (°C)</option>
+                                                                <option value="Holesterol">Holesterol (skupni/LDL/HDL)</option>
                                                             </select><br>
                                                             #if($commandrs) #springBind( "commandrs.iresult" ) #end
                                                             <label for="iresultInput">Vnesite rezultat: </label>
