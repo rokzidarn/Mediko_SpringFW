@@ -1,16 +1,25 @@
 package si.fri.t15.base.models;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.TreeSet;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.apache.commons.collections.CollectionUtils;
+
 @Entity
 public abstract class UserData implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static Set<String> relationshipTypes = new TreeSet<>(Arrays.asList(new String[] { "Brat/sestra", "Oče/mati",
+			"Dedek/babica", "Krušni starš", "Partner/partnerka", "Skrbnik" }));
 
 	@Id
 	@Column(length=4, nullable=false, updatable=false, unique=true)
@@ -56,6 +65,10 @@ public abstract class UserData implements Serializable {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	
+	public static Set<String> getRelationshipTypes() {
+		return relationshipTypes;
 	}
 	
 }

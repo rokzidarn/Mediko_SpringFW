@@ -93,7 +93,7 @@
 												<label for="postOfficeInput">Pošta</label>
 												<select class="form-control" id="postOfficeInput" name="pobox">
 													#foreach($po_box in $po_boxes)
-													<option value="$po_box.getPO_BoxId()">$po_box.getPO_BoxId() - $po_box.getCity()</option>
+													<option value="$po_box.getPO_BoxId()" #if($pData.po_number == $po_box.getPO_BoxId())selected#end>$po_box.getPO_BoxId() - $po_box.getCity()</option>
 													#end
 												</select>
 												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
@@ -142,6 +142,18 @@
 												#if($command) #springBind( "command.contactPhoneNumber" ) #end
 												<label for="contactPhoneNumberInput">Tel. št.</label>
 												<input type="text" class="form-control" id="contactPhoneNumberInput" name="contactPhoneNumber" value="$pData.emergencyContactData.phoneNumber" placeholder="Tel. št.">
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.contactRelationship" ) #end
+												<label for="contactPhoneNumberInput">Sorodstveno razmerje</label>
+												<select class="form-control" id="contactRelationshipInput" name="contactRelationship">
+													#foreach($type in $relationshipTypes)
+													<option value="$type" #if($type == $pData.emergencyContactData.relationshipType)selected#end>$type</option>
+													#end
+												</select>
 												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import si.fri.t15.base.controllers.ControllerBase;
+import si.fri.t15.base.models.UserData;
 import si.fri.t15.models.PO_Box;
 import si.fri.t15.models.user.EmergencyContactData;
 import si.fri.t15.models.user.PatientData;
@@ -66,6 +67,7 @@ public class CreatePatientController extends ControllerBase{
 		Query allPOBoxQuery = em.createNamedQuery("PO_Box.findAll");
 		List<PO_Box> poBoxes = allPOBoxQuery.getResultList();
 		model.addAttribute("po_boxes",poBoxes);
+		model.addAttribute("relationshipTypes", UserData.getRelationshipTypes());
 		
 		return new ModelAndView( "createPatient");
 	}

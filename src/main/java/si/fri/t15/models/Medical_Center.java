@@ -30,6 +30,9 @@ public class Medical_Center implements Serializable{
 	@OneToMany(mappedBy="medical_center")
 	private List<NurseData> nurses;
 	
+	@Column
+	private String sizz;
+	
 	public Medical_Center() {
 	}	
 	
@@ -71,6 +74,14 @@ public class Medical_Center implements Serializable{
 
 	public void setPo_box(PO_Box po_box) {
 		this.po_box = po_box;
+	}
+
+	public String getSizz() {
+		return sizz;
+	}
+
+	public void setSizz(String sizz) {
+		this.sizz = sizz;
 	}
 	
 }

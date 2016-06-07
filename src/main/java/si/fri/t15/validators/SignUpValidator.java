@@ -1,6 +1,10 @@
 package si.fri.t15.validators;
 
 import org.springframework.validation.Validator;
+
+import java.sql.Date;
+import java.util.Calendar;
+
 import org.apache.commons.validator.GenericValidator;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -41,6 +45,9 @@ public class SignUpValidator implements Validator{
 			
 			if(!GenericValidator.isDate(u.getBirth(), "yyyy-MM-dd", false)){
 				errors.rejectValue("birth", "field.format","Napačen format datuma");
+			}
+			else if (Date.valueOf(u.getBirth()).after(Calendar.getInstance().getTime())) {
+				errors.rejectValue("birth", "field.format", "Datum ne sme biti v prihodnosti");
 			}
 		}
 	}		

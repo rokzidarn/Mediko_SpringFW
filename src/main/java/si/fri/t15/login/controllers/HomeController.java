@@ -69,6 +69,9 @@ public class HomeController extends ControllerBase{
 		if(!userSession.getData().getClass().equals(DoctorData.class)){
 			return "redirect:/dashboard";
 		}
+		if(userSession.getData() == null) {
+			return "redirect:/updateDoctorProfile";
+		}
 		User user = em.merge(userSession);
 		String userType = "user";
 		

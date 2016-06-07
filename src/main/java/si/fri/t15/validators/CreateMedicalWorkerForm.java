@@ -135,7 +135,7 @@ public class CreateMedicalWorkerForm {
 	}
 	
 	public boolean containsProfileData() {
-		return (StringUtils.isNotEmpty(title) || StringUtils.isNotEmpty(sizz) || StringUtils.isNotEmpty(first_name) || StringUtils.isNotEmpty(last_name) || StringUtils.isNotEmpty(phoneNumber)
-				|| maxPatients != null);
+		return (StringUtils.isNotEmpty(title) || StringUtils.isNotEmpty(first_name) || StringUtils.isNotEmpty(last_name) || StringUtils.isNotEmpty(phoneNumber)
+				|| maxPatients != null || !"00016".equals(sizz));
 	}
 }
