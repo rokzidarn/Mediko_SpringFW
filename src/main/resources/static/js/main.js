@@ -861,6 +861,7 @@ function getUserListNew(){
 			var tr = "<tr>"+
 				"<th scope=\"row\">"+(i+1)+"</th>"+
 				"<td>" + data[i].username+"</td>"+
+				"<td>" + data[i].firstAndLastName+"</td>"+
 				"<td>" + formatDate(data[i].registrationDate)+"</td>"+
 				"<td>"+ usertypeLocaliaztion(data[i].userType) +"</td>";
 			tableBody.append(tr);
@@ -882,11 +883,14 @@ function exportUserList(){
     // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
     //doc.save('Test.pdf');
     $('#exportTable').addClass("user-list-export-settings");
+    $('#exportTableHeader').show();
+    $('#exportDate').text(formatDate(new Date()));
     $('#exportTable').css("left",($('#exportTable').offset().left* -1)+45);
     html2pdf ($('#exportTable'),doc,function(doc){
     	
         doc.save("SeznamUporabnikov.pdf");
         $('#exportTable').removeClass("user-list-export-settings");
+        $('#exportTableHeader').hide();
         $('#exportTable').css("left","0");
     });
 }

@@ -83,7 +83,16 @@ public class User implements UserDetails, CredentialsContainer{
 	//SelectedPatient 
 	
 	transient private PatientData selectedPatient;
+	transient private String firstAndLastName;
 
+	
+
+
+	public String getFirstAndLastName() {
+		if(data != null)
+			return data.getFirst_name()+" "+data.getLast_name();
+		return "";
+	}
 
 	@Override
 	public void eraseCredentials() {

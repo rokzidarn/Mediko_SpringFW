@@ -32,7 +32,7 @@
 												<div class="col-md-4">
 													<div class="form-group">
 														<label for="searchInput">Išči:</label>
-														<input class="form-control" type="text" id="searchInput" placeholder="email">
+														<input class="form-control" type="text" id="searchInput" placeholder="">
 													</div>
 												</div>
 												<div class="col-md-4">
@@ -108,6 +108,17 @@
                             			</div>
                             		</div> 
                             		<div id="exportTable" class="users-list-content" style="left:0">
+                     					<div id="exportTableHeader" style="display:none" class="panel panel-primary">
+                     						<div class="panel-heading">
+                     							<div class="col-md-8">
+                     								Seznam novih uporabnikov
+                     							</div>
+                     							<div id="exportDate" class="col-md-4 text-right">
+                     								06.06.2016
+                     							</div>
+                     							<div class="row"></div>
+                     						</div>
+                     					</div>
                             			<div class="panel panel-default">
                             				<div class="table-responsive">
 										  		<table class="table table-hover">
@@ -115,6 +126,7 @@
 											    		<tr> 
 											    			<th>#</th>
 											    			<th>Email</th>
+											    			<th>Ime in priimek</th>
 											    			<th>Datum registracije</th>
 											    			<th>Uporabniška vloga</th>
 										    			</tr>
