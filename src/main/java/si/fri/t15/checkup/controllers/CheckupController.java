@@ -136,6 +136,7 @@ public class CheckupController extends ControllerBase {
 		model.addAttribute("diseases", curr.getDiseases()); 
 		model.addAttribute("diets", curr.getDiets()); 
 		model.addAttribute("medicines", curr.getMedicines());
+		model.addAttribute("rcc", curr.getResultCheckups());
 		
 		//Side menu variables
 		model.addAttribute("usertype", userType);
@@ -203,11 +204,9 @@ public class CheckupController extends ControllerBase {
 		model.addAttribute("diseases", curr.getDiseases()); 
 		model.addAttribute("diets", curr.getDiets()); 
 		model.addAttribute("medicines", curr.getMedicines());
+		
 		List<Result_Checkup> rcc = curr.getResultCheckups();
-		if(rcc.size()==0)
-			model.addAttribute("results_checkup", null);
-		else 
-			model.addAttribute("results_checkup", rcc.get(0));
+		model.addAttribute("rcc", rcc);
 		
 		//vse možne bolezni, zdravila, diete iz baze, iz česar bo izbiral zdravnik DDL
 		TypedQuery<Disease> qud = em.createNamedQuery("Disease.findAll", Disease.class);
@@ -324,10 +323,19 @@ public class CheckupController extends ControllerBase {
 		Reading_Data rd = new Reading_Data();
 		rd.setData(r);
 		if(type.equals("Krvni tlak")){
-			rd.setUnit("sbp/dbp");
+			rd.setUnit("sbp/dbp/bpm");
 		}
 		else if(type.equals("Glukoza")){
 			rd.setUnit("g/mmol");
+		}
+		else if(type.equals("Teža")){
+			rd.setUnit("kg");
+		}
+		else if(type.equals("Temperatura")){
+			rd.setUnit("°C");
+		}
+		else if(type.equals("Holesterol")){
+			rd.setUnit("skupni/LDL/HDL");
 		}
 		rd.setReading(read);
 		rd.setResult_Checkup(rc);
