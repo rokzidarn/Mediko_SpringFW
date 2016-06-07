@@ -79,6 +79,8 @@ public class SignUpForm {
 	@NotNull
 	@Size(max = 4, min = 4)
 	private Integer pobox;
+	
+	private String contactRelationship;
 
 	public String getPassword() {
 		return password;
@@ -205,6 +207,14 @@ public class SignUpForm {
 				|| StringUtils.isNotEmpty(lastName) || StringUtils.isNotEmpty(contactFirstName)
 				|| StringUtils.isNotEmpty(contactLastName) || sex != null || StringUtils.isNotEmpty(birth)
 				|| StringUtils.isNotEmpty(address) || StringUtils.isNotEmpty(contactAddress)
-				|| StringUtils.isNotEmpty(phoneNumber) || StringUtils.isNotEmpty(contactPhoneNumber) || pobox != null && pobox != 1000);
+				|| StringUtils.isNotEmpty(phoneNumber) || StringUtils.isNotEmpty(contactPhoneNumber) || pobox != null && pobox != 1000 );
+	}
+
+	public String getContactRelationship() {
+		return contactRelationship;
+	}
+
+	public void setContactRelationship(String contactRelationship) {
+		this.contactRelationship = contactRelationship;
 	}
 }

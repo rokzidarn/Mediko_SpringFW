@@ -27,7 +27,11 @@
 											<div class="form-group">
 												#if($command) #springBind("command.sizz") #end
 												<label for="titleInput">Šifra izvajalca</label>
-												<input type="text" class="form-control" id="sizzInput" name="sizz" value="$!dData.sizz" placeholder="Šifra izvajalca">
+												<select class="form-control" id="sizzInput" name="sizz">
+													#foreach($medicalCenter in $medicalCenters)
+													<option value="$medicalCenter.sizz" #if($medicalCenter.sizz == $dData.sizz)selected#end>$medicalCenter.sizz - $medicalCenter.name</option>
+													#end
+												</select>
 												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>

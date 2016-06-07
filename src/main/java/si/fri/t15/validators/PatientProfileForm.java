@@ -63,6 +63,8 @@ public class PatientProfileForm {
 	@Size(max=4,min=4)
 	private int pobox;
 	
+	private String contactRelationship;
+	
 	public String getAddress() {
 		return address;
 	}
@@ -159,6 +161,14 @@ public class PatientProfileForm {
 
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
+	}
+
+	public String getContactRelationship() {
+		return contactRelationship;
+	}
+
+	public void setContactRelationship(String contactRelationship) {
+		this.contactRelationship = contactRelationship;
 	}
 	
 	

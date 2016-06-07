@@ -18,6 +18,9 @@ public class EmergencyContactData extends UserData {
 
 	@Column(name = "Address", length = 100, nullable = false, updatable = true)
 	private String address;
+	
+	@Column
+	private String relationshipType;
 
 	public String getAddress() {
 		return address;
@@ -25,6 +28,14 @@ public class EmergencyContactData extends UserData {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getRelationshipType() {
+		return relationshipType;
+	}
+
+	public void setRelationshipType(String relationshipType) {
+		this.relationshipType = relationshipType;
 	}
 
 }

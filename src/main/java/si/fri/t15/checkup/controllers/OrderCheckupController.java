@@ -169,6 +169,10 @@ public class OrderCheckupController extends ControllerBase{
 		if(userSession.getData().getClass().equals(PatientData.class) && userSession.getSelectedPatient() == null){
 			userSession.setSelectedPatient((PatientData)userSession.getData());
 		}
+		
+		if(userSession.getData() == null) {
+			return "redirect:/updateDoctorProfile";
+		}
 		//Side menu variables
 		String userType = "user";
 		User user = em.merge(userSession);
