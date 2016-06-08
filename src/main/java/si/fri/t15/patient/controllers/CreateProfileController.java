@@ -67,13 +67,14 @@ public class CreateProfileController extends ControllerBase{
 		Query allPOBoxQuery = em.createNamedQuery("PO_Box.findAll");
 		List<PO_Box> poBoxes = allPOBoxQuery.getResultList();
 		model.addAttribute("po_boxes",poBoxes);
+		model.addAttribute("relationshipTypes", UserData.getRelationshipTypes());
 		
 		return "createPatient";
 	}
 	
 	@RequestMapping(value = "/createProfile", method=RequestMethod.POST)
 	@Transactional
-	public String createPatientPOST(Model model, @ModelAttribute("profile") @Valid PatientProfileForm profile,
+	public String createPatientPOST(Model model, @ModelAttribute("command") @Valid PatientProfileForm profile,
 			BindingResult result, HttpServletRequest request, @AuthenticationPrincipal User user) {
 		
 		
@@ -94,7 +95,7 @@ public class CreateProfileController extends ControllerBase{
 		Query allPOBoxQuery = em.createNamedQuery("PO_Box.findAll");
 		List<PO_Box> poBoxes = allPOBoxQuery.getResultList();
 		model.addAttribute("po_boxes",poBoxes);
-		
+		model.addAttribute("relationshipTypes", UserData.getRelationshipTypes());
 		
 		if (result.hasErrors()) {
 			return "createPatient";
