@@ -1,6 +1,7 @@
 package si.fri.t15.patient.controllers;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -105,6 +106,10 @@ public class SignupController extends ControllerBase {
 		newUser.setAccountNonLocked(true);
 		newUser.setCredentialsNonExpired(true);
 		newUser.setEnabled(false); //false for mail confirmation
+		
+		//registration date
+		Calendar calendar = Calendar.getInstance();
+		newUser.setRegistrationDate(new java.sql.Date(calendar.getTimeInMillis()));
 		
 		Query userRoleQuery = em.createNamedQuery("UserRole.findByRole");
 		userRoleQuery.setParameter("role", "ROLE_USER");
