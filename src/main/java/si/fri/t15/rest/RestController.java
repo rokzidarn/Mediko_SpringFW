@@ -493,6 +493,7 @@ public class RestController {
 			destinationWorkDay.setNote(currentWorkDay.getNote());
 			
 			
+			
 			if(destinationWorkDay.getStart() == null || destinationWorkDay.getEnd() == null || destinationWorkDay.getMinuteInterval() == 0) continue;
 			//Calendaring
 			Calendar workDayDate = Calendar.getInstance();
@@ -510,6 +511,23 @@ public class RestController {
 			endTimeCalendar.set(workDayDate.get(Calendar.YEAR), workDayDate.get(Calendar.MONTH), workDayDate.get(Calendar.DATE));
 			
 			//GENERATE appointments
+			for(int k = 0; k < currentWorkDay.getAppointments().size(); k++){
+				
+				Appointment appointment = new Appointment();
+				Timestamp t = new Timestamp(timeCalendar.getTime().getTime());
+				appointment.setDateTime(t);
+				appointment.setDoctor((DoctorData)user.getData());
+				appointment.setWorkDay(destinationWorkDay);
+				destinationWorkDay.getAppointments().add(appointment);
+				
+				if(currentWorkDay.getAppointments().get(k).isDoctorFreeTime()){
+					appointment.setDoctorFreeTime(true);
+				}
+				
+				em.persist(appointment);
+				timeCalendar.add(Calendar.MINUTE, destinationWorkDay.getMinuteInterval());
+			}
+			/*
 			while(timeCalendar.compareTo(endTimeCalendar) <= 0){
 				Appointment appointment = new Appointment();
 				
@@ -523,7 +541,7 @@ public class RestController {
 
 								
 				timeCalendar.add(Calendar.MINUTE, destinationWorkDay.getMinuteInterval());
-			}
+			}*/
 			em.persist(destinationWorkDay);
 		}
 		List<WorkWeek> out = new ArrayList<WorkWeek>();
@@ -542,6 +560,8 @@ public class RestController {
 		Appointment appointment = (Appointment) em.createNamedQuery("Appointment.findAppointment").setParameter(1, appointmentId).getSingleResult();
 		
 		if(!appointment.getDoctor().equals(user.getData())) return null;
+		
+		if(appointment.getPatient() != null) return appointment;
 		
 		appointment.setDoctorFreeTime(!appointment.isDoctorFreeTime());
 		
