@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import si.fri.t15.base.controllers.ControllerBase;
 import si.fri.t15.base.models.UserData;
+import si.fri.t15.models.Medical_Center;
 import si.fri.t15.models.UserRole;
 import si.fri.t15.models.user.DoctorData;
 import si.fri.t15.models.user.NurseData;
@@ -53,6 +55,8 @@ public class CreateMedicalWorkerController extends ControllerBase {
 			model.addAttribute("subpage", "addDoctor");
 			model.addAttribute("path", "/mediko_dev/");
 			model.addAttribute("title", "Dodaj osebje");
+			TypedQuery<Medical_Center> query = em.createNamedQuery("Medical_Center.findAll", Medical_Center.class);
+			model.addAttribute("medicalCenters", query.getResultList());
 			return new ModelAndView("createMedicalWorker");
 		}
 
@@ -104,6 +108,8 @@ public class CreateMedicalWorkerController extends ControllerBase {
 		model.addAttribute("subpage", "addDoctor");
 		model.addAttribute("path", "/mediko_dev/");
 		model.addAttribute("title", "Dodaj osebje");
+		TypedQuery<Medical_Center> query = em.createNamedQuery("Medical_Center.findAll", Medical_Center.class);
+		model.addAttribute("medicalCenters", query.getResultList());
 		if (successfulRegistration) {
 			model.addAttribute("registrationSuccess", "admin.user_registration_successful");
 		}

@@ -103,15 +103,44 @@
                                                     </table>                                                  
                                                 </div>
 											#end
-                                            #if($instructions.length() > 0)
-                                                <p><strong>Navodila:</strong></p> 
-                                                $instructions	
+
+                                            #if($rcc.isEmpty())
+                                    <p>Ni meritev!</p>
+                                #else
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr> 
+                                                    <th>Meritev</th>
+                                                    <th>Vrednost</th>
+                                                    <th>Enota</th>
+                                                    <th>Komentar</th>
+                                                </tr>
+                                            </thead>
+                                            #foreach($rd in $rcc) 
+                                                <tbody> 
+                                                    <tr>
+                                                        <td scope="row">$rd.getType()</td> 
+                                                        <td>$rd.getReading_Datas()[0].getData()</td>
+                                                        <td>$rd.getReading_Datas()[0].getUnit()</td>
+                                                        <td>$rd.getText()</td>
+                                                    </tr> 
+                                                </tbody> 
                                             #end
-										</div>
+                                        </table>                                                  
                                     </div>
-								</div>																			
-							</div> 			
+                                #end
+
+                                            #if($instructions.length() > 0)
+                                                <p><strong>Navodila:  $instructions</strong></p>                                               	
+                                            #end
+								                         
+                                
+                            </div>		
                         </div>
+                                    </div>
+                                </div>                                                                          
+                            </div>  
                         <div id="sidebar" class="sidebar hidden-sm hidden-xs">
                             <div class="sidebar-topbar">
                                 <div class="logo" style="color:#eee">

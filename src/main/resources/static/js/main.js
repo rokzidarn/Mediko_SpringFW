@@ -668,7 +668,7 @@ function doctorAppointmentOnCalendarClicked(){
   	
   	$.ajax({
     method: "post",
-    url: appUrl+"/api/doctor/setfreetime",
+    url: appUrl+"api/doctor/setfreetime",
     data: {
       _csrf:csrf, 
       appointmentId:appointmentId}
@@ -734,7 +734,7 @@ function saveWorkDay(){
 
 	$.ajax({
     method: "post",
-    url: appUrl+"/api/doctor/updateworkday",
+    url: appUrl+"api/doctor/updateworkday",
     data: {
       _csrf:csrf, 
       workDayId:workDayId,
@@ -760,7 +760,7 @@ function copyCurrentWeek(){
 	var destinationWeekId = $(this).parent().parent().siblings()[0].id;
 	$.ajax({
     method: "post",
-    url: appUrl+"/api/doctor/copyworkweek",
+    url: appUrl+"api/doctor/copyworkweek",
     data: {
       _csrf:csrf, 
       currentWeekId:currentWeekId,

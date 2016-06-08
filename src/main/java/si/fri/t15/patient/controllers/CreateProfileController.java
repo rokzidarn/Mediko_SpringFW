@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import si.fri.t15.base.controllers.ControllerBase;
+import si.fri.t15.base.models.UserData;
 import si.fri.t15.models.PO_Box;
 import si.fri.t15.models.user.EmergencyContactData;
 import si.fri.t15.models.user.PatientData;
@@ -66,13 +67,14 @@ public class CreateProfileController extends ControllerBase{
 		Query allPOBoxQuery = em.createNamedQuery("PO_Box.findAll");
 		List<PO_Box> poBoxes = allPOBoxQuery.getResultList();
 		model.addAttribute("po_boxes",poBoxes);
+		model.addAttribute("relationshipTypes", UserData.getRelationshipTypes());
 		
 		return "createPatient";
 	}
 	
 	@RequestMapping(value = "/createProfile", method=RequestMethod.POST)
 	@Transactional
-	public String createPatientPOST(Model model, @ModelAttribute("profile") @Valid PatientProfileForm profile,
+	public String createPatientPOST(Model model, @ModelAttribute("command") @Valid PatientProfileForm command,
 			BindingResult result, HttpServletRequest request, @AuthenticationPrincipal User user) {
 		
 		
@@ -93,7 +95,7 @@ public class CreateProfileController extends ControllerBase{
 		Query allPOBoxQuery = em.createNamedQuery("PO_Box.findAll");
 		List<PO_Box> poBoxes = allPOBoxQuery.getResultList();
 		model.addAttribute("po_boxes",poBoxes);
-		
+		model.addAttribute("relationshipTypes", UserData.getRelationshipTypes());
 		
 		if (result.hasErrors()) {
 			return "createPatient";
@@ -101,20 +103,22 @@ public class CreateProfileController extends ControllerBase{
 			
 		//Create patient
 		PatientData patient = new PatientData();
-		patient.setFirst_name(profile.getFirstName());
-		patient.setLast_name(profile.getLastName());
-		patient.setSex(profile.getSex());
+		patient.setFirst_name(command.getFirstName());
+		patient.setLast_name(command.getLastName());
+		patient.setSex(command.getSex());
 		//Birth
-		String[]dateValues = profile.getBirth().split("-");
+		String[]dateValues = command.getBirth().split("-");
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Integer.parseInt(dateValues[0]),Integer.parseInt(dateValues[0]),Integer.parseInt(dateValues[0]));
 		patient.setBirth_date(new Date(calendar.getTimeInMillis()));
 		
-		patient.setAddress(profile.getAddress());
+		patient.setAddress(command.getAddress());
 		
 		//POBOX
-		PO_Box pobox = em.find(PO_Box.class, profile.getPobox());
+		PO_Box pobox = em.find(PO_Box.class, command.getPobox());
 		patient.setPo_box(pobox);
+		
+		patient.setPhoneNumber(command.getPhoneNumber());
 		
 		em.persist(patient);
 		
@@ -152,6 +156,7 @@ public class CreateProfileController extends ControllerBase{
 		Query allPOBoxQuery = em.createNamedQuery("PO_Box.findAll");
 		List<PO_Box> poBoxes = allPOBoxQuery.getResultList();
 		model.addAttribute("po_boxes", poBoxes);
+		model.addAttribute("relationshipTypes", UserData.getRelationshipTypes());
 		
 		model.addAttribute("pData", pData);
 
@@ -185,6 +190,7 @@ public class CreateProfileController extends ControllerBase{
 		Query allPOBoxQuery = em.createNamedQuery("PO_Box.findAll");
 		List<PO_Box> poBoxes = allPOBoxQuery.getResultList();
 		model.addAttribute("po_boxes", poBoxes);
+		model.addAttribute("relationshipTypes", UserData.getRelationshipTypes());
 		
 		model.addAttribute("pData", pData);
 		
@@ -207,6 +213,7 @@ public class CreateProfileController extends ControllerBase{
 		eData.setFirst_name(command.getContactFirstName());
 		eData.setLast_name(command.getContactLastName());
 		eData.setPhoneNumber(command.getContactPhoneNumber());
+		eData.setRelationshipType(command.getContactRelationship());
 
 		if (pData.getEmergencyContactData() == null) {
 			em.persist(eData);

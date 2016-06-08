@@ -171,6 +171,18 @@
 												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
 											</div>
 										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												#if($command) #springBind( "command.contactRelationship" ) #end
+												<label for="contactPhoneNumberInput">Sorodstveno razmerje</label>
+												<select class="form-control" id="contactRelationshipInput" name="contactRelationship">
+													#foreach($type in $relationshipTypes)
+													<option value="$type">$type</option>
+													#end
+												</select>
+												#foreach($error in $status.errorMessages) <div class="alert alert-danger">$error</div> #end
+											</div>
+										</div>
 									</div>
 									<p class="text-center">
 										<input type="submit" class="btn btn-default btn-lg" value="Ustvari">

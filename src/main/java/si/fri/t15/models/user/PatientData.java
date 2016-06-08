@@ -76,12 +76,14 @@ public class PatientData extends UserData {
 	        this.medicines = new ArrayList<Medicine>();
 	        List<Checkup> allCheckups = this.getCheckups();
 	        
-			for (Checkup c : allCheckups){
-				Hibernate.initialize(c.getMedicines());
-				for(Medicine m : c.getMedicines()){
-					this.medicines.add(m);
+			if (allCheckups != null) {
+				for (Checkup c : allCheckups) {
+					Hibernate.initialize(c.getMedicines());
+					for (Medicine m : c.getMedicines()) {
+						this.medicines.add(m);
+					}
 				}
-	        }
+			}
 	    }
 	    return this.medicines;
 	}
@@ -95,11 +97,13 @@ public class PatientData extends UserData {
 	        this.diets = new ArrayList<Diet>();
 	        List<Checkup> allCheckups = this.getCheckups();
 	        
-			for (Checkup c : allCheckups){
-				for(Diet d : c.getDiets()){
-					this.diets.add(d);
+			if (allCheckups != null) {
+				for (Checkup c : allCheckups) {
+					for (Diet d : c.getDiets()) {
+						this.diets.add(d);
+					}
 				}
-	        }
+			}
 	    }
 	    return this.diets;
 	}
@@ -115,16 +119,18 @@ public class PatientData extends UserData {
 	        this.nonAlergyDiseases = new ArrayList<Disease>();
 	        List<Checkup> allCheckups = this.getCheckups();
 	        
-			for (Checkup c : allCheckups){
-				for(Disease d : c.getDiseases()){
-					this.diseases.add(d);
-					if(d.getIsAllergy()==0){
-						nonAlergyDiseases.add(d);
-					}else{
-						alergyDiseases.add(d);
+			if (allCheckups != null) {
+				for (Checkup c : allCheckups) {
+					for (Disease d : c.getDiseases()) {
+						this.diseases.add(d);
+						if (d.getIsAllergy() == 0) {
+							nonAlergyDiseases.add(d);
+						} else {
+							alergyDiseases.add(d);
+						}
 					}
 				}
-	        }
+			}
 	    }
 	    return this.diseases;
 	}
@@ -153,11 +159,13 @@ public class PatientData extends UserData {
 	        this.resultCheckups = new ArrayList<Result_Checkup>();
 	        List<Checkup> allCheckups = this.getCheckups();
 	        
-			for (Checkup c : allCheckups){
-				for(Result_Checkup r : c.getResultCheckups()){
-					this.resultCheckups.add(r);
+			if (allCheckups != null) {
+				for (Checkup c : allCheckups) {
+					for (Result_Checkup r : c.getResultCheckups()) {
+						this.resultCheckups.add(r);
+					}
 				}
-	        }
+			}
 	    }
 	    return this.resultCheckups;
 	}

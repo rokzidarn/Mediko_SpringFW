@@ -32,7 +32,7 @@ public class PatientProfileForm {
 	
 	@NotNull
 	@Pattern(regexp="/[fm]{1}/")
-	private char sex;
+	private Character sex;
 
 	@NotNull
 	@Size(min=10,max=10)
@@ -61,7 +61,9 @@ public class PatientProfileForm {
 	
 	@NotNull
 	@Size(max=4,min=4)
-	private int pobox;
+	private Integer pobox;
+	
+	private String contactRelationship;
 	
 	public String getAddress() {
 		return address;
@@ -95,11 +97,11 @@ public class PatientProfileForm {
 		this.contactPhoneNumber = contactPhoneNumber;
 	}
 
-	public int getPobox() {
+	public Integer getPobox() {
 		return pobox;
 	}
 
-	public void setPobox(int pobox) {
+	public void setPobox(Integer pobox) {
 		this.pobox = pobox;
 	}
 
@@ -145,11 +147,11 @@ public class PatientProfileForm {
 		this.contactLastName = contactLastName;
 	}
 
-	public char getSex() {
+	public Character getSex() {
 		return sex;
 	}
 
-	public void setSex(char sex) {
+	public void setSex(Character sex) {
 		this.sex = sex;
 	}
 
@@ -159,6 +161,14 @@ public class PatientProfileForm {
 
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
+	}
+
+	public String getContactRelationship() {
+		return contactRelationship;
+	}
+
+	public void setContactRelationship(String contactRelationship) {
+		this.contactRelationship = contactRelationship;
 	}
 	
 	

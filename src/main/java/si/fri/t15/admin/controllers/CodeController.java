@@ -165,6 +165,100 @@ public class CodeController extends ControllerBase{
 		return new ModelAndView("codes");
 	}
 	
+	@RequestMapping(value = "/admin/code/disease/show",  method=RequestMethod.GET)
+	public ModelAndView showDiseaseGET(Model model, HttpServletRequest request, @AuthenticationPrincipal User userSession) {
+		
+		TypedQuery<Disease> qu = em.createNamedQuery("Disease.findAll", Disease.class);
+		List<Disease> all = (List<Disease>) qu.getResultList(); 
+			
+		model.addAttribute("all", all);
+		model.addAttribute("user", userSession);
+		model.addAttribute("usertype", "admin");
+		model.addAttribute("page", "admin");
+		model.addAttribute("subpage", "addDoctor");	
+		model.addAttribute("path", "/mediko_dev/");
+		model.addAttribute("title", "Šifranti");
+		
+		return new ModelAndView("codesDiseases");
+	}
+	
+	@RequestMapping(value = "/admin/code/diet/show",  method=RequestMethod.GET)
+	public ModelAndView showDietGET(Model model, HttpServletRequest request, @AuthenticationPrincipal User userSession) {
+		
+		TypedQuery<Diet> qu = em.createNamedQuery("Diet.findAll", Diet.class);
+		List<Diet> all = (List<Diet>) qu.getResultList(); 
+			
+		model.addAttribute("all", all);
+		model.addAttribute("user", userSession);
+		model.addAttribute("usertype", "admin");
+		model.addAttribute("page", "admin");
+		model.addAttribute("subpage", "addDoctor");	
+		model.addAttribute("path", "/mediko_dev/");
+		model.addAttribute("title", "Šifranti");
+		
+		return new ModelAndView("codesDiets");
+	}
+	
+	@RequestMapping(value = "/admin/code/medicine/show",  method=RequestMethod.GET)
+	public ModelAndView showMedicineGET(Model model, HttpServletRequest request, @AuthenticationPrincipal User userSession) {
+		
+		TypedQuery<Medicine> qu = em.createNamedQuery("Medicine.findAll", Medicine.class);
+		List<Medicine> all = (List<Medicine>) qu.getResultList(); 
+			
+		model.addAttribute("all", all);
+		model.addAttribute("user", userSession);
+		model.addAttribute("usertype", "admin");
+		model.addAttribute("page", "admin");
+		model.addAttribute("subpage", "addDoctor");	
+		model.addAttribute("path", "/mediko_dev/");
+		model.addAttribute("title", "Šifranti");
+		
+		return new ModelAndView("codesMedicines");
+	}
+	
+	@RequestMapping(value = "/admin/code/medcenter/show",  method=RequestMethod.GET)
+	public ModelAndView showMedCenterGET(Model model, HttpServletRequest request, @AuthenticationPrincipal User userSession) {
+		
+		TypedQuery<Medical_Center> qu = em.createNamedQuery("Medical_Center.findAll", Medical_Center.class);
+		List<Medical_Center> all = (List<Medical_Center>) qu.getResultList(); 
+			
+		model.addAttribute("all", all);
+		model.addAttribute("user", userSession);
+		model.addAttribute("usertype", "admin");
+		model.addAttribute("page", "admin");
+		model.addAttribute("subpage", "addDoctor");	
+		model.addAttribute("path", "/mediko_dev/");
+		model.addAttribute("title", "Šifranti");
+		
+		return new ModelAndView("codesMedCenters");
+	}
+	
+	@RequestMapping(value = "/admin/code/medworker/show",  method=RequestMethod.GET)
+	public ModelAndView showMedworkerGET(Model model, HttpServletRequest request, @AuthenticationPrincipal User userSession) {
+		
+		TypedQuery<User> qu = em.createNamedQuery("User.findAll", User.class);
+		List<User> allUsers = (List<User>) qu.getResultList(); 
+		
+		List<User> all = new ArrayList<>();		
+		for(User u : allUsers){
+			if(UserType.DOCTOR.equals(u.getUserType())){
+				all.add(u);
+			}
+		}
+			
+		model.addAttribute("all", all);
+		model.addAttribute("user", userSession);
+		model.addAttribute("usertype", "admin");
+		model.addAttribute("page", "admin");
+		model.addAttribute("subpage", "addDoctor");	
+		model.addAttribute("path", "/mediko_dev/");
+		model.addAttribute("title", "Šifranti");
+		
+		return new ModelAndView("codesMedWorkers");
+	}
+	
+	//-------------------------------------------------------------------------------------------------------------------------------
+	
 	@Transactional
 	@RequestMapping(value = "/admin/code/disease/add",  method=RequestMethod.POST)
 	public String addDiseasePOST(Model model, @ModelAttribute("commandda") @Valid AddDiseaseForm commandda,
