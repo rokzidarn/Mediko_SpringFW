@@ -352,6 +352,9 @@ public class RestController {
 			}
 			
 			//DAYS
+			if(workWeek.getWorkDays() == null){
+				workWeek.setWorkDays(new ArrayList<WorkDay>());
+			}
 			if(workWeek.getWorkDays().isEmpty()){
 				for(int d = 0; d < 6; d++){
 					WorkDay workDay = new WorkDay();
