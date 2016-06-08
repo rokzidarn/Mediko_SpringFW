@@ -166,10 +166,12 @@ public class HomeController extends ControllerBase{
 			
 			Date now = new Date(Calendar.getInstance().getTime().getTime());
 			List<Appointment> upcoming = new ArrayList<Appointment>();
-			for (Appointment a : pdata.getAppointments()) {
-				Date date = a.getDate();
-				if (date != null && date.compareTo(now) > 0) {
-					upcoming.add(a);
+			if (pdata.getAppointments() != null) {
+				for (Appointment a : pdata.getAppointments()) {
+					Date date = a.getDate();
+					if (date != null && date.compareTo(now) > 0) {
+						upcoming.add(a);
+					}
 				}
 			}
 			model.addAttribute("upcoming", upcoming);

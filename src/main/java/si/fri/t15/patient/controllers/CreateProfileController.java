@@ -74,7 +74,7 @@ public class CreateProfileController extends ControllerBase{
 	
 	@RequestMapping(value = "/createProfile", method=RequestMethod.POST)
 	@Transactional
-	public String createPatientPOST(Model model, @ModelAttribute("command") @Valid PatientProfileForm profile,
+	public String createPatientPOST(Model model, @ModelAttribute("command") @Valid PatientProfileForm command,
 			BindingResult result, HttpServletRequest request, @AuthenticationPrincipal User user) {
 		
 		
@@ -103,20 +103,22 @@ public class CreateProfileController extends ControllerBase{
 			
 		//Create patient
 		PatientData patient = new PatientData();
-		patient.setFirst_name(profile.getFirstName());
-		patient.setLast_name(profile.getLastName());
-		patient.setSex(profile.getSex());
+		patient.setFirst_name(command.getFirstName());
+		patient.setLast_name(command.getLastName());
+		patient.setSex(command.getSex());
 		//Birth
-		String[]dateValues = profile.getBirth().split("-");
+		String[]dateValues = command.getBirth().split("-");
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Integer.parseInt(dateValues[0]),Integer.parseInt(dateValues[0]),Integer.parseInt(dateValues[0]));
 		patient.setBirth_date(new Date(calendar.getTimeInMillis()));
 		
-		patient.setAddress(profile.getAddress());
+		patient.setAddress(command.getAddress());
 		
 		//POBOX
-		PO_Box pobox = em.find(PO_Box.class, profile.getPobox());
+		PO_Box pobox = em.find(PO_Box.class, command.getPobox());
 		patient.setPo_box(pobox);
+		
+		patient.setPhoneNumber(command.getPhoneNumber());
 		
 		em.persist(patient);
 		
