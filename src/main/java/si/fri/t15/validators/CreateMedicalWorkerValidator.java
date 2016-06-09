@@ -10,9 +10,9 @@ import org.springframework.validation.Validator;
 
 public class CreateMedicalWorkerValidator implements Validator {
 	private static final int MINIMUM_PASSWORD_LENGTH = 6;
-	private static final String FNAME = "^[a-zA-Z ]{2,16}$";
-	private static final String LNAME = "^[a-zA-Z ]{2,24}$";
-	private static final String TITLE = "^[0-9a-zA-Z-_]{4,24}$";
+	private static final String FNAME = "^[a-zA-ZčšžČŠŽ ]{2,16}$";
+	private static final String LNAME = "^[a-zA-ZčšžČŠŽ ]{2,24}$";
+	private static final String TITLE = "^[0-9a-zA-Z-_ \\.]{4,24}$";
 
 	@Override
 	public boolean supports(Class<?> c) {
