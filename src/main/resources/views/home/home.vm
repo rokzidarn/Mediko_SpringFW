@@ -83,7 +83,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong>Zdravstvena ustanova</strong><br>
-                                                        $doctor.medical_center.name
+                                                        $doctor.getMedical_center().getName()
                                                     </div>
                                                     <div class="col-md-6">
                                                     	#if(!$doctor.nurses)
@@ -456,7 +456,7 @@
 	                                                    </table>                                                   
                                                 </div>                                               
 												#end  
-												<button type="button" class="btn btn-info">Naroči</button>                                          
+												<a type="button" href="#springUrl('/checkup/order')" class="btn btn-info">Naroči</a>                                          
                                             </div>
                                         </div>
                                     </div>

@@ -124,6 +124,10 @@ public class HomeController extends ControllerBase{
 			} else if (UserType.DOCTOR.equals(userSession.getUserType())) {
 				return "redirect:/updateDoctorProfile";
 			}
+			else if (UserType.NURSE.equals(userSession.getUserType())) {
+				return "redirect:/updateDoctorProfile";
+			}
+			
 		}
 		
 		User user = em.merge(userSession);

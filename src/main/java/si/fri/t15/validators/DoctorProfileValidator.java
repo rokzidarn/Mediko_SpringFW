@@ -10,9 +10,9 @@ import org.springframework.validation.Validator;
 import si.fri.t15.doctor.controllers.DoctorProfileForm;
 
 public class DoctorProfileValidator implements Validator {
-	private static final String FNAME = "^[a-zA-Z ]{2,16}$";
-	private static final String LNAME = "^[a-zA-Z ]{2,24}$";
-	private static final String TITLE = "^[0-9a-zA-Z-_]{4,24}$";
+	private static final String FNAME = "^[a-zA-ZčšžČŠŽ ]{2,16}$";
+	private static final String LNAME = "^[a-zA-ZčšžČŠŽ ]{2,24}$";
+	private static final String TITLE = "^[0-9a-zA-Z-_ ]{4,24}$";
 
 	@Override
 	public boolean supports(Class<?> c) {
